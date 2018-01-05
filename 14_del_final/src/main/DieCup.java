@@ -1,14 +1,11 @@
-
+package main;
 public class DieCup {
 
-	private int die1=1, die2=1;
-	private int numberOfSides;
+	private int die1=0, die2=0;
 
-	private Die die;
+	private Die die = new Die();
 
-	public DieCup (int numberOfsides) {	
-		this.numberOfSides = numberOfsides;
-		die = new Die(this.numberOfSides);
+	public DieCup () {	
 	}
 
 	public void shake() {
@@ -29,5 +26,13 @@ public class DieCup {
 			isEqual = true;
 		}
 		return isEqual;
+	}
+
+	public int getDie1Value () {
+		return die1;
+	}
+
+	public int getDie2Value () {
+		return die2;
 	}
 }
