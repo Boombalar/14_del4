@@ -1,5 +1,5 @@
 
-public abstract class Field {
+public class Field {
 	protected String name;
 	protected int type;
 	protected int number;
