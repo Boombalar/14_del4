@@ -8,4 +8,10 @@ public class BreweryFields extends OwnerFields {
 	
 
 	}
+
+    public int[] returnValue() {
+	return this.multiplyer;
+			
+}
+
 }
