@@ -12,9 +12,13 @@ public class OwnerFields extends Field {
 		this.owner = owner;
 		this.groupNumber = groupNumber;
 
-    }
+        }
+    
+    	public int getPopertyValue() {
+    		return this.owner;
+    	}
 		
-		public int getOnwner(){
+		public int getOwner(){
 			return this.owner;
 }
 	    public int getGroupNumber() {
