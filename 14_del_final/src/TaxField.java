@@ -1,4 +1,8 @@
-
+/**
+ * 
+ * @author kimsa
+ *
+ */
 public class TaxField extends Field{
 	
 	private int[] returnValue = new int[1];
