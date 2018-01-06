@@ -1,20 +1,20 @@
 public class OwnerFields extends Field {
 
 	
-	protected int popertyValue;
+	protected int propertyValue;
 	protected int owner;
 	protected int groupNumber;
 	
-    public OwnerFields(String name, int type, int number, int popertyValue, int owner, int groupNumber ) {
+    public OwnerFields(String name, int type, int number, int propertyValue, int owner, int groupNumber ) {
     	super(name, type, number);
     	
-    	this.popertyValue = popertyValue;
+    	this.propertyValue = propertyValue;
 		this.owner = owner;
 		this.groupNumber = groupNumber;
 
         }
     
-    	public int getPopertyValue() {
+    	public int getPropertyValue() {
     		return this.owner;
     	}
 		
