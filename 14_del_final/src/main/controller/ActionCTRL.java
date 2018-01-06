@@ -1,3 +1,4 @@
+package main.controller;
 
 public class ActionCTRL {
 	Player[] players;
