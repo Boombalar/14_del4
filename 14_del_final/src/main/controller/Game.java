@@ -1,4 +1,4 @@
-package main.model;
+package main.controller;
 
 public class Game {
 
