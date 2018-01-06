@@ -48,6 +48,7 @@ public class ChanceCardTest {
 		String actual = chancecard.getDescription();
 		
 	}
+	 
 
 		
 
