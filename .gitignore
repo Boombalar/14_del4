@@ -26,6 +26,7 @@ hs_err_pid*
 
 ### macOS
 .DS_Store
+.icloud
 
 ### Windows
 Thumbs.db
