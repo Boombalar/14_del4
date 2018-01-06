@@ -3,7 +3,13 @@ public class Field {
 	protected String name;
 	protected int type;
 	protected int number;
-
+/**
+ * Superklassen for felterne
+ * 
+ * @param name  navn på felt eks. "Hvidovrevej"
+ * @param type  type på felt eks. 1
+ * @param number feltnummer fra 1 til 40. 
+ */
 	public Field(String name, int type, int number) {
 		this.name = name;
 		this.type = type;
