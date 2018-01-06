@@ -3,7 +3,7 @@ public class ShipFields extends OwnerFields {
 	
 	int[] rent = new int[4]; //array på 6
 	
-	public ShipFields (String name, int type, int number, int popertyValue, int owner, int groupNumber) {
+	public ShipFields (String name, int type, int number, int popertyValue, int owner, int groupNumber, int[] rent) {
 		super(name, type, number, popertyValue, owner, groupNumber);
 	
 		
