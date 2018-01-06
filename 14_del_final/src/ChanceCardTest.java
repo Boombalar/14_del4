@@ -29,6 +29,7 @@ public class ChanceCardTest {
 	public void tearDown() throws Exception {
 	}
 
+	@Test
 	public void testGetNumber() {
 		int expected = 1;
 		int actual = chancecard.number;
@@ -36,6 +37,7 @@ public class ChanceCardTest {
 		
 	}
 		
+	@Test
 	public void testGetType() {
 		int expected = 1;
 		int actual = chancecard.getType();
@@ -43,6 +45,7 @@ public class ChanceCardTest {
 		
 	}
 	
+	@Test
 	public void testGetDescription() {
 		String expected = "description";
 		String actual = chancecard.getDescription();
