@@ -40,3 +40,4 @@ Desktop.ini
 bin/**/*
 /**/bin/*
 /.metadata/
+.recommenders
