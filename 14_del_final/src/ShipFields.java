@@ -1,7 +1,7 @@
 
 public class ShipFields extends OwnerFields {
 	
-	int[] rent = new int[4]; //array på 6
+	int[] rent = new int[4]; //array på 5
 	
 	public ShipFields (String name, int type, int number, int propertyValue, int owner, int groupNumber, int value0, int value1, int value2, int value3 ) {
 		super(name, type, number, propertyValue, owner, groupNumber);
@@ -11,7 +11,7 @@ public class ShipFields extends OwnerFields {
 		rent[3] = value3;
 		
 	}
-	public int[] returnValue() {
+	public int[] getReturnValue() {
 		return this.rent;
 }
 }

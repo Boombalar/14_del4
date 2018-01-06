@@ -2,8 +2,10 @@
 public class PropertyFields extends OwnerFields {
 
 	int[] rent = new int[8];
-	//private int numberOfHouse;
-	//private int priceOfHouse;
+	/*private int numberOfHouse;
+	private int priceOfHouse;
+	Er lagt in i det sidste to pladser i arrayet. 
+	*/
 	
 	public PropertyFields (String name, int type, int number, int propertyValue, int owner, int groupNumber, int value0, int value1, int value2, int value3, int value4, int value5, int value6, int value7) {
     	super(name, type, number, propertyValue, owner, groupNumber);
