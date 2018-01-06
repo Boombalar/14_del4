@@ -13,18 +13,16 @@ public class Account {
 	
 	/**
 	 * Withdraw(Udtræk) penge fra den givne spillers pengebeholdning.
-	 * @param value den mængde der skal trækkes ud af spillerens account.
+	 * @param value Den mængde der skal trækkes ud af spillerens account.
 	 */
-	
 	public void withdraw(int value) {
 		this.balance -= value;
 	}
 	
 	/**
 	 * deposit(indsæt) penge til den givne spillers pengebeholdning.
-	 * @param value den mængde der skal lægges til spillerens account.
+	 * @param value Den mængde der skal lægges til spillerens account.
 	 */
-	
 	public void deposit(int value) {
 		this.balance += value;
 	}
