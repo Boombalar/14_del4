@@ -5,33 +5,44 @@ import org.junit.Test;
 
 public class DieCupTest {
 
-	main.DieCup diecup = new main.DieCup();
+	main.DieCup dieCup = new main.DieCup();
 
+	/**
+	 * shakeTest()
+	 * - tester om shake() laver en ændring på die1 og die2 på Die objektet.
+	 */
 	@Test
 	public void shakeTest() {
 		int i = 0;
-
-		while (i < 40000) {
-			diecup.shake();
-			assertFalse(diecup.getDie1Value() == 0);
-			assertFalse(diecup.getDie2Value() == 0);
+			dieCup.shake();
+			assertFalse(dieCup.getDie1Value() == 0);
+			assertFalse(dieCup.getDie2Value() == 0);
 			i++;
-		}
 	}
 
+	/**
+	 * getDiceValueTest()
+	 * - tester om værdien er den samme.
+	 * Man trækker info fra de to terningslagringspladser, vs. bruge metoden dicecup.getDiceValue
+	 */
 	@Test
 	public void getDiceValueTest() {
-		int totalValue = diecup.getDie1Value() + diecup.getDie2Value();
-		assertTrue(totalValue == diecup.getDiceValue());
+		int totalValue = dieCup.getDie1Value() + dieCup.getDie2Value();
+		assertTrue(totalValue == dieCup.getDiceValue());
 	}
 
+	/**
+	 * getEqualEyesTest()
+	 * - tester om værdien af de to lagringspladser til terningerne er de samme.
+	 * Man trækker info omkring begge terninger vs. man trækker info fra metoden objektet.getEqualEyes.
+	 */
 	@Test
 	public void getEqualEyesTest() {
 		boolean isEqualEyes = false;
-		diecup.shake();
-		if (diecup.getDie1Value() == diecup.getDie2Value()) {
+		dieCup.shake();
+		if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 			isEqualEyes = true;
-			assertTrue(isEqualEyes == diecup.getEqualEyes());
+			assertTrue(isEqualEyes == dieCup.getEqualEyes());
 		}
 	}
 }
