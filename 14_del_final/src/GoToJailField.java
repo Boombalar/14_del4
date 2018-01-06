@@ -1,9 +1,14 @@
 
 public class GoToJailField extends Field{
-	int jail;
 	
-	public GoToJailField(String name, int type, int number, int jail) {
+	private int[] returnValue = new int[1];
+	
+	public GoToJailField (String name, int type, int number, int jail) {
 		super(name, type, number);
-		this.jail = jail;
+		this.returnValue[0] = jail;
+	}
+	
+	public int[] getReturnValue() {
+		return this.returnValue;	
 	}
 }
