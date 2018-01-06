@@ -7,7 +7,10 @@ public class TaxField extends Field{
 		super(name, type, number);
 		this.returnValue[0] = taxAmount;
 	}
-
+	/**
+	 * getReturnValue returnerer et int[1]
+	 * @return værdien er den skat der skal betales
+	 */
 	public int[] getReturnValue() {
 		return this.returnValue;
 	}
