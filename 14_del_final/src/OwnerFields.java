@@ -14,11 +14,10 @@ public class OwnerFields extends Field {
 
     }
 		
-		
-		public int hentOnwner(){
+		public int getOnwner(){
 			return this.owner;
 }
-	    public int hentGroupNumber() {
+	    public int getGroupNumber() {
 	    	return this.groupNumber;
 	    }
 }
