@@ -11,19 +11,11 @@ public class MoveToCard extends ChanceCard{
 		this.returnvalue[0]=fieldnumber;
 		this.returnvalue[1]=movetotype;
 		
-		
+		 
 		 
 	}
 	
-	public int getFieldNumber() {
-		return this.fieldnumber;
-	}
-	
-	public int getMoveToType() {
-		return this.movetotype;
-	}
-	
-	public int[] returnValue() {
+	public int[] getReturnValue() {
 		return this.returnvalue;
 	}
 }
