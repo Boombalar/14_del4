@@ -1,3 +1,4 @@
+package test;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -6,16 +7,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import main.model.ChanceCard;
+
 public class ChanceCardTest {
 
-	ChanceCard chancecard = new ChanceCard(1,1,"description");
+	main.model.ChanceCard chancecard = new ChanceCard(1,1,"description");
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	
 	}
-	
-	
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
@@ -36,7 +37,7 @@ public class ChanceCardTest {
 	@Test
 	public void testGetNumber() {
 		int expected = 1;
-		int actual = chancecard.number;
+		int actual = chancecard.getNumber();
 		assertEquals("getNumber metoden virker ikke", expected, actual);
 		
 	}

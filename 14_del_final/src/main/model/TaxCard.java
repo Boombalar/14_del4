@@ -1,4 +1,4 @@
-
+package main.model;
 
 public class TaxCard extends ChanceCard {
 	

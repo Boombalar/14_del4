@@ -1,4 +1,4 @@
-
+package main.model;
 
 public class MoveToCard extends ChanceCard{
 

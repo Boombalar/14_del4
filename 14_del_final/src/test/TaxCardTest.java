@@ -1,3 +1,4 @@
+package test;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -6,10 +7,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class MoveToCardTest {
+import main.model.TaxCard;
 
-	
-	
+public class TaxCardTest {
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -27,22 +28,21 @@ public class MoveToCardTest {
 	}
 
 	@Test
-	public void testMoveToCard() {
+	public void testTaxCard() {
 		int[] expectedreturnValue = new int [2];
 		int[] actualreturnValue = new int [2];
-			
-		MoveToCard movetocard = new MoveToCard(1,1,"description",2,3);
-		int expectedNumber = 1;
-		int expectedType = 1;
-		String expectedDescription = "description";
-		expectedreturnValue[0] = 2;
-		expectedreturnValue[1] = 3;
-
 		
-		int actualNumber = movetocard.getNumber();
-		int actualType = movetocard.getType();
-		String actualDescription = movetocard.getDescription();
-		actualreturnValue=movetocard.getReturnValue();
+		TaxCard taxcard = new TaxCard(2,2,"description",4,5);
+		int expectedNumber = 2;
+		int expectedType = 2;
+		String expectedDescription = "description";
+		expectedreturnValue[0] = 4;
+		expectedreturnValue[1] = 5;
+		
+		int actualNumber = taxcard.getNumber();
+		int actualType = taxcard.getType();
+		String actualDescription = taxcard.getDescription();
+		actualreturnValue = taxcard.returnValue();
 		
 		assertEquals("getNumber virker ikke", expectedNumber, actualNumber);
 		assertEquals("getType virker ikke", expectedType, actualType);
@@ -50,14 +50,6 @@ public class MoveToCardTest {
 		assertEquals("returnvalue value0 virker ikke", expectedreturnValue[0], actualreturnValue[0]);
 		assertEquals("returnvalue value1 virker ikke", expectedreturnValue[1], actualreturnValue[1]);
 		
-		
-		
-		
-		
-		
-		
-			
-	
 	}
 
 }
