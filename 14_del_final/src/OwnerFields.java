@@ -15,7 +15,7 @@ public class OwnerFields extends Field {
         }
     
     	public int getPropertyValue() {
-    		return this.owner;
+    		return this.propertyValue;
     	}
 		
 		public int getOwner(){
