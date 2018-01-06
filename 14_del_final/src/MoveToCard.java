@@ -4,11 +4,14 @@ public class MoveToCard extends ChanceCard{
 
 	private int fieldnumber;
 	private int movetotype;
+	private int[] returnvalue = new int[2];
 	
 	public MoveToCard(int number, int type, String description, int fieldnumber, int movetotype) {
 		super(number, type, description);
-		this.fieldnumber=fieldnumber;
-		this.movetotype=movetotype;
+		this.returnvalue[0]=fieldnumber;
+		this.returnvalue[1]=movetotype;
+		
+		
 		 
 	}
 	
@@ -20,4 +23,7 @@ public class MoveToCard extends ChanceCard{
 		return this.movetotype;
 	}
 	
+	public int[] returnValue() {
+		return this.returnvalue;
+	}
 }
