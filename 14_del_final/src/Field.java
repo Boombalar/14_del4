@@ -21,4 +21,11 @@ public class Field {
 	public int getNumber() {
 		return this.number;
 	}
+	
+	public int[] returnValue() {
+		int[] returnvalue = {0,1};
+		
+		return returnvalue;
+	}
+	
 }
