@@ -48,7 +48,7 @@ public class PropertyFieldsTest {
 		String actualname = propertyfield.getName();
 		int actualType = propertyfield.getType();
 		int actualNumber = propertyfield.getNumber();
-		int actualPropertyValue = propertyfield.getPopertyValue();
+		int actualPropertyValue = propertyfield.getPropertyValue();
 		int actualOwner = propertyfield.getOwner();
 		int actualGroupNumber = propertyfield.getGroupNumber();
 		actualReturnValue = propertyfield.getReturnValue(); //returnerer i dette tilfælde et int array der er 8 langt med det værdier der er lagt ind i det.
