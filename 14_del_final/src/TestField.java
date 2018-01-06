@@ -26,7 +26,11 @@ public class TestField {
 
 	@Test
 	public void testField() {
-		fail("Not yet implemented");
+		Field field = new Field("start",1,1);
+		
+		String name = field.getName();
+		int type = field.getType();
+		int number = field.getNumber();
 	}
 
 	@Test
