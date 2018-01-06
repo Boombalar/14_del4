@@ -3,7 +3,7 @@ public class ActionCTRL {
 	Player[] players;
 	Board board;
 	ViewCTRL view;
-	ChanceCardCTRL chancecard;
+	ChanceCardCTRL chanceCard;
 	Diecup diecup;
 	
 	public ActionCTRL() {
