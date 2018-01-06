@@ -29,6 +29,10 @@ public class ChanceCardTest {
 	public void tearDown() throws Exception {
 	}
 
+	
+	/**
+	 * tester om konstruktøren ChanceCard er oprettet korrekt, om nummeret bliver returneret som forventet
+	 */
 	@Test
 	public void testGetNumber() {
 		int expected = 1;
@@ -36,7 +40,11 @@ public class ChanceCardTest {
 		assertEquals("getNumber metoden virker ikke", expected, actual);
 		
 	}
-		
+	
+	
+	/**
+	 * tester om konstruktøren ChanceCard er oprettet korrekt, om typen bliver returneret som forventet
+	 */
 	@Test
 	public void testGetType() {
 		int expected = 1;
@@ -45,6 +53,9 @@ public class ChanceCardTest {
 		
 	}
 	
+	/**
+	 * tester om konstruktøren ChanceCard er oprettet korrekt, om beskrivelsen bliver returneret som forventet
+	 */
 	@Test
 	public void testGetDescription() {
 		String expected = "description";
