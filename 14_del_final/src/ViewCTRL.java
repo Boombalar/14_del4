@@ -20,9 +20,9 @@ public class ViewCTRL {
 	}
 	
 	public String getTextField() {
-		String enteredtext="";
+		String enteredText="";
 		
-		return enteredtext;
+		return enteredText;
 	}
 	
 	public void updateDice(int die1, int die2) {
