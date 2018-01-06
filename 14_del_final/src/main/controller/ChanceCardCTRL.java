@@ -1,3 +1,4 @@
+package main.controller;
 
 public class ChanceCardCTRL {
 	ChanceCard[] chanceCard = new ChanceCard[30];
