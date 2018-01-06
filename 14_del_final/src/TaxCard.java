@@ -12,14 +12,6 @@ public class TaxCard extends ChanceCard {
 		this.returnvalue[0]=housetax;
 		this.returnvalue[1]=hoteltax;
 	}
-
-	public int getHouseTax() {
-		return this.housetax;
-	}
-	
-	public int getHotelTax() {
-		return this.hoteltax;
-	}
 	
 	public int[] returnValue() {
 		return this.returnvalue;
