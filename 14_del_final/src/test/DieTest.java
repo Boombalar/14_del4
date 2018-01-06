@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class DieTest {
 
-	main.Die die = new main.Die();
+	main.model.Die die = new main.model.Die();
 
 	@Test
 	public void testRoll() {

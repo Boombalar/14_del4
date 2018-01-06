@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import main.Player;
+import main.model.Player;
 
 public class PlayerTest {
 	

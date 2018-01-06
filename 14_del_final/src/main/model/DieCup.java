@@ -1,4 +1,5 @@
-package main;
+package main.model;
+
 public class DieCup {
 
 	private int die1=0, die2=0;
