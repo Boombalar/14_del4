@@ -23,9 +23,9 @@ public class Field {
 	}
 	
 	public int[] returnValue() {
-		int[] returnvalue = {0};
+		int[] returnValue = {0};
 		
-		return returnvalue;
+		return returnValue;
 	}
 	
 }
