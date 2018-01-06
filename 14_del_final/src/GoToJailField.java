@@ -7,7 +7,10 @@ public class GoToJailField extends Field{
 		super(name, type, number);
 		this.returnValue[0] = jail;
 	}
-	
+	/**
+	 * Returnerer en int[1]
+	 * @return    værdien er det felt der skal hoppes til.
+	 */
 	public int[] getReturnValue() {
 		return this.returnValue;	
 	}
