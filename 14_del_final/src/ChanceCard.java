@@ -26,6 +26,9 @@ public class ChanceCard {
 		return this.description;
 	}
 	
-	
+	public int[] returnValue() {
+		int[] returnvalue = {0,1};
+		return returnvalue;
+	}
 }
  
