@@ -15,4 +15,5 @@ public class TaxField extends Field{
 		return this.returnValue;
 	}
 	
+	
 }
