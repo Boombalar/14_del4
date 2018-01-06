@@ -4,12 +4,13 @@ public class TaxCard extends ChanceCard {
 	
 	private int housetax;
 	private int hoteltax;
+	private int[] returnvalue = new int[2];
 	
 
 	public TaxCard(int number, int type, String description, int housetax, int hoteltax) {
 		super(number, type, description);
-		this.housetax=housetax;
-		this.hoteltax=hoteltax;
+		this.returnvalue[0]=housetax;
+		this.returnvalue[1]=hoteltax;
 	}
 
 	public int getHouseTax() {
@@ -19,5 +20,8 @@ public class TaxCard extends ChanceCard {
 	public int getHotelTax() {
 		return this.hoteltax;
 	}
-	 
+	
+	public int[] returnValue() {
+		return this.returnvalue;
+	}
 }
