@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class TestGotoJailField {
+public class TaxFieldTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -25,24 +25,24 @@ public class TestGotoJailField {
 	}
 
 	@Test
-	public void testGoToJailField() {
-		GoToJailField gotoJailField = new GoToJailField("Ryk direkte i fængsel",1,2,31);
+	public void testTaxField() {
+		TaxField taxField = new TaxField("Betal Indkomstskat",1,2,4000);
 		
-		String expectedname ="Ryk direkte i fængsel";
+		String expectedname ="Betal Indkomstskat";
 		int expectedtype = 1;
 		int expectednumber = 2;
-		int[] expectedjailfield = {31};
-		String actualname = gotoJailField.getName();
-		int actualnumber = gotoJailField.getNumber();
-		int actualtype = gotoJailField.getType();
-		int[] actualjailfield = gotoJailField.getReturnValue();
-		System.out.println( actualjailfield[0]);
-		System.out.println(expectedjailfield[0]);
+		int[] expectedtaxAmount = {4000};
+		String actualname = taxField.getName();
+		int actualnumber = taxField.getNumber();
+		int actualtype = taxField.getType();
+		int[] actualtaxAmount = taxField.getReturnValue();
+		System.out.println( actualtaxAmount[0]);
+		System.out.println(expectedtaxAmount[0]);
 		
 		assertEquals("Name virker ikke", expectedname, actualname);
 		assertEquals("Number virker ikke", expectednumber, actualnumber);
 		assertEquals("Type virker ikke", expectedtype, actualtype);
-		assertEquals("taxAmount med arrays virker ikke",expectedjailfield[0], actualjailfield[0]);
+		assertEquals("taxAmount med arrays virker ikke",expectedtaxAmount[0], actualtaxAmount[0]);
 	}
 
 }
