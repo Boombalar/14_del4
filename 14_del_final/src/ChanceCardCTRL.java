@@ -1,6 +1,6 @@
 
 public class ChanceCardCTRL {
-	ChanceCard[] chancecard = new ChanceCard[30];
+	ChanceCard[] chanceCard = new ChanceCard[30];
 
 	public ChanceCardCTRL () {
 		
@@ -11,8 +11,8 @@ public class ChanceCardCTRL {
 	}
 	
 	public int[] draw() {
-		int[] values = new int[2];
+		int[] returnValues = new int[2];
 		
-		return values;
+		return returnValues;
 	}
 }
