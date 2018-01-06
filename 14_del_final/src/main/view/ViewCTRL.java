@@ -1,6 +1,7 @@
-package main;
+package main.view;
 
 import gui_main.GUI;
+import main.model.Player;
 
 import java.lang.reflect.Field;
 

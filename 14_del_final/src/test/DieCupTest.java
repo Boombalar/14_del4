@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class DieCupTest {
 
-	main.DieCup diecup = new main.DieCup();
+	main.model.DieCup diecup = new main.model.DieCup();
 
 	@Test
 	public void shakeTest() {
