@@ -8,7 +8,7 @@ public class PropertyFields extends OwnerFields {
 	public PropertyFields (String name, int type, int number, int popertyValue, int owner, int groupNumber, int[] rent) {
     	super(name, type, number, popertyValue, owner, groupNumber);
 		
-		//this.rent = rent; //skal den være der 
+		
 		this.rent[6] = numberOfHouse;
 		this.rent[7] = priceOfHouse;	
 		
