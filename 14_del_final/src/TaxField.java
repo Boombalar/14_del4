@@ -5,7 +5,7 @@ public class TaxField extends Field{
 	
 	public TaxField (String name, int type, int number, int taxAmount) {
 		super(name,type,number);
-		this.returnValue[1] = taxAmount;
+		this.returnValue[0] = taxAmount;
 	}
 
 	public int[] getReturnValue() {
