@@ -26,7 +26,7 @@ public class PropertyFieldsTest {
 
 	@Test
 	public void testPropertyFields() {
-		PropertyFields propertyfield = new PropertyFields("Hvidovrevej",1,4,1200,0,1,50,250,750,2250,4000,6000,0,1000);
+		PropertyFields propertyfield = new PropertyFields("Hvidovrevej",1,4,3000,0,1,50,250,750,2250,4000,6000,0,1000);
 		int[] expectedReturnValue = new int[8];
 		int[] actualReturnValue = new int[8];
 		

@@ -1,16 +1,16 @@
 
 public class BreweryFields extends OwnerFields {
 	
-	int[] multiplyer = new int[2];
+	int[] multiplier = new int[2];
 	
-	public BreweryFields (String name, int type, int number, int popertyValue, int owner, int groupNumber, int[] rent) {
-		super(name, type, number, popertyValue, owner, groupNumber);
-	
-
+	public BreweryFields (String name, int type, int number, int propertyValue, int owner, int groupNumber, int Value0, int Value1) {
+		super(name, type, number, propertyValue, owner, groupNumber);
+		multiplier[0] = Value0;
+		multiplier[1] = Value1;
 	}
 
-    public int[] returnValue() {
-	return this.multiplyer;
+    public int[] getReturnValue() {
+	return this.multiplier;
 			
 }
 
