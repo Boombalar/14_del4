@@ -26,31 +26,17 @@ public class TestField {
 
 	@Test
 	public void testField() {
-		Field field = new Field("start",1,1);
+		Field field = new Field("start",1,2);
 		
-		String name = field.getName();
-		int type = field.getType();
-		int number = field.getNumber();
-	}
+		String nameactual = field.getName();
+		int actualtype = field.getType();
+		int actualnumber = field.getNumber();
+		String nameexpected = "start";
+		int typexpected = 1;
+		int numberexpected = 2;
 
-	@Test
-	public void testGetName() {
-		fail("Not yet implemented");
+		assertEquals("name virker ikke", nameexpected, nameactual);
+		assertEquals("number virker ikke",numberexpected, actualnumber);
+		assertEquals("type virker ikke",typexpected, actualtype);
 	}
-
-	@Test
-	public void testGetType() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetNumber() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testReturnValue() {
-		fail("Not yet implemented");
-	}
-
 }
