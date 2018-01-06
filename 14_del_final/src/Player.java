@@ -40,7 +40,7 @@ public class Player {
 	 * @param value Den mængde der skal lægges til spillerens pengebeholdning
 	 */
 	public void recieveMoney(int value) {
-		myAccount.deposit += value;
+		myAccount.deposit(value);
 	}
 	
 	/**
@@ -48,6 +48,6 @@ public class Player {
 	 * @param value Den mængde der trækkes fra spillerens pengebeholdning.
 	 */
 	public void removeMoney(int value) {
-		myAccount.withdraw -= value;
+		myAccount.withdraw(value);
 	}
 }
