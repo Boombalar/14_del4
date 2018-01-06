@@ -23,7 +23,7 @@ public class Field {
 	}
 	
 	public int[] returnValue() {
-		int[] returnvalue = {0,1};
+		int[] returnvalue = {0};
 		
 		return returnvalue;
 	}
