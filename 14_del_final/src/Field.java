@@ -27,7 +27,10 @@ public class Field {
 	public int getNumber() {
 		return this.number;
 	}
-	
+	/**
+	 * Bliver overskrevet af subklasserne.
+	 * @return
+	 */
 	public int[] returnValue() {
 		int[] returnValue = {0};
 		
