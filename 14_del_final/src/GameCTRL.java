@@ -1,6 +1,6 @@
 
 public class GameCTRL {
-	private ActionCTRL actionctrl;
+	private ActionCTRL actionCtrl;
 	private int playernum;
 
 	public GameCTRL() {
