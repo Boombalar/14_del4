@@ -5,7 +5,7 @@ public class PropertyFields extends OwnerFields {
 	//private int numberOfHouse;
 	//private int priceOfHouse;
 	
-	public PropertyFields (String name, int type, int number, int popertyValue, int owner, int groupNumber, int[] rent) {
+	public PropertyFields (String name, int type, int number, int popertyValue, int owner, int groupNumber, int[] rent, int numberOfHouse, int priceOfHouse) {
     	super(name, type, number, popertyValue, owner, groupNumber);
 		
 		
