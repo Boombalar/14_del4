@@ -1,3 +1,4 @@
+package main.model;
 
 public class BreweryFields extends OwnerFields {
 	

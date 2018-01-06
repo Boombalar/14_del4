@@ -1,3 +1,4 @@
+package main.model;
 
 public class PropertyFields extends OwnerFields {
 

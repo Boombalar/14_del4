@@ -1,3 +1,4 @@
+package test;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -6,7 +7,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ShipFieldsTest {
+import main.model.BreweryFields;
+
+public class BreweryFieldsTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -24,39 +27,35 @@ public class ShipFieldsTest {
 	public void tearDown() throws Exception {
 	}
 	
-	
+    
 	/**
+	 * BreweryFields klassen
 	 * opretter et object af Ship med udfyldte parameter i parameterlisten. Og et forventet array og et Faktisk (det der er udfyldt i parameterliste) array
 	 */
 	@Test
-	public void testShipFields() {
-		ShipFields shipFields = new ShipFields ("Kalundborg/aarhus",3,2,5000,1,2,500,1000,2000,4000);
-		int[] expectedReturnValue = new int[4];
-		int[] actualReturnValue = new int[4];
+	public void testBreweryFields() {
+		BreweryFields breweryFields = new BreweryFields ("Tuborgvej",3,2,3000,1,4,100,200);
+		int[] expectedReturnValue = new int[2];
+		int[] actualReturnValue = new int[2];
 		
-		//hvis ikke jeg kan modtage parameterlisten vil nedarvningen ikke fungere
 		
-		String expectedname = "Kalundborg/aarhus";
+		String expectedname = "Tuborgvej";
 		int expectedType = 3;
 		int expectedNumber = 2;
-		int expectedPropertyValue = 5000;
+		int expectedPropertyValue = 3000;
 		int expectedOwner = 1;
-		int expectedGroupNumber = 2;
-		expectedReturnValue[0] = 500;
-		expectedReturnValue[1] = 1000;
-		expectedReturnValue[2] = 2000;
-		expectedReturnValue[3] = 4000;
+		int expectedGroupNumber = 4;
+		expectedReturnValue[0] = 100;
+		expectedReturnValue[1] = 200;
 		
 		
-		String actualname = shipFields.getName();
-		int actualType = shipFields.getType();
-		int actualNumber = shipFields.getNumber();
-		int actualPropertyValue = shipFields.getPropertyValue();
-		int actualOwner = shipFields.getOwner();
-		int actualGroupNumber = shipFields.getGroupNumber();
-		actualReturnValue = shipFields.getReturnValue(); 
-		//returner i dette tilfælde et int array der er 4 langt med det værdier der er lagt ind i det.
-		
+		String actualname = breweryFields.getName();
+		int actualType = breweryFields.getType();
+		int actualNumber = breweryFields.getNumber();
+		int actualPropertyValue = breweryFields.getPropertyValue();
+		int actualOwner = breweryFields.getOwner();
+		int actualGroupNumber = breweryFields.getGroupNumber();
+		actualReturnValue = breweryFields.getReturnValue(); 
 		
 		assertEquals("Name virker ikke",expectedname, actualname);
 		assertEquals("Type virker ikke", expectedType, actualType);
@@ -64,11 +63,11 @@ public class ShipFieldsTest {
 		assertEquals("PropertyValue virker ikke", expectedPropertyValue, actualPropertyValue);
 		assertEquals("Owner virker ikke", expectedOwner, actualOwner);
 		assertEquals("GroupNumber virker ikke", expectedGroupNumber, actualGroupNumber);
-		for (int index = 0;index <= 3; index++) {
+		for (int index = 0;index <= 1; index++) {
 			assertEquals("returnvalue plads " + index + " virker ikke", expectedReturnValue[index], actualReturnValue[index]);
+		}
 		
 		
 	}
 
-	}
 }

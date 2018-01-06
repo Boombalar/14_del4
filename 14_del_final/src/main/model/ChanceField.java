@@ -1,3 +1,4 @@
+package main.model;
 /**
  * Ingen returfelt
  * @author kimsa

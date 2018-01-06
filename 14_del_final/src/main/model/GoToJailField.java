@@ -1,3 +1,4 @@
+package main.model;
 
 public class GoToJailField extends Field{
 	
