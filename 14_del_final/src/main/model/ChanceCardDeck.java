@@ -39,7 +39,7 @@ public class ChanceCardDeck {
 		
 	}
 	
-	public ChanceCard[] getChanceCardsDeck() {
+	public ChanceCard[] getChanceCards() {
 		return chancecards;
 	}
 }
