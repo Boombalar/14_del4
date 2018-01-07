@@ -61,6 +61,7 @@ public class ChanceCardTest {
 	public void testGetDescription() {
 		String expected = "description";
 		String actual = chancecard.getDescription();
+		assertEquals("GetDescription metoden virker ikke", expected, actual);
 		
 	}
 	 
