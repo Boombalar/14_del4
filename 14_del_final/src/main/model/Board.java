@@ -2,7 +2,7 @@ package main.model;
 
 public class Board {
 
-	Private field[40] Field;
+	private int field[40] Field;
 
 
 	public Board() {
