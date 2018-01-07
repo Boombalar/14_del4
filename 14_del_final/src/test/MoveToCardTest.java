@@ -1,4 +1,4 @@
-package main.model;
+package test;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -6,6 +6,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import main.model.MoveToCard;
 
 public class MoveToCardTest {
 

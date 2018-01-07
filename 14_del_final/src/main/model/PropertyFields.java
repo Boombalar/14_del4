@@ -2,7 +2,7 @@ package main.model;
 
 public class PropertyFields extends OwnerFields {
 
-	int[] rent = new int[8];
+	private int[] rent = new int[8];
 	/*private int numberOfHouse;
 	private int priceOfHouse;
 	Er lagt in i det sidste to pladser i arrayet. 

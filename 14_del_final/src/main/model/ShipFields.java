@@ -2,7 +2,7 @@ package main.model;
 
 public class ShipFields extends OwnerFields {
 	
-	int[] rent = new int[4]; //array på 5
+	private int[] rent = new int[4]; //array på 5
 	
 	public ShipFields (String name, int type, int number, int propertyValue, int owner, int groupNumber, int value0, int value1, int value2, int value3 ) {
 		super(name, type, number, propertyValue, owner, groupNumber);
