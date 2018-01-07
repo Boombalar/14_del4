@@ -2,8 +2,6 @@ package main.model;
 
 public class TaxCard extends ChanceCard {
 	
-	private int housetax;
-	private int hoteltax;
 	private int[] returnvalue = new int[2];
 	
 
