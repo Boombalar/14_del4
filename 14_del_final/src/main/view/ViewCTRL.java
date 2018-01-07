@@ -62,13 +62,11 @@ public class ViewCTRL {
 	}
 	
 	/**
-	 * Ved ikke præcist hvad meningen er med denne.
+	 * Stiller spilleren et spørgsmål og returnerer svaret spilleren giver.
 	 * @return
 	 */
-	public String getTextField() {
-		String enteredText="";
-		
-		return enteredText;
+	public String getTextField(String question) {
+		return gui.getUserString(question);
 	}
 	
 	/**
@@ -101,29 +99,43 @@ public class ViewCTRL {
 	}
 	
 	/**
-	 * 
-	 * @param player
-	 * @param fieldnum
+	 * Opdatere ejerskabet af et felt til spilleren
+	 * OBS: MANGLER LOKATIONEN PÅ DET FELT DER SKAL OPDATERES
+	 * @param player Spillerens nummer
+	 * @param fieldNumber Nummeret på det felt der skal opdateres
 	 */
 	public void updateOwnership(int player, int fieldNumber) {
 		street.
 		street.setBorder(playerTEMP[player].getPrimaryColor());
 	}
 	
+	/**
+	 * Opdatere et felt med huse, fra 0-5, og hvis der er "5" huse på feltet så placere den et hotel istedet.
+	 * @param fieldNumber Nummeret på feltet der skal opdateres
+	 * @param houses Mængden af huse der skal på feltet 0-5, hvor 0 er ingen huse og 5 er et hotel.
+	 */
 	public void updateBuildings(int fieldNumber, int houses) {
 		boolean hasHotel = false;
 		if (houses == 5) {
 			hasHotel = true;
 			street.setHotel(hasHotel);
 		}
-	
-		street.setHouses(houses);
+		else
+			street.setHouses(houses);		
 	}
 	
+	/**
+	 * Beskeden der står overst på skærmen, med ok knappen der styrer flowed på spillet
+	 * @param text Den tekst der skal vises til spilleren.
+	 */
 	public void writeText (String text) {
 		gui.showMessage(text);
 	}
 	
+	/**
+	 * Viser chanceCard teksten i midten af spillebrættet
+	 * @param text Den tekst der skal stå i midten af spillebrættet.
+	 */
 	public void showChanceCard (String text) {
 		gui.displayChanceCard(text);
 	}
