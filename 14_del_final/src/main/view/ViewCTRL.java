@@ -121,7 +121,7 @@ public class ViewCTRL {
 	}
 	
 	public void writeText (String text) {
-		
+		gui.showMessage(text);
 	}
 	
 	public void showChanceCard (String text) {
