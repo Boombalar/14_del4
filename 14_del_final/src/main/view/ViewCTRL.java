@@ -19,9 +19,9 @@ import gui_fields.GUI_Street;
 
 public class ViewCTRL {
 	GUI gui = new GUI();
-	GUI_Field field;
+	GUI_Field[] field;
 	GUI_Player[] playerTEMP;
-
+	private GUI_Street street;
 	
 	/**
 	 * Kunstrøktur til ViewCTRL
@@ -40,6 +40,7 @@ public class ViewCTRL {
 	public String getDropDownChoice(String buttonText, String[] lines) {
 		return gui.getUserSelection(buttonText, lines);
 	}
+	
 	/**
 	 * Metode der viser en yes/no knap i GUIen
 	 * @param buttonText Tekst over knapperne
@@ -86,8 +87,8 @@ public class ViewCTRL {
 	 * @param newPosition Den nye position på spilleren.
 	 */
 	public void updatePlayerPosition(int player, int oldPosition, int newPosition) {
-		gui.getFields()[oldPosition].setCar(Player[player], false);
-		gui.getFields()[newPosition].setCar(Player[player], true);
+		gui.getFields()[oldPosition].setCar(playerTEMP[player], false);
+		gui.getFields()[newPosition].setCar(playerTEMP[player], true);
 	}
 	
 	/**
@@ -96,7 +97,7 @@ public class ViewCTRL {
 	 * @param amount mængden der skal vises i GUIen
 	 */
 	public void updatePlayerAccount(int player, int amount) {
-		Player[player].setBalance(amount);
+		playerTEMP[player].setBalance(amount);
 	}
 	
 	/**
@@ -104,12 +105,19 @@ public class ViewCTRL {
 	 * @param player
 	 * @param fieldnum
 	 */
-	public void updateOwnership(int player, int fieldnum) {
-		gui.getFields()[fieldnum].
+	public void updateOwnership(int player, int fieldNumber) {
+		street.
+		street.setBorder(playerTEMP[player].getPrimaryColor());
 	}
 	
-	public void updateBuildings(int fieldnum, int houses, int hotel) {
-		
+	public void updateBuildings(int fieldNumber, int houses) {
+		boolean hasHotel = false;
+		if (houses == 5) {
+			hasHotel = true;
+			street.setHotel(hasHotel);
+		}
+	
+		street.setHouses(houses);
 	}
 	
 	public void writeText (String text) {
@@ -117,6 +125,6 @@ public class ViewCTRL {
 	}
 	
 	public void showChanceCard (String text) {
-		
+		gui.displayChanceCard(text);
 	}
 }
