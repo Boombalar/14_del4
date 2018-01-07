@@ -28,15 +28,15 @@ public class ChanceCardDeck {
 		chancecards[20] = new MoveToCard(20,2,"Ryk frem til Frederiksberg Allé. Hvis De passerer Start, indkassér kr. 4.000",12,1);
 		chancecards[21] = new MoveToCard(21,2,"Tag ind på Rådhuspladsen",39,1);
 		chancecards[22] = new MoveToCard(22,2,"Gå i fængsel. Ryk direkte til fængslet. Selvom De passerer start indkasserer De ikke kr. 4.000",11,1);
-		chancecards[23] = new MoveToCard(23,2,"Ryk frem til start",0,2);// Her er moveto parametret ligegyldigt
-		chancecards[24] = new MoveToCard(24,2,"Ryk frem til start",0,2);// Her er moveto parametret ligegyldigt
-		chancecards[25] = new MoveToCard(25,2,"Ryk frem til start",0,2);// Her er moveto parametret ligegyldigt
+		chancecards[23] = new MoveToCard(23,2,"Tag med den nærmeste færge - Flyt brikken frem, og hvis De passerer Start, Inkassér da kr. 4.000",0,2);// Her er moveto parametret ligegyldigt
+		chancecards[24] = new MoveToCard(24,2,"Ryk brikken frem tkl det nærmeste rederi og betal ejeren to gange den leje, han ellers er berettiget til. Hvis selskabet ikke ejes af nogen kan De købe det af banken.",0,2);// Her er moveto parametret ligegyldigt
+		chancecards[25] = new MoveToCard(25,2,"Ryk brikken frem tkl det nærmeste rederi og betal ejeren to gange den leje, han ellers er berettiget til. Hvis selskabet ikke ejes af nogen kan De købe det af banken.",0,2);// Her er moveto parametret ligegyldigt
 		chancecards[26] = new MoveToCard(26,2,"Ryk frem 3 felter tilbage",0,3);// Her er moveto parametret ligegyldigt
 		chancecards[27] = new MoveToCard(27,4,"Ejendomsskatterne er steget, ekstraudgifterne er: kr. 800 pr. hus og kr. 2.300 pr. hotel",800,2300);
 		chancecards[28] = new MoveToCard(28,4,"Oliepriserne er steget, og De skal betale: kr. 500 pr. hus og kr. 2.000 pr. hotel",500,2000);
 		chancecards[29] = new ReleaseJailCard(29,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kor kan opbevares, indtil De får brug for det.");
 		chancecards[30] = new ReleaseJailCard(30,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kor kan opbevares, indtil De får brug for det.");
-		
+		chancecards[31] = new MoveToCard(31,2,"Ryk frem til Grønningen. Hvis De passerer Start, Indkassér da kr. 4.000",25,1);
 	}
 	
 	public ChanceCard[] getChanceCards() {
