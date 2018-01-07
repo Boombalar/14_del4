@@ -3,12 +3,12 @@ package main.model;
 public class Player {
 	
 	private String name; //Spillerens navn
-	private int turnsInJail; //Antal forsøg der er brugt på at komme ud af jail
-	private int equalEyes; //Antal gange en spiller har slået 2 ens.
-	private int position; //Spillerens aktuelle lokation
+	private int turnsInJail=0; //Antal forsøg der er brugt på at komme ud af jail
+	private int equalEyes=0; //Antal gange en spiller har slået 2 ens.
+	private int position=0; //Spillerens aktuelle lokation
 	Account myAccount = new Account(); //En ny instans af Account(Pung)
 	private boolean broke = false; //Tjekker om spilleren er bankerot.
-	private boolean extraTurn; //Tjekker om spilleren skal have en tur til.
+	private boolean extraTurn=false; //Tjekker om spilleren skal have en tur til.
 	
 	/**
 	 * Konstruktør på spilleren
