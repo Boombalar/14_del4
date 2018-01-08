@@ -38,7 +38,7 @@ public class Field {
 		return returnValue;
 	}
 	
-	public int getGroupNumber() {return 1;}
+//	public int getGroupNumber() {return 1;}
 	
 	
 	
