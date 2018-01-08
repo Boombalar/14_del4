@@ -6,7 +6,7 @@ public class CreatePlayers {
 	private String playerName;
 	
 	public CreatePlayers(int numberOfPlayers) {
-		for (int x=0;x<=numberOfPlayers;x++) {
+		for (int x=1;x<=numberOfPlayers;x++) {
 			playerName = "Player "+x;
 			players[x]= new Player(playerName);
 		}

@@ -55,4 +55,8 @@ public class Player {
 	public void removeMoney(int value) {
 		myAccount.withdraw(value);
 	}
+	
+	public String getPlayerName() {
+		return this.name;
+	}
 }

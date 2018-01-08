@@ -1,16 +1,13 @@
 package view;
 
 import gui_main.GUI;
-
 import java.awt.Color;
-import java.lang.reflect.Field;
 
-import gui_fields.GUI_Board;
+//import gui_fields.GUI_Board;
 import gui_fields.GUI_Car;
-import gui_fields.GUI_Car.Type;
 import gui_fields.GUI_Chance;
 import gui_fields.GUI_Field;
-import gui_fields.GUI_Jail;
+//import gui_fields.GUI_Jail;
 import gui_fields.GUI_Player;
 import gui_fields.GUI_Refuge;
 import gui_fields.GUI_Shipping;
@@ -23,15 +20,17 @@ import model.*;
 
 public class ViewCTRL {
 	private Player[] players;
-	private model.Field[] fields;
+	private Field[] fields;
 
 	private GUI gui = new GUI();
 	private GUI_Field[] field;
 	private GUI_Player[] guiPlayer;
+	private Color[] carColor = new Color[7];
+	private GUI_Car[] guiCar = new GUI_Car[7];
 
 
 	/**
-	 * Kunstruktør til ViewCTRL
+	 * Kunstruktør til ViewCTRL. Opretter board og spillere.
 	 * @param players
 	 * @param board
 	 */
@@ -46,11 +45,14 @@ public class ViewCTRL {
 		Color bgColor = Color.white;
 		Color fgColor = Color.white;
 
+		//Generer felter til board på baggrund af Model field
 		for (int i = 0; i < field.length; i++) {
 			fieldType = this.fields[i].getType();
 
+			//Bestem farve til grupperne
 			switch(fieldType) {
-			case 0: 
+
+			case 0: //PropertyField
 				int groupNumber = (((PropertyFields)fields[i]).getGroupNumber());
 				switch(groupNumber) {
 				case 1:
@@ -79,32 +81,51 @@ public class ViewCTRL {
 					break;
 				}
 				field[i] = new GUI_Street(fields[i].getName(),"subText", "description", "100", bgColor, fgColor);
-				break; //PropertyField
-			case 1: 
+				break; 
+
+			case 1: //ShipField
 				field[i] = new GUI_Shipping(fields[i].getName(),"subText","Description","4000","arg4",Color.cyan,Color.cyan);
-				break; //ShipField
-			case 2: 
+				break; 
+
+			case 2: //BreweryField
 				field[i] = new GUI_Brewery(fields[i].getName(),"subText","Description","3000","arg4",Color.orange,Color.orange);
-				break; //BreweryField
-			case 3: 
+				break; 
+
+			case 3: //TaxField
 				field[i] = new GUI_Tax(fields[i].getName(),"subText","Description",Color.white, Color.white);
-				break; //TaxField
-			case 4: 
+				break; 
+
+			case 4: //ChanceField
 				field[i] = new GUI_Chance(fields[i].getName(),"subText","Description",Color.black, Color.black);
-				break; //ChanceField
-			case 5: 
+				break; 
+
+			case 5: //StartField
 				field[i] = new GUI_Start(fields[i].getName(),"subtext","description",Color.red, Color.red);
-				break; //StartField
-			
-			case 6: 
+				break; 
+
+			case 6: //NoActionField
 				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
-				break; //NoActionField
-			
-			case 7: 
+				break; 
+
+			case 7: //GoToJailField
 				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
-				break; //GoToJailField
-				
-				
+				break; 
+			}
+			
+			//Opretter 6 farver på bilerne
+			carColor[1] = new Color(70,250,0);
+			carColor[2] = new Color(10,160,230);
+			carColor[3] = new Color(200,200,200);
+			carColor[4] = new Color(0,0,0);	
+			carColor[5] = new Color(50,150,100);
+			carColor[6] = new Color(75,100,220);
+
+			//Opret spillere på bræt.
+			for (int counter = 1 ; counter < players.length-1 ; counter++) {
+				guiCar[counter] = new GUI_Car();
+				guiCar[counter].setPrimaryColor(carColor[counter]);
+				guiPlayer[counter] = new GUI_Player(players[counter].getPlayerName(),players[counter].getBalance(),guiCar[counter]);
+				gui.addPlayer(guiPlayer[counter]);
 			}
 		}
 
