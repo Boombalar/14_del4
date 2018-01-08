@@ -2,6 +2,7 @@ package view;
 
 import gui_main.GUI;
 
+import java.awt.Color;
 import java.lang.reflect.Field;
 
 import gui_fields.GUI_Board;
@@ -15,50 +16,100 @@ import gui_fields.GUI_Refuge;
 import gui_fields.GUI_Shipping;
 import gui_fields.GUI_Start;
 import gui_fields.GUI_Street;
+import gui_fields.GUI_Brewery;
+import gui_fields.GUI_Tax;
 import model.*
 ;
 
 
 public class ViewCTRL {
+	Player[] players;
+	model.Field[] fields;
+
 	GUI gui = new GUI();
 	GUI_Field[] field;
 	GUI_Player[] playerTEMP;
 	private GUI_Street street;
-	
+
 	/**
 	 * Kunstruktør til ViewCTRL
 	 * @param players
 	 * @param board
 	 */
-	public ViewCTRL(Player[] players, Field[] board) {
+	public ViewCTRL(Player[] players, Board board) {
+		this.players = players;
+		this.fields = board.getFields();
+		MakeBoard();
+	}
+
+	private void MakeBoard() {
 		int fieldType;
-		
-		for (int i = 0; i < board.length; i++) {
-			fieldType = board[i].getType();
-			
+		Color bgColor = Color.white;
+		Color fgColor = Color.white;
+
+		for (int i = 0; i < field.length; i++) {
+			fieldType = this.fields[i].getType();
+
 			switch(fieldType) {
 			case 0: 
-				int groupNumber = ((PropertyFields)board[i]).getGroupNumber();
+				int groupNumber = (((PropertyFields)fields[i]).getGroupNumber());
 				switch(groupNumber) {
-					case 1:
-						break;
-				
-				
+				case 1:
+					bgColor = Color.blue;
+					break;
+				case 2:
+					bgColor = Color.pink;
+					break;
+				case 3:
+					bgColor = Color.green;
+					break;
+				case 4:
+					bgColor = Color.gray;
+					break;
+				case 5:
+					bgColor = Color.red;
+					break;
+				case 6:
+					bgColor = Color.white;
+					break;
+				case 7:
+					bgColor = Color.yellow;
+					break;
+				case 8:
+					bgColor = Color.magenta;
+					break;
 				}
+				field[i] = new GUI_Street(fields[i].getName(),"subText", "description", "100", bgColor, fgColor);
+				break; //PropertyField
+			case 1: 
+				field[i] = new GUI_Shipping(fields[i].getName(),"subText","Description","4000","arg4",Color.cyan,Color.cyan);
+				break; //ShipField
+			case 2: 
+				field[i] = new GUI_Brewery(fields[i].getName(),"subText","Description","3000","arg4",Color.orange,Color.orange);
+				break; //BreweryField
+			case 3: 
+				field[i] = new GUI_Tax(fields[i].getName(),"subText","Description",Color.white, Color.white);
+				break; //TaxField
+			case 4: 
+				field[i] = new GUI_Chance(fields[i].getName(),"subText","Description",Color.black, Color.black);
+				break; //ChanceField
+			case 5: 
+				field[i] = new GUI_Start(fields[i].getName(),"subtext","description",Color.red, Color.red);
+				break; //StartField
+			
+			case 6: 
+				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
+				break; //NoActionField
+			
+			case 7: 
+				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
+
+				break; //GoToJailField
 				
 				
-				field[i] = new GUI_Street(board[i].getName(),"subText", "description", 100, bgColor, fgColor)
-					break; //PropertyField
-			case 1: break; //ShipField
-			case 2: break; //BreweryField
-			case 3: break; //TaxField
-			case 4: break; //ChanceField
-			case 5: break; //StartField
-			case 6: break; //NoActionField
-			case 7: break; //GoToJailField
 			}
 		}
-		
+
 	}
 	/**
 	 * Metode der giver mulighed for at lave en dropdown menu i GUI
@@ -69,7 +120,7 @@ public class ViewCTRL {
 	public String getDropDownChoice(String buttonText, String[] lines) {
 		return gui.getUserSelection(buttonText, lines);
 	}
-	
+
 	/**
 	 * Metode der viser en yes/no knap i GUIen
 	 * @param buttonText Tekst over knapperne
@@ -80,7 +131,7 @@ public class ViewCTRL {
 	public boolean getUserAnswer(String buttonText, String yesMessage, String noMessage) {	
 		return gui.getUserLeftButtonPressed(buttonText, yesMessage, noMessage);
 	}
-	
+
 	/**
 	 * OK knappen der styrer flowet i spillet.
 	 * @param buttonText Tekst der skal stå i knappen
@@ -89,7 +140,7 @@ public class ViewCTRL {
 	public void getUserResponse(String buttonText, String textMessage) {
 		gui.getUserButtonPressed(buttonText, textMessage);
 	}
-	
+
 	/**
 	 * Stiller spilleren et spørgsmål og returnerer svaret spilleren giver.
 	 * @return
@@ -97,7 +148,7 @@ public class ViewCTRL {
 	public String getTextField(String question) {
 		return gui.getUserString(question);
 	}
-	
+
 	/**
 	 * Viser knapperne i GUIen
 	 * @param die1 Den ene terning
@@ -106,7 +157,7 @@ public class ViewCTRL {
 	public void updateDice(int die1, int die2) {
 		gui.setDice(die1, die2);
 	}
-	
+
 	/**
 	 * metode til at opdatere en spillers position.
 	 * @param player Spillerens nummer
@@ -117,7 +168,7 @@ public class ViewCTRL {
 		gui.getFields()[oldPosition].setCar(playerTEMP[player], false);
 		gui.getFields()[newPosition].setCar(playerTEMP[player], true);
 	}
-	
+
 	/**
 	 * Metode der får GUIen til at vise en spillers account
 	 * @param player Spillerens nummer
@@ -126,18 +177,18 @@ public class ViewCTRL {
 	public void updatePlayerAccount(int player, int amount) {
 		playerTEMP[player].setBalance(amount);
 	}
-	
+
 	/**
 	 * Opdatere ejerskabet af et felt til spilleren
 	 * OBS: MANGLER LOKATIONEN PÅ DET FELT DER SKAL OPDATERES
 	 * @param player Spillerens nummer
 	 * @param fieldNumber Nummeret på det felt der skal opdateres
 	 */
-	public void updateOwnership(int player, int fieldNumber) {
-		street.
-		street.setBorder(playerTEMP[player].getPrimaryColor());
-	}
-	
+//	public void updateOwnership(int player, int fieldNumber) {
+//		street.
+//		street.setBorder(playerTEMP[player].getPrimaryColor());
+//	}
+
 	/**
 	 * Opdatere et felt med huse, fra 0-5, og hvis der er "5" huse på feltet så placere den et hotel istedet.
 	 * @param fieldNumber Nummeret på feltet der skal opdateres
@@ -153,7 +204,7 @@ public class ViewCTRL {
 			street.setHouses(houses);
 		else System.out.println("Fejl i updateBuildings metode");
 	}
-	
+
 	/**
 	 * Beskeden der står overst på skærmen, med ok knappen der styrer flowed på spillet
 	 * @param text Den tekst der skal vises til spilleren.
@@ -161,7 +212,7 @@ public class ViewCTRL {
 	public void writeText (String text) {
 		gui.showMessage(text);
 	}
-	
+
 	/**
 	 * Viser chanceCard teksten i midten af spillebrættet
 	 * @param text Den tekst der skal stå i midten af spillebrættet.
