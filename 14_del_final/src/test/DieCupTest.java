@@ -13,11 +13,9 @@ public class DieCupTest {
 	 */
 	@Test
 	public void shakeTest() {
-		int i = 0;
 			dieCup.shake();
 			assertFalse(dieCup.getDie1Value() == 0);
 			assertFalse(dieCup.getDie2Value() == 0);
-			i++;
 	}
 
 	/**
@@ -45,4 +43,5 @@ public class DieCupTest {
 			assertTrue(isEqualEyes == dieCup.getEqualEyes());
 		}
 	}
+	
 }
