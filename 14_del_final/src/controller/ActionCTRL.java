@@ -1,6 +1,6 @@
 package controller;
 
-import model.Player;
+import model.*;
 
 public class ActionCTRL {
 	model.Player[] players;
@@ -8,7 +8,8 @@ public class ActionCTRL {
 	view.ViewCTRL view;
 	ChanceCardCTRL chanceCard;
 	model.DieCup diecup;
-
+	model.Field[] field;
+	
 	public ActionCTRL() {
 		view.ViewCTRL view = new view.ViewCTRL(this.players, this.board);
 	}
