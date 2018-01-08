@@ -23,7 +23,7 @@ private void initialiseGame() {
 	ViewCTRL viewCRTL = new ViewCTRL();
 	ChanceCardCTRL chanceCardCRTL = new ChanceCardCRTL();
 	DieCup dieCup = new DieCup();
-	
+
 	int Player[]
 
 	private void startGame();
@@ -49,7 +49,6 @@ private void tansfer(int currentPlayer, int	receivePlayer, boolean direction, in
 	
 	
 private void switchRules(Player[] players, int currentplayer) {
-
 int fieldType;
 fieldType = field[players[currentplayer].getPosition()].getType();
 
