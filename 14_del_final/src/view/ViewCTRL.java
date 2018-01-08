@@ -81,7 +81,8 @@ public class ViewCTRL {
 					break;
 				}
 				fgColor = Color.black;
-				guiFields[i] = new GUI_Street(fields[i].getName(),"subText", "description", "100", bgColor, fgColor);
+				String price = Integer.toString(((PropertyFields)fields[i]).getPropertyValue()) + " kr.";
+				guiFields[i] = new GUI_Street(fields[i].getName(),price, "description", "100", bgColor, fgColor);
 				break; 
 
 			case 1: //ShipField
