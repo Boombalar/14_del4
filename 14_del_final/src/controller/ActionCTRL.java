@@ -18,7 +18,7 @@ public class ActionCTRL {
 		initialiseGame();
 	}
 
-	private void initialiseGame() {
+	public void initialiseGame() {
 		int numberOfPlayers;
 		
 		//Lav bræt model.

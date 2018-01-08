@@ -2,7 +2,7 @@ package model;
 
 public class ChanceCardDeck {
 
-	private ChanceCard[] chancecards;
+	private ChanceCard[] chancecards = new ChanceCard[32];
 	
 	public ChanceCardDeck() {
 		chancecards[0] = new TransactionCard(0,1,"De har måttet vedtage en parkeringsbøde. Betal 200 kr.",-200);

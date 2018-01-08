@@ -5,11 +5,7 @@ public class StartGame {
 
 	public static void main(String[] args) {
 		StartGame game = new StartGame();
-		game.Start();
-	}
-	
-	public void Start() {
-		ActionCTRL actionCTRL = new ActionCTRL();
-		
+		game.actionCTRL = new ActionCTRL();
+		game.actionCTRL.initialiseGame();
 	}
 }

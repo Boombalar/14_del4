@@ -22,8 +22,8 @@ public class ViewCTRL {
 	private Player[] players;
 	private Field[] fields;
 
-	private GUI gui = new GUI();
-	private GUI_Field[] field;
+	private GUI gui;
+	private GUI_Field[] guiFields = new GUI_Field[40];
 	private GUI_Player[] guiPlayer;
 	private Color[] carColor = new Color[7];
 	private GUI_Car[] guiCar = new GUI_Car[7];
@@ -42,14 +42,15 @@ public class ViewCTRL {
 	private void MakeBoard() {
 		int fieldType;
 		Color bgColor = Color.white;
-		Color fgColor = Color.white;
+		Color fgColor = Color.black;
 
-		//Generer felter til board på baggrund af Model field
-		for (int i = 0; i < field.length; i++) {
+		//Generer felter til board på baggrund af Model guiFields
+		for (int i = 0; i < fields.length; i++) {
 			fieldType = this.fields[i].getType();
 
 			//Bestem farve til grupperne
 			switch(fieldType) {
+			
 
 			case 0: //PropertyField
 				int groupNumber = (((PropertyFields)fields[i]).getGroupNumber());
@@ -79,38 +80,40 @@ public class ViewCTRL {
 					bgColor = Color.magenta;
 					break;
 				}
-				field[i] = new GUI_Street(fields[i].getName(),"subText", "description", "100", bgColor, fgColor);
+				fgColor = Color.black;
+				guiFields[i] = new GUI_Street(fields[i].getName(),"subText", "description", "100", bgColor, fgColor);
 				break; 
 
 			case 1: //ShipField
-				field[i] = new GUI_Shipping(fields[i].getName(),"subText","Description","4000","arg4",Color.cyan,Color.cyan);
+				guiFields[i] = new GUI_Shipping(fields[i].getName(),"subText","Description","4000","arg4",Color.cyan,Color.black);
 				break; 
 
 			case 2: //BreweryField
-				field[i] = new GUI_Brewery(fields[i].getName(),"subText","Description","3000","arg4",Color.orange,Color.orange);
+				guiFields[i] = new GUI_Brewery(fields[i].getName(),"subText","Description","3000","arg4",Color.orange,Color.black);
 				break; 
 
 			case 3: //TaxField
-				field[i] = new GUI_Tax(fields[i].getName(),"subText","Description",Color.white, Color.white);
+				guiFields[i] = new GUI_Tax(fields[i].getName(),"subText","Description",Color.white, Color.black);
 				break; 
 
 			case 4: //ChanceField
-				field[i] = new GUI_Chance(fields[i].getName(),"subText","Description",Color.black, Color.black);
+				guiFields[i] = new GUI_Chance(fields[i].getName(),"subText","Description",Color.black, Color.white);
 				break; 
 
 			case 5: //StartField
-				field[i] = new GUI_Start(fields[i].getName(),"subtext","description",Color.red, Color.red);
+				guiFields[i] = new GUI_Start(fields[i].getName(),"subtext","description",Color.red, Color.black);
 				break; 
 
 			case 6: //NoActionField
-				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
+				guiFields[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.white);
 				break; 
 
 			case 7: //GoToJailField
-				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
+				guiFields[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.white);
 				break; 
 			}
 		}
+		gui = new GUI(guiFields);
 	}
 
 	public void makeGuiPlayers(Player[] players) {
@@ -206,7 +209,7 @@ public class ViewCTRL {
 		 * @param fieldNumber Nummeret på det felt der skal opdateres
 		 */
 		public void updateOwnership(int player, int fieldNumber) {
-			((GUI_Street)field[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
+			((GUI_Street)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
 		}
 
 		/**
@@ -218,10 +221,10 @@ public class ViewCTRL {
 			boolean hasHotel = false;
 			if (houses == 5) {
 				hasHotel = true;
-				((GUI_Street)field[fieldNumber]).setHotel(hasHotel);
+				((GUI_Street)guiFields[fieldNumber]).setHotel(hasHotel);
 			}
 			else if (houses < 5 && houses >= 0)
-				((GUI_Street)field[fieldNumber]).setHouses(houses);
+				((GUI_Street)guiFields[fieldNumber]).setHouses(houses);
 			else System.out.println("Fejl i updateBuildings metode");
 		}
 

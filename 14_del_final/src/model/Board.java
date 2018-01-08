@@ -2,7 +2,7 @@ package model;
 
 public class Board {
 
-	private Field[] field;
+	private Field[] field = new Field[40];
 
 	public Board() {
 		//opret felter
