@@ -88,12 +88,12 @@ public class ViewCTRL {
 
 			case 1: //ShipField
 				price = Integer.toString(((ShipFields)fields[i]).getPropertyValue())+ " kr.";
-				guiFields[i] = new GUI_Shipping(fields[i].getName(),price,"test","4000","arg4",Color.cyan,Color.black);
+				guiFields[i] = new GUI_Shipping("",fields[i].getName(),price,"","arg4",Color.cyan,Color.black);
 				break; 
 
 			case 2: //BreweryField
 				price = Integer.toString(((BreweryFields)fields[i]).getPropertyValue()) + " kr.";
-				guiFields[i] = new GUI_Brewery(fields[i].getName(),"arg1","arg2","arg3","arg4",Color.orange,Color.black);
+				guiFields[i] = new GUI_Brewery("",fields[i].getName(),price,"","arg4",Color.orange,Color.black);
 
 				break; 
 
@@ -112,7 +112,7 @@ public class ViewCTRL {
 				break; 
 
 			case 6: //NoActionField
-				guiFields[i] = new GUI_Refuge(fields[i].getName(), "", "aeg2", "", Color.black, Color.white);
+				guiFields[i] = new GUI_Refuge("", "", fields[i].getName(), "", Color.black, Color.white);
 				break; 
 
 			case 7: //GoToJailField
