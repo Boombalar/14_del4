@@ -36,6 +36,10 @@ public class Player {
 			
 	}
 	
+	public int getPosition() {
+		return this.position;
+	}
+	
 	/**
 	 * recieveMoney giver spilleren penge igennem deposit metoden i Account
 	 * @param value Den mængde der skal lægges til spillerens pengebeholdning
