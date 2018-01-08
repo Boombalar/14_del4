@@ -28,6 +28,10 @@ public class ChanceCard {
 		return this.number;
 	}
 	
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	
 	/**
 	 * 
 	 * @return returnerer typen af chancekortet
