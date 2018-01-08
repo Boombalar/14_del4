@@ -43,7 +43,8 @@ public class ActionCTRL {
 			//ShipsFields
 		case 1:
 			if(owner == 0) {
-
+				boolean answer = view.getUserAnswer("Vil du købe redderiet", "ja", "nej");
+				
 			}
 		}
 
