@@ -18,18 +18,17 @@ import gui_fields.GUI_Start;
 import gui_fields.GUI_Street;
 import gui_fields.GUI_Brewery;
 import gui_fields.GUI_Tax;
-import model.*
-;
+import model.*;
 
 
 public class ViewCTRL {
-	Player[] players;
-	model.Field[] fields;
+	private Player[] players;
+	private model.Field[] fields;
 
-	GUI gui = new GUI();
-	GUI_Field[] field;
-	GUI_Player[] playerTEMP;
-	private GUI_Street street;
+	private GUI gui = new GUI();
+	private GUI_Field[] field;
+	private GUI_Player[] guiPlayer;
+
 
 	/**
 	 * Kunstruktør til ViewCTRL
@@ -103,7 +102,6 @@ public class ViewCTRL {
 			
 			case 7: 
 				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
-
 				break; //GoToJailField
 				
 				
@@ -165,8 +163,8 @@ public class ViewCTRL {
 	 * @param newPosition Den nye position på spilleren.
 	 */
 	public void updatePlayerPosition(int player, int oldPosition, int newPosition) {
-		gui.getFields()[oldPosition].setCar(playerTEMP[player], false);
-		gui.getFields()[newPosition].setCar(playerTEMP[player], true);
+		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
+		gui.getFields()[newPosition].setCar(guiPlayer[player], true);
 	}
 
 	/**
@@ -175,19 +173,17 @@ public class ViewCTRL {
 	 * @param amount mængden der skal vises i GUIen
 	 */
 	public void updatePlayerAccount(int player, int amount) {
-		playerTEMP[player].setBalance(amount);
+		guiPlayer[player].setBalance(amount);
 	}
 
 	/**
 	 * Opdatere ejerskabet af et felt til spilleren
-	 * OBS: MANGLER LOKATIONEN PÅ DET FELT DER SKAL OPDATERES
 	 * @param player Spillerens nummer
 	 * @param fieldNumber Nummeret på det felt der skal opdateres
 	 */
-//	public void updateOwnership(int player, int fieldNumber) {
-//		street.
-//		street.setBorder(playerTEMP[player].getPrimaryColor());
-//	}
+	public void updateOwnership(int player, int fieldNumber) {
+		((GUI_Street)field[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
+	}
 
 	/**
 	 * Opdatere et felt med huse, fra 0-5, og hvis der er "5" huse på feltet så placere den et hotel istedet.
@@ -198,10 +194,10 @@ public class ViewCTRL {
 		boolean hasHotel = false;
 		if (houses == 5) {
 			hasHotel = true;
-			street.setHotel(hasHotel);
+			((GUI_Street)field[fieldNumber]).setHotel(hasHotel);
 		}
-		else if (houses < 5 && houses > 0)
-			street.setHouses(houses);
+		else if (houses < 5 && houses >= 0)
+			((GUI_Street)field[fieldNumber]).setHouses(houses);
 		else System.out.println("Fejl i updateBuildings metode");
 	}
 
