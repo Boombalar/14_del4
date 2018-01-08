@@ -28,7 +28,24 @@ public class ViewCTRL {
 	 * @param players
 	 * @param board
 	 */
-	public ViewCTRL(Player[] players, Board board) {
+	public ViewCTRL(Player[] players, Field[] board) {
+		for (int i = 0; i < board.length; i++) {
+			int fieldType = board.getType;
+			
+			switch(fieldType) {
+			case 0: 
+				switch((PropertyFields)board[i].getP)
+				field[i] = new GUI_Street(board.getName,"subText", "description", 100, bgColor, fgColor)
+					break; //PropertyField
+			case 1: break; //ShipField
+			case 2: break; //BreweryField
+			case 3: break; //TaxField
+			case 4: break; //ChanceField
+			case 5: break; //StartField
+			case 6: break; //NoActionField
+			case 7: break; //GoToJailField
+			}
+		}
 		
 	}
 	/**
@@ -120,8 +137,9 @@ public class ViewCTRL {
 			hasHotel = true;
 			street.setHotel(hasHotel);
 		}
-		else
-			street.setHouses(houses);		
+		else if (houses < 5 && houses > 0)
+			street.setHouses(houses);
+		else System.out.println("Fejl i updateBuildings metode");
 	}
 	
 	/**
