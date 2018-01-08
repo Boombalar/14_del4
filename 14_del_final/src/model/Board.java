@@ -41,7 +41,7 @@ public class Board {
 		field[31] = new PropertyFields("Amagertorv",0,31,6000,0,7,550,2600,7800,18000,22000,25000,0,4000);
 		field[32] = new PropertyFields("Vimmelskaftet",0,32,6000,0,7,550,2600,7800,18000,22000,25000,0,4000);
 		field[33] = new ChanceField("PrøvLykken",4,33);
-		field[34] = new PropertyFields("Nygade",0,34,64000,0,7,600,3000,9000,20000,24000,28000,0,4000);
+		field[34] = new PropertyFields("Nygade",0,34,6400,0,7,600,3000,9000,20000,24000,28000,0,4000);
 		field[35] = new ShipFields("Halsskov/Knudshoved",1,35,4000,0,9,500,1000,2000,4000);
 		field[36] = new NoActionField("Prøv Lykken",4,36);
 		field[37] = new PropertyFields("Frederiksberggade",0,37,7000,0,8,700,3500,10000,22000,26000,30000,0,4000);

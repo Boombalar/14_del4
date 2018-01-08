@@ -43,6 +43,7 @@ public class ViewCTRL {
 		int fieldType;
 		Color bgColor = Color.white;
 		Color fgColor = Color.black;
+		String price = "";
 
 		//Generer felter til board på baggrund af Model guiFields
 		for (int i = 0; i < fields.length; i++) {
@@ -81,36 +82,39 @@ public class ViewCTRL {
 					break;
 				}
 				fgColor = Color.black;
-				String price = Integer.toString(((PropertyFields)fields[i]).getPropertyValue()) + " kr.";
-				guiFields[i] = new GUI_Street(fields[i].getName(),price, "description", "100", bgColor, fgColor);
+				price = Integer.toString(((PropertyFields)fields[i]).getPropertyValue()) + " kr.";
+				guiFields[i] = new GUI_Street(fields[i].getName(),price, "", "100", bgColor, fgColor);
 				break; 
 
 			case 1: //ShipField
-				guiFields[i] = new GUI_Shipping(fields[i].getName(),"subText","Description","4000","arg4",Color.cyan,Color.black);
+				guiFields[i] = new GUI_Shipping(fields[i].getName(),"subText","","4000","arg4",Color.cyan,Color.black);
 				break; 
 
 			case 2: //BreweryField
-				guiFields[i] = new GUI_Brewery(fields[i].getName(),"subText","Description","3000","arg4",Color.orange,Color.black);
+				price = Integer.toString(((BreweryFields)fields[i]).getPropertyValue()) + " kr.";
+				guiFields[i] = new GUI_Brewery(fields[i].getName(),price,"","","arg4",Color.orange,Color.black);
 				break; 
 
 			case 3: //TaxField
-				guiFields[i] = new GUI_Tax(fields[i].getName(),"subText","Description",Color.white, Color.black);
+				int[] taxint = ((TaxField)fields[i]).getReturnValue();
+				String tax = Integer.toString(taxint[0]) + " kr."; 
+				guiFields[i] = new GUI_Tax(fields[i].getName(),tax,"",Color.white, Color.black);
 				break; 
 
 			case 4: //ChanceField
-				guiFields[i] = new GUI_Chance(fields[i].getName(),"subText","Description",Color.black, Color.white);
+				guiFields[i] = new GUI_Chance(fields[i].getName(),"","",Color.black, Color.white);
 				break; 
 
 			case 5: //StartField
-				guiFields[i] = new GUI_Start(fields[i].getName(),"subtext","description",Color.red, Color.black);
+				guiFields[i] = new GUI_Start(fields[i].getName(),"Når du passerer start får du 4000 kr.","",Color.red, Color.black);
 				break; 
 
 			case 6: //NoActionField
-				guiFields[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.white);
+				guiFields[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "", "aeg3", Color.black, Color.white);
 				break; 
 
 			case 7: //GoToJailField
-				guiFields[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.white);
+				guiFields[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "", "aeg3", Color.black, Color.white);
 				break; 
 			}
 		}
