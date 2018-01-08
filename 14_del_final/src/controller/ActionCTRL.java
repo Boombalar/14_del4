@@ -10,11 +10,15 @@ public class ActionCTRL {
 	model.DieCup diecup;
 	model.Field[] field;
 	
+	
 	public ActionCTRL() {
 		view.ViewCTRL view = new view.ViewCTRL(this.players, this.board);
 	}
 
 	private void initialiseGame() {
+		
+		
+		
 
 	}
 
@@ -38,13 +42,21 @@ public class ActionCTRL {
 					(((PropertyFields)field[position]).setOwner(currentplayer);
 					// GUI kald, så spiller for en teskt om at han har købt feltet, message "Du har nu købt felt" + field[position].getName
 
-				}else 
+				}if(owner != 0 && owner != currentplayer) {
+					
+					
+					
+				}
+					
 
 			}
 			//ShipsFields
 		case 1:
 			if(owner == 0) {
 				boolean answer = view.getUserAnswer("Vil du købe redderiet", "ja", "nej");
+				if(answer == true) {
+					//Transaktion metoder kommer her
+				}
 				
 			}
 		}
