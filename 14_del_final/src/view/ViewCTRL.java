@@ -116,7 +116,7 @@ public class ViewCTRL {
 				break; 
 
 			case 7: //GoToJailField
-				guiFields[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "aeg2", "aeg3", Color.black, Color.white);
+				guiFields[i] = new GUI_Refuge("", "", fields[i].getName(), "", Color.black, Color.white);
 				break; 
 			}
 		}
