@@ -78,7 +78,6 @@ public class ViewCTRL {
 				case 8:
 					bgColor = Color.magenta;
 					break;
-	
 				}
 				field[i] = new GUI_Street(fields[i].getName(),"subText", "description", "100", bgColor, fgColor);
 				break; //PropertyField
