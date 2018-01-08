@@ -1,4 +1,4 @@
-package main.model;
+package model;
 
 public class Account {
 	private int balance = 30000; //Start værdi for hver spiller.

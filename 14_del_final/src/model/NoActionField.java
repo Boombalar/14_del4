@@ -1,4 +1,4 @@
-package main.model;
+package model;
 /**
  * Her er der ingen returværdi.
  * @author kimsa

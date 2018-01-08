@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import main.model.BreweryFields;
+import model.BreweryFields;
 
 public class BreweryFieldsTest {
 

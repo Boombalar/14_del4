@@ -1,7 +1,6 @@
-package main.view;
+package view;
 
 import gui_main.GUI;
-import main.model.Player;
 
 import java.lang.reflect.Field;
 
@@ -16,6 +15,9 @@ import gui_fields.GUI_Refuge;
 import gui_fields.GUI_Shipping;
 import gui_fields.GUI_Start;
 import gui_fields.GUI_Street;
+import model.*
+;
+
 
 public class ViewCTRL {
 	GUI gui = new GUI();
@@ -24,18 +26,28 @@ public class ViewCTRL {
 	private GUI_Street street;
 	
 	/**
-	 * Kunstrøktur til ViewCTRL
+	 * Kunstruktør til ViewCTRL
 	 * @param players
 	 * @param board
 	 */
 	public ViewCTRL(Player[] players, Field[] board) {
+		int fieldType;
+		
 		for (int i = 0; i < board.length; i++) {
-			int fieldType = board.getType;
+			fieldType = board[i].getType();
 			
 			switch(fieldType) {
 			case 0: 
-				switch((PropertyFields)board[i].getP)
-				field[i] = new GUI_Street(board.getName,"subText", "description", 100, bgColor, fgColor)
+				int groupNumber = ((PropertyFields)board[i]).getGroupNumber();
+				switch(groupNumber) {
+					case 1:
+						break;
+				
+				
+				}
+				
+				
+				field[i] = new GUI_Street(board[i].getName(),"subText", "description", 100, bgColor, fgColor)
 					break; //PropertyField
 			case 1: break; //ShipField
 			case 2: break; //BreweryField

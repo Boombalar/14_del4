@@ -7,11 +7,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import main.model.ChanceCard;
+import model.ChanceCard;
 
 public class ChanceCardTest {
 
-	main.model.ChanceCard chancecard = new ChanceCard(1,1,"description");
+	model.ChanceCard chancecard = new ChanceCard(1,1,"description");
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

@@ -1,4 +1,4 @@
-package main.model;
+package model;
 
 public class Field {
 	protected String name;
@@ -37,5 +37,10 @@ public class Field {
 		
 		return returnValue;
 	}
+	
+	public int getGroupNumber() {return 1;}
+	
+	
+	
 	
 }

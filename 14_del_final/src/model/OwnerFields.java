@@ -1,4 +1,4 @@
-package main.model;
+package model;
 public class OwnerFields extends Field {
 
 	
@@ -32,7 +32,7 @@ public class OwnerFields extends Field {
     	}
 		/**
 		 * 
-		 * @return en getter metode, der returner hvad grunden er værd i variablen: owner
+		 * @return en getter metode, der returner hvem der ejer grundkortet: owner
          */
 		 
 		public int getOwner(){
@@ -41,7 +41,7 @@ public class OwnerFields extends Field {
 	    
 		 /**
 		  * 
-		  * @return en getter metode, der returner hvad grunden er værd i variablen: groupNumber
+		  * @return en getter metode, der returner hvilken gruppe grundkortet er i: groupNumber
 		  */
 		 public int getGroupNumber() {
 	    	return this.groupNumber;

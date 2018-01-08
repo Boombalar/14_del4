@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import main.model.GoToJailField;
+import model.GoToJailField;
 
 public class GotoJailFieldTest {
 
