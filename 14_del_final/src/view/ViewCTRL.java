@@ -34,9 +34,8 @@ public class ViewCTRL {
 	 * @param players
 	 * @param board
 	 */
-	public ViewCTRL(Player[] players, Board board) {
-		this.players = players;
-		this.fields = board.getFields();
+	public ViewCTRL(Field[] fields) {
+		this.fields = fields;
 		MakeBoard();
 	}
 
@@ -111,130 +110,134 @@ public class ViewCTRL {
 				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
 				break; 
 			}
-			
-			//Opretter 6 farver på bilerne
-			carColor[1] = new Color(70,250,0);
-			carColor[2] = new Color(10,160,230);
-			carColor[3] = new Color(200,200,200);
-			carColor[4] = new Color(0,0,0);	
-			carColor[5] = new Color(50,150,100);
-			carColor[6] = new Color(75,100,220);
+		}
+	}
 
-			//Opret spillere på bræt.
-			for (int counter = 1 ; counter < players.length-1 ; counter++) {
-				guiCar[counter] = new GUI_Car();
-				guiCar[counter].setPrimaryColor(carColor[counter]);
-				guiPlayer[counter] = new GUI_Player(players[counter].getPlayerName(),players[counter].getBalance(),guiCar[counter]);
-				gui.addPlayer(guiPlayer[counter]);
+	public void makeGuiPlayers(Player[] players) {
+		
+		this.players = players;
+		
+		//Opretter 6 farver på bilerne
+		carColor[1] = new Color(70,250,0);
+		carColor[2] = new Color(10,160,230);
+		carColor[3] = new Color(200,200,200);
+		carColor[4] = new Color(0,0,0);	
+		carColor[5] = new Color(50,150,100);
+		carColor[6] = new Color(75,100,220);
+
+		//Opret spillere på bræt.
+		for (int counter = 1 ; counter < players.length ; counter++) {
+			guiCar[counter] = new GUI_Car();
+			guiCar[counter].setPrimaryColor(carColor[counter]);
+			guiPlayer[counter] = new GUI_Player(players[counter].getPlayerName(),players[counter].getBalance(),guiCar[counter]);
+			gui.addPlayer(guiPlayer[counter]);
+		}
+	}
+		/**
+		 * Metode der giver mulighed for at lave en dropdown menu i GUI
+		 * @param buttonText Teksten der kommer over dropdown menuen
+		 * @param lines Array med den tekst der skal stå på linjerne
+		 * @return Returnere GUIens dropdown menu
+		 */
+		public String getDropDownChoice(String buttonText, String[] lines) {
+			return gui.getUserSelection(buttonText, lines);
+		}
+
+		/**
+		 * Metode der viser en yes/no knap i GUIen
+		 * @param buttonText Tekst over knapperne
+		 * @param yesMessage Tekst der skal stå på TRUE knappen
+		 * @param noMessage Tekst der skal stå på FALSE knappen
+		 * @return Returnere GUIens yes/no menu
+		 */
+		public boolean getUserAnswer(String buttonText, String yesMessage, String noMessage) {	
+			return gui.getUserLeftButtonPressed(buttonText, yesMessage, noMessage);
+		}
+
+		/**
+		 * OK knappen der styrer flowet i spillet.
+		 * @param buttonText Tekst der skal stå i knappen
+		 * @param textMessage Tekst der skal stå over knappen
+		 */
+		public void getUserResponse(String buttonText, String textMessage) {
+			gui.getUserButtonPressed(buttonText, textMessage);
+		}
+
+		/**
+		 * Stiller spilleren et spørgsmål og returnerer svaret spilleren giver.
+		 * @return
+		 */
+		public String getTextField(String question) {
+			return gui.getUserString(question);
+		}
+
+		/**
+		 * Viser knapperne i GUIen
+		 * @param die1 Den ene terning
+		 * @param die2 Den anden terning
+		 */
+		public void updateDice(int die1, int die2) {
+			gui.setDice(die1, die2);
+		}
+
+		/**
+		 * metode til at opdatere en spillers position.
+		 * @param player Spillerens nummer
+		 * @param oldPosition Den gamle position på spilleren.
+		 * @param newPosition Den nye position på spilleren.
+		 */
+		public void updatePlayerPosition(int player, int oldPosition, int newPosition) {
+			gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
+			gui.getFields()[newPosition].setCar(guiPlayer[player], true);
+		}
+
+		/**
+		 * Metode der får GUIen til at vise en spillers account
+		 * @param player Spillerens nummer
+		 * @param amount mængden der skal vises i GUIen
+		 */
+		public void updatePlayerAccount(int player, int amount) {
+			guiPlayer[player].setBalance(amount);
+		}
+
+		/**
+		 * Opdatere ejerskabet af et felt til spilleren
+		 * @param player Spillerens nummer
+		 * @param fieldNumber Nummeret på det felt der skal opdateres
+		 */
+		public void updateOwnership(int player, int fieldNumber) {
+			((GUI_Street)field[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
+		}
+
+		/**
+		 * Opdatere et felt med huse, fra 0-5, og hvis der er "5" huse på feltet så placere den et hotel istedet.
+		 * @param fieldNumber Nummeret på feltet der skal opdateres
+		 * @param houses Mængden af huse der skal på feltet 0-5, hvor 0 er ingen huse og 5 er et hotel.
+		 */
+		public void updateBuildings(int fieldNumber, int houses) {
+			boolean hasHotel = false;
+			if (houses == 5) {
+				hasHotel = true;
+				((GUI_Street)field[fieldNumber]).setHotel(hasHotel);
 			}
+			else if (houses < 5 && houses >= 0)
+				((GUI_Street)field[fieldNumber]).setHouses(houses);
+			else System.out.println("Fejl i updateBuildings metode");
 		}
 
-	}
-	/**
-	 * Metode der giver mulighed for at lave en dropdown menu i GUI
-	 * @param buttonText Teksten der kommer over dropdown menuen
-	 * @param lines Array med den tekst der skal stå på linjerne
-	 * @return Returnere GUIens dropdown menu
-	 */
-	public String getDropDownChoice(String buttonText, String[] lines) {
-		return gui.getUserSelection(buttonText, lines);
-	}
-
-	/**
-	 * Metode der viser en yes/no knap i GUIen
-	 * @param buttonText Tekst over knapperne
-	 * @param yesMessage Tekst der skal stå på TRUE knappen
-	 * @param noMessage Tekst der skal stå på FALSE knappen
-	 * @return Returnere GUIens yes/no menu
-	 */
-	public boolean getUserAnswer(String buttonText, String yesMessage, String noMessage) {	
-		return gui.getUserLeftButtonPressed(buttonText, yesMessage, noMessage);
-	}
-
-	/**
-	 * OK knappen der styrer flowet i spillet.
-	 * @param buttonText Tekst der skal stå i knappen
-	 * @param textMessage Tekst der skal stå over knappen
-	 */
-	public void getUserResponse(String buttonText, String textMessage) {
-		gui.getUserButtonPressed(buttonText, textMessage);
-	}
-
-	/**
-	 * Stiller spilleren et spørgsmål og returnerer svaret spilleren giver.
-	 * @return
-	 */
-	public String getTextField(String question) {
-		return gui.getUserString(question);
-	}
-
-	/**
-	 * Viser knapperne i GUIen
-	 * @param die1 Den ene terning
-	 * @param die2 Den anden terning
-	 */
-	public void updateDice(int die1, int die2) {
-		gui.setDice(die1, die2);
-	}
-
-	/**
-	 * metode til at opdatere en spillers position.
-	 * @param player Spillerens nummer
-	 * @param oldPosition Den gamle position på spilleren.
-	 * @param newPosition Den nye position på spilleren.
-	 */
-	public void updatePlayerPosition(int player, int oldPosition, int newPosition) {
-		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
-		gui.getFields()[newPosition].setCar(guiPlayer[player], true);
-	}
-
-	/**
-	 * Metode der får GUIen til at vise en spillers account
-	 * @param player Spillerens nummer
-	 * @param amount mængden der skal vises i GUIen
-	 */
-	public void updatePlayerAccount(int player, int amount) {
-		guiPlayer[player].setBalance(amount);
-	}
-
-	/**
-	 * Opdatere ejerskabet af et felt til spilleren
-	 * @param player Spillerens nummer
-	 * @param fieldNumber Nummeret på det felt der skal opdateres
-	 */
-	public void updateOwnership(int player, int fieldNumber) {
-		((GUI_Street)field[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
-	}
-
-	/**
-	 * Opdatere et felt med huse, fra 0-5, og hvis der er "5" huse på feltet så placere den et hotel istedet.
-	 * @param fieldNumber Nummeret på feltet der skal opdateres
-	 * @param houses Mængden af huse der skal på feltet 0-5, hvor 0 er ingen huse og 5 er et hotel.
-	 */
-	public void updateBuildings(int fieldNumber, int houses) {
-		boolean hasHotel = false;
-		if (houses == 5) {
-			hasHotel = true;
-			((GUI_Street)field[fieldNumber]).setHotel(hasHotel);
+		/**
+		 * Beskeden der står overst på skærmen, med ok knappen der styrer flowed på spillet
+		 * @param text Den tekst der skal vises til spilleren.
+		 */
+		public void writeText (String text) {
+			gui.showMessage(text);
 		}
-		else if (houses < 5 && houses >= 0)
-			((GUI_Street)field[fieldNumber]).setHouses(houses);
-		else System.out.println("Fejl i updateBuildings metode");
-	}
 
-	/**
-	 * Beskeden der står overst på skærmen, med ok knappen der styrer flowed på spillet
-	 * @param text Den tekst der skal vises til spilleren.
-	 */
-	public void writeText (String text) {
-		gui.showMessage(text);
+		/**
+		 * Viser chanceCard teksten i midten af spillebrættet
+		 * @param text Den tekst der skal stå i midten af spillebrættet.
+		 */
+		public void showChanceCard (String text) {
+			gui.displayChanceCard(text);
+		}
 	}
-
-	/**
-	 * Viser chanceCard teksten i midten af spillebrættet
-	 * @param text Den tekst der skal stå i midten af spillebrættet.
-	 */
-	public void showChanceCard (String text) {
-		gui.displayChanceCard(text);
-	}
-}

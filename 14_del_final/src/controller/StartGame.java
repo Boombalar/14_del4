@@ -1,22 +1,15 @@
 package controller;
 
-import controller.ActionCTRL;
-
 public class StartGame {
-	private ActionCTRL actionCtrl;
-	private int playernum;
+	private ActionCTRL actionCTRL;
 
 	public static void main(String[] args) {
-		ActionCTRL actionCRTL = new controller.ActionCTRL();
+		StartGame game = new StartGame();
+		game.Start();
 	}
 	
-	public StartGame() {
+	public void Start() {
+		ActionCTRL actionCTRL = new ActionCTRL();
 		
-		changePlayer();
 	}
-
-	public void changePlayer() {
-
-	}
-
 }
