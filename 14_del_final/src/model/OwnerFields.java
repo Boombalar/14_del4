@@ -38,6 +38,11 @@ public class OwnerFields extends Field {
 		public int getOwner(){
 			return this.owner;
         }
+		
+		public void setOwner(int newOwner) {
+			this.owner = newOwner;
+			
+		}
 	    
 		 /**
 		  * 
