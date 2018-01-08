@@ -19,16 +19,33 @@ import gui_fields.GUI_Street;
 
 public class ViewCTRL {
 	GUI gui = new GUI();
-	GUI_Field field;
+	GUI_Field[] field;
 	GUI_Player[] playerTEMP;
-
+	private GUI_Street street;
 	
 	/**
 	 * Kunstrøktur til ViewCTRL
 	 * @param players
 	 * @param board
 	 */
-	public ViewCTRL(Player[] players, Board board) {
+	public ViewCTRL(Player[] players, Field[] board) {
+		for (int i = 0; i < board.length; i++) {
+			int fieldType = board.getType;
+			
+			switch(fieldType) {
+			case 0: 
+				switch((PropertyFields)board[i].getP)
+				field[i] = new GUI_Street(board.getName,"subText", "description", 100, bgColor, fgColor)
+					break; //PropertyField
+			case 1: break; //ShipField
+			case 2: break; //BreweryField
+			case 3: break; //TaxField
+			case 4: break; //ChanceField
+			case 5: break; //StartField
+			case 6: break; //NoActionField
+			case 7: break; //GoToJailField
+			}
+		}
 		
 	}
 	/**
@@ -40,6 +57,7 @@ public class ViewCTRL {
 	public String getDropDownChoice(String buttonText, String[] lines) {
 		return gui.getUserSelection(buttonText, lines);
 	}
+	
 	/**
 	 * Metode der viser en yes/no knap i GUIen
 	 * @param buttonText Tekst over knapperne
@@ -61,13 +79,11 @@ public class ViewCTRL {
 	}
 	
 	/**
-	 * Ved ikke præcist hvad meningen er med denne.
+	 * Stiller spilleren et spørgsmål og returnerer svaret spilleren giver.
 	 * @return
 	 */
-	public String getTextField() {
-		String enteredText="";
-		
-		return enteredText;
+	public String getTextField(String question) {
+		return gui.getUserString(question);
 	}
 	
 	/**
@@ -86,8 +102,8 @@ public class ViewCTRL {
 	 * @param newPosition Den nye position på spilleren.
 	 */
 	public void updatePlayerPosition(int player, int oldPosition, int newPosition) {
-		gui.getFields()[oldPosition].setCar(Player[player], false);
-		gui.getFields()[newPosition].setCar(Player[player], true);
+		gui.getFields()[oldPosition].setCar(playerTEMP[player], false);
+		gui.getFields()[newPosition].setCar(playerTEMP[player], true);
 	}
 	
 	/**
@@ -96,27 +112,49 @@ public class ViewCTRL {
 	 * @param amount mængden der skal vises i GUIen
 	 */
 	public void updatePlayerAccount(int player, int amount) {
-		Player[player].setBalance(amount);
+		playerTEMP[player].setBalance(amount);
 	}
 	
 	/**
-	 * 
-	 * @param player
-	 * @param fieldnum
+	 * Opdatere ejerskabet af et felt til spilleren
+	 * OBS: MANGLER LOKATIONEN PÅ DET FELT DER SKAL OPDATERES
+	 * @param player Spillerens nummer
+	 * @param fieldNumber Nummeret på det felt der skal opdateres
 	 */
-	public void updateOwnership(int player, int fieldnum) {
-		gui.getFields()[fieldnum].
+	public void updateOwnership(int player, int fieldNumber) {
+		street.
+		street.setBorder(playerTEMP[player].getPrimaryColor());
 	}
 	
-	public void updateBuildings(int fieldnum, int houses, int hotel) {
-		
+	/**
+	 * Opdatere et felt med huse, fra 0-5, og hvis der er "5" huse på feltet så placere den et hotel istedet.
+	 * @param fieldNumber Nummeret på feltet der skal opdateres
+	 * @param houses Mængden af huse der skal på feltet 0-5, hvor 0 er ingen huse og 5 er et hotel.
+	 */
+	public void updateBuildings(int fieldNumber, int houses) {
+		boolean hasHotel = false;
+		if (houses == 5) {
+			hasHotel = true;
+			street.setHotel(hasHotel);
+		}
+		else if (houses < 5 && houses > 0)
+			street.setHouses(houses);
+		else System.out.println("Fejl i updateBuildings metode");
 	}
 	
+	/**
+	 * Beskeden der står overst på skærmen, med ok knappen der styrer flowed på spillet
+	 * @param text Den tekst der skal vises til spilleren.
+	 */
 	public void writeText (String text) {
-		
+		gui.showMessage(text);
 	}
 	
+	/**
+	 * Viser chanceCard teksten i midten af spillebrættet
+	 * @param text Den tekst der skal stå i midten af spillebrættet.
+	 */
 	public void showChanceCard (String text) {
-		
+		gui.displayChanceCard(text);
 	}
 }
