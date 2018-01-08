@@ -1,14 +1,14 @@
 package controller;
 
 public class ActionCTRL {
-	Player[] players;
-	Board board;
-	ViewCTRL view;
+	model.Player[] players;
+	model.Board board;
+	view.ViewCTRL view;
 	ChanceCardCTRL chanceCard;
-	Diecup diecup;
+	model.DieCup diecup;
 	
 	public ActionCTRL() {
-		
+		view.ViewCTRL view = new view.ViewCTRL(this.players, this.board);
 	}
 	
 	private void initialiseGame() {

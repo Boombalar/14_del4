@@ -36,12 +36,9 @@ public class ViewCTRL {
 	 * @param players
 	 * @param board
 	 */
-	public ViewCTRL(Player[] players, Field[] board) {
-		Board boardtest = new Board();
-
-
+	public ViewCTRL(Player[] players, Board board) {
 		this.players = players;
-		this.fields = boardtest.getFields();
+		this.fields = board.getFields();
 		MakeBoard();
 	}
 
@@ -97,11 +94,19 @@ public class ViewCTRL {
 			case 4: 
 				field[i] = new GUI_Chance(fields[i].getName(),"subText","Description",Color.black, Color.black);
 				break; //ChanceField
-			case 5: break; //StartField
+			case 5: 
+				field[i] = new GUI_Start(fields[i].getName(),"subtext","description",Color.red, Color.red);
+				break; //StartField
 			
-			case 6: break; //NoActionField
+			case 6: 
+				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
+				break; //NoActionField
 			
-			case 7: break; //GoToJailField
+			case 7: 
+				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
+
+				break; //GoToJailField
+				
 			}
 		}
 
@@ -179,10 +184,10 @@ public class ViewCTRL {
 	 * @param player Spillerens nummer
 	 * @param fieldNumber Nummeret på det felt der skal opdateres
 	 */
-	public void updateOwnership(int player, int fieldNumber) {
-		street.
-		street.setBorder(playerTEMP[player].getPrimaryColor());
-	}
+//	public void updateOwnership(int player, int fieldNumber) {
+//		street.
+//		street.setBorder(playerTEMP[player].getPrimaryColor());
+//	}
 
 	/**
 	 * Opdatere et felt med huse, fra 0-5, og hvis der er "5" huse på feltet så placere den et hotel istedet.
