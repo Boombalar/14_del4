@@ -106,6 +106,7 @@ public class ViewCTRL {
 
 				break; //GoToJailField
 				
+				
 			}
 		}
 
