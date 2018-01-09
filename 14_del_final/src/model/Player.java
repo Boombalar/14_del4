@@ -71,11 +71,20 @@ public class Player {
 	public void setExtraTurn(boolean extraTurn) {
 		this.extraTurn=extraTurn;
 	}
-	
+
 	public int getTurnsInJail() {
 		return turnsInJail;
 	}
 	public void setTurnsInJail(int turnsInJail) {
 		this.turnsInJail = turnsInJail;
+	}
+
+	public boolean getBroke() {
+		return this.broke;
+	}
+	
+	public void setBroke(boolean broke) {
+		this.broke = broke;
+
 	}
 }

@@ -71,11 +71,13 @@ public class ViewCTRLTEST {
 		view.updateBuildings(9, 5);
 		System.out.println("updateBuildings er testet");
 		
+		
+		
 		view.updateOwnership(1, 1);
-		view.updateOwnership(3, 1);
-		view.updateOwnership(6, 1);
-		view.updateOwnership(8, 1);
-		view.updateOwnership(9, 1);
+		view.updateOwnership(1, 3);
+		view.updateOwnership(1, 6);
+		view.updateOwnership(1, 8);
+		view.updateOwnership(1, 9);
 		System.out.println("updateOwnership er testet");
 		
 
