@@ -19,6 +19,8 @@ public class ActionCTRL {
 
 	public ActionCTRL() {
 		initialiseGame();
+		
+		gameSequence();
 	}
 
 	public void initialiseGame() {
@@ -49,7 +51,7 @@ public class ActionCTRL {
 	}
 
 	
-	  private void gameSequences() {
+	  private void gameSequence() {
 		  int diceValue;
 		  int oldPlayerPosition = 0;
 		  int newPlayerPosition;
@@ -58,7 +60,6 @@ public class ActionCTRL {
 				  for (int j = 0; j < numberOfPlayers; j++) {
 					  if (players[j].checkBroke()) {
 						  j++;
-						  lostPlayerCount++;
 						}
 					  view.getUserResponse("Fortsæt", "Det er spiller  " + j + "'s tur nu");
 					  String[] playerChoice = {"Slå terninger", "Køb/sælg huse og hoteller", "Sælg grund"};
@@ -93,9 +94,15 @@ public class ActionCTRL {
 	  }
 	  
 	  private boolean checkWinner() {
-		  int winner = lostPlayerCount-1;
-		  if (winner < numberOfPlayers)
-			  
+		  int numberOfPLayersBroke = 0;
+		  boolean winner = false;
+		 for (int i = 0; i < numberOfPlayers; i++) {
+			if (players[i].checkBroke())
+				numberOfPLayersBroke++;
+		}
+		 if (numberOfPLayersBroke == numberOfPlayers-1)
+			  winner = true;
+		return winner;
 			  
 	  }
 	// // private void tansfer(int currentPlayer, int receivePlayer, boolean
