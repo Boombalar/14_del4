@@ -83,22 +83,22 @@ public class ActionCTRL {
 			int owner = (((PropertyFields)fields[position]).getOwner());	
 			if (owner == 0) {
 				boolean	answer = view.getUserAnswer("Vil du købe denne grund?", "ja", "nej");
-			if(answer == true) {
-				//indsæt transactionmetode
-				//Her bliver feltet skiftet til currentplayer . OBS currentplayer skal skiftes når gamesekvens bliver lavet. 
-				(((PropertyFields)fields[position]).setOwner(currentplayer);
-				//GUI kald, så spiller for en teskt om at han har købt feltet, message "Du har nu købt felt" + field[position].getName
-			}
-			if(owner != 0 && owner != currentplayer) {
-				
-				
-				
-			}
-		//ShipsFields
-		case 1:
-//				if(owner == 0) {
-//
-//				}else 
+				if(answer == true) {
+					//indsæt transactionmetode
+					//Her bliver feltet skiftet til currentplayer . OBS currentplayer skal skiftes når gamesekvens bliver lavet. 
+					(((PropertyFields)fields[position]).setOwner(currentplayer);
+					//GUI kald, så spiller for en teskt om at han har købt feltet, message "Du har nu købt felt" + field[position].getName
+				}
+				if(owner != 0 && owner != currentplayer) {
+
+
+
+				}
+				//ShipsFields
+			case 1:
+				//				if(owner == 0) {
+				//
+				//				}else 
 
 			}
 			//Other
@@ -106,18 +106,21 @@ public class ActionCTRL {
 			if(owner == 0) {
 				owner = 2;
 			}
+		}
 	}
-}
-	public int getRentFromPropertyField (fieldNum) {
-	int rent[] = (((PropertyFields)fields[fieldNum]).returnValue());
-	
-	switch (rent[6]) {
-	
-	case 0:
-		int rentNoHouses = rent[0];
-		//indsæt transactionmetode (currentplayer, owner, rentNoHouses)
-		return;
-	}
+	public int getRentFromPropertyField (int fieldNum) {
+		int[] fieldRent = (((PropertyFields)fields[fieldNum]).returnValue());
+		int fieldOwner = (((PropertyFields)fields[fieldNum]).getOwner());
+
+		switch (fieldRent[6]) {
+
+		case 0:
+			int rentOnNoHouses = fieldRent[0];
+			if (checkForGroupOwnership(fieldOwner, Field[] fields, fieldNum) == true) {
+				rentOnNoHouses = rentOnNoHouses * 2;
+			}
+				return rentOnNoHouses;
+		}
 
 
-//REGEL METODER HERUNDER.
+		//REGEL METODER HERUNDER.
