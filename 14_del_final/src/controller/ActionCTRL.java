@@ -194,20 +194,11 @@ public class ActionCTRL {
 					if (Toolbox.getHOusesOnProperty(currentPlayer, fields, fieldCount, returnValue)==0) {
 						Toolbox.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
 						
-					}else {
-						view.writeText("Du kan ikke sælge grunden for der er huse på");
-						
-					
-					if (players[currentPlayer].getBalance() > Toolbox.getHousePrice(chosenFieldNumber, fields)) {
-							int[] returnValue =	(((OwnerFields)fields[chosenFieldNumber]).returnValue());
-							if (returnValue[6]<5) {//hvis der er mindre end 5 huse på feltet
-								returnValue[6]++;
-								players[currentPlayer].removeMoney(Toolbox.getHousePrice(chosenFieldNumber, fields));
-							}else {
-								view.writeText("Du kan ikke bygge flere huse på denne grund");
-							}
-						}
 					}
+					else {
+						view.writeText("Du kan ikke sælge grunden for der er huse på");
+					}
+					break;
 					
 					//Lav logik for spillers choice
 
