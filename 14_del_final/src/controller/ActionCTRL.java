@@ -80,19 +80,17 @@ public class ActionCTRL {
 					 case "Køb/sælg huse og hoteller":
 						 view.getUserResponse("OK", "Du har valgt Køb/sælg huse og hoteller");
 						// String[] fieldToUpgrade = {//Spillerens ejede grunde
+						 //Lav logik for spillers choice
 					
 							
 					 }
-
-					  
-					  //Lav logik for spillers choice
 			  }
-			  
 		  }
-		  
 	  	}
+		  if (checkWinner())
+			  printWinner();
 	  }
-	  
+ 
 	  private boolean checkWinner() {
 		  int numberOfPLayersBroke = 0;
 		  boolean winner = false;
@@ -105,29 +103,13 @@ public class ActionCTRL {
 		return winner;
 			  
 	  }
-	// // private void tansfer(int currentPlayer, int receivePlayer, boolean
-	// direction, int amount) {
-	// // if (direction == true);
-	// // players[currentPlayer].removemoney(amount);
-	// // players[receivePlayer].recievemoney(amount);
-	// //
-	// // //recievemoney og removemoney.
-		//}
-		//else { (direction == false);
-		//players[currentPlayer].recieveMoney(amount);
-		//players[receivePlayer].removeMoney.(amount);
-	//}
-	//	
-	//	
-	//	private void switchRules() {
-	//		
-	//	}
-	//	
-	//	
-	//	private void startGame();
-	//	String[] playerAmount = {6, 5, 4, 3, 2};
-	//	playernum = 
-
-	//REGEL METODER HERUNDER.
-	//}
+	  private void printWinner() {
+		  if (checkWinner()) {
+			  for (int i = 0; i < numberOfPlayers; i++) {
+				  boolean checkPlayerBroke = players[i].checkBroke();
+				if (!checkPlayerBroke)
+					view.getUserResponse("Afslut spil", "Spiller " + i + " har vundet!!");
+			}
+		  }
+	  }
 }
