@@ -6,10 +6,10 @@ import view.*;
 public class ActionCTRL {
 	Board board;
 	Field[] fields;
-	
+
 	CreatePlayers makePlayers;
 	Player[] players;
-	
+
 	ViewCTRL view;
 	ChanceCardCTRL chanceCard;
 	DieCup dieCup;
@@ -20,33 +20,33 @@ public class ActionCTRL {
 
 	public void initialiseGame() {
 		int numberOfPlayers;
-		
+
 		//Lav bræt model.
 		board = new Board();		
 		fields = board.getFields();
-		
+
 		//Opret bræt.
 		view = new ViewCTRL(fields);
-		
+
 		//Hent antal spillere.
 		String[] lines = {"2","3","4","5","6"};
 		numberOfPlayers = Integer.parseInt(view.getDropDownChoice("Vælg antal spillere 2-6", lines));
-		
+
 		//Lav player array.
 		makePlayers = new CreatePlayers(numberOfPlayers); 
 		players = makePlayers.getPlayers();
-		
+
 		//Opret antal spillere på bræt.
 		view.makeGuiPlayers(players);
-		
+
 		//Lav chancekort CTRL.
 		chanceCard = new ChanceCardCTRL();
-		
+
 		//Lav raflebæger.
 		dieCup = new DieCup();
 	}
 
-	
+
 	//	private void gameSequences();
 	//	 	if (players[currentPlayer].checkBroke)
 	//	 		i++
@@ -65,15 +65,59 @@ public class ActionCTRL {
 	//}
 	//	
 	//	
-	//	private void switchRules() {
-	//		
-	//	}
 	//	
 	//	
 	//	private void startGame();
 	//	String[] playerAmount = {6, 5, 4, 3, 2};
 	//	playernum = 
 
-	//REGEL METODER HERUNDER.
-	//}
+	private void switchRules(Player[] players, int currentplayer) {
+		int fieldType;
+		fieldType = fields[players[currentplayer].getPosition()].getType();
+
+		switch (fieldType) {
+
+		//ProbertyField
+		case 0:
+			int position = players[currentplayer].getPosition();
+			int owner = (((PropertyFields)fields[position]).getOwner());	
+			if (owner == 0) {
+				boolean	answer = view.getUserAnswer("Vil du købe denne grund?", "ja", "nej");
+			if(answer == true) {
+				//indsæt transactionmetode
+				//Her bliver feltet skiftet til currentplayer . OBS currentplayer skal skiftes når gamesekvens bliver lavet. 
+				(((PropertyFields)fields[position]).setOwner(currentplayer);
+				//GUI kald, så spiller for en teskt om at han har købt feltet, message "Du har nu købt felt" + field[position].getName
+			}
+			if(owner != 0 && owner != currentplayer) {
+				
+				
+				
+			}
+		//ShipsFields
+		case 1:
+//				if(owner == 0) {
+//
+//				}else 
+
+			}
+			//Other
+		case 2:
+			if(owner == 0) {
+				owner = 2;
+			}
+	}
 }
+	public int getRentFromPropertyField (fieldNum) {
+	int rent[] = (((PropertyFields)fields[fieldNum]).returnValue());
+	
+	switch (rent[6]) {
+	
+	case 0:
+		int rentNoHouses = rent[0];
+		//indsæt transactionmetode (currentplayer, owner, rentNoHouses)
+		return;
+	}
+
+
+//REGEL METODER HERUNDER.
