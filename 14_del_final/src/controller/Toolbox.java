@@ -45,7 +45,12 @@ public class Toolbox {
 
 		changeOwnerShip(toPlayer, fields, fieldNumber);
 		priceOfProperty = ((OwnerFields)fields[fieldNumber]).getPropertyValue();
-		players[currentPlayer].recieveMoney(priceOfProperty);	
+		if (toPlayer == 0) {
+			players[currentPlayer].recieveMoney(priceOfProperty);
+		}else {
+			transferAssets(currentPlayer, toPlayer, players, fields);
+		}
+
 	}
 
 	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields) {
@@ -98,25 +103,25 @@ public class Toolbox {
 		return returnValue;
 	}
 
-	
+
 	public int getHousesOnProperty(int currentPlayer, Field[] fields, int fieldNumber, int[] returnValue) {
 		if (((OwnerFields)fields[fieldNumber]).getOwner()==currentPlayer) {
 			returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
 		}
 		return returnValue[6];
 	}
-	
+
 	public int getHousePrice(int fieldNumber, Field[] fields) {
 		int[] returnValue;
 		returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
 		return returnValue[7];
 	}
-	
+
 	public int raiseMoney(int currentplayer, Field[] fields, int amount) {
 		int returnValue;
-		
-		
+
+
 		return returnValue;
 	}
-	
+
 }
