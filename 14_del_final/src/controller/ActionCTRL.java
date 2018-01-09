@@ -63,7 +63,7 @@ public class ActionCTRL {
 					  if (players[j].checkBroke()) {
 						  j++;
 						}
-					  view.getUserResponse("Fortsæt", "Det er spiller  " + j + "'s tur nu");
+					  view.writeText("Det er spiller  " + j + "'s tur nu");
 					  String[] playerChoice = {"Slå terninger", "Køb/sælg huse og hoteller", "Sælg grund"};
 					  String choiceOfPlayer = view.getDropDownChoice("vælg", playerChoice);
 					 switch(choiceOfPlayer) {
@@ -80,7 +80,6 @@ public class ActionCTRL {
 						 }
 						 break;
 					 case "Køb/sælg huse og hoteller":
-						 view.getUserResponse("OK", "Du har valgt Køb/sælg huse og hoteller");
 						// String[] fieldToUpgrade = {//Spillerens ejede grunde
 						 //Lav logik for spillers choice
 					
