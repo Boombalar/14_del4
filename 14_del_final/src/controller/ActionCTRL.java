@@ -8,10 +8,10 @@ import view.*;
 public class ActionCTRL {
 	Board board;
 	Field[] fields;
-	
+
 	CreatePlayers makePlayers;
 	Player[] players;
-	
+
 	ViewCTRL view;
 	ChanceCardCTRL chanceCard;
 	DieCup dieCup;
@@ -21,94 +21,223 @@ public class ActionCTRL {
 
 	public ActionCTRL() {
 		initialiseGame();
-		
+
 		gameSequence();
 	}
 
 	public void initialiseGame() {
-		
+
 		//Lav bræt model.
 		board = new Board();		
 		fields = board.getFields();
-		
+
 		//Opret bræt.
 		view = new ViewCTRL(fields);
-		
+
 		//Hent antal spillere.
 		String[] lines = {"2","3","4","5","6"};
 		numberOfPlayers = Integer.parseInt(view.getDropDownChoice("Vælg antal spillere 2-6", lines));
-		
+
 		//Lav player array.
 		makePlayers = new CreatePlayers(numberOfPlayers); 
 		players = makePlayers.getPlayers();
-		
+
 		//Opret antal spillere på bræt.
 		view.makeGuiPlayers(players);
-		
+
 		//Lav chancekort CTRL.
 		chanceCard = new ChanceCardCTRL();
-		
+
 		//Lav raflebæger.
 		dieCup = new DieCup();
 	}
 
-	
-	  private void gameSequence() {
-		  int diceValue;
-		  int oldPlayerPosition = 0;
-		  int newPlayerPosition;
-		  while (!checkWinner()) {
-			  while (true) {
-				  for (int j = 0; j < numberOfPlayers; j++) {
-					  if (players[j].checkBroke()) {
-						  j++;
+
+	private void gameSequence() {
+		int currentPlayer = 1;
+		int diceValue;
+		int oldPlayerPosition = 0;
+		int newPlayerPosition;
+		while (!checkWinner()) {
+			/*
+			if(players[currentPlayer].checkTurnInJail()==1)
+				if(players[currentPlayer].getPosition() == 11)
+					if (players.releaseCard >=1); {
+						String[] playerChoiceJail = {"Betal 1000 kr", "Brug releaseCard"};
+						String ChoiceJailPlayer = view.getDropDownChoice("Vælg", playerChoiceJail);
+						view.updatePlayerAccount(player, amount);
+					}
+							else {
+								String playerChoiceRelease = "Betal 1000 kr for at komme ud af fængsel";
+								//raisemoney
+								players[currentPlayer].removeMoney(1000);
+							}
+
 						}
-					  view.writeText("Det er spiller  " + j + "'s tur nu");
-					  String[] playerChoice = {"Slå terninger", "Køb/sælg huse og hoteller", "Sælg grund"};
-					  String choiceOfPlayer = view.getDropDownChoice("vælg", playerChoice);
-					 switch(choiceOfPlayer) {
-					 case "Slå terninger": 
-						 dieCup.getDiceValue();
-						 diceValue = dieCup.getDiceValue();
-						 oldPlayerPosition += diceValue;
-						 newPlayerPosition = oldPlayerPosition += dieCup.getDiceValue();
-						 view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());						  
-						 view.updatePlayerPosition(j, oldPlayerPosition, newPlayerPosition);
-						 if (newPlayerPosition > 40) {
-							 newPlayerPosition -= 40;
-							 players[j].recieveMoney(4000);
-							 view.writeText("Spiller " + j + " har passeret start og får 4000 kroner");
-						 }
-						 break;
-					 case "Køb/sælg huse og hoteller":
-						// String[] fieldToUpgrade = {//Spillerens ejede grunde
-						 //Lav logik for spillers choice
+			 */
+			while (true) {
+				if(players[currentPlayer].checkBroke())
+					break;
+				view.writeText("Det er spiller  " + currentPlayer + "'s tur nu");
+				String[] playerChoice = {"Slå terninger", "Køb huse og hoteller","Sælg huse og hoteller", "Sælg grund"};
+				String choiceOfPlayer = view.getDropDownChoice("vælg", playerChoice);
+				switch(choiceOfPlayer) {
+				case "Slå terninger": 
+					dieCup.getDiceValue();
+					diceValue = dieCup.getDiceValue();
+					oldPlayerPosition = players[currentPlayer].getPosition();
+					newPlayerPosition = oldPlayerPosition + diceValue;
+					players[currentPlayer].setPosition(oldPlayerPosition + diceValue);
+					view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());						  
+					view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
+					if (newPlayerPosition > 39) {
+						newPlayerPosition -= 40;
+						players[currentPlayer].recieveMoney(4000);
+						view.writeText("Spiller " + currentPlayer + " har passeret start og får 4000 kroner");
+					}
+					break;
+				case "Køb huse og hoteller":
+					int amountOfProperties;
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
+						if (fields[fieldCount] instanceof PropertyFields) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+								amountOfProperties++;
+							}
+						}
+					}
+					String[] propertyArray = new String[amountOfProperties];
+					int index;
+
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
+						if (fields[fieldCount] instanceof PropertyFields) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+								propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
+							}
+						}
+					}
+					String choice = view.getDropDownChoice("Vælg grund du vil bygge på", propertyArray);
+					int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
+					if( Toolbox.checkForGroupOwnership(currentPlayer, fields, chosenFieldNumber)) {
+						if (players[currentPlayer].getBalance() > Toolbox.getHousePrice(chosenFieldNumber, fields)) {
+							int[] returnValue =	(((OwnerFields)fields[chosenFieldNumber]).returnValue());
+							if (returnValue[6]<5) {//hvis der er mindre end 5 huse på feltet
+								returnValue[6]++;
+								players[currentPlayer].removeMoney(Toolbox.getHousePrice(chosenFieldNumber, fields));
+							}else {
+								view.writeText("Du kan ikke bygge flere huse på denne grund");
+							}
+						}
+					}
+					break;
+
+				case "Sælg huse og hoteller":
+					int amountOfProperties;
+					int[] returnValue;
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
+						if (fields[fieldCount] instanceof PropertyFields) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+								returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
+								if (Toolbox.getHOusesOnProperty(currentPlayer, fields, fieldCount, returnValue)>0) {
+									amountOfProperties++;
+								}
+							}
+						}
+					}
+					String[] propertyArray = new String[amountOfProperties];
+					int index;
+
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
+						if (fields[fieldCount] instanceof PropertyFields) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+								returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
+								if (Toolbox.getHOusesOnProperty(currentPlayer, fields, fieldCount, returnValue)>0) {
+									propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
+								}
+							}
+						}
+					}
+					String choice = view.getDropDownChoice("Vælg grund du vil sælge huse fra", propertyArray);
+					int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
+					players[currentPlayer].recieveMoney(Toolbox.sellBuilding(currentPlayer, players, fields, chosenFieldNumber));
+					break;
+
+				case "Sælg grund":
+					int amountOfProperties;
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
+						if (fields[fieldCount] instanceof PropertyFields) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+								amountOfProperties++;
+							}
+						}
+					}
+					String[] propertyArray = new String[amountOfProperties];
+					int index;
+
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
+						if (fields[fieldCount] instanceof PropertyFields) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+								propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
+							}
+						}
+					}
+					String choice = view.getDropDownChoice("Vælg hvilken grund du vil sælge", propertyArray);
+					int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
 					
-							
-					 }
-			  }
-		  }
-	  	}
-		  if (checkWinner())
-			  printWinner();
-	  }
- 
-	  private boolean checkWinner() {
-		  int numberOfPLayersBroke = 0;
-		  boolean winner = false;
-		 for (int i = 0; i < numberOfPlayers; i++) {
+					String[] playerCountArray = new String[players.length+1];
+					for (int playerCount = 0;playerCount <= players.length;playerCount++) {
+						playerCountArray[playerCount]= Integer.toString(playerCount);
+					}
+					String playerSellChoice = view.getDropDownChoice("Hvilken spiller vil du sælge til? 0 er til banken", playerCountArray);
+					int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
+					
+					
+					if (Toolbox.getHOusesOnProperty(currentPlayer, fields, fieldCount, returnValue)==0) {
+						Toolbox.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
+						
+					}else {
+						view.writeText("Du kan ikke sælge grunden for der er huse på");
+						
+					
+					if (players[currentPlayer].getBalance() > Toolbox.getHousePrice(chosenFieldNumber, fields)) {
+							int[] returnValue =	(((OwnerFields)fields[chosenFieldNumber]).returnValue());
+							if (returnValue[6]<5) {//hvis der er mindre end 5 huse på feltet
+								returnValue[6]++;
+								players[currentPlayer].removeMoney(Toolbox.getHousePrice(chosenFieldNumber, fields));
+							}else {
+								view.writeText("Du kan ikke bygge flere huse på denne grund");
+							}
+						}
+					}
+					
+					//Lav logik for spillers choice
+
+
+				}
+			}
+			currentPlayer++;
+			if (currentPlayer > players.length)
+				currentPlayer = 1;
+		}
+		if (checkWinner())
+			printWinner();
+	}
+
+	private boolean checkWinner() {
+		int numberOfPLayersBroke = 0;
+		boolean winner = false;
+		for (int i = 0; i < numberOfPlayers; i++) {
 			if (players[i].checkBroke())
 				numberOfPLayersBroke++;
 		}
-		 if (numberOfPLayersBroke == numberOfPlayers-1)
-			  winner = true;
+		if (numberOfPLayersBroke == numberOfPlayers-1)
+			winner = true;
 		return winner;
-			  
-	  }
-	  private void printWinner() {
-		  if (checkWinner()) {
-			  for (int i = 0; i < numberOfPlayers; i++) {
-				  boolean checkPlayerBroke = players[i].checkBroke();
+
+	}
+	private void printWinner() {
+		if (checkWinner()) {
+			for (int i = 0; i < numberOfPlayers; i++) {
+				boolean checkPlayerBroke = players[i].checkBroke();
 				if (!checkPlayerBroke) {
 					view.getUserResponse("Afslut spil", "Spiller " + i + " har vundet!!");
 					try {
@@ -120,8 +249,8 @@ public class ActionCTRL {
 						e.printStackTrace();
 					}
 				}
-				
+
 			}
-		  }
-	  }
+		}
+	}
 }
