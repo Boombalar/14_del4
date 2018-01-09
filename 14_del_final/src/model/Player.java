@@ -3,7 +3,7 @@ package model;
 public class Player {
 	
 	private String name; //Spillerens navn
-//	private int turnsInJail=0; //Antal forsøg der er brugt på at komme ud af jail
+	private int turnsInJail=0; //Antal forsøg der er brugt på at komme ud af jail
 //	private int equalEyes=0; //Antal gange en spiller har slået 2 ens.
 	private int position=0; //Spillerens aktuelle lokation
 	private Account myAccount = new Account(); //En ny instans af Account(Pung)
@@ -70,5 +70,12 @@ public class Player {
 	
 	public void setExtraTurn(boolean extraTurn) {
 		this.extraTurn=extraTurn;
+	}
+	
+	public int getTurnsInJail() {
+		return turnsInJail;
+	}
+	public void setTurnsInJail(int turnsInJail) {
+		this.turnsInJail = turnsInJail;
 	}
 }
