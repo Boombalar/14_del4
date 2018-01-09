@@ -29,6 +29,7 @@ public class Toolbox {
 	public void sellBuildings(int currentPlayer, Player[] players, Field[] fields, int fieldNumber) {
 		int[] returnValue = new int[8];
 		int numberOfHouses;
+		int priceOfBuilding;
 		
 			if (((OwnerFields)fields[fieldNumber]).getOwner()==currentPlayer) {
 				returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
@@ -37,8 +38,11 @@ public class Toolbox {
 					numberOfHouses = numberOfHouses -1;
 					returnValue[6] = numberOfHouses;
 				}
-				
 			}
+			priceOfBuilding = returnValue[7]/2;
+			players[currentPlayer].recieveMoney(priceOfBuilding);
+			
+			
 	}
 
 	public void sellProperty(int currentPlayer, int toPlayer, Player[] players, Field[] fields, int fieldNumber) {
