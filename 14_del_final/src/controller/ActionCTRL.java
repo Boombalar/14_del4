@@ -14,12 +14,14 @@ public class ActionCTRL {
 	ChanceCardCTRL chanceCard;
 	DieCup dieCup;
 
+	int numberOfPlayers;
+	int lostPlayerCount;
+
 	public ActionCTRL() {
 		initialiseGame();
 	}
 
 	public void initialiseGame() {
-		int numberOfPlayers;
 		
 		//Lav bræt model.
 		board = new Board();		
@@ -47,21 +49,52 @@ public class ActionCTRL {
 	}
 
 	
-	//	private void gameSequences();
-	//	 	if (players[currentPlayer].checkBroke)
-	//	 		i++
-	//	//hele gameSequences while loop i et while loop i et forloop. 
-	//	//metodee der har logikken bag alle spillers tur 
-	//	}
-	//	private void tansfer(int currentPlayer, int	receivePlayer, boolean direction, int amount) {
-	//		if (direction == true);
-	//		players[currentPlayer].removemoney(amount);
-	//		players[receivePlayer].recievemoney(amount);
-	//		
-	//		//recievemoney og removemoney. 
-	//		}else { (direction == false);
-	//		players[currentPlayer].recieveMoney(amount);
-	//		players[receivePlayer].removeMoney.(amount);	
+	  private void gameSequences() {
+		  int oldPlayerPosition;
+		  while (!checkWinner()) {
+			  while (true) {
+				  for (int j = 0; j < numberOfPlayers; j++) {
+					  if (players[j].checkBroke()) {
+						  j++;
+						}
+					  view.getUserResponse("Fortset", "Det er spiller  " + j + "'s tur nu");
+					  String[] playerChoice = {"Slå terninger", "Køb/sælg huse og hoteller", "Sælg grund"};
+					  String choiceOfPlayer = view.getDropDownChoice("vælg", playerChoice);
+					  if (choiceOfPlayer == "Slå terninger") {
+						  dieCup.getDiceValue();
+						  view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());
+						  int newPlayerPosition = oldPlayerPosition += dieCup.getDiceValue();
+						  view.updatePlayerPosition(j, oldPlayerPosition, newPlayerPosition);
+						  if (newPlayerPosition > 40) {
+							  newPlayerPosition -= 40;
+							  players[j].recieveMoney(4000);
+						  }
+					  }
+					  //Lav logik for spillers choice
+					  
+					  if (players.)
+			  }
+			  
+		  }
+		  
+	  	}
+	  }
+	  
+	  private boolean checkWinner() {
+		  if (lostPlayerCount < 2)
+			  
+	  }
+	// // private void tansfer(int currentPlayer, int receivePlayer, boolean
+	// direction, int amount) {
+	// // if (direction == true);
+	// // players[currentPlayer].removemoney(amount);
+	// // players[receivePlayer].recievemoney(amount);
+	// //
+	// // //recievemoney og removemoney.
+		//}
+		//else { (direction == false);
+		//players[currentPlayer].recieveMoney(amount);
+		//players[receivePlayer].removeMoney.(amount);
 	//}
 	//	
 	//	
