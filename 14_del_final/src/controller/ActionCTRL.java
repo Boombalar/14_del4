@@ -63,16 +63,11 @@ public class ActionCTRL {
 	//		players[currentPlayer].recieveMoney(amount);
 	//		players[receivePlayer].removeMoney.(amount);	
 	//}
-	//	
-	//	
-	//	
-	//	
 	//	private void startGame();
 	//	String[] playerAmount = {6, 5, 4, 3, 2};
 	//	playernum = 
 
 	private void fieldRulesSwitch(Player[] players, int currentplayer) {
-
 		int fieldType = fields[players[currentplayer].getPosition()].getType();
 		int position = players[currentplayer].getPosition();
 		int owner = (((OwnerFields)fields[position]).getOwner());
@@ -104,6 +99,7 @@ public class ActionCTRL {
 			}
 
 			break;
+			
 		case 1:
 			//ShipFields
 			int shippingPropertyValue = (((ShipFields)fields[position]).getPropertyValue());
@@ -129,7 +125,7 @@ public class ActionCTRL {
 				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette rederi");
 			}
 			break;
-			
+
 		case 2:
 			//Breweryfields
 			int breweryPropertyValue = (((BreweryFields)fields[position]).getPropertyValue());
@@ -154,7 +150,7 @@ public class ActionCTRL {
 				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette bryggeri");
 			}
 			break;
-			
+
 		case 3:
 			//Taxfields
 			int[] taxValue = (((TaxField)fields[position]).getReturnValue());
@@ -162,26 +158,27 @@ public class ActionCTRL {
 			view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
 			view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + taxValue[0] + " i skat");
 			break;
-			
-			
+
+
 		case 4:
 			//Chancefield
 
 			break;
-			
+
 		case 5:
-			//Startfield
-
+			//Startfield - ingenting sker
 			break;
-			
+
 		case 6:
-			//NoActionField
-
+			//NoActionField - ingenting sker
 			break;
-			
+
 		case 7:
 			//GoToJailField
-
+			players[currentplayer].setPosition(11);
+			players[currentplayer].setTurnsInJail(1);
+			view.updatePlayerPosition(currentplayer, position, 11);
+			view.writeText("Du er landet på " + fields[position].getName() + " du skal nu i fængsel");
 			break;
 		}
 	}
@@ -195,9 +192,9 @@ public class ActionCTRL {
 			int rentOnNoHouses = fieldRent[0];
 			if (checkForGroupOwnership(fieldOwner, Field[] fields, fieldNum) == true) {
 				rentOnNoHouses = rentOnNoHouses * 2;
-				}
+			}
 			return rentOnNoHouses;
-			
+
 		case 1:
 			int rentOnOneHouse = fieldRent[1];
 			return rentOnOneHouse;
@@ -241,7 +238,7 @@ public class ActionCTRL {
 			return rentOnFourShip;
 		}
 	}
-	
+
 	public int getRentFromBreweryField(int fieldNum) {
 		int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
 		int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
