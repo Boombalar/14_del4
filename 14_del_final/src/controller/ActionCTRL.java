@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.concurrent.TimeUnit;
+
 import model.*;
 import view.*;
 
@@ -107,8 +109,18 @@ public class ActionCTRL {
 		  if (checkWinner()) {
 			  for (int i = 0; i < numberOfPlayers; i++) {
 				  boolean checkPlayerBroke = players[i].checkBroke();
-				if (!checkPlayerBroke)
+				if (!checkPlayerBroke) {
 					view.getUserResponse("Afslut spil", "Spiller " + i + " har vundet!!");
+					try {
+						TimeUnit.SECONDS.sleep(1);
+						System.exit(0);
+					}
+					catch (InterruptedException e) {
+						System.out.println("Fejl i sleep når program lukker");
+						e.printStackTrace();
+					}
+				}
+				
 			}
 		  }
 	  }
