@@ -123,6 +123,17 @@ public class ActionCTRL {
 						(((ShipFields)fields[position]).setOwner(currentplayer);
 						view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr" );
 
+						if(owner != 0 && owner != currentplayer) {
+							int shipRent = getRentFromShipField(position);
+							//transaktionmetode (currentplayer, owner, propertyRent)
+							view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
+							view.updatePlayerAccount(owner, players[owner].getBalance());
+							view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
+
+						}
+						if(owner == currentplayer) {
+							view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv denne grund");
+						}
 					} 
 				}
 
@@ -140,7 +151,13 @@ public class ActionCTRL {
 						view.updateOwnership(currentplayer, position);
 						(((BreweryFields)fields[position]).setOwner(currentplayer);
 						view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr");
+
 						if(owner != 0 && owner != currentplayer) {
+							//							int breweryRent = getRentFromShipField(position);
+							//							//transaktionmetode (currentplayer, owner, propertyRent)
+							//							view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
+							//							view.updatePlayerAccount(owner, players[owner].getBalance());
+							//							view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
 
 						}
 
@@ -200,21 +217,26 @@ public class ActionCTRL {
 		public int getRentFromShipField(int fieldNum) {
 			int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
 			int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
-
-			switch (fieldRent[3]) {
-
-			case 0:
-				int rentOnShip = fieldRent[0];
-				if (checkForGroupOwnership(fieldOwner, Field[] fields, fieldNum) == true) {
-					return rentOnShip;
-					
-				}
-			case 1:
-			case 2:
-			case 3:
-			}
+			int numberOfOwnedShipFields = checkNumOfOwnedShipFields(fieldOwner, Field[] fields, fieldNum);
 			
+			switch (numberOfOwnedShipFields) {
+
+			case 1:
+				int rentOnShip = fieldRent[0];
+				return rentOnShip;
 				
+			case 2:
+				int rentOnTwoShip = fieldRent[1];
+				return rentOnTwoShip;
+			case 3:
+				int rentOnThreeShip = fieldRent[2];
+				return rentOnThreeShip;
+			case 4:
+				int rentOnFourShip = fieldRent[3];
+				return rentOnFourShip;
+			}
+
+
 
 		}
 	}
