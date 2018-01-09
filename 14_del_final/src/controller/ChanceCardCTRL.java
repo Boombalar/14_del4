@@ -13,6 +13,7 @@ public class ChanceCardCTRL {
 	public ChanceCardCTRL () {
 		ChanceCardDeck deck = new ChanceCardDeck();
 		chanceCard = deck.getChanceCards();
+		shuffle();
 	}
 	
 	private void shuffle() {

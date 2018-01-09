@@ -1,22 +1,15 @@
 package controller;
-
-import controller.ActionCTRL;
+import test.*;
 
 public class StartGame {
-	private ActionCTRL actionCtrl;
-	private int playernum;
+	private ActionCTRL actionCTRL;
 
 	public static void main(String[] args) {
-		ActionCTRL actionCRTL = new controller.ActionCTRL();
-	}
-	
-	public StartGame() {
+		StartGame game = new StartGame();
+//		game.actionCTRL = new ActionCTRL();
+//		game.actionCTRL.initialiseGame();
 		
-		changePlayer();
+		ViewCTRLTEST viewTest = new ViewCTRLTEST();
+		
 	}
-
-	public void changePlayer() {
-
-	}
-
 }

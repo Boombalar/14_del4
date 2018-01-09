@@ -22,11 +22,11 @@ public class ViewCTRL {
 	private Player[] players;
 	private Field[] fields;
 
-	private GUI gui = new GUI();
-	private GUI_Field[] field;
+	private GUI gui;
+	private GUI_Field[] guiFields = new GUI_Field[40];
 	private GUI_Player[] guiPlayer;
 	private Color[] carColor = new Color[7];
-	private GUI_Car[] guiCar = new GUI_Car[7];
+	private GUI_Car[] guiCar;
 
 
 	/**
@@ -34,23 +34,24 @@ public class ViewCTRL {
 	 * @param players
 	 * @param board
 	 */
-	public ViewCTRL(Player[] players, Board board) {
-		this.players = players;
-		this.fields = board.getFields();
+	public ViewCTRL(Field[] fields) {
+		this.fields = fields;
 		MakeBoard();
 	}
 
 	private void MakeBoard() {
 		int fieldType;
 		Color bgColor = Color.white;
-		Color fgColor = Color.white;
+		Color fgColor = Color.black;
+		String price = "";
 
-		//Generer felter til board på baggrund af Model field
-		for (int i = 0; i < field.length; i++) {
+		//Generer felter til board på baggrund af Model guiFields
+		for (int i = 0; i < fields.length; i++) {
 			fieldType = this.fields[i].getType();
 
 			//Bestem farve til grupperne
 			switch(fieldType) {
+
 
 			case 0: //PropertyField
 				int groupNumber = (((PropertyFields)fields[i]).getGroupNumber());
@@ -80,56 +81,72 @@ public class ViewCTRL {
 					bgColor = Color.magenta;
 					break;
 				}
-				field[i] = new GUI_Street(fields[i].getName(),"subText", "description", "100", bgColor, fgColor);
+				fgColor = Color.black;
+				price = Integer.toString(((PropertyFields)fields[i]).getPropertyValue()) + " kr.";
+				guiFields[i] = new GUI_Street(fields[i].getName(),price, "", "100", bgColor, fgColor);
 				break; 
 
 			case 1: //ShipField
-				field[i] = new GUI_Shipping(fields[i].getName(),"subText","Description","4000","arg4",Color.cyan,Color.cyan);
+				price = Integer.toString(((ShipFields)fields[i]).getPropertyValue())+ " kr.";
+				guiFields[i] = new GUI_Shipping("",fields[i].getName(),price,"","arg4",Color.cyan,Color.black);
 				break; 
 
 			case 2: //BreweryField
-				field[i] = new GUI_Brewery(fields[i].getName(),"subText","Description","3000","arg4",Color.orange,Color.orange);
+				price = Integer.toString(((BreweryFields)fields[i]).getPropertyValue()) + " kr.";
+				guiFields[i] = new GUI_Brewery("",fields[i].getName(),price,"","arg4",Color.orange,Color.black);
+
 				break; 
 
 			case 3: //TaxField
-				field[i] = new GUI_Tax(fields[i].getName(),"subText","Description",Color.white, Color.white);
+				int[] taxint = ((TaxField)fields[i]).getReturnValue();
+				String tax = Integer.toString(taxint[0]) + " kr."; 
+				guiFields[i] = new GUI_Tax(fields[i].getName(),tax,"",Color.white, Color.black);
 				break; 
 
 			case 4: //ChanceField
-				field[i] = new GUI_Chance(fields[i].getName(),"subText","Description",Color.black, Color.black);
+				guiFields[i] = new GUI_Chance(fields[i].getName(),"","",Color.black, Color.white);
 				break; 
 
 			case 5: //StartField
-				field[i] = new GUI_Start(fields[i].getName(),"subtext","description",Color.red, Color.red);
+				guiFields[i] = new GUI_Start(fields[i].getName(),"","",Color.red, Color.black);
 				break; 
 
 			case 6: //NoActionField
-				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
+				guiFields[i] = new GUI_Refuge("", "", fields[i].getName(), "", Color.black, Color.white);
 				break; 
 
 			case 7: //GoToJailField
-				field[i] = new GUI_Refuge(fields[i].getName(), "Subtext", "description", "aeg3", Color.black, Color.black);
+				guiFields[i] = new GUI_Refuge("", "", fields[i].getName(), "", Color.black, Color.white);
 				break; 
 			}
-			
-			//Opretter 6 farver på bilerne
-			carColor[1] = new Color(70,250,0);
-			carColor[2] = new Color(10,160,230);
-			carColor[3] = new Color(200,200,200);
-			carColor[4] = new Color(0,0,0);	
-			carColor[5] = new Color(50,150,100);
-			carColor[6] = new Color(75,100,220);
-
-			//Opret spillere på bræt.
-			for (int counter = 1 ; counter < players.length-1 ; counter++) {
-				guiCar[counter] = new GUI_Car();
-				guiCar[counter].setPrimaryColor(carColor[counter]);
-				guiPlayer[counter] = new GUI_Player(players[counter].getPlayerName(),players[counter].getBalance(),guiCar[counter]);
-				gui.addPlayer(guiPlayer[counter]);
-			}
 		}
-
+		gui = new GUI(guiFields);
 	}
+
+	public void makeGuiPlayers(Player[] players) {
+
+		this.players = players;
+		guiPlayer = new GUI_Player[players.length+1];
+
+		//Opretter 6 farver på bilerne
+		carColor[1] = new Color(70,250,0);
+		carColor[2] = new Color(10,160,230);
+		carColor[3] = new Color(200,200,200);
+		carColor[4] = new Color(0,0,0);	
+		carColor[5] = new Color(50,150,100);
+		carColor[6] = new Color(75,100,220);
+
+		//Opret spillere på bræt.
+		guiCar = new GUI_Car[players.length+1];
+		for (int counter = 1 ; counter <= players.length-1 ; counter++) {
+			guiCar[counter] = new GUI_Car();
+			guiCar[counter].setPrimaryColor(carColor[counter]);
+			guiPlayer[counter] = new GUI_Player(players[counter].getPlayerName(),players[counter].getBalance(),guiCar[counter]);
+			gui.addPlayer(guiPlayer[counter]);
+			gui.getFields()[players[counter].getPosition()].setCar(guiPlayer[counter], true);
+		}
+	}
+
 	/**
 	 * Metode der giver mulighed for at lave en dropdown menu i GUI
 	 * @param buttonText Teksten der kommer over dropdown menuen
@@ -169,7 +186,7 @@ public class ViewCTRL {
 	}
 
 	/**
-	 * Viser knapperne i GUIen
+	 * Viser terningerne i GUIen
 	 * @param die1 Den ene terning
 	 * @param die2 Den anden terning
 	 */
@@ -203,7 +220,11 @@ public class ViewCTRL {
 	 * @param fieldNumber Nummeret på det felt der skal opdateres
 	 */
 	public void updateOwnership(int player, int fieldNumber) {
-		((GUI_Street)field[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
+		if (player == 0) {
+			//sæt til startborderfarve
+		}else {
+			((GUI_Street)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
+		}
 	}
 
 	/**
@@ -215,10 +236,10 @@ public class ViewCTRL {
 		boolean hasHotel = false;
 		if (houses == 5) {
 			hasHotel = true;
-			((GUI_Street)field[fieldNumber]).setHotel(hasHotel);
+			((GUI_Street)guiFields[fieldNumber]).setHotel(hasHotel);
 		}
 		else if (houses < 5 && houses >= 0)
-			((GUI_Street)field[fieldNumber]).setHouses(houses);
+			((GUI_Street)guiFields[fieldNumber]).setHouses(houses);
 		else System.out.println("Fejl i updateBuildings metode");
 	}
 
