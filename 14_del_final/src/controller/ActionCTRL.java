@@ -16,8 +16,12 @@ public class ActionCTRL {
 	ChanceCardCTRL chanceCard;
 	DieCup dieCup;
 
+	Toolbox toolbox;
+
 	int numberOfPlayers;
 	int lostPlayerCount;
+
+
 
 	public ActionCTRL() {
 		initialiseGame();
@@ -49,6 +53,8 @@ public class ActionCTRL {
 
 		//Lav raflebæger.
 		dieCup = new DieCup();
+
+		toolbox = new Toolbox();
 	}
 
 	private void gameSequence() {
@@ -203,8 +209,8 @@ public class ActionCTRL {
 					int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
 
 
-					if (Toolbox.getHOusesOnProperty(currentPlayer, fields, fieldCount, returnValue)==0) {
-						Toolbox.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
+					if (toolbox.getHOusesOnProperty(currentPlayer, fields, fieldCount, returnValue)==0) {
+						toolbox.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
 
 					}
 					else {
@@ -380,39 +386,15 @@ public class ActionCTRL {
 	}
 	public int getRentFromPropertyField (int fieldNum) {
 		int[] fieldRent = (((PropertyFields)fields[fieldNum]).returnValue());
+		int returnValue = fieldRent[fieldRent[6]];
 		int fieldOwner = (((PropertyFields)fields[fieldNum]).getOwner());
-
-		switch (fieldRent[6]) {
-
-		case 0:
-			int rentOnNoHouses = fieldRent[0];
-			if (checkForGroupOwnership(fieldOwner, Field[] fields, fieldNum) == true) {
-				rentOnNoHouses = rentOnNoHouses * 2;
-			}
-			return rentOnNoHouses;
-
-		case 1:
-			int rentOnOneHouse = fieldRent[1];
-			return rentOnOneHouse;
-
-		case 2: 
-			int rentOnTwoHouse = fieldRent[2];
-			return rentOnTwoHouse;
-
-		case 3:
-			int rentOnThreeHouse = fieldRent[3];
-			return rentOnThreeHouse;
-
-		case 4:
-			int rentOnFourHouse = fieldRent[4];
-			return rentOnFourHouse;
-
-		case 5: 
-			int rentOnOneHotel = fieldRent[5];
-			return rentOnOneHotel;
+		
+		if (toolbox.checkForGroupOwnership(fieldOwner, fields, fieldNum) == true) {
+			returnValue = fieldRent[0] * 2;
 		}
-
+		return returnValue;
 	}
+
 	public int getRentFromShipField(int fieldNum) {
 		int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
 		int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
