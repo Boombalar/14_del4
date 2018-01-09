@@ -46,27 +46,6 @@ public class ActionCTRL {
 		dieCup = new DieCup();
 	}
 
-
-	//	private void gameSequences();
-	//	 	if (players[currentPlayer].checkBroke)
-	//	 		i++
-	//	//hele gameSequences while loop i et while loop i et forloop. 
-	//	//metodee der har logikken bag alle spillers tur 
-	//	}
-	//	private void tansfer(int currentPlayer, int	receivePlayer, boolean direction, int amount) {
-	//		if (direction == true);
-	//		players[currentPlayer].removemoney(amount);
-	//		players[receivePlayer].recievemoney(amount);
-	//		
-	//		//recievemoney og removemoney. 
-	//		}else { (direction == false);
-	//		players[currentPlayer].recieveMoney(amount);
-	//		players[receivePlayer].removeMoney.(amount);	
-	//}
-	//	private void startGame();
-	//	String[] playerAmount = {6, 5, 4, 3, 2};
-	//	playernum = 
-
 	private void fieldRulesSwitch(Player[] players, int currentplayer) {
 		int fieldType = fields[players[currentplayer].getPosition()].getType();
 		int position = players[currentplayer].getPosition();
@@ -114,6 +93,7 @@ public class ActionCTRL {
 					view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr" );
 				}
 			}
+			
 			if(owner != 0 && owner != currentplayer) {
 				int shipRent = getRentFromShipField(position);
 				//transaktionmetode (currentplayer, owner, shipRent)
@@ -121,6 +101,7 @@ public class ActionCTRL {
 				view.updatePlayerAccount(owner, players[owner].getBalance());
 				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
 			}
+			
 			if(owner == currentplayer) {
 				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette rederi");
 			}
@@ -139,6 +120,7 @@ public class ActionCTRL {
 					view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr");
 				}
 			}
+			
 			if(owner != 0 && owner != currentplayer) {
 				int breweryRent = (getRentFromBreweryField(position) * dieCup.getDiceValue());
 				//transaktionmetode (currentplayer, owner, breweryRent)
@@ -146,6 +128,7 @@ public class ActionCTRL {
 				view.updatePlayerAccount(owner, players[owner].getBalance());
 				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + breweryRent + " til " + players[owner].getPlayerName());
 			}
+			
 			if(owner == currentplayer) {
 				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette bryggeri");
 			}
@@ -161,8 +144,12 @@ public class ActionCTRL {
 
 
 		case 4:
-			//Chancefield
-
+			//Chancefield			
+			view.writeText("Du er landet på 'Prøv lykken', du trækker et chance kort");
+			chanceCard.draw();
+			String chanceCardText = chanceCard.getDescription();
+			view.showChanceCard(chanceCardText);
+			chanceCardRules(currentplayer);
 			break;
 
 		case 5:
@@ -255,6 +242,35 @@ public class ActionCTRL {
 		}
 	}
 	
+	public void chanceCardRules(int playerNumber) {
+		
+		int chanceCardType = chanceCard.getType();
+		int[] chanceCardValue = chanceCard.getReturnValue();
+		
+		switch (chanceCardType) {
+		
+		case 1: // TransactionCard
+			int transactionValue = chanceCardValue[0];
+			if (transactionValue < 0)
+			players[playerNumber].removeMoney(transactionValue*(-1));
+			else
+				players[playerNumber].recieveMoney(transactionValue);
+			break;
+			
+		case 2: // MoveToCards
+			
+			
+			break;
+			
+		case 3: // ReleaseCards
+			
+			break;
+			
+		case 4: //TaxCards
+			
+			break;
+		}
+	}
 }
 
 
