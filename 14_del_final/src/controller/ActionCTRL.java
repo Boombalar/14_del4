@@ -50,29 +50,41 @@ public class ActionCTRL {
 
 	
 	  private void gameSequences() {
-		  int oldPlayerPosition;
+		  int diceValue;
+		  int oldPlayerPosition = 0;
+		  int newPlayerPosition;
 		  while (!checkWinner()) {
 			  while (true) {
 				  for (int j = 0; j < numberOfPlayers; j++) {
 					  if (players[j].checkBroke()) {
 						  j++;
+						  lostPlayerCount++;
 						}
-					  view.getUserResponse("Fortset", "Det er spiller  " + j + "'s tur nu");
+					  view.getUserResponse("Fortsæt", "Det er spiller  " + j + "'s tur nu");
 					  String[] playerChoice = {"Slå terninger", "Køb/sælg huse og hoteller", "Sælg grund"};
 					  String choiceOfPlayer = view.getDropDownChoice("vælg", playerChoice);
-					  if (choiceOfPlayer == "Slå terninger") {
-						  dieCup.getDiceValue();
-						  view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());
-						  int newPlayerPosition = oldPlayerPosition += dieCup.getDiceValue();
-						  view.updatePlayerPosition(j, oldPlayerPosition, newPlayerPosition);
-						  if (newPlayerPosition > 40) {
-							  newPlayerPosition -= 40;
-							  players[j].recieveMoney(4000);
-						  }
-					  }
-					  //Lav logik for spillers choice
+					 switch(choiceOfPlayer) {
+					 case "Slå terninger": 
+						 dieCup.getDiceValue();
+						 diceValue = dieCup.getDiceValue();
+						 oldPlayerPosition += diceValue;
+						 newPlayerPosition = oldPlayerPosition += dieCup.getDiceValue();
+						 view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());						  
+						 view.updatePlayerPosition(j, oldPlayerPosition, newPlayerPosition);
+						 if (newPlayerPosition > 40) {
+							 newPlayerPosition -= 40;
+							 players[j].recieveMoney(4000);
+						 }
+						 break;
+					 case "Køb/sælg huse og hoteller":
+						 view.getUserResponse("OK", "Du har valgt Køb/sælg huse og hoteller");
+						// String[] fieldToUpgrade = {//Spillerens ejede grunde
+					
+							
+					 }
+
 					  
-					  if (players.)
+					  //Lav logik for spillers choice
 			  }
 			  
 		  }
@@ -81,7 +93,9 @@ public class ActionCTRL {
 	  }
 	  
 	  private boolean checkWinner() {
-		  if (lostPlayerCount < 2)
+		  int winner = lostPlayerCount-1;
+		  if (winner < numberOfPlayers)
+			  
 			  
 	  }
 	// // private void tansfer(int currentPlayer, int receivePlayer, boolean
