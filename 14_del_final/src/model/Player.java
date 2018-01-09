@@ -71,4 +71,12 @@ public class Player {
 	public void setExtraTurn(boolean extraTurn) {
 		this.extraTurn=extraTurn;
 	}
+	
+	public boolean getBroke() {
+		return this.broke;
+	}
+	
+	public void setBroke(boolean broke) {
+		this.broke = broke;
+	}
 }
