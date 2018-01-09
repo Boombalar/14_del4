@@ -21,7 +21,6 @@ public class ActionCTRL {
 
 	public ActionCTRL() {
 		initialiseGame();
-
 		gameSequence();
 	}
 
@@ -82,10 +81,10 @@ public class ActionCTRL {
 				view.writeText("Det er spiller  " + currentPlayer + "'s tur nu");
 				String[] playerChoice = {"Slå terninger", "Køb huse og hoteller","Sælg huse og hoteller", "Sælg grund"};
 				String choiceOfPlayer = view.getDropDownChoice("vælg", playerChoice);
-				
+
 				//Håndtér valg fra menu
 				switch(choiceOfPlayer) {
-				
+
 				// Slå terninger
 				// Slår terningerne, ændrer position i model lag og opdaterer view lag
 				// Håndterer om man kommer over start og får 4.000.
@@ -103,13 +102,13 @@ public class ActionCTRL {
 						view.writeText("Spiller " + currentPlayer + " har passeret start og får 4000 kroner");
 					}
 					break;
-					
-				// Køb huse og hoteller.
-				// Finder de felter hvor spilleren ejer hele grupper. 
-				// Giver mulighed for at bygge på de felter.
+
+					// Køb huse og hoteller.
+					// Finder de felter hvor spilleren ejer hele grupper. 
+					// Giver mulighed for at bygge på de felter.
 				case "Køb huse og hoteller":
 					//Vi starter med at finde ud af hvor mange
-					
+
 					int amountOfProperties;
 					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 						if (fields[fieldCount] instanceof PropertyFields) {
@@ -195,24 +194,24 @@ public class ActionCTRL {
 					}
 					String choice = view.getDropDownChoice("Vælg hvilken grund du vil sælge", propertyArray);
 					int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
-					
+
 					String[] playerCountArray = new String[players.length+1];
 					for (int playerCount = 0;playerCount <= players.length;playerCount++) {
 						playerCountArray[playerCount]= Integer.toString(playerCount);
 					}
 					String playerSellChoice = view.getDropDownChoice("Hvilken spiller vil du sælge til? 0 er til banken", playerCountArray);
 					int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
-					
-					
+
+
 					if (Toolbox.getHOusesOnProperty(currentPlayer, fields, fieldCount, returnValue)==0) {
 						Toolbox.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
-						
+
 					}
 					else {
 						view.writeText("Du kan ikke sælge grunden for der er huse på");
 					}
 					break;
-					
+
 					//Lav logik for spillers choice
 				}
 			}
@@ -255,7 +254,7 @@ public class ActionCTRL {
 			}
 		}
 	}
-	
+
 	private void fieldRulesSwitch(Player[] players, int currentplayer) {
 		int fieldType = fields[players[currentplayer].getPosition()].getType();
 		int position = players[currentplayer].getPosition();
@@ -288,7 +287,7 @@ public class ActionCTRL {
 			}
 
 			break;
-			
+
 		case 1:
 			//ShipFields
 			int shippingPropertyValue = (((ShipFields)fields[position]).getPropertyValue());
@@ -303,7 +302,7 @@ public class ActionCTRL {
 					view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr" );
 				}
 			}
-			
+
 			if(owner != 0 && owner != currentplayer) {
 				int shipRent = getRentFromShipField(position);
 				//transaktionmetode (currentplayer, owner, shipRent)
@@ -311,7 +310,7 @@ public class ActionCTRL {
 				view.updatePlayerAccount(owner, players[owner].getBalance());
 				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
 			}
-			
+
 			if(owner == currentplayer) {
 				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette rederi");
 			}
@@ -330,7 +329,7 @@ public class ActionCTRL {
 					view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr");
 				}
 			}
-			
+
 			if(owner != 0 && owner != currentplayer) {
 				int breweryRent = (getRentFromBreweryField(position) * dieCup.getDiceValue());
 				//transaktionmetode (currentplayer, owner, breweryRent)
@@ -338,7 +337,7 @@ public class ActionCTRL {
 				view.updatePlayerAccount(owner, players[owner].getBalance());
 				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + breweryRent + " til " + players[owner].getPlayerName());
 			}
-			
+
 			if(owner == currentplayer) {
 				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette bryggeri");
 			}
@@ -451,35 +450,34 @@ public class ActionCTRL {
 			return rentOnTwoBrewery;
 		}
 	}
-	
+
 	public void chanceCardRules(int playerNumber) {
-		
+
 		int chanceCardType = chanceCard.getType();
 		int[] chanceCardValue = chanceCard.getReturnValue();
-		
+
 		switch (chanceCardType) {
-		
+
 		case 1: // TransactionCard
 			int transactionValue = chanceCardValue[0];
 			if (transactionValue < 0)
-			players[playerNumber].removeMoney(transactionValue*(-1));
+				players[playerNumber].removeMoney(transactionValue*(-1));
 			else
 				players[playerNumber].recieveMoney(transactionValue);
 			break;
-			
+
 		case 2: // MoveToCards
-			
-			
+
+
 			break;
-			
+
 		case 3: // ReleaseCards
-			
+
 			break;
-			
+
 		case 4: //TaxCards
-			
+
 			break;
 		}
 	}
-}
 }
