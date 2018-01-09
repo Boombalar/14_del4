@@ -105,4 +105,10 @@ public class Toolbox {
 		}
 		return returnValue[6];
 	}
+	
+	public int getHousePrice(int fieldNumber, Field[] fields) {
+		int[] returnValue;
+		returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
+		return returnValue[7];
+	}
 }
