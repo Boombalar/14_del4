@@ -240,8 +240,8 @@ public class ActionCTRL {
 	}
 
 	public int getRentFromBreweryField(int fieldNum) {
-		int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
-		int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
+		int[] fieldRent = (((BreweryFields)fields[fieldNum]).returnValue());
+		int fieldOwner = (((BreweryFields)fields[fieldNum]).getOwner());
 		int numberOfOwnedBreweryFields = checkNumOfOwnedFields(fieldOwner, Field[] fields, fieldNum, fields[fieldNum].getType());
 
 		switch (numberOfOwnedBreweryFields) {
