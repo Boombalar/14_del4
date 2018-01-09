@@ -111,4 +111,12 @@ public class Toolbox {
 		returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
 		return returnValue[7];
 	}
+	
+	public int raiseMoney(int currentplayer, Field[] fields, int amount) {
+		int returnValue;
+		
+		
+		return returnValue;
+	}
+	
 }
