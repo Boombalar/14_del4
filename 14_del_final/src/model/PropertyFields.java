@@ -38,7 +38,6 @@ public class PropertyFields extends OwnerFields {
 		return this.rent;
 	}
 	
-	
 }
 
 //pris 0-5 huse = 6 pladser i array
