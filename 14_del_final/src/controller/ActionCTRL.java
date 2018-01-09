@@ -77,6 +77,7 @@ public class ActionCTRL {
 						 if (newPlayerPosition > 40) {
 							 newPlayerPosition -= 40;
 							 players[j].recieveMoney(4000);
+							 view.writeText("Spiller " + j + " har passeret start og får 4000 kroner");
 						 }
 						 break;
 					 case "Køb/sælg huse og hoteller":
