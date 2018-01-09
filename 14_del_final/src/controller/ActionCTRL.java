@@ -76,12 +76,20 @@ public class ActionCTRL {
 						}
 			 */
 			while (true) {
+				// Hvis en spiller er broke, så gå ud af loop
 				if(players[currentPlayer].checkBroke())
 					break;
+				// Lav Startmenu for spiller
 				view.writeText("Det er spiller  " + currentPlayer + "'s tur nu");
 				String[] playerChoice = {"Slå terninger", "Køb huse og hoteller","Sælg huse og hoteller", "Sælg grund"};
 				String choiceOfPlayer = view.getDropDownChoice("vælg", playerChoice);
+				
+				//Håndtér valg fra menu
 				switch(choiceOfPlayer) {
+				
+				// Slå terninger
+				// Slår terningerne, ændrer position i model lag og opdaterer view lag
+				// Håndterer om man kommer over start og får 4.000.
 				case "Slå terninger": 
 					dieCup.getDiceValue();
 					diceValue = dieCup.getDiceValue();
@@ -96,7 +104,13 @@ public class ActionCTRL {
 						view.writeText("Spiller " + currentPlayer + " har passeret start og får 4000 kroner");
 					}
 					break;
+					
+				// Køb huse og hoteller.
+				// Finder de felter hvor spilleren ejer hele grupper. 
+				// Giver mulighed for at bygge på de felter.
 				case "Køb huse og hoteller":
+					//Vi starter med at finde ud af hvor mange
+					
 					int amountOfProperties;
 					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 						if (fields[fieldCount] instanceof PropertyFields) {
