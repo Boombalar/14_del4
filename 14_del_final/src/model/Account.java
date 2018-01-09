@@ -17,6 +17,7 @@ public class Account {
 	 */
 	public void withdraw(int value) {
 		this.balance -= value;
+		
 	}
 	
 	/**
