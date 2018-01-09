@@ -78,11 +78,10 @@ public class ActionCTRL {
 		int owner = (((OwnerFields)fields[position]).getOwner());
 		switch (fieldType) {
 
-		//ProbertyField
 		case 0:	
+			//ProbertyField
 			int propertyValue = (((PropertyFields)fields[position]).getPropertyValue());
-
-			if (owner == 0) {
+			if(owner == 0) {
 				boolean	answer = view.getUserAnswer("Vil du købe denne grund?", "ja", "nej");
 				if(answer == true) {
 					//indsæt transactionmetode (currentplayer, owner, propertyValue);
@@ -91,152 +90,171 @@ public class ActionCTRL {
 					(((PropertyFields)fields[position]).setOwner(currentplayer);
 					view.updateOwnership(currentplayer, position);
 					view.writeText("Du har købt " + fields[position].getName()+ " for " + propertyValue + " kr."); 
-
-					// SKAL DER VÆRE SPILLESKIFT HER EFTER ??????
 				}
-
-				if(owner != 0 && owner != currentplayer) {
-
-					int propertyRent = getRentFromPropertyField(position);
-					//transaktionmetode (currentplayer, owner, propertyRent)
-					view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
-					view.updatePlayerAccount(owner, players[owner].getBalance());
-					view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + propertyRent + " til " + players[owner].getPlayerName());
-
-				}
-				if(owner == currentplayer) {
-					view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv denne grund");
-
-				}
-
-
-				//ShipsFields
-			case 1:
-				int shippingValue = (((ShipFields)fields[position]).getPropertyValue());
-
-				if(owner == 0) {
-					boolean answer = view.getUserAnswer("Du er landet på" + fields[position].getName() + " vil du købe grunden", "ja", "nej");
-					if(answer == true) {
-						//transaktionmetode ( currentplayer, owner, shippingvalue)
-						view.updatePlayerAccount(currentplayer, shippingValue);
-						view.updateOwnership(currentplayer, position);
-						(((ShipFields)fields[position]).setOwner(currentplayer);
-						view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr" );
-
-						if(owner != 0 && owner != currentplayer) {
-							int shipRent = getRentFromShipField(position);
-							//transaktionmetode (currentplayer, owner, propertyRent)
-							view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
-							view.updatePlayerAccount(owner, players[owner].getBalance());
-							view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
-
-						}
-						if(owner == currentplayer) {
-							view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv denne grund");
-						}
-					} 
-				}
-
-
-
-				//Breweryfields
-			case 2:
-				int breweryValue = (((BreweryFields)fields[position]).getPropertyValue());
-
-				if(owner == 0) {
-					boolean answer = view.getUserAnswer("Du er landet på " + fields[position].getName() + "vil du købe grunden", "ja", "nej");
-					if(answer == true) {
-						//transaktionmetode(currentplayer, owner, shippingvalue)
-						view.updatePlayerAccount(currentplayer, breweryValue);
-						view.updateOwnership(currentplayer, position);
-						(((BreweryFields)fields[position]).setOwner(currentplayer);
-						view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr");
-
-						if(owner != 0 && owner != currentplayer) {
-							//							int breweryRent = getRentFromShipField(position);
-							//							//transaktionmetode (currentplayer, owner, propertyRent)
-							//							view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
-							//							view.updatePlayerAccount(owner, players[owner].getBalance());
-							//							view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
-
-						}
-
-					}
-				}
-				//Taxfields
-			case 3:
-
-				//Chancefield
-			case 4:
-
-				//Startfield
-			case 5:
-
-				//NoActionField
-			case 6:
-
-				//GoToJailField
-			case 7:
-
 			}
-		}
-		public int getRentFromPropertyField (int fieldNum) {
-			int[] fieldRent = (((PropertyFields)fields[fieldNum]).returnValue());
-			int fieldOwner = (((PropertyFields)fields[fieldNum]).getOwner());
-
-			switch (fieldRent[6]) {
-
-			case 0:
-				int rentOnNoHouses = fieldRent[0];
-				if (checkForGroupOwnership(fieldOwner, Field[] fields, fieldNum) == true) {
-					rentOnNoHouses = rentOnNoHouses * 2;
-				}
-				return rentOnNoHouses;
-			case 1:
-				int rentOnOneHouse = fieldRent[1];
-				return rentOnOneHouse;
-
-			case 2: 
-				int rentOnTwoHouse = fieldRent[2];
-				return rentOnTwoHouse;
-
-			case 3:
-				int rentOnThreeHouse = fieldRent[3];
-				return rentOnThreeHouse;
-
-			case 4:
-				int rentOnFourHouse = fieldRent[4];
-				return rentOnFourHouse;
-
-			case 5: 
-				int rentOnOneHotel = fieldRent[5];
-				return rentOnOneHotel;
+			if(owner != 0 && owner != currentplayer) {
+				int propertyRent = getRentFromPropertyField(position);
+				//transaktionmetode (currentplayer, owner, propertyRent)
+				view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
+				view.updatePlayerAccount(owner, players[owner].getBalance());
+				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + propertyRent + " til " + players[owner].getPlayerName());
+			}
+			if((owner == currentplayer)) { 
+				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv denne grund");
 			}
 
-		}
-		public int getRentFromShipField(int fieldNum) {
-			int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
-			int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
-			int numberOfOwnedShipFields = checkNumOfOwnedShipFields(fieldOwner, Field[] fields, fieldNum);
+			break;
+		case 1:
+			//ShipFields
+			int shippingPropertyValue = (((ShipFields)fields[position]).getPropertyValue());
+
+			if(owner == 0) {
+				boolean answer = view.getUserAnswer("Du er landet på" + fields[position].getName() + " vil du købe grunden", "ja", "nej");
+				if(answer == true) {
+					//transaktionmetode (currentplayer, owner, shippingPropertyValue)
+					view.updatePlayerAccount(currentplayer, shippingPropertyValue);
+					view.updateOwnership(currentplayer, position);
+					(((ShipFields)fields[position]).setOwner(currentplayer);
+					view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr" );
+				}
+			}
+			if(owner != 0 && owner != currentplayer) {
+				int shipRent = getRentFromShipField(position);
+				//transaktionmetode (currentplayer, owner, shipRent)
+				view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
+				view.updatePlayerAccount(owner, players[owner].getBalance());
+				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
+			}
+			if(owner == currentplayer) {
+				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette rederi");
+			}
+			break;
 			
-			switch (numberOfOwnedShipFields) {
-
-			case 1:
-				int rentOnShip = fieldRent[0];
-				return rentOnShip;
-				
-			case 2:
-				int rentOnTwoShip = fieldRent[1];
-				return rentOnTwoShip;
-			case 3:
-				int rentOnThreeShip = fieldRent[2];
-				return rentOnThreeShip;
-			case 4:
-				int rentOnFourShip = fieldRent[3];
-				return rentOnFourShip;
+		case 2:
+			//Breweryfields
+			int breweryPropertyValue = (((BreweryFields)fields[position]).getPropertyValue());
+			if(owner == 0) {
+				boolean answer = view.getUserAnswer("Du er landet på " + fields[position].getName() + "vil du købe grunden", "ja", "nej");
+				if(answer == true) {
+					//transaktionmetode(currentplayer, owner, breweryPropertyValue)
+					view.updatePlayerAccount(currentplayer, breweryPropertyValue);
+					view.updateOwnership(currentplayer, position);
+					(((BreweryFields)fields[position]).setOwner(currentplayer);
+					view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr");
+				}
 			}
+			if(owner != 0 && owner != currentplayer) {
+				int breweryRent = (getRentFromBreweryField(position) * dieCup.getDiceValue());
+				//transaktionmetode (currentplayer, owner, breweryRent)
+				view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
+				view.updatePlayerAccount(owner, players[owner].getBalance());
+				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + breweryRent + " til " + players[owner].getPlayerName());
+			}
+			if(owner == currentplayer) {
+				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette bryggeri");
+			}
+			break;
+			
+		case 3:
+			//Taxfields
+			int[] taxValue = (((TaxField)fields[position]).getReturnValue());
+			//transaktionmetode (currentplayer, 0, taxValue[0])
+			view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
+			view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + taxValue[0] + " i skat");
+			break;
+			
+			
+		case 4:
+			//Chancefield
 
+			break;
+			
+		case 5:
+			//Startfield
 
+			break;
+			
+		case 6:
+			//NoActionField
 
+			break;
+			
+		case 7:
+			//GoToJailField
+
+			break;
 		}
 	}
+	public int getRentFromPropertyField (int fieldNum) {
+		int[] fieldRent = (((PropertyFields)fields[fieldNum]).returnValue());
+		int fieldOwner = (((PropertyFields)fields[fieldNum]).getOwner());
+
+		switch (fieldRent[6]) {
+
+		case 0:
+			int rentOnNoHouses = fieldRent[0];
+			if (checkForGroupOwnership(fieldOwner, Field[] fields, fieldNum) == true) {
+				rentOnNoHouses = rentOnNoHouses * 2;
+				}
+			return rentOnNoHouses;
+			
+		case 1:
+			int rentOnOneHouse = fieldRent[1];
+			return rentOnOneHouse;
+
+		case 2: 
+			int rentOnTwoHouse = fieldRent[2];
+			return rentOnTwoHouse;
+
+		case 3:
+			int rentOnThreeHouse = fieldRent[3];
+			return rentOnThreeHouse;
+
+		case 4:
+			int rentOnFourHouse = fieldRent[4];
+			return rentOnFourHouse;
+
+		case 5: 
+			int rentOnOneHotel = fieldRent[5];
+			return rentOnOneHotel;
+		}
+
+	}
+	public int getRentFromShipField(int fieldNum) {
+		int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
+		int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
+		int numberOfOwnedShipFields = checkNumOfOwnedFields(fieldOwner, Field[] fields, fieldNum, fields[fieldNum].getType());
+
+		switch (numberOfOwnedShipFields) {
+
+		case 1:
+			int rentOnShip = fieldRent[0];
+			return rentOnShip;
+		case 2:
+			int rentOnTwoShip = fieldRent[1];
+			return rentOnTwoShip;
+		case 3:
+			int rentOnThreeShip = fieldRent[2];
+			return rentOnThreeShip;
+		case 4:
+			int rentOnFourShip = fieldRent[3];
+			return rentOnFourShip;
+		}
+	}
+	
+	public int getRentFromBreweryField(int fieldNum) {
+		int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
+		int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
+		int numberOfOwnedBreweryFields = checkNumOfOwnedFields(fieldOwner, Field[] fields, fieldNum, fields[fieldNum].getType());
+
+		switch (numberOfOwnedBreweryFields) {
+
+		case 1:
+			int rentOnOneBrewery = fieldRent[0];
+			return rentOnOneBrewery;
+		case 2:
+			int rentOnTwoBrewery = fieldRent[1];
+			return rentOnTwoBrewery;
+		}
+	}
+}
