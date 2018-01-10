@@ -70,15 +70,11 @@ public class ActionCTRL {
 			if(players[currentPlayer].getTurnsInJail()==1) {
 				if (players[currentPlayer].getReleaseCard() > 0) {
 
-
 					String[] playerChoiceJail = {"Betal 1000 kr", "Brug releaseCard"};
 					String choiceJailPlayer = view.getDropDownChoice("Vælg hvordan du kommer ud af fængsel", playerChoiceJail);
 
-
 					if (choiceJailPlayer=="Brug releaseCard") {
 						players[currentPlayer].setTurnsInJail(0);}
-
-
 
 					if (choiceJailPlayer=="Betal 1000kr") {
 						view.writeText("Betal 1000 kr for at komme ud af fængsel");
@@ -190,7 +186,6 @@ public class ActionCTRL {
 						}
 					}
 					break;
-
 
 					//Sælg huse og hoteller.
 					//Find de grunde hvor spilleren ejer huse
