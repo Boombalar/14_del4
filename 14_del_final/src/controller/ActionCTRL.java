@@ -126,8 +126,17 @@ public class ActionCTRL {
 					view.writeText("Spiller " + currentPlayer + " har passeret start og får 4000 kroner");
 				}
 				fieldRulesSwitch(currentPlayer);
-				if (dieCup.getDie1Value() == dieCup.getDie2Value())
+				if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 					currentPlayer--;
+					/*
+					players[currentPlayer].changeEqualEyes() ++;
+					if(players[currentPlayer].changeEqualEyes() == 3) {
+						jail();
+						players[currentPlayer].changeEqualEyes(-3);
+					}
+					*/
+					
+				}
 				break;
 
 				// Køb huse og hoteller.
@@ -197,7 +206,7 @@ public class ActionCTRL {
 							returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
 							if (toolbox.getHousesOnProperty(currentPlayer, fields, fieldCount, returnValue)>0) {
 								amountOfProperties++;
-							}
+							}	
 						}
 					}
 				}
