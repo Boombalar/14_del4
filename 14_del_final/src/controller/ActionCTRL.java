@@ -300,6 +300,7 @@ public class ActionCTRL {
 			printWinner();
 			break;
 		}
+		}
 	}
 
 	private boolean checkWinner() {
