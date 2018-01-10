@@ -467,7 +467,7 @@ public class ActionCTRL {
 			break;
 		}
 	}
-
+		//metode som tjekker for om det felt man er landet på er ejet af den samme ejer, uden huse. 
 	public int getRentFromPropertyField (int fieldNum) {
 		int[] fieldRent = (((PropertyFields)fields[fieldNum]).returnValue());
 		int numberOfHouses = fieldRent[fieldRent[6]];
@@ -495,7 +495,7 @@ public class ActionCTRL {
 		int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(fieldNum, fields, fieldOwner));
 		return fieldRent[(numOfOwnedBrewFields - 1)];
 	}
-
+	//Metode som switcher på hvilken type ChanceCard man har trukket.
 	public void chanceCardRules (int playerNumber) {
 
 		int chanceCardType = chanceCard.getType();
@@ -531,7 +531,7 @@ public class ActionCTRL {
 			break;
 		}
 	}
-
+		//Metode som switcher på hvilket type MoveToCard man har trukket.
 	public void MoveToCardsRules (int playerNumber) {
 		int[] chanceCardValueArray = chanceCard.getReturnValue();
 		int moveToField = chanceCardValueArray[0];
