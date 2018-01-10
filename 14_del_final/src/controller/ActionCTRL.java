@@ -73,7 +73,7 @@ public class ActionCTRL {
 		int[] returnValue;
 
 		while (!checkWinner()) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
-			/*
+			
 			if(players[currentPlayer].checkTurnInJail()==1)
 				if(players[currentPlayer].getPosition() == 11)
 					if (players.releaseCard >=1); {
@@ -88,7 +88,8 @@ public class ActionCTRL {
 							}
 
 						}
-			 */
+			 
+		
 			while (true) {
 				// Hvis en spiller er broke, så gå ud af loop
 				if(players[currentPlayer].checkBroke())
@@ -108,9 +109,13 @@ public class ActionCTRL {
 					//slå terninger
 					dieCup.shake();
 					diceValue = dieCup.getDiceValue();
+					
+					//skift position på spiller i model lag
 					oldPlayerPosition = players[currentPlayer].getPosition();
 					newPlayerPosition = oldPlayerPosition + diceValue;
 					players[currentPlayer].setPosition(oldPlayerPosition + diceValue);
+					
+					//Update view
 					view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());						  
 					view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
 					
@@ -277,11 +282,11 @@ public class ActionCTRL {
 		if (currentPlayer > players.length)
 			currentPlayer = 1;
 
-		if (checkWinner())
+		if (checkWinner()) {
 			printWinner();
+			break;
+		}
 	}
-
-
 
 	private boolean checkWinner() {
 		int numberOfPLayersBroke = 0;
