@@ -4,7 +4,7 @@ import java.util.Random;
 public class Die {
 
 	private int eyes;
-	private int sides = 6;
+	private int sides = 6; //Antal sidder på terningen.
 
 	/**
 	 * Die konstruktør

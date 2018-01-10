@@ -2,7 +2,7 @@ package model;
 
 public class DieCup {
 
-	private int die1=0, die2=0;
+	private int die1=0, die2=0; //Instansiere terningerne.
 
 	private Die die = new Die();
 
@@ -51,7 +51,7 @@ public class DieCup {
 
 	/**
 	 * getDie1Value()
-	 * @return int terning værdi.
+	 * @return int terning1 værdi.
 	 */
 	public int getDie1Value () {
 		return die1;
@@ -59,7 +59,7 @@ public class DieCup {
 
 	/**
 	 * getDie1Value()
-	 * @return int terning værdi.
+	 * @return int terning2 værdi.
 	 */
 	public int getDie2Value () {
 		return die2;

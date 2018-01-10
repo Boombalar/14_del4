@@ -1,9 +1,9 @@
 package model;
 
 public class Field {
-	protected String name;
-	protected int type;
-	protected int number;
+	protected String name; //Navnet på det givne felt
+	protected int type; //Typen på feltet.
+	protected int number; //Nummeret feltet har på brættet.
 /**
  * Superklassen for felterne
  * 
@@ -17,20 +17,32 @@ public class Field {
 		this.number = number;
 	}
 	
+	/**
+	 * Getter til navnet på feltet
+	 * @return Navnet på feltet.
+	 */
 	public String getName() {
 		return this.name;
 	}
 	
+	/**
+	 * Typen feltet har
+	 * @return Kommer an på hvilket felt der hentes.
+	 */
 	public int getType() {
 		return this.type;
 	}
 	
+	/**
+	 * Feltets plads på brættet
+	 * @return Nummeret fletet har på brættet.
+	 */
 	public int getNumber() {
 		return this.number;
 	}
 	/**
 	 * Bliver overskrevet af subklasserne.
-	 * @return
+	 * @return Kommer an på subklassen.
 	 */
 	public int[] returnValue() {
 		int[] returnValue = {0};
@@ -39,8 +51,4 @@ public class Field {
 	}
 	
 //	public int getGroupNumber() {return 1;}
-	
-	
-	
-	
 }

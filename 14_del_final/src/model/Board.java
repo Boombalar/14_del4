@@ -2,10 +2,13 @@ package model;
 
 public class Board {
 
-	private Field[] field = new Field[40];
+	private Field[] field = new Field[40]; //Danner et array med alle de 40 felter der er på brættet.
 
 	public Board() {
 		//opret felter
+
+		//Opsætning er som følgende
+		//field[<nummer i arrayet>] = new (<klassen som feltet hører til>, <navn>, <data som stammer fra hver af felternes klasses opbygning af arrayet>)
 
 		field[0] = new StartField("Start", 5, 0);
 		field[1] = new PropertyFields("Rødovrevej",0,1,1200,0,1,50,250,750,2250,4000,6000,0,1000);
@@ -49,6 +52,10 @@ public class Board {
 		field[39] = new PropertyFields("Rådhuspladsen",0,39,8000,0,8,1000,4000,12000,28000,34000,40000,0,4000);
 	}
 	
+	/**
+	 * Getter til field arrayet
+	 * @return Field array der indeholder alle felterne samt logik.
+	 */
 	public Field[] getFields() {
 		return field;
 	}

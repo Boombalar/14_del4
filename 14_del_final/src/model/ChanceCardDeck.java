@@ -2,7 +2,12 @@ package model;
 
 public class ChanceCardDeck {
 
-	private ChanceCard[] chancecards = new ChanceCard[32];
+	private ChanceCard[] chancecards = new ChanceCard[32]; //Danner et array med de 32 chancekort vi har.
+	//Opretter chancekortne
+	
+	//Opsætning er som følgende
+	//chancecards[<nummer i arrayet>] = new <klassen som chancekortet hører til> (<nummer på kortet>, <typen 1-4>, <beskrivelsen af kortet>, <eventuel betaling eller feltet der skal rykkes til>)
+	//De sidste pladser i arrayet bliver bestemt i de klasser der nedarves.
 	
 	public ChanceCardDeck() {
 		chancecards[0] = new TransactionCard(0,1,"De har måttet vedtage en parkeringsbøde. Betal 200 kr.",-200);
@@ -39,6 +44,10 @@ public class ChanceCardDeck {
 		chancecards[31] = new MoveToCard(31,2,"Ryk frem til Grønningen. Hvis De passerer Start, Indkassér da kr. 4.000",25,1);
 	}
 	
+	/**
+	 * Getter til et chancekort
+	 * @return Arrayet der indeholder alle chancekortne.
+	 */
 	public ChanceCard[] getChanceCards() {
 		return chancecards;
 	}

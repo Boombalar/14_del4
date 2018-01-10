@@ -9,7 +9,7 @@ public class Player {
 	private Account myAccount = new Account(); //En ny instans af Account(Pung)
 	private boolean broke = false; //Tjekker om spilleren er bankerot.
 	private boolean extraTurn=false; //Tjekker om spilleren skal have en tur til.
-	private int releaseCard=0;
+	private int releaseCard=0; //Antal kort der giver spilleren mulighed for at komme smertefrit ud at fængsel
 	
 	/**
 	 * Konstruktør på spilleren
@@ -18,6 +18,7 @@ public class Player {
 	public Player(String name) {
 		this.name = name;
 	}
+	
 	/**
 	 * En getter til spillerens balance som går ind i den instans af account og tjekker hvad den får at getter som tjekker den variabel som er spillerens pengebeholdning.
 	 * @return Returnere getBalance metoden fra klassen Account.
@@ -34,13 +35,20 @@ public class Player {
 		if (getBalance() < 0)
 			broke = true;
 		return broke;
-			
 	}
+	
+	/**
+	 * En hardsetter på hvad en given spillers position skal være.
+	 * @param position Position på hvor spilleren skal stå henne.
+	 */
 	public void setPosition(int position) {
 		this.position = position;
 	}
 	
-	
+	/**
+	 * En getter på spillerens position
+	 * @return Spillerens position.
+	 */
 	public int getPosition() {
 		return this.position;
 	}
@@ -61,43 +69,82 @@ public class Player {
 		myAccount.withdraw(value);
 	}
 	
+	/**
+	 * En getter på spillerens navn
+	 * @return Spillerens navn
+	 */
 	public String getPlayerName() {
 		return this.name;
 	}
 	
+	/**
+	 * En boolean på om spilleren skal have en extra tur, hvis han slår 2 ens.
+	 * @return False, vil altid returnere false, medmindre den er specifikt sat til at være true med setteren, og da vil den altid returnere true.
+	 */
 	public boolean getExtraTurn() {
 		return this.extraTurn;
 	}
 	
+	/**
+	 * Setter en spiller extraTurn til parameteren, og da forbliver spillerens extraTurn boolean til dette, indtil ændret.
+	 * @param extraTurn Hvis en spiller skal have en extra tur, sæt da true.
+	 */
 	public void setExtraTurn(boolean extraTurn) {
 		this.extraTurn=extraTurn;
 	}
 
+	/**
+	 * En getter på hvor mange turer en spiller har siddet i fængsel.
+	 * @return En integer på hvor mange turer en spiller har siddet i fængsel
+	 */
 	public int getTurnsInJail() {
 		return turnsInJail;
 	}
+	
+	/**
+	 * Hardsetter en spillers tur i fængsel.
+	 * @param turnsInJail Antal turer det ønskes at sætte en spillers tur i fængsel.
+	 */
 	public void setTurnsInJail(int turnsInJail) {
 		this.turnsInJail = turnsInJail;
 	}
 
+	/**
+	 * Endnu en metode der returnere om en spiller er bankerot.
+	 * @return Returnerer om den tidligere metode giver true/false.
+	 */
 	public boolean getBroke() {
 		return this.broke;
 	}
 	
+	/**
+	 * En setter til om en spiller har tabt.
+	 * @param broke Boolean, true så er spilleren bankerot.
+	 */
 	public void setBroke(boolean broke) {
 		this.broke = broke;
 	}
 	
+	/**
+	 * En getter på hvor mange releaseCards en given spiller har
+	 * @return Antal release cards, defualt 0.
+	 */
 	public int getReleaseCard() {
 		return this.releaseCard;
 	}
 	
+	/**
+	 * Køres denne metode tilføjes 1 til antal releaseCards.
+	 */
 	public void addReleaseCard() {
 		this.releaseCard++;
 	}
 	
+	/**
+	 * En camougeret getter til antal releaseCards en spiller har.
+	 * @return Antal kort en spiller har.
+	 */
 	public int useReleaseCard() {
-		
 		return this.releaseCard;
 	}
 }
