@@ -107,6 +107,9 @@ public class ActionCTRL {
 						players[currentPlayer].recieveMoney(4000);
 						view.writeText("Spiller " + currentPlayer + " har passeret start og får 4000 kroner");
 					}
+					fieldRulesSwitch(currentPlayer);
+					if (dieCup.getDie1Value() == dieCup.getDie2Value())
+						currentPlayer--;
 					break;
 
 					// Køb huse og hoteller.
