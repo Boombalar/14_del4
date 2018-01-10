@@ -1,6 +1,5 @@
 package controller;
 
-import org.omg.CORBA.Current;
 import model.*;
 
 public class Toolbox {
@@ -8,6 +7,12 @@ public class Toolbox {
 	public Toolbox() {
 	}
 
+	public void safeTransferMoney(int fromPlayer, int toPlayer, Player[] players, int amount) {
+		players[fromPlayer].removeMoney(amount);
+		players[toPlayer].recieveMoney(amount);
+	}
+	
+	
 	public void transferAssets(int fromPlayer, int toPlayer, Player[] players, Field[] fields) {
 		for(int fieldcount = 0;fieldcount <=39;fieldcount++) {
 			if (fields[fieldcount] instanceof OwnerFields) {
@@ -42,7 +47,7 @@ public class Toolbox {
 		if (toPlayer == 0) {
 			players[currentPlayer].recieveMoney(priceOfProperty);
 		}else {
-			transferMoney(currentPlayer, toPlayer, players, priceOfProperty);
+			safeTransferMoney(currentPlayer, toPlayer, players, priceOfProperty);
 		}
 	}
 
@@ -65,7 +70,7 @@ public class Toolbox {
 		if (toPlayer==0) {
 			players[currentPlayer].removeMoney(players[currentPlayer].getBalance());
 		}else {
-			transferMoney(currentPlayer, toPlayer, players, players[currentPlayer].getBalance());
+			safeTransferMoney(currentPlayer, toPlayer, players, players[currentPlayer].getBalance());
 		}
 	}
 
@@ -179,5 +184,13 @@ public class Toolbox {
 				}
 			}
 		}
+	}
+	
+	public boolean CheckForPassingStart(int oldPosition, int newPosition) {
+		Boolean checkForPassingStart = false;
+		if (newPosition < oldPosition) {
+			checkForPassingStart = true;
+		}
+		return checkForPassingStart;
 	}
 }
