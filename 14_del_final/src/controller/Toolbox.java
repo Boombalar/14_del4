@@ -101,11 +101,11 @@ public class Toolbox {
 		return returnValue;
 	}
 	
-	public int checkNumOfOwnFieldsWithType (int playerNumber, Field[] fields, int fieldNumber, int fieldType) {
+	public int checkNumOfOwnFieldsWithType (int playerNumber, Field[] fieldsName, int fieldNumber, int fieldType) {
 		int numbOfFieldsWithType=0;
-		for(int i=0 ; (i < 39) && (i != fieldNumber) ; i++) {
-			int fieldOwner = (((PropertyFields)fields[i]).getOwner());
-			int fieldTypeFromProperty = (((PropertyFields)fields[i]).getType());
+		for(int i=0 ; i < 39 ; i++) {
+			int fieldOwner = (((PropertyFields)fieldsName[i]).getOwner());
+			int fieldTypeFromProperty = (((PropertyFields)fieldsName[i]).getType());
 			if ((fieldOwner == playerNumber) && (fieldTypeFromProperty == fieldType)) {
 				numbOfFieldsWithType += 1;
 			}
