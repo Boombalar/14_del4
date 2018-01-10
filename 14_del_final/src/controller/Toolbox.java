@@ -3,8 +3,6 @@ import model.*;
 
 public class Toolbox {
 
-
-
 	public Toolbox() {
 
 	}
@@ -109,6 +107,30 @@ public class Toolbox {
 			returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
 		}
 		return returnValue[6];
+	}
+
+	public int getNumberOfHousesFromPlayer (int playerNumber, Field[] fields) {
+		int numbOfHouses=0;
+		for(int i=0 ; i < 39 ; i++) {
+			int numbOfHousesOnField = (((PropertyFields)fields[i]).getReturnValue()[6]);
+			int fieldOwner = (((PropertyFields)fields[i]).getOwner());
+			if ((fieldOwner == playerNumber) && (numbOfHousesOnField > 0) && (numbOfHousesOnField < 5)) {
+				numbOfHouses += (((PropertyFields)fields[i]).getReturnValue()[6]);
+			}
+		}
+		return numbOfHouses;
+	}
+	
+	public int getNumberOfHotelsFromPlayer (int playerNumber, Field[] fields) {
+		int numbOfHotels=0;
+		for(int i=0 ; i < 39 ; i++) {
+			int numbOfHousesOnField = (((PropertyFields)fields[i]).getReturnValue()[6]);
+			int fieldOwner = (((PropertyFields)fields[i]).getOwner());
+			if ((fieldOwner == playerNumber) && (numbOfHousesOnField == 5)) { // hvis der er 5 huse, så er der et hotel
+				numbOfHotels += 1;
+			}
+		}
+		return numbOfHotels;
 	}
 
 	public int getHousePrice(int fieldNumber, Field[] fields) {
