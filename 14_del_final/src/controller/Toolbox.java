@@ -1,16 +1,13 @@
 package controller;
 
+import org.omg.CORBA.Current;
+
 import model.*;
 
 public class Toolbox {
 
 	public Toolbox() {
 
-	}
-
-	public void transferMoney(int fromPlayer, int toPlayer, Player[] players, int amount) {
-		players[fromPlayer].removeMoney(amount);
-		players[toPlayer].recieveMoney(amount);
 	}
 
 	public void transferAssets(int fromPlayer, int toPlayer, Player[] players, Field[] fields) {
@@ -144,10 +141,23 @@ public class Toolbox {
 		return returnValue;
 	}
 
-	public int raiseMoney(int currentplayer, Field[] fields, int amount) {
-		int returnValue=0;
+	public boolean raiseMoney(int currentplayer, Field[] fields, int amount) {
+		boolean returnValue=true;
 
 		return returnValue;
 	}
 
+	public void payMoney(int currentPlayer, int toPlayer, Player[] players, Field[] fields, int amount) {
+		if (checkForBankruptcy(currentPlayer, players, amount)) {
+			if (raiseMoney(currentPlayer, fields, amount) == false){
+				bankruptcy(currentPlayer, toPlayer, players, fields);
+			} else {						
+				players[currentPlayer].removeMoney(amount);
+				if (toPlayer > 0) {
+					players[currentPlayer].recieveMoney(amount);
+				}
+				
+			}
+		}
+	}
 }
