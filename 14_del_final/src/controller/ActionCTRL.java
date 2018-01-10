@@ -274,23 +274,24 @@ public class ActionCTRL {
 			if(owner == 0) {
 				boolean	answer = view.getUserAnswer("Vil du købe denne grund?", "ja", "nej");
 				if(answer == true) {
-					toolbox.payMoney(playerNumber, owner, players, fields, propertyValue);
-					view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
+					toolbox.payMoney(playerNumber, owner, players, fields, propertyValue); //spiller køber grunden af brættet
+					view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); //Update af gui.
 					PropertyFields wantedFieldChange = ((PropertyFields)fields[position]);
 					//Herunder bliver feltets ejer skiftet.
 					wantedFieldChange.setOwner(playerNumber);
 					view.updateOwnership(playerNumber, position);
-					view.writeText("Du har købt " + fields[position].getName()+ " for " + propertyValue + " kr."); 
+					view.writeText("Du har købt " + fields[position].getName()+ " for " + propertyValue + " kr."); //gui tekst til spilleren
 				}
 			}
 			if(owner != 0 && owner != playerNumber) {
 				int propertyRent = getRentFromPropertyField(position);
-				toolbox.payMoney(playerNumber, owner, players, fields, propertyRent);
-				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
-				view.updatePlayerAccount(owner, players[owner].getBalance());
-				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + propertyRent + " til " + players[owner].getPlayerName());
+				toolbox.payMoney(playerNumber, owner, players, fields, propertyRent); // transaction mellem to spiller.
+				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); //update af den aktive spillerens konto
+				view.updatePlayerAccount(owner, players[owner].getBalance()); //Update af den spiller som modtager penge
+				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + propertyRent + " til " + players[owner].getPlayerName()); //Gui i tekst til spilleren
 			}
-			if((owner == playerNumber)) { 
+			//Her lander den aktivespiller på et felt som han selv ejer. 
+			if((owner == playerNumber)) {  
 				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv denne grund");
 			}
 
@@ -356,9 +357,9 @@ public class ActionCTRL {
 		case 3:
 			//Taxfields
 			int[] taxValue = (((TaxField)fields[position]).getReturnValue());
-			toolbox.payMoney(playerNumber, owner, players, fields, taxValue[0]);
-			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
-			view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + taxValue[0] + " i skat");
+			toolbox.payMoney(playerNumber, owner, players, fields, taxValue[0]); // Transaction som sker på spilleren ud fra hvilket taxfield han lander på
+			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); // update af gui.
+			view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + taxValue[0] + " i skat"); // tekst til spilleren
 			break;
 
 
@@ -372,10 +373,10 @@ public class ActionCTRL {
 
 		case 7:
 			//GoToJailField
-			players[playerNumber].setPosition(11);
-			players[playerNumber].setTurnsInJail(1);
-			view.updatePlayerPosition(playerNumber, position, 11);
-			view.writeText("Du er landet på " + fields[position].getName() + " du skal nu i fængsel");
+			players[playerNumber].setPosition(11); // spilleren position bliver rykket til felt nr 11
+			players[playerNumber].setTurnsInJail(1); // Spilleren sidder i fængsel.
+			view.updatePlayerPosition(playerNumber, position, 11); //update af gui
+			view.writeText("Du er landet på " + fields[position].getName() + " du skal nu i fængsel"); //tekst til spilleren.
 			break;
 		}
 	}
