@@ -354,10 +354,12 @@ public class ActionCTRL {
 			int owner = (((OwnerFields)fields[this.oldPlayerPosition]).getOwner());
 
 			switch (fieldType) {
-
+			
 			case 0:	
 				//ProbertyField
 				int propertyValue = (((PropertyFields)fields[this.oldPlayerPosition]).getPropertyValue());
+				int[] fieldRent = (((PropertyFields)fields[this.oldPlayerPosition]).returnValue());
+				int propertyRent = fieldRent[fieldRent[6]];
 				if(owner == 0) {
 					boolean	answer = view.getUserAnswer("Vil du købe denne grund?", "ja", "nej");		
 					if(answer == true) {
@@ -371,7 +373,9 @@ public class ActionCTRL {
 					}
 				}
 				if(owner != 0 && owner != playerNumber) {
-					int propertyRent = getRentFromPropertyField(this.oldPlayerPosition);
+					if ((toolbox.checkForGroupOwnership(owner, fields, this.oldPlayerPosition) == true) && (fieldRent[6] == 0)) {
+						propertyRent *= 2;
+					}
 					toolbox.payMoney(playerNumber, owner, players, fields, propertyRent);				 //transaction mellem to spiller.
 					view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());			 //update af den aktive spillerens konto
 					view.updatePlayerAccount(owner, players[owner].getBalance());						 //Update af den spiller som modtager penge
@@ -388,10 +392,13 @@ public class ActionCTRL {
 				//ShipFields
 				shippingFieldRules(playerNumber, 1);
 				break;
-
+				
 			case 2:
 				//Breweryfields
 				int breweryPropertyValue = (((BreweryFields)fields[this.oldPlayerPosition]).getPropertyValue());
+				int[] fieldRent = (((BreweryFields)fields[this.oldPlayerPosition]).returnValue());
+				int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(this.oldPlayerPosition, fields, owner));
+				
 				if(owner == 0) {
 					boolean answer = view.getUserAnswer("Du er landet på " + fields[this.oldPlayerPosition].getName() + "vil du købe grunden", "ja", "nej");
 					if(answer == true) {
@@ -403,9 +410,8 @@ public class ActionCTRL {
 						view.writeText("Du har købt " + fields[this.oldPlayerPosition].getName() + " for " + breweryPropertyValue + " kr");
 					}
 				}
-
 				if(owner != 0 && owner != playerNumber) {
-					int breweryRent = (getRentFromBreweryField(this.oldPlayerPosition) * dieCup.getDiceValue());
+					int breweryRent = fieldRent[numOfOwnedBrewFields];
 					toolbox.payMoney(playerNumber, owner, players, fields, breweryRent);
 					view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 					view.updatePlayerAccount(owner, players[owner].getBalance());
@@ -443,38 +449,13 @@ public class ActionCTRL {
 				break;
 			}
 		}
-		//metode som tjekker for om det felt man er landet på er ejet af den samme ejer, uden huse. 
-		public int getRentFromPropertyField (int fieldNum) {
-			int[] fieldRent = (((PropertyFields)fields[fieldNum]).returnValue());
-			int numberOfHouses = fieldRent[fieldRent[6]];
-			int fieldOwner = (((PropertyFields)fields[fieldNum]).getOwner());
-			int returnValue = fieldRent[0];
-
-			if ((toolbox.checkForGroupOwnership(fieldOwner, fields, fieldNum) == true) && (numberOfHouses == 0)) {
-				returnValue = fieldRent[0] * 2;
-			} else {
-				returnValue = fieldRent[numberOfHouses];
-			}
-			return returnValue;
-		}
-		// Metode som tjekker om man har alle rederier og hvad man skal betale.
-		public int getRentFromShipField(int fieldNum) {
-			int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
-			int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
-			int numOfOwnedShipFields = (toolbox.getNumberOfOwnedPropertiesInGroup(fieldNum, fields, fieldOwner));
-			return fieldRent[(numOfOwnedShipFields - 1)];
-		}
-		// En metode som tjekker om man har et eller to brewery og hvad man skal betale. 
-		public int getRentFromBreweryField(int fieldNum) {
-			int[] fieldRent = (((BreweryFields)fields[fieldNum]).returnValue());
-			int fieldOwner = (((BreweryFields)fields[fieldNum]).getOwner());
-			int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(fieldNum, fields, fieldOwner));
-			return fieldRent[(numOfOwnedBrewFields - 1)];
-		}
 		
 		public void shippingFieldRules(int playerNumber, int multiplier) {
 			int shippingPropertyValue = (((ShipFields)fields[this.oldPlayerPosition]).getPropertyValue());
 			int owner = (((ShipFields)fields[this.oldPlayerPosition]).getOwner());
+			int[] fieldRent = (((ShipFields)fields[this.oldPlayerPosition]).returnValue());
+			int numOfOwnedShipFields = (toolbox.getNumberOfOwnedPropertiesInGroup(this.oldPlayerPosition, fields, owner));
+			
 			if(owner == 0) {
 				boolean answer = view.getUserAnswer("Du er landet på" + fields[this.oldPlayerPosition].getName() + " vil du købe grunden", "ja", "nej"); //Spiller for mulighed for at købe grunden
 				if(answer == true) {
@@ -488,7 +469,7 @@ public class ActionCTRL {
 			}
 
 			if(owner != 0 && owner != playerNumber) {
-				int shipRent = getRentFromShipField(this.oldPlayerPosition);
+				int shipRent = fieldRent[numOfOwnedShipFields -1];
 				toolbox.payMoney(playerNumber, owner, players, fields, shipRent*multiplier);
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 				view.updatePlayerAccount(owner, players[owner].getBalance());
