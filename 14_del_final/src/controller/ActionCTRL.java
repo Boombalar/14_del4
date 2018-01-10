@@ -405,7 +405,7 @@ public class ActionCTRL {
 			int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(this.newPlayerPosition, fields, owner));
 
 			if(owner == 0) {
-				boolean answer = view.getUserAnswer("Du er landet på " + fields[this.newPlayerPosition].getName() + "vil du købe grunden", "ja", "nej");
+				boolean answer = view.getUserAnswer(players[playerNumber].getPlayerName() + "er landet på " + fields[this.newPlayerPosition].getName() + "vil du købe grunden", "ja", "nej");
 				if(answer == true) {
 					toolbox.payMoney(playerNumber, owner, players, fields, breweryPropertyValue);
 					view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
@@ -438,7 +438,7 @@ public class ActionCTRL {
 
 		case 4:
 			//Chancefield			
-			view.writeText("Du er landet på 'Prøv lykken', du trækker et chance kort"); //Tekst fra gui 
+			view.writeText(players[playerNumber].getPlayerName() + "er landet på 'Prøv lykken', du trækker et chance kort"); //Tekst fra gui 
 			chanceCard.draw();   														//ChanceCardCRTL trækker et kort	
 			view.showChanceCard(chanceCard.getDescription());							//Teksten fra Chancekortet vises i gui 
 			chanceCardRules(playerNumber);												//kald af metode som fortæller hvilket slags kort man har trukket.
@@ -466,7 +466,7 @@ public class ActionCTRL {
 		int numOfOwnedShipFields = (toolbox.getNumberOfOwnedPropertiesInGroup(this.newPlayerPosition, fields, owner));
 
 		if(owner == 0) {
-			boolean answer = view.getUserAnswer("Du er landet på " + fields[this.newPlayerPosition].getName() + " vil du købe grunden", "ja", "nej"); //Spiller for mulighed for at købe grunden
+			boolean answer = view.getUserAnswer(players[playerNumber].getPlayerName() + "er landet på " + fields[this.newPlayerPosition].getName() + " vil du købe grunden", "ja", "nej"); //Spiller for mulighed for at købe grunden
 			if(answer == true) {
 				toolbox.payMoney(playerNumber, owner, players, fields, shippingPropertyValue);				//transaktionen forgår mellem spiller og bræt
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());								//Update af spillerens konto i gui
