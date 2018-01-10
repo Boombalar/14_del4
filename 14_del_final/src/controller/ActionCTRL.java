@@ -68,7 +68,29 @@ public class ActionCTRL {
 
 		while (!checkWinner()) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 
-		}
+			if(players[currentPlayer].getTurnsInJail()==1) {
+				if (players[currentPlayer].getReleaseCard() > 0) {
+
+
+					String[] playerChoiceJail = {"Betal 1000 kr", "Brug releaseCard"};
+					String choiceJailPlayer = view.getDropDownChoice("Vælg hvordan du kommer ud af fængsel", playerChoiceJail);
+
+
+					if (choiceJailPlayer=="Brug releaseCard") {
+						players[currentPlayer].setTurnsInJail(0);}
+
+
+
+					if (choiceJailPlayer=="Betal 1000kr") {
+						view.writeText("Betal 1000 kr for at komme ud af fængsel");
+						toolbox.payMoney(currentPlayer, 0, players, fields, 1000);
+					}
+
+				} else {					
+					String playerChoiceRelease = "Betal 1000 kr for at komme ud af fængsel";
+					toolbox.payMoney(currentPlayer, 0, players, fields, 1000);
+				}
+			}
 
 		while (true) {
 			// Hvis en spiller er broke, så gå ud af loop
@@ -179,6 +201,7 @@ public class ActionCTRL {
 				//Find antal propertyfields med huse
 				//Således vi kan lave Array til dropdown
 
+				int[] returnValue;
 				amountOfProperties=0;
 				for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 					if (fields[fieldCount] instanceof PropertyFields) {
@@ -310,186 +333,19 @@ public class ActionCTRL {
 		}
 	}
 
-	private void fieldRulesSwitch(Player[] players, int currentplayer) {
-		int fieldType = fields[players[currentplayer].getPosition()].getType();
-		int position = players[currentplayer].getPosition();
-		int owner = (((OwnerFields)fields[position]).getOwner());
+	private void updateEntireBoard(Field[] fields, Player[] players, ViewCTRL view) {
 
-		switch (fieldType) {
-
-		case 0:	
-			//ProbertyField
-			int propertyValue = (((PropertyFields)fields[position]).getPropertyValue());
-			if(owner == 0) {
-				boolean	answer = view.getUserAnswer("Vil du købe denne grund?", "ja", "nej");
-				if(answer == true) {
-					//indsæt transactionmetode (currentplayer, owner, propertyValue);
-					//Her bliver feltet skiftet til currentplayer . OBS currentplayer skal skiftes når gamesekvens bliver lavet. 
-					view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
-					(((PropertyFields)fields[position]).setOwner(currentplayer);
-					view.updateOwnership(currentplayer, position);
-					view.writeText("Du har købt " + fields[position].getName()+ " for " + propertyValue + " kr."); 
-				}
+		//Updater fields ownership på bræt
+		for (int fieldCount = 0;fieldCount <= 39; fieldCount++) {
+			if (fields[fieldCount] instanceof PropertyFields) {
+				view.updateOwnership(((PropertyFields)fields[fieldCount]).getOwner(), fieldCount);
 			}
-			if(owner != 0 && owner != currentplayer) {
-				int propertyRent = getRentFromPropertyField(position);
-				//transaktionmetode (currentplayer, owner, propertyRent)
-				view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
-				view.updatePlayerAccount(owner, players[owner].getBalance());
-				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + propertyRent + " til " + players[owner].getPlayerName());
+		}
+		for (int playerCount = 1 ; playerCount <= players.length; playerCount++) {
+			if (players[playerCount].getBroke()) {
+				view.turnOffPlayer(playerCount);
 			}
-			if((owner == currentplayer)) { 
-				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv denne grund");
-			}
-
-			break;
-
-		case 1:
-			//ShipFields
-			int shippingPropertyValue = (((ShipFields)fields[position]).getPropertyValue());
-
-			if(owner == 0) {
-				boolean answer = view.getUserAnswer("Du er landet på" + fields[position].getName() + " vil du købe grunden", "ja", "nej");
-				if(answer == true) {
-					//transaktionmetode (currentplayer, owner, shippingPropertyValue)
-					view.updatePlayerAccount(currentplayer, shippingPropertyValue);
-					view.updateOwnership(currentplayer, position);
-					(((ShipFields)fields[position]).setOwner(currentplayer);
-					view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr" );
-				}
-			}
-
-			if(owner != 0 && owner != currentplayer) {
-				int shipRent = getRentFromShipField(position);
-				//transaktionmetode (currentplayer, owner, shipRent)
-				view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
-				view.updatePlayerAccount(owner, players[owner].getBalance());
-				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
-			}
-
-			if(owner == currentplayer) {
-				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette rederi");
-			}
-			break;
-
-		case 2:
-			//Breweryfields
-			int breweryPropertyValue = (((BreweryFields)fields[position]).getPropertyValue());
-			if(owner == 0) {
-				boolean answer = view.getUserAnswer("Du er landet på " + fields[position].getName() + "vil du købe grunden", "ja", "nej");
-				if(answer == true) {
-					//transaktionmetode(currentplayer, owner, breweryPropertyValue)
-					view.updatePlayerAccount(currentplayer, breweryPropertyValue);
-					view.updateOwnership(currentplayer, position);
-					(((BreweryFields)fields[position]).setOwner(currentplayer);
-					view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr");
-				}
-			}
-
-			if(owner != 0 && owner != currentplayer) {
-				int breweryRent = (getRentFromBreweryField(position) * dieCup.getDiceValue());
-				//transaktionmetode (currentplayer, owner, breweryRent)
-				view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
-				view.updatePlayerAccount(owner, players[owner].getBalance());
-				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + breweryRent + " til " + players[owner].getPlayerName());
-			}
-
-			if(owner == currentplayer) {
-				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette bryggeri");
-			}
-			break;
-
-		case 3:
-			//Taxfields
-			int[] taxValue = (((TaxField)fields[position]).getReturnValue());
-			//transaktionmetode (currentplayer, 0, taxValue[0])
-			view.updatePlayerAccount(currentplayer, players[currentplayer].getBalance());
-			view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + taxValue[0] + " i skat");
-			break;
-
-
-		case 4:
-			//Chancefield			
-			view.writeText("Du er landet på 'Prøv lykken', du trækker et chance kort");
-			chanceCard.draw();
-			String chanceCardText = chanceCard.getDescription();
-			view.showChanceCard(chanceCardText);
-			chanceCardRules(currentplayer);
-			break;
-
-		case 5:
-			//Startfield - ingenting sker
-			break;
-
-		case 6:
-			//NoActionField - ingenting sker
-			break;
-
-		case 7:
-			//GoToJailField
-			players[currentplayer].setPosition(11);
-			players[currentplayer].setTurnsInJail(1);
-			view.updatePlayerPosition(currentplayer, position, 11);
-			view.writeText("Du er landet på " + fields[position].getName() + " du skal nu i fængsel");
-			break;
 		}
 	}
 
-	public int getRentFromPropertyField (int fieldNum) {
-		int[] fieldRent = (((PropertyFields)fields[fieldNum]).returnValue());
-		int returnValue = fieldRent[fieldRent[6]];
-		int fieldOwner = (((PropertyFields)fields[fieldNum]).getOwner());
-
-		if (toolbox.checkForGroupOwnership(fieldOwner, fields, fieldNum) == true) {
-			returnValue = fieldRent[0] * 2;
-		}
-		return returnValue;
-	}
-
-	public int getRentFromShipField(int fieldNum) {
-		int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
-		int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
-		int numberOfOwnedShipFields = toolbox.getNumberOfOwnedPropertiesInGroup(fieldNum, fields, fieldOwner);
-
-		return fieldRent[numberOfOwnedShipFields-1];
-
-	}
-
-	public int getRentFromBreweryField(int fieldNum) {
-		int[] fieldRent = (((BreweryFields)fields[fieldNum]).returnValue());
-		int fieldOwner = (((BreweryFields)fields[fieldNum]).getOwner());
-		int numberOfOwnedBreweryFields = toolbox.getNumberOfOwnedPropertiesInGroup(fieldNum, fields, fieldOwner);
-
-		return fieldRent[numberOfOwnedBreweryFields-1];
-	}
-
-
-	public void chanceCardRules(int playerNumber) {
-
-		int chanceCardType = chanceCard.getType();
-		int[] chanceCardValue = chanceCard.getReturnValue();
-
-		switch (chanceCardType) {
-
-		case 1: // TransactionCard
-			int transactionValue = chanceCardValue[0];
-			if (transactionValue < 0)
-				players[playerNumber].removeMoney(transactionValue*(-1));
-			else
-				players[playerNumber].recieveMoney(transactionValue);
-			break;
-
-		case 2: // MoveToCards
-
-
-			break;
-
-		case 3: // ReleaseCards
-
-			break;
-
-		case 4: //TaxCards
-
-			break;
-		}
-	}
+// indsæt fieldruleswitch og alle metoder.

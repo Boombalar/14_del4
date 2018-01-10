@@ -258,4 +258,8 @@ public class ViewCTRL {
 	public void showChanceCard (String text) {
 		gui.displayChanceCard(text);
 	}
+	
+	public void turnOffPlayer (int player) {
+		gui.getFields()[players[player].getPosition()].setCar(guiPlayer[player], false);
+	}
 }

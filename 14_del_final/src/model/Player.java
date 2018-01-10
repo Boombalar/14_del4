@@ -9,6 +9,7 @@ public class Player {
 	private Account myAccount = new Account(); //En ny instans af Account(Pung)
 	private boolean broke = false; //Tjekker om spilleren er bankerot.
 	private boolean extraTurn=false; //Tjekker om spilleren skal have en tur til.
+	private int releaseCard=0;
 	
 	/**
 	 * Konstruktør på spilleren
@@ -85,6 +86,18 @@ public class Player {
 	
 	public void setBroke(boolean broke) {
 		this.broke = broke;
-
+	}
+	
+	public int getReleaseCard() {
+		return this.releaseCard;
+	}
+	
+	public void addReleaseCard() {
+		this.releaseCard++;
+	}
+	
+	public int useReleaseCard() {
+		
+		return this.releaseCard;
 	}
 }
