@@ -200,7 +200,7 @@ public class ActionCTRL {
 						if (fields[fieldCount] instanceof PropertyFields) {
 							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
 								returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
-								if (toolbox.getHousesOnProperty(currentPlayer, fields, fieldCount, returnValue)>0) {
+								if (toolbox.getHousesOnProperty(currentPlayer, fields, fieldCount)>0) {
 									amountOfProperties++;
 								}	
 							}
@@ -218,7 +218,7 @@ public class ActionCTRL {
 						if (fields[fieldCount] instanceof PropertyFields) {
 							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
 								returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
-								if (toolbox.getHousesOnProperty(currentPlayer, fields, fieldCount, returnValue)>0) {
+								if (toolbox.getHousesOnProperty(currentPlayer, fields, fieldCount)>0) {
 									propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
 								}
 							}

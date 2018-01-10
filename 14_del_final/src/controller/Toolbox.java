@@ -178,7 +178,6 @@ public class Toolbox {
 		int numberOfHouses;
 		int priceOfHouse;
 		int priceOfProperty;
-		int valueOfHouses;
 		int valueOfSale=0;
 		int valueOfSale2=0;
 		int playerbalance = players[currentPlayer].getBalance();
