@@ -100,6 +100,18 @@ public class Toolbox {
 		}
 		return returnValue;
 	}
+	
+	public int checkNumOfOwnFieldsWithType (int playerNumber, Field[] fields, int fieldNumber, int fieldType) {
+		int numbOfFieldsWithType=0;
+		for(int i=0 ; (i < 39) && (i != fieldNumber) ; i++) {
+			int fieldOwner = (((PropertyFields)fields[i]).getOwner());
+			int fieldTypeFromProperty = (((PropertyFields)fields[i]).getType());
+			if ((fieldOwner == playerNumber) && (fieldTypeFromProperty == fieldType)) {
+				numbOfFieldsWithType += 1;
+			}
+		}
+		return numbOfFieldsWithType;
+	}
 
 
 	public int getHousesOnProperty(int currentPlayer, Field[] fields, int fieldNumber, int[] returnValue) {
@@ -141,7 +153,6 @@ public class Toolbox {
 
 	public int raiseMoney(int currentplayer, Field[] fields, int amount) {
 		int returnValue;
-
 
 		return returnValue;
 	}
