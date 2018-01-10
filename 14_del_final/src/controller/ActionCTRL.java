@@ -298,13 +298,13 @@ public class ActionCTRL {
 	}
 
 	private boolean checkWinner() {
-		int numberOfPLayersBroke = 0;
+		int numberOfPlayersBroke = 0;
 		boolean winner = false;
-		for (int i = 0; i < numberOfPlayers; i++) {
+		for (int i = 1; i < numberOfPlayers; i++) {
 			if (players[i].checkBroke())
-				numberOfPLayersBroke++;
+				numberOfPlayersBroke++;
 		}
-		if (numberOfPLayersBroke == numberOfPlayers-1)
+		if (numberOfPlayersBroke == numberOfPlayers-1)
 			winner = true;
 		return winner;
 	}
@@ -343,7 +343,7 @@ public class ActionCTRL {
 		}
 	}
 
-/**
+		/**
 		 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
 		 * @param playerNumber - Modtager et spiller nummer
 		 */
