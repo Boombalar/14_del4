@@ -348,13 +348,17 @@ public class ActionCTRL {
 			}
 		}
 
-		//Metode som switcher på hvilket type felt man er landet på
+		
+		/**
+		 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
+		 * @param playerNumber - Modtager et spiller nummer
+		 */
 		private void fieldRulesSwitch (int playerNumber) {
 			int fieldType = fields[players[playerNumber].getPosition()].getType();
 			int owner = (((OwnerFields)fields[this.oldPlayerPosition]).getOwner());
 
 			switch (fieldType) {
-			
+
 			case 0:	
 				//ProbertyField
 				int propertyValue = (((PropertyFields)fields[this.oldPlayerPosition]).getPropertyValue());
@@ -392,13 +396,13 @@ public class ActionCTRL {
 				//ShipFields
 				shippingFieldRules(playerNumber, 1);
 				break;
-				
+
 			case 2:
 				//Breweryfields
 				int breweryPropertyValue = (((BreweryFields)fields[this.oldPlayerPosition]).getPropertyValue());
-				int[] fieldRent = (((BreweryFields)fields[this.oldPlayerPosition]).returnValue());
+				int[] breweryFieldRent = (((BreweryFields)fields[this.oldPlayerPosition]).returnValue());
 				int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(this.oldPlayerPosition, fields, owner));
-				
+
 				if(owner == 0) {
 					boolean answer = view.getUserAnswer("Du er landet på " + fields[this.oldPlayerPosition].getName() + "vil du købe grunden", "ja", "nej");
 					if(answer == true) {
@@ -411,7 +415,7 @@ public class ActionCTRL {
 					}
 				}
 				if(owner != 0 && owner != playerNumber) {
-					int breweryRent = fieldRent[numOfOwnedBrewFields];
+					int breweryRent = breweryFieldRent[numOfOwnedBrewFields];
 					toolbox.payMoney(playerNumber, owner, players, fields, breweryRent);
 					view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 					view.updatePlayerAccount(owner, players[owner].getBalance());
@@ -450,12 +454,17 @@ public class ActionCTRL {
 			}
 		}
 		
+			/**
+			 * shippingFieldRules() - En metode som bestemmer logikken for når man lander på et rederifelt og for hvor mange rederier man har
+			 * @param playerNumber - modtager et spillernummer
+			 * @param multiplier - Hvis feltet er ejet af en spiller ganges den totale leje med multiplier.
+			 */
 		public void shippingFieldRules(int playerNumber, int multiplier) {
 			int shippingPropertyValue = (((ShipFields)fields[this.oldPlayerPosition]).getPropertyValue());
 			int owner = (((ShipFields)fields[this.oldPlayerPosition]).getOwner());
 			int[] fieldRent = (((ShipFields)fields[this.oldPlayerPosition]).returnValue());
 			int numOfOwnedShipFields = (toolbox.getNumberOfOwnedPropertiesInGroup(this.oldPlayerPosition, fields, owner));
-			
+
 			if(owner == 0) {
 				boolean answer = view.getUserAnswer("Du er landet på" + fields[this.oldPlayerPosition].getName() + " vil du købe grunden", "ja", "nej"); //Spiller for mulighed for at købe grunden
 				if(answer == true) {
@@ -469,8 +478,8 @@ public class ActionCTRL {
 			}
 
 			if(owner != 0 && owner != playerNumber) {
-				int shipRent = fieldRent[numOfOwnedShipFields -1];
-				toolbox.payMoney(playerNumber, owner, players, fields, shipRent*multiplier);
+				int shipRent = (fieldRent[numOfOwnedShipFields -1])*multiplier;
+				toolbox.payMoney(playerNumber, owner, players, fields, shipRent);
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 				view.updatePlayerAccount(owner, players[owner].getBalance());
 				view.writeText("Du er landet på " + fields[this.oldPlayerPosition].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
@@ -479,11 +488,15 @@ public class ActionCTRL {
 			if(owner == playerNumber) {
 				view.writeText("Du er landet på " + fields[this.oldPlayerPosition].getName() + " du ejer selv dette rederi");
 			}
-			
-		}
-		//Metode som switcher på hvilken type ChanceCard man har trukket.
-		public void chanceCardRules (int playerNumber) {
 
+		}
+		
+		/**
+		 * chanceCardRules - En metode som switcher på hvilken type ChanceCard man har trukket.
+		 * @param playerNumber - modtager et playernummer.
+		 */
+		
+		public void chanceCardRules (int playerNumber) {
 			int chanceCardType = chanceCard.getType();
 			int[] chanceCardValueArray = chanceCard.getReturnValue();
 			switch (chanceCardType) {
@@ -497,7 +510,6 @@ public class ActionCTRL {
 				break;
 
 			case 2: // MoveToCards
-
 				MoveToCardsRules(playerNumber); // logik og viewCTRL-kald ligger i denne metode.
 				if(checkForPassingStart(this.oldPlayerPosition, this.newPlayerPosition) == true)
 					view.updatePlayerPosition(playerNumber, this.oldPlayerPosition, this.newPlayerPosition);
@@ -516,7 +528,11 @@ public class ActionCTRL {
 				break;
 			}
 		}
-		//Metode som switcher på hvilket type MoveToCard man har trukket.
+		
+		/**
+		 * MoveToCardRules - En Metode som switcher på hvilket type MoveToCard man har trukket.
+		 * @param playerNumber - modtager et playernummer.
+		 */
 		public void MoveToCardsRules (int playerNumber) {
 			int[] chanceCardValueArray = chanceCard.getReturnValue();
 			int moveToField = chanceCardValueArray[0];
