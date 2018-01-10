@@ -56,12 +56,12 @@ public class ActionCTRL {
 
 		toolbox = new Toolbox();
 	}
+	int oldPlayerPosition = 0; //En given spiller start position på en runde
+	int newPlayerPosition; //Den position en given spiller rykkes til når terningerne er slået
 
 	private void gameSequence() {
 		int currentPlayer = 1; //Den første spiller instaniseres til spiller 1
 		int diceValue; //Den samlede mængde af terningerne
-		int oldPlayerPosition = 0; //En given spiller start position på en runde
-		int newPlayerPosition; //Den position en given spiller rykkes til når terningerne er slået
 		while (!checkWinner()) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 			/*
 			if(players[currentPlayer].checkTurnInJail()==1)
