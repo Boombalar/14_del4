@@ -274,10 +274,10 @@ public class ActionCTRL {
 			if(owner == 0) {
 				boolean	answer = view.getUserAnswer("Vil du købe denne grund?", "ja", "nej");
 				if(answer == true) {
-					//indsæt transactionmetode (currentplayer, owner, propertyValue);
-					//Her bliver feltet skiftet til currentplayer . OBS currentplayer skal skiftes når gamesekvens bliver lavet. 
+					toolbox.payMoney(playerNumber, owner, players, fields, propertyValue);
 					view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 					PropertyFields wantedFieldChange = ((PropertyFields)fields[position]);
+					//Herunder bliver feltets ejer skiftet.
 					wantedFieldChange.setOwner(playerNumber);
 					view.updateOwnership(playerNumber, position);
 					view.writeText("Du har købt " + fields[position].getName()+ " for " + propertyValue + " kr."); 
@@ -285,7 +285,7 @@ public class ActionCTRL {
 			}
 			if(owner != 0 && owner != playerNumber) {
 				int propertyRent = getRentFromPropertyField(position);
-				//transaktionmetode (currentplayer, owner, propertyRent)
+				toolbox.payMoney(playerNumber, owner, players, fields, propertyRent);
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 				view.updatePlayerAccount(owner, players[owner].getBalance());
 				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + propertyRent + " til " + players[owner].getPlayerName());
@@ -303,7 +303,7 @@ public class ActionCTRL {
 			if(owner == 0) {
 				boolean answer = view.getUserAnswer("Du er landet på" + fields[position].getName() + " vil du købe grunden", "ja", "nej");
 				if(answer == true) {
-					//transaktionmetode (currentplayer, owner, shippingPropertyValue)
+					toolbox.payMoney(playerNumber, owner, players, fields, shippingPropertyValue);
 					view.updatePlayerAccount(playerNumber, shippingPropertyValue);
 					view.updateOwnership(playerNumber, position);
 					ShipFields wantedFieldChange = ((ShipFields)fields[position]);
@@ -314,7 +314,7 @@ public class ActionCTRL {
 
 			if(owner != 0 && owner != playerNumber) {
 				int shipRent = getRentFromShipField(position);
-				//transaktionmetode (currentplayer, owner, shipRent)
+				toolbox.payMoney(playerNumber, owner, players, fields, shipRent);
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 				view.updatePlayerAccount(owner, players[owner].getBalance());
 				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
@@ -331,7 +331,7 @@ public class ActionCTRL {
 			if(owner == 0) {
 				boolean answer = view.getUserAnswer("Du er landet på " + fields[position].getName() + "vil du købe grunden", "ja", "nej");
 				if(answer == true) {
-					//transaktionmetode(currentplayer, owner, breweryPropertyValue)
+					toolbox.payMoney(playerNumber, owner, players, fields, breweryPropertyValue);
 					view.updatePlayerAccount(playerNumber, breweryPropertyValue);
 					view.updateOwnership(playerNumber, position);
 					BreweryFields wantedFieldChange = ((BreweryFields)fields[position]);
@@ -342,7 +342,7 @@ public class ActionCTRL {
 
 			if(owner != 0 && owner != playerNumber) {
 				int breweryRent = (getRentFromBreweryField(position) * dieCup.getDiceValue());
-				//transaktionmetode (currentplayer, owner, breweryRent)
+				toolbox.payMoney(playerNumber, owner, players, fields, breweryRent);
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 				view.updatePlayerAccount(owner, players[owner].getBalance());
 				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + breweryRent + " til " + players[owner].getPlayerName());
@@ -356,7 +356,7 @@ public class ActionCTRL {
 		case 3:
 			//Taxfields
 			int[] taxValue = (((TaxField)fields[position]).getReturnValue());
-			//transaktionmetode (currentplayer, 0, taxValue[0])
+			toolbox.payMoney(playerNumber, owner, players, fields, taxValue[0]);
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + taxValue[0] + " i skat");
 			break;
