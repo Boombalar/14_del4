@@ -430,15 +430,20 @@ public class ActionCTRL {
 			break;
 
 		case 2: // MoveToCards
-
+			MoveToCardsRules(playerNumber); // logik og viewCTRL-kald ligger i denne metode.
 			break;
 
 		case 3: // ReleaseCards
-
+			players[playerNumber].setTurnsInJail(1);;
 			break;
 
 		case 4: //TaxCards
-
+			int numberofhouses = toolbox.getNumberOfHousesFromPlayer(playerNumber, fields);
+			int numberofhotels = toolbox.getNumberOfHotelsFromPlayer(playerNumber, fields);
+			
+			players[playerNumber].removeMoney(chanceCardValueArray[1]*numberofhouses);
+			players[playerNumber].removeMoney(chanceCardValueArray[2]*numberofhotels);
+			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			break;
 		}
 	}
@@ -495,8 +500,9 @@ public class ActionCTRL {
 
 			break;
 
-		case 3:
-
+		case 3: // Ryk tre felter tilbage.
+			players[playerNumber].setPosition(oldPosition-3);
+			view.updatePlayerPosition(playerNumber, oldPosition, oldPosition-3);
 			break;
 		}
 	}
