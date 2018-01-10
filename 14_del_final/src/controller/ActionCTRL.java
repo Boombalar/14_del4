@@ -56,7 +56,11 @@ public class ActionCTRL {
 
 		toolbox = new Toolbox();
 	}
-
+/**
+ * gameSequence
+ * kører gamesekvens for en spiller
+ * 
+ */
 	private void gameSequence() {
 		int currentPlayer = 1; //Den første spiller instaniseres til spiller 1
 		int diceValue; //Den samlede mængde af terningerne
@@ -89,6 +93,7 @@ public class ActionCTRL {
 				// Hvis en spiller er broke, så gå ud af loop
 				if(players[currentPlayer].checkBroke())
 					break;
+				
 				// Lav Startmenu for spiller
 				view.writeText("Det er spiller  " + currentPlayer + "'s tur nu");
 				String[] playerChoice = {"Slå terninger", "Køb huse og hoteller","Sælg huse og hoteller", "Sælg grund"};
@@ -97,17 +102,19 @@ public class ActionCTRL {
 				//Håndtér valg fra menu
 				switch(choiceOfPlayer) {
 
-				// Slå terninger
 				// Slår terningerne, ændrer position i model lag og opdaterer view lag
 				// Håndterer om man kommer over start og får 4.000.
 				case "Slå terninger": 
-					dieCup.getDiceValue();
+					//slå terninger
+					dieCup.shake();
 					diceValue = dieCup.getDiceValue();
 					oldPlayerPosition = players[currentPlayer].getPosition();
 					newPlayerPosition = oldPlayerPosition + diceValue;
 					players[currentPlayer].setPosition(oldPlayerPosition + diceValue);
 					view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());						  
 					view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
+					
+					//Håndter om man kommer over start og får 4000.
 					if (newPlayerPosition > 39) {
 						newPlayerPosition -= 40;
 						players[currentPlayer].recieveMoney(4000);
@@ -431,6 +438,7 @@ public class ActionCTRL {
 			break;
 		}
 	}
+	
 	public int getRentFromPropertyField (int fieldNum) {
 		int[] fieldRent = (((PropertyFields)fields[fieldNum]).returnValue());
 		int returnValue = fieldRent[fieldRent[6]];
