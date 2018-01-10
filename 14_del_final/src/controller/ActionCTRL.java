@@ -7,7 +7,6 @@ import view.*;
 
 public class ActionCTRL {
 	private int numberOfPlayers;
-	private int lostPlayerCount;
 	private int oldPlayerPosition = 0; //En given spiller start position på en runde
 	private int newPlayerPosition; //Den position en given spiller rykkes til når terningerne er slået
 	private Board board;
@@ -511,12 +510,12 @@ public class ActionCTRL {
 
 			case 2: // MoveToCards
 				MoveToCardsRules(playerNumber); // logik og viewCTRL-kald ligger i denne metode.
-				if(checkForPassingStart(this.oldPlayerPosition, this.newPlayerPosition) == true)
+				if(toolbox.CheckForPassingStart(this.oldPlayerPosition, this.newPlayerPosition) == true)
 					view.updatePlayerPosition(playerNumber, this.oldPlayerPosition, this.newPlayerPosition);
 				break;
 
 			case 3: // ReleaseCards
-				players[playerNumber].addReleaseCards();
+				players[playerNumber].addReleaseCard();
 				break;
 
 			case 4: //TaxCards
