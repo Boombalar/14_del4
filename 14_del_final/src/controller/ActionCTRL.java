@@ -543,7 +543,7 @@ public class ActionCTRL {
 
 		case 1:
 			// Blot flyttekort til et bestemt felt.
-			if((chanceCard.cardnumber == 19) || (chanceCard.cardnumber == 22)) {
+			if((chanceCard.cardNumber == 19) || (chanceCard.cardNumber == 22)) {
 				players[playerNumber].setPosition(moveToField);
 				view.updatePlayerPosition(playerNumber,this.oldPlayerPosition, moveToField);
 				players[playerNumber].setTurnsInJail(1);
@@ -555,7 +555,12 @@ public class ActionCTRL {
 			}
 			break;
 
-		case 2: // Et flyttekort, hvor man flytter til det nærmeste felt med redderi.			
+		case 2: // Et flyttekort, hvor man flytter til det nærmeste felt med redderi.	
+//			
+//			while(fields[fieldNumber]) {
+//				
+//			}
+			
 			int[] shippingArray = new int[4];
 			// Der oprettes et loop, som smider lokationenerne fra feltnumrene, ind i et array, hvis typen er "1" - som er shippingField.
 			for(int i=0 ; i < 39 ; i++) {
