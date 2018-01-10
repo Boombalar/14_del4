@@ -1,13 +1,11 @@
 package controller;
 
 import org.omg.CORBA.Current;
-
 import model.*;
 
 public class Toolbox {
 
 	public Toolbox() {
-
 	}
 
 	public void transferAssets(int fromPlayer, int toPlayer, Player[] players, Field[] fields) {
@@ -141,9 +139,32 @@ public class Toolbox {
 		return returnValue;
 	}
 
+	public int getNumberOfHousesFromPlayer (int playerNumber, Field[] fields) {
+		int numbOfHouses=0;
+		for(int i=0 ; i < 39 ; i++) {
+			int numbOfHousesOnField = (((PropertyFields)fields[i]).getReturnValue()[6]);
+			int fieldOwner = (((PropertyFields)fields[i]).getOwner());
+			if ((fieldOwner == playerNumber) && (numbOfHousesOnField > 0) && (numbOfHousesOnField < 5)) {
+				numbOfHouses += (((PropertyFields)fields[i]).getReturnValue()[6]);
+			}
+		}
+		return numbOfHouses;
+	}
+	
+	public int getNumberOfHotelsFromPlayer (int playerNumber, Field[] fields) {
+		int numbOfHotels=0;
+		for(int i=0 ; i < 39 ; i++) {
+			int numbOfHousesOnField = (((PropertyFields)fields[i]).getReturnValue()[6]);
+			int fieldOwner = (((PropertyFields)fields[i]).getOwner());
+			if ((fieldOwner == playerNumber) && (numbOfHousesOnField == 5)) { // hvis der er 5 huse, så er der et hotel
+				numbOfHotels += 1;
+			}
+		}
+		return numbOfHotels;
+	}
+
 	public boolean raiseMoney(int currentplayer, Field[] fields, int amount) {
 		boolean returnValue=true;
-
 		return returnValue;
 	}
 
@@ -156,7 +177,6 @@ public class Toolbox {
 				if (toPlayer > 0) {
 					players[currentPlayer].recieveMoney(amount);
 				}
-				
 			}
 		}
 	}
