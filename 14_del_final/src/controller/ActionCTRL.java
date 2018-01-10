@@ -209,7 +209,7 @@ public class ActionCTRL {
 					int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
 
 
-					if (toolbox.getHOusesOnProperty(currentPlayer, fields, fieldCount, returnValue)==0) {
+					if (toolbox.getHousesOnProperty(currentPlayer, fields, fieldCount, returnValue)==0) {
 						toolbox.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
 
 					}
@@ -395,14 +395,14 @@ public class ActionCTRL {
 	public int getRentFromShipField(int fieldNum) {
 		int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
 		int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
-		int numOfOwnedShipFields = (toolbox.checkNumOfOwnedFields(fieldOwner, Field[] fields, fieldNum, fields[fieldNum].getType()));
+		int numOfOwnedShipFields = (toolbox.checkNumOfOwnFieldsWithType(fieldOwner, fields, fieldNum, fields[fieldNum].getType()));
 		return fieldRent[(numOfOwnedShipFields - 1)];
 	}
 
 	public int getRentFromBreweryField(int fieldNum) {
 		int[] fieldRent = (((BreweryFields)fields[fieldNum]).returnValue());
 		int fieldOwner = (((BreweryFields)fields[fieldNum]).getOwner());
-		int numOfOwnedBrewFields = (toolbox.checkNumOfOwnedFields(fieldOwner, Field[] fields, fieldNum, fields[fieldNum].getType()));
+		int numOfOwnedBrewFields = (toolbox.checkNumOfOwnFieldsWithType(fieldOwner, fields, fieldNum, fields[fieldNum].getType()));
 		return fieldRent[(numOfOwnedBrewFields - 1)];
 	}
 
@@ -440,7 +440,6 @@ public class ActionCTRL {
 	}
 
 	public void MoveToCardsRules (int playerNumber) {
-		int chanceCardType = chanceCard.getType();
 		int[] chanceCardValueArray = chanceCard.getReturnValue();
 		int oldPosition = players[playerNumber].getPosition();
 		int moveToField = chanceCardValueArray[1];
