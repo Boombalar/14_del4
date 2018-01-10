@@ -1,9 +1,8 @@
 package controller;
+
 import model.*;
 
 public class Toolbox {
-
-
 
 	public Toolbox() {
 
@@ -33,7 +32,7 @@ public class Toolbox {
 
 		numberOfHouses = getHousesOnProperty(currentPlayer, fields, fieldNumber, returnValue);
 		if (numberOfHouses > 0) {
-			numberOfHouses = numberOfHouses -1;
+			numberOfHouses = numberOfHouses - 1;
 			returnValue[6] = numberOfHouses;
 		}
 		priceOfBuilding = returnValue[7]/2;
@@ -48,9 +47,8 @@ public class Toolbox {
 		if (toPlayer == 0) {
 			players[currentPlayer].recieveMoney(priceOfProperty);
 		}else {
-			transferAssets(currentPlayer, toPlayer, players, fields);
+			transferMoney(currentPlayer, toPlayer, players, priceOfProperty);
 		}
-
 	}
 
 	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields) {
@@ -103,12 +101,26 @@ public class Toolbox {
 		return returnValue;
 	}
 
-
 	public int getHousesOnProperty(int currentPlayer, Field[] fields, int fieldNumber, int[] returnValue) {
 		if (((OwnerFields)fields[fieldNumber]).getOwner()==currentPlayer) {
 			returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
 		}
 		return returnValue[6];
+	}
+
+	public int getHousesOnGroup(int currentPlayer, Field[] fields, int fieldNumber) {
+		int returnValue=0;
+		int[] returnField;
+
+		for (int fieldCount = 0;fieldCount<= 39;fieldCount++) {
+			if(fields[fieldCount] instanceof PropertyFields) {
+				returnField = ((PropertyFields)fields[fieldNumber]).getReturnValue();
+				if(((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer && getHousesOnProperty(currentPlayer, fields, fieldNumber, returnField)>0) {
+					returnValue = returnValue + getHousesOnProperty(currentPlayer, fields, fieldNumber, returnField);
+				}
+			}
+		}
+		return returnValue;
 	}
 
 	public int getHousePrice(int fieldNumber, Field[] fields) {
@@ -117,9 +129,23 @@ public class Toolbox {
 		return returnValue[7];
 	}
 
-	public int raiseMoney(int currentplayer, Field[] fields, int amount) {
-		int returnValue;
+	public int getNumberOfOwnedPropertiesInGroup(int fieldNumber, Field[] fields, int playerOwner) {
+		int returnValue=0;
+		int groupNumber = ((PropertyFields)fields[fieldNumber]).getGroupNumber();
+		for (int fieldCount=0;fieldCount<=39;fieldCount++) {
+			if (fields[fieldCount] instanceof PropertyFields) {
+				if (((PropertyFields)fields[fieldCount]).getOwner()==playerOwner) {
+					if (((PropertyFields)fields[fieldCount]).getGroupNumber()==groupNumber) {
+						returnValue++;
+					}
+				}
+			}
+		}
+		return returnValue;
+	}
 
+	public int raiseMoney(int currentplayer, Field[] fields, int amount) {
+		int returnValue=0;
 
 		return returnValue;
 	}
