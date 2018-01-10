@@ -80,7 +80,7 @@ public class Toolbox {
 
 	public boolean checkForBankruptcy(int currentPlayer, Player[] players, int amount) {
 		boolean returnValue = false;
-		if (players[currentPlayer].getBalance() - amount < 0) {
+		if ((players[currentPlayer].getBalance() - amount) < 0) {
 			players[currentPlayer].setBroke(true);
 			returnValue = true;
 		}		
@@ -102,11 +102,12 @@ public class Toolbox {
 	}
 
 	public int getHousesOnProperty(int currentPlayer, Field[] fields, int fieldNumber) {
-		int[] returnValue=null;
+		int value = 0;
 		if (((OwnerFields)fields[fieldNumber]).getOwner()==currentPlayer) {
-			returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
+			int[] returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
+			value = returnValue[6];
 		}
-		return returnValue[6];
+		return value;
 	}
 
 	public int getHousesOnGroup(int currentPlayer, Field[] fields, int fieldNumber) {

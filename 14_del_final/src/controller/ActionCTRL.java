@@ -113,7 +113,7 @@ public class ActionCTRL {
 
 					//Update view
 					view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());						  
-					
+
 
 					//Håndter om man kommer over start og får 4000.
 					if (newPlayerPosition > 39) {
@@ -121,11 +121,11 @@ public class ActionCTRL {
 						players[currentPlayer].recieveMoney(4000);
 						view.writeText("Spiller " + currentPlayer + " har passeret start og får 4000 kroner");
 					}
-					
+
 					players[currentPlayer].setPosition(newPlayerPosition);
 					view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 					view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
-					
+
 					fieldRulesSwitch(currentPlayer);
 					if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 						currentPlayer--;
@@ -357,7 +357,7 @@ public class ActionCTRL {
 		if ((fields[this.newPlayerPosition]) instanceof OwnerFields) {
 			owner = (((OwnerFields)fields[this.newPlayerPosition]).getOwner());
 		}
-		
+
 		switch (fieldType) {
 
 		case 0:	
@@ -504,10 +504,11 @@ public class ActionCTRL {
 
 		case 1: // TransactionCard
 			int transactionValue = chanceCardValueArray[0];
-			if (transactionValue < 0)
+			if (transactionValue < 0) {
 				toolbox.payMoney(playerNumber, 0, players, fields, transactionValue);
-			else
-				players[playerNumber].recieveMoney(transactionValue);	
+			} else {
+				players[playerNumber].recieveMoney(transactionValue);
+			}
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			break;
 
@@ -524,8 +525,8 @@ public class ActionCTRL {
 		case 4: //TaxCards
 			int numberofhouses = toolbox.getNumberOfHousesFromPlayer(playerNumber, fields);
 			int numberofhotels = toolbox.getNumberOfHotelsFromPlayer(playerNumber, fields);
-			players[playerNumber].removeMoney(chanceCardValueArray[0]*numberofhouses);
-			players[playerNumber].removeMoney(chanceCardValueArray[1]*numberofhotels);
+			int totalSum = (chanceCardValueArray[0] * numberofhouses)+(chanceCardValueArray[1] * numberofhotels);
+			players[playerNumber].removeMoney(totalSum);
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			break;
 		}

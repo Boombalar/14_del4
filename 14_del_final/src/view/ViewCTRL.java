@@ -220,10 +220,31 @@ public class ViewCTRL {
 	 * @param fieldNumber Nummeret på det felt der skal opdateres
 	 */
 	public void updateOwnership(int player, int fieldNumber) {
-		if (player == 0) {
-			//sæt til startborderfarve
+		
+		if(guiFields[fieldNumber] instanceof GUI_Shipping) {
+			if (player == 0) {
+				((GUI_Shipping)guiFields[fieldNumber]).setBorder(null);
+				//sæt til startborderfarve
+			}
+			else ((GUI_Shipping)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
 		}
-		else ((GUI_Street)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
+		if(guiFields[fieldNumber] instanceof GUI_Brewery) {
+			if (player == 0) {
+				((GUI_Brewery)guiFields[fieldNumber]).setBorder(null);
+				//sæt til startborderfarve
+			}
+			else ((GUI_Brewery)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
+		}
+		if(guiFields[fieldNumber] instanceof GUI_Street) {
+			if (player == 0) {
+				((GUI_Street)guiFields[fieldNumber]).setBorder(null);
+				//sæt til startborderfarve
+			}
+			else ((GUI_Street)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
+		}
+
+		
+		
 	}
 
 	/**
