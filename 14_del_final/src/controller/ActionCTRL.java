@@ -6,22 +6,18 @@ import model.*;
 import view.*;
 
 public class ActionCTRL {
-	Board board;
-	Field[] fields;
-
-	CreatePlayers makePlayers;
-	Player[] players;
-
-	ViewCTRL view;
-	ChanceCardCTRL chanceCard;
-	DieCup dieCup;
-
-	Toolbox toolbox;
-
-	int numberOfPlayers;
-	int lostPlayerCount;
-
-
+	private int numberOfPlayers;
+	private int lostPlayerCount;
+	private int oldPlayerPosition = 0; //En given spiller start position på en runde
+	private int newPlayerPosition; //Den position en given spiller rykkes til når terningerne er slået
+	private Board board;
+	private Field[] fields;
+	private CreatePlayers makePlayers;
+	private Player[] players;
+	private ViewCTRL view;
+	private ChanceCardCTRL chanceCard;
+	private DieCup dieCup;
+	private Toolbox toolbox;
 
 	public ActionCTRL() {
 		initialiseGame();
@@ -64,31 +60,15 @@ public class ActionCTRL {
 	private void gameSequence() {
 		int currentPlayer = 1; //Den første spiller instaniseres til spiller 1
 		int diceValue; //Den samlede mængde af terningerne
-		int oldPlayerPosition = 0; //En given spiller start position på en runde
-		int newPlayerPosition; //Den position en given spiller rykkes til når terningerne er slået
 		int amountOfProperties; //Den mængde grunde en given spiller ejer?
 		int index; //Index til hvad?
 		String[] propertyArray; //Det String array som indeholder alle de grunde en given spiller ejer.
 		String choice; //Det valg en given spiller vælger ud fra propertyString array.
-		int[] returnValue; //Hvilken specifik returværdi det dette?
+		int[] returnValue; //Hvilken specifik returværdi det dette?s
 
 		while (!checkWinner()) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 
-			if(players[currentPlayer].checkTurnInJail()==1)
-				if(players[currentPlayer].getPosition() == 11)
-					if (players.releaseCard >=1); {
-						String[] playerChoiceJail = {"Betal 1000 kr", "Brug releaseCard"};
-						String ChoiceJailPlayer = view.getDropDownChoice("Vælg", playerChoiceJail);
-						view.updatePlayerAccount(player, amount);
-					}
-					else {
-						String playerChoiceRelease = "Betal 1000 kr for at komme ud af fængsel";
-						//raisemoney
-						players[currentPlayer].removeMoney(1000);
-					}
-
 		}
-
 
 		while (true) {
 			// Hvis en spiller er broke, så gå ud af loop
