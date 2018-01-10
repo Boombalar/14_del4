@@ -393,14 +393,14 @@ public class ActionCTRL {
 		}
 		return returnValue;
 	}
-
+	// Metode som tjekker om man har alle rederier og hvad man skal betale.
 	public int getRentFromShipField(int fieldNum) {
 		int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
 		int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
 		int numOfOwnedShipFields = (toolbox.checkNumOfOwnFieldsWithType(fieldOwner, fields, fieldNum, fields[fieldNum].getType()));
 		return fieldRent[(numOfOwnedShipFields - 1)];
 	}
-
+	// En metode som tjekker om man har et eller to brewery og hvad man skal betale. 
 	public int getRentFromBreweryField(int fieldNum) {
 		int[] fieldRent = (((BreweryFields)fields[fieldNum]).returnValue());
 		int fieldOwner = (((BreweryFields)fields[fieldNum]).getOwner());
@@ -412,19 +412,26 @@ public class ActionCTRL {
 
 		int chanceCardType = chanceCard.getType();
 		int[] chanceCardValueArray = chanceCard.getReturnValue();
-
 		switch (chanceCardType) {
 
 		case 1: // TransactionCard
 			int transactionValue = chanceCardValueArray[0];
 			if (transactionValue < 0)
-				players[playerNumber].removeMoney(transactionValue*(-1));
+				toolbox.payMoney(playerNumber, 0, players, fields, transactionValue);
 			else
 				players[playerNumber].recieveMoney(transactionValue);
+				
 			break;
 
 		case 2: // MoveToCards
+			int oldPosition = players[playerNumber].getPosition();
+			int newPosition = chanceCardValueArray[0]; 
 			MoveToCardsRules(playerNumber); // logik og viewCTRL-kald ligger i denne metode.
+			if(checkForPassingStart(oldPosition, newPosition) == true)
+			view.updatePlayerPosition(playerNumber, oldPosition, newPosition);
+			fieldRulesSwitch(playerNumber);
+			
+				
 			break;
 
 		case 3: // ReleaseCards
