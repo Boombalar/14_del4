@@ -132,11 +132,11 @@ public class Toolbox {
 
 	public int getNumberOfOwnedPropertiesInGroup(int fieldNumber, Field[] fields, int playerOwner) {
 		int returnValue=0;
-		int groupNumber = ((PropertyFields)fields[fieldNumber]).getGroupNumber();
+		int groupNumber = ((OwnerFields)fields[fieldNumber]).getGroupNumber();
 		for (int fieldCount=0;fieldCount<=39;fieldCount++) {
-			if (fields[fieldCount] instanceof PropertyFields) {
-				if (((PropertyFields)fields[fieldCount]).getOwner()==playerOwner) {
-					if (((PropertyFields)fields[fieldCount]).getGroupNumber()==groupNumber) {
+			if (fields[fieldCount] instanceof OwnerFields) {
+				if (((OwnerFields)fields[fieldCount]).getOwner()==playerOwner) {
+					if (((OwnerFields)fields[fieldCount]).getGroupNumber()==groupNumber) {
 						returnValue++;
 					}
 				}

@@ -29,10 +29,10 @@ public class ChanceCardDeck {
 		chancecards[16] = new TransactionCard(16,1,"Grundet dyrtiden har De fået gageforhøjelse. Modtag kr. 1.000",1000);
 		chancecards[17] = new TransactionCard(17,1,"De har en række med elleve rigtige i tipning. Modtag kr. 1.000",1000);
 		chancecards[18] = new MoveToCard(18,2,"Ryk frem til start",0,1);
-		chancecards[19] = new MoveToCard(19,2,"Gå i fængsel. Ryk direkte til fængslet. Selvom De passerer start indkasserer De ikke kr. 4.000",11,1);
-		chancecards[20] = new MoveToCard(20,2,"Ryk frem til Frederiksberg Allé. Hvis De passerer Start, indkassér kr. 4.000",12,1);
+		chancecards[19] = new MoveToCard(19,2,"Gå i fængsel. Ryk direkte til fængslet. Selvom De passerer start indkasserer De ikke kr. 4.000",10,1);
+		chancecards[20] = new MoveToCard(20,2,"Ryk frem til Frederiksberg Allé. Hvis De passerer Start, indkassér kr. 4.000",11,1);
 		chancecards[21] = new MoveToCard(21,2,"Tag ind på Rådhuspladsen",39,1);
-		chancecards[22] = new MoveToCard(22,2,"Gå i fængsel. Ryk direkte til fængslet. Selvom De passerer start indkasserer De ikke kr. 4.000",11,1);
+		chancecards[22] = new MoveToCard(22,2,"Gå i fængsel. Ryk direkte til fængslet. Selvom De passerer start indkasserer De ikke kr. 4.000",10,1);
 		chancecards[23] = new MoveToCard(23,2,"Ryk brikken frem til det nærmeste rederi og betal ejeren to gange den leje, han ellers er berettiget til. Hvis selskabet ikke ejes af nogen kan De købe det af banken.",0,2);// Her er moveto parametret ligegyldigt
 		chancecards[24] = new MoveToCard(24,2,"Ryk brikken frem til det nærmeste rederi og betal ejeren to gange den leje, han ellers er berettiget til. Hvis selskabet ikke ejes af nogen kan De købe det af banken.",0,2);// Her er moveto parametret ligegyldigt
 		chancecards[25] = new MoveToCard(25,2,"Ryk brikken frem til det nærmeste rederi og betal ejeren to gange den leje, han ellers er berettiget til. Hvis selskabet ikke ejes af nogen kan De købe det af banken.",0,2);// Her er moveto parametret ligegyldigt
@@ -41,7 +41,7 @@ public class ChanceCardDeck {
 		chancecards[28] = new TaxCard(28,4,"Oliepriserne er steget, og De skal betale: kr. 500 pr. hus og kr. 2.000 pr. hotel",500,2000);
 		chancecards[29] = new ReleaseJailCard(29,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kor kan opbevares, indtil De får brug for det.");
 		chancecards[30] = new ReleaseJailCard(30,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kor kan opbevares, indtil De får brug for det.");
-		chancecards[31] = new MoveToCard(31,2,"Ryk frem til Grønningen. Hvis De passerer Start, Indkassér da kr. 4.000",25,1);
+		chancecards[31] = new MoveToCard(31,2,"Ryk frem til Grønningen. Hvis De passerer Start, Indkassér da kr. 4.000",24,1);
 	}
 	
 	/**

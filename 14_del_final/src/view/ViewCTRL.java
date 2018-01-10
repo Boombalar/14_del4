@@ -222,9 +222,8 @@ public class ViewCTRL {
 	public void updateOwnership(int player, int fieldNumber) {
 		if (player == 0) {
 			//sæt til startborderfarve
-		}else {
-			((GUI_Street)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
 		}
+		else ((GUI_Street)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
 	}
 
 	/**
