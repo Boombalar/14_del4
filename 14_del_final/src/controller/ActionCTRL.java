@@ -102,7 +102,7 @@ public class ActionCTRL {
 
 				// Slår terningerne, ændrer position i model lag og opdaterer view lag
 				// Håndterer om man kommer over start og får 4.000.
-				case "Slå terninger": 
+				case "Slå terninger":
 					//slå terninger
 					dieCup.shake();
 					diceValue = dieCup.getDiceValue();
@@ -284,11 +284,10 @@ public class ActionCTRL {
 					returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
 					toolbox.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
 				}
-
 				break;
 				//Lav logik for spillers choice
 			}
-
+			view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 			currentPlayer++;
 			if (currentPlayer > players.length-1){
 				currentPlayer = 1;
@@ -375,7 +374,7 @@ public class ActionCTRL {
 					//Herunder bliver feltets ejer skiftet.
 					wantedFieldChange.setOwner(playerNumber);
 					view.updateOwnership(playerNumber, this.newPlayerPosition);
-					view.writeText("Du har købt " + fields[this.newPlayerPosition].getName()+ " for " + propertyValue + " kr."); //gui tekst til spilleren
+					view.writeText(players[playerNumber].getPlayerName() + " har købt " + fields[this.newPlayerPosition].getName()+ " for " + propertyValue + " kr."); //gui tekst til spilleren
 				}
 			}
 			if(owner != 0 && owner != playerNumber) {
@@ -385,7 +384,7 @@ public class ActionCTRL {
 				toolbox.payMoney(playerNumber, owner, players, fields, propertyRent);				 //transaction mellem to spiller.
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());			 //update af den aktive spillerens konto
 				view.updatePlayerAccount(owner, players[owner].getBalance());						 //Update af den spiller som modtager penge
-				view.writeText("Du er landet på " + fields[this.newPlayerPosition].getName() + " du skal betale " + propertyRent + " til " + players[owner].getPlayerName()); //Gui i tekst til spilleren
+				view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[this.newPlayerPosition].getName() + " du skal betale " + propertyRent + " til " + players[owner].getPlayerName()); //Gui i tekst til spilleren
 			}
 			//Her lander den aktivespiller på et felt som han selv ejer. 
 			if((owner == playerNumber)) {  

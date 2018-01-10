@@ -1,5 +1,6 @@
 package controller;
 
+import gui_fields.GUI_Shipping;
 import model.*;
 
 public class Toolbox {
@@ -11,8 +12,8 @@ public class Toolbox {
 		players[fromPlayer].removeMoney(amount);
 		players[toPlayer].recieveMoney(amount);
 	}
-	
-	
+
+
 	public void transferAssets(int fromPlayer, int toPlayer, Player[] players, Field[] fields) {
 		for(int fieldcount = 0;fieldcount <=39;fieldcount++) {
 			if (fields[fieldcount] instanceof OwnerFields) {
@@ -54,23 +55,26 @@ public class Toolbox {
 	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields) {
 		int[] returnValue;
 
-		for (int fieldCount = 0;fieldCount <=39;fieldCount++) {
-			if (((OwnerFields)fields[fieldCount]).getOwner() == currentPlayer) {
-				returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
-				int numberOfBuildings=returnValue[6];
-				if (numberOfBuildings>0) {
-					for (int numberOfBuildingSales = 1 ; numberOfBuildingSales <= numberOfBuildings ; numberOfBuildingSales++) {
-						sellBuilding(currentPlayer, players, fields, fieldCount);
-					}
-				}
-				changeOwnerShip(toPlayer, fields, fieldCount);	
-			}
-		}
+		for (int fieldCount = 0 ; fieldCount <=39 ; fieldCount++) {
 
-		if (toPlayer==0) {
-			players[currentPlayer].removeMoney(players[currentPlayer].getBalance());
-		}else {
-			safeTransferMoney(currentPlayer, toPlayer, players, players[currentPlayer].getBalance());
+			if(fields[fieldCount] instanceof OwnerFields) {
+				if (((OwnerFields)fields[fieldCount]).getOwner() == currentPlayer) {
+					returnValue = (((OwnerFields)fields[fieldCount]).returnValue());
+					int numberOfBuildings=returnValue[6];
+					if (numberOfBuildings>0) {
+						for (int numberOfBuildingSales = 1 ; numberOfBuildingSales <= numberOfBuildings ; numberOfBuildingSales++) {
+							sellBuilding(currentPlayer, players, fields, fieldCount);
+						}
+					}
+					changeOwnerShip(toPlayer, fields, fieldCount);	
+				}
+			}
+
+			if (toPlayer==0) {
+				players[currentPlayer].removeMoney(players[currentPlayer].getBalance());
+			}else {
+				safeTransferMoney(currentPlayer, toPlayer, players, players[currentPlayer].getBalance());
+			}
 		}
 	}
 
@@ -250,15 +254,15 @@ public class Toolbox {
 		if (checkForBankruptcy(currentPlayer, players, amount)) {
 			if (raiseMoney(currentPlayer, players, fields, amount) == false){
 				bankruptcy(currentPlayer, toPlayer, players, fields);
-			} else {						
-				players[currentPlayer].removeMoney(amount);
-				if (toPlayer > 0) {
-					players[currentPlayer].recieveMoney(amount);
-				}
+			}
+		} else {						
+			players[currentPlayer].removeMoney(amount);
+			if (toPlayer > 0) {
+				players[currentPlayer].recieveMoney(amount);
 			}
 		}
 	}
-	
+
 	public boolean CheckForPassingStart(int oldPosition, int newPosition) {
 		Boolean checkForPassingStart = false;
 		if (newPosition < oldPosition) {
