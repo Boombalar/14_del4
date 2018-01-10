@@ -308,7 +308,7 @@ public class ActionCTRL {
 					view.updateOwnership(currentplayer, position);
 					ShipFields wantedFieldChange = ((ShipFields)fields[position]);
 					wantedFieldChange.setOwner(currentplayer);
-					view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr" );
+					view.writeText("Du har købt " + fields[position].getName() + " for " + shippingPropertyValue + " kr" );
 				}
 			}
 
@@ -336,7 +336,7 @@ public class ActionCTRL {
 					view.updateOwnership(currentplayer, position);
 					BreweryFields wantedFieldChange = ((BreweryFields)fields[position]);
 					wantedFieldChange.setOwner(currentplayer);
-					view.writeText("Du har købt " + fields[position].getName() + " for " + propertyValue + " kr");
+					view.writeText("Du har købt " + fields[position].getName() + " for " + breweryPropertyValue + " kr");
 				}
 			}
 
@@ -370,14 +370,6 @@ public class ActionCTRL {
 			view.showChanceCard(chanceCardText);
 			chanceCardRules(currentplayer);
 			break;
-
-			//		case 5:
-			//			//Startfield - ingenting sker
-			//			break;
-			//
-			//		case 6:
-			//			//NoActionField - ingenting sker
-			//			break;
 
 		case 7:
 			//GoToJailField
@@ -440,7 +432,6 @@ public class ActionCTRL {
 		case 4: //TaxCards
 			int numberofhouses = toolbox.getNumberOfHousesFromPlayer(playerNumber, fields);
 			int numberofhotels = toolbox.getNumberOfHotelsFromPlayer(playerNumber, fields);
-			
 			players[playerNumber].removeMoney(chanceCardValueArray[1]*numberofhouses);
 			players[playerNumber].removeMoney(chanceCardValueArray[2]*numberofhotels);
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
