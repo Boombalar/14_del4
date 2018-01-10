@@ -351,103 +351,102 @@ public class ActionCTRL {
 
 	private void fieldRulesSwitch (int playerNumber) {
 		int fieldType = fields[players[playerNumber].getPosition()].getType();
-		int position = players[playerNumber].getPosition();
-		int owner = (((OwnerFields)fields[position]).getOwner());
+		int owner = (((OwnerFields)fields[this.oldPlayerPosition]).getOwner());
 
 		switch (fieldType) {
 
 		case 0:	
 			//ProbertyField
-			int propertyValue = (((PropertyFields)fields[position]).getPropertyValue());
+			int propertyValue = (((PropertyFields)fields[this.oldPlayerPosition]).getPropertyValue());
 			if(owner == 0) {
 				boolean	answer = view.getUserAnswer("Vil du købe denne grund?", "ja", "nej");
 				if(answer == true) {
 					toolbox.payMoney(playerNumber, owner, players, fields, propertyValue); //spiller køber grunden af brættet
 					view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); //Update af gui.
-					PropertyFields wantedFieldChange = ((PropertyFields)fields[position]);
+					PropertyFields wantedFieldChange = ((PropertyFields)fields[this.oldPlayerPosition]);
 					//Herunder bliver feltets ejer skiftet.
 					wantedFieldChange.setOwner(playerNumber);
-					view.updateOwnership(playerNumber, position);
-					view.writeText("Du har købt " + fields[position].getName()+ " for " + propertyValue + " kr."); //gui tekst til spilleren
+					view.updateOwnership(playerNumber, this.oldPlayerPosition);
+					view.writeText("Du har købt " + fields[this.oldPlayerPosition].getName()+ " for " + propertyValue + " kr."); //gui tekst til spilleren
 				}
 			}
 			if(owner != 0 && owner != playerNumber) {
-				int propertyRent = getRentFromPropertyField(position);
+				int propertyRent = getRentFromPropertyField(this.oldPlayerPosition);
 				toolbox.payMoney(playerNumber, owner, players, fields, propertyRent); // transaction mellem to spiller.
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); //update af den aktive spillerens konto
 				view.updatePlayerAccount(owner, players[owner].getBalance()); //Update af den spiller som modtager penge
-				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + propertyRent + " til " + players[owner].getPlayerName()); //Gui i tekst til spilleren
+				view.writeText("Du er landet på " + fields[this.oldPlayerPosition].getName() + " du skal betale " + propertyRent + " til " + players[owner].getPlayerName()); //Gui i tekst til spilleren
 			}
 			//Her lander den aktivespiller på et felt som han selv ejer. 
 			if((owner == playerNumber)) {  
-				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv denne grund");
+				view.writeText("Du er landet på " + fields[this.oldPlayerPosition].getName() + " du ejer selv denne grund");
 			}
 
 			break;
 
 		case 1:
 			//ShipFields
-			int shippingPropertyValue = (((ShipFields)fields[position]).getPropertyValue());
+			int shippingPropertyValue = (((ShipFields)fields[this.oldPlayerPosition]).getPropertyValue());
 
 			if(owner == 0) {
-				boolean answer = view.getUserAnswer("Du er landet på" + fields[position].getName() + " vil du købe grunden", "ja", "nej");
+				boolean answer = view.getUserAnswer("Du er landet på" + fields[this.oldPlayerPosition].getName() + " vil du købe grunden", "ja", "nej");
 				if(answer == true) {
 					toolbox.payMoney(playerNumber, owner, players, fields, shippingPropertyValue);
 					view.updatePlayerAccount(playerNumber, shippingPropertyValue);
-					view.updateOwnership(playerNumber, position);
-					ShipFields wantedFieldChange = ((ShipFields)fields[position]);
+					view.updateOwnership(playerNumber, this.oldPlayerPosition);
+					ShipFields wantedFieldChange = ((ShipFields)fields[this.oldPlayerPosition]);
 					wantedFieldChange.setOwner(playerNumber);
-					view.writeText("Du har købt " + fields[position].getName() + " for " + shippingPropertyValue + " kr" );
+					view.writeText("Du har købt " + fields[this.oldPlayerPosition].getName() + " for " + shippingPropertyValue + " kr" );
 				}
 			}
 
 			if(owner != 0 && owner != playerNumber) {
-				int shipRent = getRentFromShipField(position);
+				int shipRent = getRentFromShipField(this.oldPlayerPosition);
 				toolbox.payMoney(playerNumber, owner, players, fields, shipRent);
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 				view.updatePlayerAccount(owner, players[owner].getBalance());
-				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
+				view.writeText("Du er landet på " + fields[this.oldPlayerPosition].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
 			}
 
 			if(owner == playerNumber) {
-				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette rederi");
+				view.writeText("Du er landet på " + fields[this.oldPlayerPosition].getName() + " du ejer selv dette rederi");
 			}
 			break;
 
 		case 2:
 			//Breweryfields
-			int breweryPropertyValue = (((BreweryFields)fields[position]).getPropertyValue());
+			int breweryPropertyValue = (((BreweryFields)fields[this.oldPlayerPosition]).getPropertyValue());
 			if(owner == 0) {
-				boolean answer = view.getUserAnswer("Du er landet på " + fields[position].getName() + "vil du købe grunden", "ja", "nej");
+				boolean answer = view.getUserAnswer("Du er landet på " + fields[this.oldPlayerPosition].getName() + "vil du købe grunden", "ja", "nej");
 				if(answer == true) {
 					toolbox.payMoney(playerNumber, owner, players, fields, breweryPropertyValue);
 					view.updatePlayerAccount(playerNumber, breweryPropertyValue);
-					view.updateOwnership(playerNumber, position);
-					BreweryFields wantedFieldChange = ((BreweryFields)fields[position]);
+					view.updateOwnership(playerNumber, this.oldPlayerPosition);
+					BreweryFields wantedFieldChange = ((BreweryFields)fields[this.oldPlayerPosition]);
 					wantedFieldChange.setOwner(playerNumber);
-					view.writeText("Du har købt " + fields[position].getName() + " for " + breweryPropertyValue + " kr");
+					view.writeText("Du har købt " + fields[this.oldPlayerPosition].getName() + " for " + breweryPropertyValue + " kr");
 				}
 			}
 
 			if(owner != 0 && owner != playerNumber) {
-				int breweryRent = (getRentFromBreweryField(position) * dieCup.getDiceValue());
+				int breweryRent = (getRentFromBreweryField(this.oldPlayerPosition) * dieCup.getDiceValue());
 				toolbox.payMoney(playerNumber, owner, players, fields, breweryRent);
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 				view.updatePlayerAccount(owner, players[owner].getBalance());
-				view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + breweryRent + " til " + players[owner].getPlayerName());
+				view.writeText("Du er landet på " + fields[this.oldPlayerPosition].getName() + " du skal betale " + breweryRent + " til " + players[owner].getPlayerName());
 			}
 
 			if(owner == playerNumber) {
-				view.writeText("Du er landet på " + fields[position].getName() + " du ejer selv dette bryggeri");
+				view.writeText("Du er landet på " + fields[this.oldPlayerPosition].getName() + " du ejer selv dette bryggeri");
 			}
 			break;
 
 		case 3:
 			//Taxfields
-			int[] taxValue = (((TaxField)fields[position]).getReturnValue());
+			int[] taxValue = (((TaxField)fields[this.oldPlayerPosition]).getReturnValue());
 			toolbox.payMoney(playerNumber, owner, players, fields, taxValue[0]); // Transaction som sker på spilleren ud fra hvilket taxfield han lander på
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); // update af gui.
-			view.writeText("Du er landet på " + fields[position].getName() + " du skal betale " + taxValue[0] + " i skat"); // tekst til spilleren
+			view.writeText("Du er landet på " + fields[this.oldPlayerPosition].getName() + " du skal betale " + taxValue[0] + " i skat"); // tekst til spilleren
 			break;
 
 
@@ -463,8 +462,8 @@ public class ActionCTRL {
 			//GoToJailField
 			players[playerNumber].setPosition(11); // spilleren position bliver rykket til felt nr 11
 			players[playerNumber].setTurnsInJail(1); // Spilleren sidder i fængsel.
-			view.updatePlayerPosition(playerNumber, position, 11); //update af gui
-			view.writeText("Du er landet på " + fields[position].getName() + " du skal nu i fængsel"); //tekst til spilleren.
+			view.updatePlayerPosition(playerNumber, this.oldPlayerPosition, 11); //update af gui
+			view.writeText("Du er landet på " + fields[this.oldPlayerPosition].getName() + " du skal nu i fængsel"); //tekst til spilleren.
 			break;
 		}
 	}
@@ -486,14 +485,14 @@ public class ActionCTRL {
 	public int getRentFromShipField(int fieldNum) {
 		int[] fieldRent = (((ShipFields)fields[fieldNum]).returnValue());
 		int fieldOwner = (((ShipFields)fields[fieldNum]).getOwner());
-		int numOfOwnedShipFields = (toolbox.checkNumOfOwnFieldsWithType(fieldOwner, fields, fieldNum, fields[fieldNum].getType()));
+		int numOfOwnedShipFields = (toolbox.getNumberOfOwnedPropertiesInGroup(fieldNum, fields, fieldOwner));
 		return fieldRent[(numOfOwnedShipFields - 1)];
 	}
 	// En metode som tjekker om man har et eller to brewery og hvad man skal betale. 
 	public int getRentFromBreweryField(int fieldNum) {
 		int[] fieldRent = (((BreweryFields)fields[fieldNum]).returnValue());
 		int fieldOwner = (((BreweryFields)fields[fieldNum]).getOwner());
-		int numOfOwnedBrewFields = (toolbox.checkNumOfOwnFieldsWithType(fieldOwner, fields, fieldNum, fields[fieldNum].getType()));
+		int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(fieldNum, fields, fieldOwner));
 		return fieldRent[(numOfOwnedBrewFields - 1)];
 	}
 
@@ -508,19 +507,15 @@ public class ActionCTRL {
 			if (transactionValue < 0)
 				toolbox.payMoney(playerNumber, 0, players, fields, transactionValue);
 			else
-				players[playerNumber].recieveMoney(transactionValue);
-				
+				players[playerNumber].recieveMoney(transactionValue);	
 			break;
 
 		case 2: // MoveToCards
-			int oldPosition = players[playerNumber].getPosition();
-			int newPosition = chanceCardValueArray[0]; 
-			MoveToCardsRules(playerNumber); // logik og viewCTRL-kald ligger i denne metode.
-			if(checkForPassingStart(oldPosition, newPosition) == true)
-			view.updatePlayerPosition(playerNumber, oldPosition, newPosition);
-			fieldRulesSwitch(playerNumber);
 			
-				
+			MoveToCardsRules(playerNumber); // logik og viewCTRL-kald ligger i denne metode.
+			if(checkForPassingStart(this.oldPlayerPosition, this.newPlayerPosition) == true)
+			view.updatePlayerPosition(playerNumber, this.oldPlayerPosition, this.newPlayerPosition);
+			fieldRulesSwitch(playerNumber);
 			break;
 
 		case 3: // ReleaseCards
@@ -539,7 +534,6 @@ public class ActionCTRL {
 
 	public void MoveToCardsRules (int playerNumber) {
 		int[] chanceCardValueArray = chanceCard.getReturnValue();
-		int oldPosition = players[playerNumber].getPosition();
 		int moveToField = chanceCardValueArray[0];
 
 		switch (chanceCardValueArray[1]){
@@ -548,12 +542,12 @@ public class ActionCTRL {
 			// Blot flyttekort til et bestemt felt.
 			if((chanceCard.cardnumber == 19) || (chanceCard.cardnumber == 22)) {
 				players[playerNumber].setPosition(moveToField);
-				view.updatePlayerPosition(playerNumber, oldPosition, moveToField);
+				view.updatePlayerPosition(playerNumber,this.oldPlayerPosition, moveToField);
 				players[playerNumber].setTurnsInJail(1);
 			}
 			else {
 				players[playerNumber].setPosition(moveToField);
-				view.updatePlayerPosition(playerNumber, oldPosition, moveToField);
+				view.updatePlayerPosition(playerNumber, this.oldPlayerPosition, moveToField);
 			}
 			break;
 
@@ -566,34 +560,34 @@ public class ActionCTRL {
 				}
 			}
 			// Herefter kommer der et tjek om hvilket efterfølgende shippingField er nærmest.
-			if( oldPosition < shippingArray[0]) {
+			if( this.oldPlayerPosition < shippingArray[0]) {
 				players[playerNumber].setPosition(shippingArray[0]);
-				view.updatePlayerPosition(playerNumber, oldPosition, shippingArray[0]);
+				view.updatePlayerPosition(playerNumber, this.oldPlayerPosition, shippingArray[0]);
 				fieldRulesSwitch(playerNumber);
 			}
 
-			else if( oldPosition > shippingArray[0] && oldPosition < shippingArray[1]) {
+			else if( this.oldPlayerPosition > shippingArray[0] && this.oldPlayerPosition < shippingArray[1]) {
 				players[playerNumber].setPosition(shippingArray[1]);
-				view.updatePlayerPosition(playerNumber, oldPosition, shippingArray[1]);
+				view.updatePlayerPosition(playerNumber, this.oldPlayerPosition, shippingArray[1]);
 				fieldRulesSwitch(playerNumber);
 			}
 
-			else if( oldPosition > shippingArray[1] && oldPosition < shippingArray[2]) {
+			else if( this.oldPlayerPosition > shippingArray[1] && this.oldPlayerPosition < shippingArray[2]) {
 				players[playerNumber].setPosition(shippingArray[2]);
-				view.updatePlayerPosition(playerNumber, oldPosition, shippingArray[2]);
+				view.updatePlayerPosition(playerNumber, this.oldPlayerPosition, shippingArray[2]);
 				fieldRulesSwitch(playerNumber);
 			}
 
-			else if( oldPosition > shippingArray[2] && oldPosition < shippingArray[3]) {
+			else if( this.oldPlayerPosition > shippingArray[2] && this.oldPlayerPosition < shippingArray[3]) {
 				players[playerNumber].setPosition(shippingArray[3]);
-				view.updatePlayerPosition(playerNumber, oldPosition, shippingArray[3]);
+				view.updatePlayerPosition(playerNumber, this.oldPlayerPosition, shippingArray[3]);
 				fieldRulesSwitch(playerNumber);
 			}
 			break;
 
 		case 3: // Ryk tre felter tilbage.
-			players[playerNumber].setPosition(oldPosition-3);
-			view.updatePlayerPosition(playerNumber, oldPosition, oldPosition-3);
+			players[playerNumber].setPosition(this.oldPlayerPosition-3);
+			view.updatePlayerPosition(playerNumber, this.oldPlayerPosition, this.oldPlayerPosition-3);
 			break;
 		}
 	}
