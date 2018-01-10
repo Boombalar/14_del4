@@ -92,213 +92,214 @@ public class ActionCTRL {
 				}
 			}
 
-		while (true) {
-			// Hvis en spiller er broke, så gå ud af loop
-			if(players[currentPlayer].checkBroke())
-				break;
+			while (true) {
+				// Hvis en spiller er broke, så gå ud af loop
+				if(players[currentPlayer].checkBroke())
+					break;
 
-			// Lav Startmenu for spiller
-			view.writeText("Det er spiller  " + currentPlayer + "'s tur nu");
-			String[] playerChoice = {"Slå terninger", "Køb huse og hoteller","Sælg huse og hoteller", "Sælg grund"};
-			String choiceOfPlayer = view.getDropDownChoice("vælg", playerChoice);
+				// Lav Startmenu for spiller
+				view.writeText("Det er spiller  " + currentPlayer + "'s tur nu");
+				String[] playerChoice = {"Slå terninger", "Køb huse og hoteller","Sælg huse og hoteller", "Sælg grund"};
+				String choiceOfPlayer = view.getDropDownChoice("vælg", playerChoice);
 
-			//Håndtér valg fra menu
-			switch(choiceOfPlayer) {
+				//Håndtér valg fra menu
+				switch(choiceOfPlayer) {
 
-			// Slår terningerne, ændrer position i model lag og opdaterer view lag
-			// Håndterer om man kommer over start og får 4.000.
-			case "Slå terninger": 
-				//slå terninger
-				dieCup.shake();
-				diceValue = dieCup.getDiceValue();
+				// Slår terningerne, ændrer position i model lag og opdaterer view lag
+				// Håndterer om man kommer over start og får 4.000.
+				case "Slå terninger": 
+					//slå terninger
+					dieCup.shake();
+					diceValue = dieCup.getDiceValue();
 
-				//skift position på spiller i model lag
-				oldPlayerPosition = players[currentPlayer].getPosition();
-				newPlayerPosition = oldPlayerPosition + diceValue;
-				players[currentPlayer].setPosition(oldPlayerPosition + diceValue);
+					//skift position på spiller i model lag
+					oldPlayerPosition = players[currentPlayer].getPosition();
+					newPlayerPosition = oldPlayerPosition + diceValue;
+					players[currentPlayer].setPosition(oldPlayerPosition + diceValue);
 
-				//Update view
-				view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());						  
-				view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
+					//Update view
+					view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());						  
+					view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
 
-				//Håndter om man kommer over start og får 4000.
-				if (newPlayerPosition > 39) {
-					newPlayerPosition -= 40;
-					players[currentPlayer].recieveMoney(4000);
-					view.writeText("Spiller " + currentPlayer + " har passeret start og får 4000 kroner");
-				}
-				fieldRulesSwitch(currentPlayer);
-				if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
-					currentPlayer--;
-					/*
+					//Håndter om man kommer over start og får 4000.
+					if (newPlayerPosition > 39) {
+						newPlayerPosition -= 40;
+						players[currentPlayer].recieveMoney(4000);
+						view.writeText("Spiller " + currentPlayer + " har passeret start og får 4000 kroner");
+					}
+					fieldRulesSwitch(currentPlayer);
+					if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
+						currentPlayer--;
+						/*
 					players[currentPlayer].changeEqualEyes() ++;
 					if(players[currentPlayer].changeEqualEyes() == 3) {
 						jail();
 						players[currentPlayer].changeEqualEyes(-3);
 					}
-					*/
-					
-				}
-				break;
+						 */
 
-				// Køb huse og hoteller.
-				// Finder de felter hvor spilleren ejer hele grupper. 
-				// Giver mulighed for at bygge på de felter.
-			case "Køb huse og hoteller":
-				//Vi starter med at finde ud af hvor mange PropertyFields man ejer hvor man har hele gruppen
-				//Således vi kan opbygge et array til dropdownlisten.
-
-				amountOfProperties = 0;
-				for(int fieldCount = 0;fieldCount<=39;fieldCount++) {//Går hele brættet igennem
-					if (fields[fieldCount] instanceof PropertyFields) {
-						if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkForGroupOwnership(currentPlayer, fields, fieldCount) == true) {
-							amountOfProperties++;
-						}
 					}
-				}
+					break;
 
-				//Vi laver Array til DropDown listen
-				propertyArray = new String[amountOfProperties];
-				index = 0;
+					// Køb huse og hoteller.
+					// Finder de felter hvor spilleren ejer hele grupper. 
+					// Giver mulighed for at bygge på de felter.
+				case "Køb huse og hoteller":
+					//Vi starter med at finde ud af hvor mange PropertyFields man ejer hvor man har hele gruppen
+					//Således vi kan opbygge et array til dropdownlisten.
 
-				//Vi populerer Array
-				//populer array med felt hvis man ejer det og har hele gruppen eks.
-				//1. Hvidovrevej
-				//3. Rødovrevej
-				for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-					if (fields[fieldCount] instanceof PropertyFields) {
-						if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkForGroupOwnership(currentPlayer, fields, fieldCount) == true) {
-							propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
-						}
-					}
-					index++;
-				}
-
-				//Vi modtager svar fra dropdown listen
-				choice = view.getDropDownChoice("Vælg grund du vil bygge på", propertyArray);
-				int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
-
-				//Vi bygger hvis man ejer hele gruppen, og har råd
-				if( toolbox.checkForGroupOwnership(currentPlayer, fields, chosenFieldNumber)) {
-					if (players[currentPlayer].getBalance() > toolbox.getHousePrice(chosenFieldNumber, fields)) {
-						returnValue = (((OwnerFields)fields[chosenFieldNumber]).returnValue());
-						if (returnValue[6]<5) {//hvis der er mindre end 5 huse på feltet
-							returnValue[6]++;
-							players[currentPlayer].removeMoney(toolbox.getHousePrice(chosenFieldNumber, fields));
-						}else {
-							view.writeText("Du kan ikke bygge flere huse på denne grund");
-						}
-					}
-				}
-				break;
-
-
-				//Sælg huse og hoteller.
-				//Find de grunde hvor spilleren ejer huse
-				//sælg et hus.
-			case "Sælg huse og hoteller":
-
-				//Find antal propertyfields med huse
-				//Således vi kan lave Array til dropdown
-
-				int[] returnValue;
-				amountOfProperties=0;
-				for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-					if (fields[fieldCount] instanceof PropertyFields) {
-						if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
-							returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
-							if (toolbox.getHousesOnProperty(currentPlayer, fields, fieldCount, returnValue)>0) {
+					amountOfProperties = 0;
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {//Går hele brættet igennem
+						if (fields[fieldCount] instanceof PropertyFields) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkForGroupOwnership(currentPlayer, fields, fieldCount) == true) {
 								amountOfProperties++;
-							}	
-						}
-					}
-				}
-
-				//Lav array til dropdown
-				propertyArray = new String[amountOfProperties];
-				index=0;
-
-				//populer array med felt hvis feltet har huse på sig eks.
-				//1. Hvidovrevej
-				//3. Rødovrevej
-				for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-					if (fields[fieldCount] instanceof PropertyFields) {
-						if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
-							returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
-							if (toolbox.getHousesOnProperty(currentPlayer, fields, fieldCount, returnValue)>0) {
-								propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
 							}
 						}
 					}
-					index++;
+
+					//Vi laver Array til DropDown listen
+					propertyArray = new String[amountOfProperties];
+					index = 0;
+
+					//Vi populerer Array
+					//populer array med felt hvis man ejer det og har hele gruppen eks.
+					//1. Hvidovrevej
+					//3. Rødovrevej
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
+						if (fields[fieldCount] instanceof PropertyFields) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkForGroupOwnership(currentPlayer, fields, fieldCount) == true) {
+								propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
+							}
+						}
+						index++;
+					}
+
+					//Vi modtager svar fra dropdown listen
+					choice = view.getDropDownChoice("Vælg grund du vil bygge på", propertyArray);
+					int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
+
+					//Vi bygger hvis man ejer hele gruppen, og har råd
+					if( toolbox.checkForGroupOwnership(currentPlayer, fields, chosenFieldNumber)) {
+						if (players[currentPlayer].getBalance() > toolbox.getHousePrice(chosenFieldNumber, fields)) {
+							returnValue = (((OwnerFields)fields[chosenFieldNumber]).returnValue());
+							if (returnValue[6]<5) {//hvis der er mindre end 5 huse på feltet
+								returnValue[6]++;
+								players[currentPlayer].removeMoney(toolbox.getHousePrice(chosenFieldNumber, fields));
+							}else {
+								view.writeText("Du kan ikke bygge flere huse på denne grund");
+							}
+						}
+					}
+					break;
+
+
+					//Sælg huse og hoteller.
+					//Find de grunde hvor spilleren ejer huse
+					//sælg et hus.
+				case "Sælg huse og hoteller":
+
+					//Find antal propertyfields med huse
+					//Således vi kan lave Array til dropdown
+
+					int[] returnValue;
+					amountOfProperties=0;
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
+						if (fields[fieldCount] instanceof PropertyFields) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+								returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
+								if (toolbox.getHousesOnProperty(currentPlayer, fields, fieldCount, returnValue)>0) {
+									amountOfProperties++;
+								}	
+							}
+						}
+					}
+
+					//Lav array til dropdown
+					propertyArray = new String[amountOfProperties];
+					index=0;
+
+					//populer array med felt hvis feltet har huse på sig eks.
+					//1. Hvidovrevej
+					//3. Rødovrevej
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
+						if (fields[fieldCount] instanceof PropertyFields) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+								returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
+								if (toolbox.getHousesOnProperty(currentPlayer, fields, fieldCount, returnValue)>0) {
+									propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
+								}
+							}
+						}
+						index++;
+					}
+
+					//Sælg hus
+					choice = view.getDropDownChoice("Vælg grund du vil sælge huse fra", propertyArray);
+					chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
+					toolbox.sellBuilding(currentPlayer, players, fields, chosenFieldNumber);
+					break;
+
+					//Sælg grund hvis man ejer den og der ikke er nogle huse på
+					//Man kan sælge til banken eller anden spiller
+				case "Sælg grund":
+
+					//Find ud af hvor mange grunde man ejer som ikke har huse på sin gruppe til array
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
+						if (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fields, fieldCount)==0) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+								amountOfProperties++;
+							}
+						}
+					}
+
+					//Lav Array
+					propertyArray = new String[amountOfProperties];
+					index=0;
+
+					//populer array med felt hvis man ejer det og der ikke er huse på gruppen
+					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
+						if (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fields, fieldCount)==0) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+								propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
+							}
+						}
+						index++;
+					}
+
+					//vælge grund i dropdown
+					choice = view.getDropDownChoice("Vælg hvilken grund du vil sælge", propertyArray);
+					chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
+
+					//Vælge hvilken spiller man vil sælge til 
+					//0 er banken.
+
+					//Lav array og populer
+					String[] playerCountArray = new String[players.length+1];
+					for (int playerCount = 0;playerCount <= players.length;playerCount++) {
+						playerCountArray[playerCount]= Integer.toString(playerCount);
+					}
+
+					//Vælg spiller eller bank
+					String playerSellChoice = view.getDropDownChoice("Hvilken spiller vil du sælge til? 0 er til banken", playerCountArray);
+					int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
+
+					//Sælg grund.
+					returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
+					toolbox.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
 				}
 
-				//Sælg hus
-				choice = view.getDropDownChoice("Vælg grund du vil sælge huse fra", propertyArray);
-				chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
-				toolbox.sellBuilding(currentPlayer, players, fields, chosenFieldNumber);
 				break;
-
-				//Sælg grund hvis man ejer den og der ikke er nogle huse på
-				//Man kan sælge til banken eller anden spiller
-			case "Sælg grund":
-
-				//Find ud af hvor mange grunde man ejer som ikke har huse på sin gruppe til array
-				for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-					if (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fields, fieldCount)==0) {
-						if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
-							amountOfProperties++;
-						}
-					}
-				}
-
-				//Lav Array
-				propertyArray = new String[amountOfProperties];
-				index=0;
-
-				//populer array med felt hvis man ejer det og der ikke er huse på gruppen
-				for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-					if (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fields, fieldCount)==0) {
-						if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
-							propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
-						}
-					}
-					index++;
-				}
-
-				//vælge grund i dropdown
-				choice = view.getDropDownChoice("Vælg hvilken grund du vil sælge", propertyArray);
-				chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
-
-				//Vælge hvilken spiller man vil sælge til 
-				//0 er banken.
-
-				//Lav array og populer
-				String[] playerCountArray = new String[players.length+1];
-				for (int playerCount = 0;playerCount <= players.length;playerCount++) {
-					playerCountArray[playerCount]= Integer.toString(playerCount);
-				}
-
-				//Vælg spiller eller bank
-				String playerSellChoice = view.getDropDownChoice("Hvilken spiller vil du sælge til? 0 er til banken", playerCountArray);
-				int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
-
-				//Sælg grund.
-				returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
-				toolbox.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
+				//Lav logik for spillers choice
 			}
 
-			break;
-			//Lav logik for spillers choice
-		}
+			currentPlayer++;
+			if (currentPlayer > players.length)
+				currentPlayer = 1;
 
-		currentPlayer++;
-		if (currentPlayer > players.length)
-			currentPlayer = 1;
-
-		if (checkWinner()) {
-			printWinner();
-			break;
+			if (checkWinner()) {
+				printWinner();
+				break;
+			}
 		}
 	}
 
@@ -509,7 +510,7 @@ public class ActionCTRL {
 				toolbox.payMoney(playerNumber, 0, players, fields, transactionValue);
 			else
 				players[playerNumber].recieveMoney(transactionValue);
-				
+
 			break;
 
 		case 2: // MoveToCards
@@ -517,10 +518,10 @@ public class ActionCTRL {
 			int newPosition = chanceCardValueArray[0]; 
 			MoveToCardsRules(playerNumber); // logik og viewCTRL-kald ligger i denne metode.
 			if(checkForPassingStart(oldPosition, newPosition) == true)
-			view.updatePlayerPosition(playerNumber, oldPosition, newPosition);
+				view.updatePlayerPosition(playerNumber, oldPosition, newPosition);
 			fieldRulesSwitch(playerNumber);
-			
-				
+
+
 			break;
 
 		case 3: // ReleaseCards

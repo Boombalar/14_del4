@@ -25,7 +25,7 @@ public class Toolbox {
 		int numberOfHouses;
 		int priceOfBuilding;
 
-		numberOfHouses = getHousesOnProperty(currentPlayer, fields, fieldNumber, returnValue);
+		numberOfHouses = getHousesOnProperty(currentPlayer, fields, fieldNumber);
 		if (numberOfHouses > 0) {
 			numberOfHouses = numberOfHouses - 1;
 			returnValue[6] = numberOfHouses;
@@ -96,7 +96,8 @@ public class Toolbox {
 		return returnValue;
 	}
 
-	public int getHousesOnProperty(int currentPlayer, Field[] fields, int fieldNumber, int[] returnValue) {
+	public int getHousesOnProperty(int currentPlayer, Field[] fields, int fieldNumber) {
+		int[] returnValue=null;
 		if (((OwnerFields)fields[fieldNumber]).getOwner()==currentPlayer) {
 			returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
 		}
@@ -105,13 +106,13 @@ public class Toolbox {
 
 	public int getHousesOnGroup(int currentPlayer, Field[] fields, int fieldNumber) {
 		int returnValue=0;
-		int[] returnField;
+		int[] returnField = null;
 
 		for (int fieldCount = 0;fieldCount<= 39;fieldCount++) {
 			if(fields[fieldCount] instanceof PropertyFields) {
 				returnField = ((PropertyFields)fields[fieldNumber]).getReturnValue();
-				if(((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer && getHousesOnProperty(currentPlayer, fields, fieldNumber, returnField)>0) {
-					returnValue = returnValue + getHousesOnProperty(currentPlayer, fields, fieldNumber, returnField);
+				if(((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer && getHousesOnProperty(currentPlayer, fields, fieldNumber)>0) {
+					returnValue = returnValue + getHousesOnProperty(currentPlayer, fields, fieldNumber);
 				}
 			}
 		}
@@ -142,35 +143,107 @@ public class Toolbox {
 	public int getNumberOfHousesFromPlayer (int playerNumber, Field[] fields) {
 		int numbOfHouses=0;
 		for(int i=0 ; i < 39 ; i++) {
-			int numbOfHousesOnField = (((PropertyFields)fields[i]).getReturnValue()[6]);
-			int fieldOwner = (((PropertyFields)fields[i]).getOwner());
-			if ((fieldOwner == playerNumber) && (numbOfHousesOnField > 0) && (numbOfHousesOnField < 5)) {
-				numbOfHouses += (((PropertyFields)fields[i]).getReturnValue()[6]);
+			if(fields[i] instanceof PropertyFields) {
+				int numbOfHousesOnField = (((PropertyFields)fields[i]).getReturnValue()[6]);
+				int fieldOwner = (((PropertyFields)fields[i]).getOwner());
+				if ((fieldOwner == playerNumber) && (numbOfHousesOnField < 5)) {
+					numbOfHouses += numbOfHousesOnField;
+				}
 			}
 		}
 		return numbOfHouses;
 	}
-	
+
 	public int getNumberOfHotelsFromPlayer (int playerNumber, Field[] fields) {
 		int numbOfHotels=0;
 		for(int i=0 ; i < 39 ; i++) {
-			int numbOfHousesOnField = (((PropertyFields)fields[i]).getReturnValue()[6]);
-			int fieldOwner = (((PropertyFields)fields[i]).getOwner());
-			if ((fieldOwner == playerNumber) && (numbOfHousesOnField == 5)) { // hvis der er 5 huse, så er der et hotel
-				numbOfHotels += 1;
+			if(fields[i] instanceof PropertyFields) {
+				int numbOfHousesOnField = (((PropertyFields)fields[i]).getReturnValue()[6]);
+				int fieldOwner = (((PropertyFields)fields[i]).getOwner());
+				if ((fieldOwner == playerNumber) && (numbOfHousesOnField == 5)) { // hvis der er 5 huse, så er der et hotel
+					numbOfHotels += 1;
+				}
 			}
 		}
 		return numbOfHotels;
 	}
 
-	public boolean raiseMoney(int currentplayer, Field[] fields, int amount) {
+	public boolean raiseMoney(int currentPlayer, Player[] players, Field[] fields, int amountReached) {
 		boolean returnValue=true;
+		int numberOfHouses;
+		int priceOfHouse;
+		int priceOfProperty;
+		int valueOfHouses;
+		int valueOfSale=0;
+		int valueOfSale2=0;
+		int playerbalance = players[currentPlayer].getBalance();
+		int amountNeeded = amountReached - playerbalance;
+
+		//Vi sælger huse
+		for (int fieldCount = 0 ; fieldCount<=39;fieldCount++) {
+			if(fields[fieldCount] instanceof PropertyFields && valueOfSale < amountNeeded) {
+				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+					numberOfHouses = getHousesOnProperty(currentPlayer, fields, fieldCount);
+					priceOfHouse = getHousePrice(fieldCount, fields)/2;
+					if(numberOfHouses > 0) {
+						//Vi sælger husene 1 ad gangen
+						for (int houseCount = 0; houseCount <= numberOfHouses; houseCount++ ) {
+							valueOfSale = valueOfSale + priceOfHouse;
+							sellBuilding(currentPlayer, players, fields, fieldCount);
+							if (valueOfSale >= amountNeeded) {
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		if (valueOfSale < amountNeeded) {
+			if (checkPropertySaleValue(currentPlayer, fields, amountNeeded-valueOfSale)) {
+				if(valueOfSale2 < amountNeeded) {
+					for (int fieldCount2 = 0; fieldCount2<=39;fieldCount2++) {
+						if(fields[fieldCount2] instanceof PropertyFields && valueOfSale2 < amountNeeded) {
+							if (((PropertyFields)fields[fieldCount2]).getOwner() == currentPlayer && getHousesOnProperty(currentPlayer, fields, fieldCount2)==0) {
+								priceOfProperty = ((OwnerFields)fields[fieldCount2]).getPropertyValue();
+								valueOfSale2 = valueOfSale + priceOfProperty;
+								if (valueOfSale2 >= amountNeeded) {
+									sellProperty(currentPlayer, 0, players, fields, fieldCount2);
+								}
+							}
+						}
+					}
+				}
+			} else {
+				returnValue = false;
+			}
+		}
+		return returnValue;
+	}
+
+	public boolean checkPropertySaleValue(int currentPlayer, Field[] fields, int amountNeeded) {
+		boolean returnValue = false;
+		int valueOfSale=0;
+		int priceOfProperty;
+
+		if(valueOfSale < amountNeeded) {
+			for (int fieldCount = 0; fieldCount<=39;fieldCount++) {
+				if(fields[fieldCount] instanceof PropertyFields && valueOfSale < amountNeeded) {
+					if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && getHousesOnProperty(currentPlayer, fields, fieldCount)==0) {
+						priceOfProperty = ((OwnerFields)fields[fieldCount]).getPropertyValue();
+						valueOfSale = valueOfSale + priceOfProperty;
+						if (valueOfSale >= amountNeeded) {
+							returnValue = true;
+						}
+					}
+				}
+			}
+		}
 		return returnValue;
 	}
 
 	public void payMoney(int currentPlayer, int toPlayer, Player[] players, Field[] fields, int amount) {
 		if (checkForBankruptcy(currentPlayer, players, amount)) {
-			if (raiseMoney(currentPlayer, fields, amount) == false){
+			if (raiseMoney(currentPlayer, players, fields, amount) == false){
 				bankruptcy(currentPlayer, toPlayer, players, fields);
 			} else {						
 				players[currentPlayer].removeMoney(amount);
