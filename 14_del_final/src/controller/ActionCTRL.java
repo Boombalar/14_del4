@@ -366,8 +366,7 @@ public class ActionCTRL {
 			//Chancefield			
 			view.writeText("Du er landet på 'Prøv lykken', du trækker et chance kort");
 			chanceCard.draw();
-			String chanceCardText = chanceCard.getDescription();
-			view.showChanceCard(chanceCardText);
+			view.showChanceCard(chanceCard.getDescription());
 			chanceCardRules(playerNumber);
 			break;
 
@@ -383,11 +382,14 @@ public class ActionCTRL {
 
 	public int getRentFromPropertyField (int fieldNum) {
 		int[] fieldRent = (((PropertyFields)fields[fieldNum]).returnValue());
-		int returnValue = fieldRent[fieldRent[6]];
+		int numberOfHouses = fieldRent[fieldRent[6]];
 		int fieldOwner = (((PropertyFields)fields[fieldNum]).getOwner());
+		int returnValue = fieldRent[0];
 
-		if (toolbox.checkForGroupOwnership(fieldOwner, fields, fieldNum) == true) {
+		if ((toolbox.checkForGroupOwnership(fieldOwner, fields, fieldNum) == true) && (numberOfHouses == 0)) {
 			returnValue = fieldRent[0] * 2;
+		} else {
+			returnValue = fieldRent[numberOfHouses];
 		}
 		return returnValue;
 	}
@@ -426,14 +428,14 @@ public class ActionCTRL {
 			break;
 
 		case 3: // ReleaseCards
-			players[playerNumber].setTurnsInJail(1);;
+			players[playerNumber].addReleaseCards();
 			break;
 
 		case 4: //TaxCards
 			int numberofhouses = toolbox.getNumberOfHousesFromPlayer(playerNumber, fields);
 			int numberofhotels = toolbox.getNumberOfHotelsFromPlayer(playerNumber, fields);
-			players[playerNumber].removeMoney(chanceCardValueArray[1]*numberofhouses);
-			players[playerNumber].removeMoney(chanceCardValueArray[2]*numberofhotels);
+			players[playerNumber].removeMoney(chanceCardValueArray[0]*numberofhouses);
+			players[playerNumber].removeMoney(chanceCardValueArray[1]*numberofhotels);
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			break;
 		}
@@ -442,9 +444,9 @@ public class ActionCTRL {
 	public void MoveToCardsRules (int playerNumber) {
 		int[] chanceCardValueArray = chanceCard.getReturnValue();
 		int oldPosition = players[playerNumber].getPosition();
-		int moveToField = chanceCardValueArray[1];
+		int moveToField = chanceCardValueArray[0];
 
-		switch (chanceCardValueArray[2]){
+		switch (chanceCardValueArray[1]){
 
 		case 1:
 			// Blot flyttekort til et bestemt felt.
@@ -467,27 +469,30 @@ public class ActionCTRL {
 					shippingArray[i] = i;
 				}
 			}
-			// Herefter kommer der et tjek om hvad det efterfølgende shippingField
+			// Herefter kommer der et tjek om hvilket efterfølgende shippingField er nærmest.
 			if( oldPosition < shippingArray[0]) {
 				players[playerNumber].setPosition(shippingArray[0]);
 				view.updatePlayerPosition(playerNumber, oldPosition, shippingArray[0]);
+				fieldRulesSwitch(playerNumber);
 			}
 
 			else if( oldPosition > shippingArray[0] && oldPosition < shippingArray[1]) {
 				players[playerNumber].setPosition(shippingArray[1]);
 				view.updatePlayerPosition(playerNumber, oldPosition, shippingArray[1]);
+				fieldRulesSwitch(playerNumber);
 			}
 
 			else if( oldPosition > shippingArray[1] && oldPosition < shippingArray[2]) {
 				players[playerNumber].setPosition(shippingArray[2]);
 				view.updatePlayerPosition(playerNumber, oldPosition, shippingArray[2]);
+				fieldRulesSwitch(playerNumber);
 			}
 
 			else if( oldPosition > shippingArray[2] && oldPosition < shippingArray[3]) {
 				players[playerNumber].setPosition(shippingArray[3]);
 				view.updatePlayerPosition(playerNumber, oldPosition, shippingArray[3]);
+				fieldRulesSwitch(playerNumber);
 			}
-
 			break;
 
 		case 3: // Ryk tre felter tilbage.
