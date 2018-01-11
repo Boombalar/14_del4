@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.WriteAbortedException;
+import java.security.KeyStore.ProtectionParameter;
 import java.util.concurrent.TimeUnit;
 
 import model.*;
@@ -176,20 +178,26 @@ public class ActionCTRL {
 					}
 
 					//Vi modtager svar fra dropdown listen
-					choice = view.getDropDownChoice("Vælg grund du vil bygge på", propertyArray);
-					int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
+					if (propertyArray.length != 0) {
+						choice = view.getDropDownChoice("Vælg grund du vil bygge på", propertyArray);
+						int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
 
-					//Vi bygger hvis man ejer hele gruppen, og har råd
-					if( toolbox.checkPropertyGroupOwnership(currentPlayer, fields, chosenFieldNumber)) {
-						if (players[currentPlayer].getBalance() > toolbox.getHousePrice(chosenFieldNumber, fields)) {
-							returnValue = (((OwnerFields)fields[chosenFieldNumber]).returnValue());
-							if (returnValue[6]<5) {//hvis der er mindre end 5 huse på feltet
-								returnValue[6]++;
-								players[currentPlayer].removeMoney(toolbox.getHousePrice(chosenFieldNumber, fields));
-							}else {
-								view.writeText("Du kan ikke bygge flere huse på denne grund");
+						//Vi bygger hvis man ejer hele gruppen, og har råd
+						if( toolbox.checkPropertyGroupOwnership(currentPlayer, fields, chosenFieldNumber)) {
+							if (players[currentPlayer].getBalance() > toolbox.getHousePrice(chosenFieldNumber, fields)) {
+								returnValue = (((OwnerFields)fields[chosenFieldNumber]).returnValue());
+								if (returnValue[6]<5) {//hvis der er mindre end 5 huse på feltet
+									returnValue[6]++;
+									players[currentPlayer].removeMoney(toolbox.getHousePrice(chosenFieldNumber, fields));
+								}else {
+									view.writeText("Du kan ikke bygge flere huse på denne grund");
+								}
 							}
 						}
+					}
+					else {
+						view.writeText("Du ejer ikke nogle grunde");
+						currentPlayer--;
 					}
 					break;
 
@@ -233,9 +241,16 @@ public class ActionCTRL {
 					}
 
 					//Sælg hus
-					choice = view.getDropDownChoice("Vælg grund du vil sælge huse fra", propertyArray);
-					chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
-					toolbox.sellBuilding(currentPlayer, players, fields, chosenFieldNumber);
+					if (propertyArray.length != 0) {
+						choice = view.getDropDownChoice("Vælg grund du vil sælge huse fra", propertyArray);
+						int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
+						toolbox.sellBuilding(currentPlayer, players, fields, chosenFieldNumber);
+					}
+					else 
+					{
+						view.writeText("Du har ikke nogle grunde at sælge huse på");
+						currentPlayer--;
+					}
 					break;
 
 					//Sælg grund hvis man ejer den og der ikke er nogle huse på
@@ -250,7 +265,6 @@ public class ActionCTRL {
 							}
 						}
 					}
-
 					//Lav Array
 					propertyArray = new String[amountOfProperties];
 					index=0;
@@ -266,25 +280,31 @@ public class ActionCTRL {
 					}
 
 					//vælge grund i dropdown
-					choice = view.getDropDownChoice("Vælg hvilken grund du vil sælge", propertyArray);
-					chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
+					if (propertyArray.length != 0) {
+						choice = view.getDropDownChoice("Vælg hvilken grund du vil sælge", propertyArray);
+						int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
 
-					//Vælge hvilken spiller man vil sælge til 
-					//0 er banken.
+						//Vælge hvilken spiller man vil sælge til 
+						//0 er banken.
 
-					//Lav array og populer
-					String[] playerCountArray = new String[players.length+1];
-					for (int playerCount = 0;playerCount <= players.length;playerCount++) {
-						playerCountArray[playerCount]= Integer.toString(playerCount);
+						//Lav array og populer
+						String[] playerCountArray = new String[players.length+1];
+						for (int playerCount = 0;playerCount <= players.length;playerCount++) {
+							playerCountArray[playerCount]= Integer.toString(playerCount);
+						}
+
+						//Vælg spiller eller bank
+						String playerSellChoice = view.getDropDownChoice("Hvilken spiller vil du sælge til? 0 er til banken", playerCountArray);
+						int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
+
+						//Sælg grund.
+						returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
+						toolbox.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
 					}
-
-					//Vælg spiller eller bank
-					String playerSellChoice = view.getDropDownChoice("Hvilken spiller vil du sælge til? 0 er til banken", playerCountArray);
-					int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
-
-					//Sælg grund.
-					returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
-					toolbox.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
+					else {
+						view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
+						currentPlayer--;
+					}
 				}
 				break;
 				//Lav logik for spillers choice
@@ -377,7 +397,7 @@ public class ActionCTRL {
 					//Herunder bliver feltets ejer skiftet.
 					wantedFieldChange.setOwner(playerNumber);
 					view.updateOwnership(playerNumber, newPlayerPosition);
-					}
+				}
 			}
 			if(owner != 0 && owner != playerNumber) {
 				if ((toolbox.checkPropertyGroupOwnership(owner, fields, newPlayerPosition) == true) && (fieldRent[6] == 0)) {
@@ -415,7 +435,7 @@ public class ActionCTRL {
 					view.updateOwnership(playerNumber, newPlayerPosition);
 					BreweryFields wantedFieldChange = ((BreweryFields)fields[newPlayerPosition]);
 					wantedFieldChange.setOwner(playerNumber);
-					}
+				}
 			}
 			if(owner != 0 && owner != playerNumber) {
 				int breweryRent = breweryFieldRent[numOfOwnedBrewFields-1];
@@ -507,7 +527,7 @@ public class ActionCTRL {
 			int transactionValue = chanceCardValueArray[0];
 			if (transactionValue < 0) {
 				toolbox.payMoney(playerNumber, 0, players, fields, transactionValue);
-				
+
 			} else {
 				players[playerNumber].recieveMoney(transactionValue);
 			}
