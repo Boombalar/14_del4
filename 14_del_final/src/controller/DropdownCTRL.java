@@ -7,7 +7,7 @@ public class DropdownCTRL {
 
 
 
-	public void rollDice (int currentPlayer, DieCup dieCup, Player[] players, Field[] fields, ViewCTRL view, FieldRuleCTRL fieldRuleCTRL ) {
+	public void rollDice (int currentPlayer, DieCup dieCup, Player[] players, Field[] fields, ViewCTRL view, FieldRuleCTRL fieldRuleCTRL, LandOnFieldCTRL landonfield, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chancecard, FieldRuleCTRL fieldRuleSwitch ) {
 
 		//slå terninger
 		dieCup.shake();
@@ -32,7 +32,8 @@ public class DropdownCTRL {
 		view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
 		view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
-		fieldRuleCTRL.fieldRulesSwitch(currentPlayer, newPlayerPosition, players, fields);
+		fieldRuleCTRL.fieldRulesSwitch(currentPlayer, newPlayerPosition, players, fields, landonfield, view, toolbox, bankruptcy, trade, chancecard, fieldRuleSwitch);
+		
 		if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 			currentPlayer--;
 			/*
