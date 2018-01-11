@@ -258,7 +258,7 @@ public class Toolbox {
 		} else {						
 			players[currentPlayer].removeMoney(amount);
 			if (toPlayer > 0) {
-				players[currentPlayer].recieveMoney(amount);
+				players[toPlayer].recieveMoney(amount);
 			}
 		}
 	}
