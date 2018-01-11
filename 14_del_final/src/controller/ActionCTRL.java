@@ -479,7 +479,7 @@ public class ActionCTRL {
 		}
 
 		if(owner != 0 && owner != playerNumber) {
-			int shipRent = (fieldRent[numOfOwnedShipFields -1])*multiplier;
+			int shipRent = ((fieldRent[numOfOwnedShipFields -1])*multiplier);
 			toolbox.payMoney(playerNumber, owner, players, fields, shipRent);
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			view.updatePlayerAccount(owner, players[owner].getBalance());
