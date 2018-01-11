@@ -275,26 +275,5 @@ public class Toolbox {
 			checkForPassingStart = true;
 		}
 		return checkForPassingStart;
-	}
-	
-	public String[] getPropertyArray () {
-
-	//Vi laver Array til DropDown listen
-	propertyArray = new String[amountOfProperties];
-	index = 0;
-
-	//Vi populerer Array
-	//populer array med felt hvis man ejer det og har hele gruppen eks.
-	//1. Hvidovrevej
-	//3. Rødovrevej
-	for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-		if (fields[fieldCount] instanceof PropertyFields) {
-			if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkForGroupOwnership(currentPlayer, fields, fieldCount) == true) {
-				propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
-			}
-		}
-		index++;
-	}
-	
-	
+	}	
 }
