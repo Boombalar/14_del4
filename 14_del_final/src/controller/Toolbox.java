@@ -28,7 +28,7 @@ public class Toolbox {
 
 		for (int fieldCount = 0;fieldCount<= 39;fieldCount++) {
 			if(fields[fieldCount] instanceof PropertyFields) {
-				housesOnProperty = getHousesOnProperty(currentPlayer, fields, fieldNumber);
+				housesOnProperty = getHousesOnProperty(currentPlayer, fieldNumber, fields);
 				if(housesOnProperty > 0) {
 					returnValue = returnValue + housesOnProperty;
 				}
@@ -94,7 +94,7 @@ public class Toolbox {
 		if(valueOfSale < amountNeeded) {
 			for (int fieldCount = 0; fieldCount<=39;fieldCount++) {
 				if(fields[fieldCount] instanceof PropertyFields && valueOfSale < amountNeeded) {
-					if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && getHousesOnProperty(currentPlayer, fields, fieldCount)==0) {
+					if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && getHousesOnProperty(currentPlayer, fieldCount, fields)==0) {
 						priceOfProperty = ((OwnerFields)fields[fieldCount]).getPropertyValue();
 						valueOfSale = valueOfSale + priceOfProperty;
 						if (valueOfSale >= amountNeeded) {
