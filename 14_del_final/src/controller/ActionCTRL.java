@@ -21,6 +21,7 @@ public class ActionCTRL {
 	private TradeCTRL trade;
 	private WinnerCTRL winner;
 	private BankruptcyCTRL bankruptcy;
+	private FieldRuleCTRL fieldRuleCTRL;
 	
 	public ActionCTRL() {
 		initialiseGame();
@@ -64,7 +65,7 @@ public class ActionCTRL {
 
 		while (!checkWinner()) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 			
-		jail.jailHandling(currentPlayer, players, view, toolbox, fields);
+		jail.jailHandling(currentPlayer, players, fields, view, toolbox, trade);
 
 			while (true) {
 				// Hvis en spiller er broke, så gå ud af loop
@@ -82,7 +83,7 @@ public class ActionCTRL {
 				// Slår terningerne, ændrer position i model lag og opdaterer view lag
 				// Håndterer om man kommer over start og får 4.000.
 				case "Slå terninger":
-					rollDice
+					dropdown.rollDice(currentPlayer, dieCup, players, fields, view, fieldRuleCTRL, landonfield, toolbox, bankruptcy, trade, chanceCard);
 					break;
 
 					// Køb huse og hoteller.

@@ -7,7 +7,7 @@ public class DropdownCTRL {
 
 
 
-	public void rollDice (int currentPlayer, DieCup dieCup, Player[] players, Field[] fields, ViewCTRL view, FieldRuleCTRL fieldRuleCTRL, LandOnFieldCTRL landonfield, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chancecard, FieldRuleCTRL fieldRuleSwitch ) {
+	public void rollDice (int currentPlayer, DieCup dieCup, Player[] players, Field[] fields, ViewCTRL view, FieldRuleCTRL fieldRuleCTRL, LandOnFieldCTRL landonfield, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chancecard) {
 
 		//slå terninger
 		dieCup.shake();
