@@ -402,7 +402,7 @@ public class ActionCTRL {
 		case 2:
 			//Breweryfields
 			int breweryPropertyValue = (((BreweryFields)fields[newPlayerPosition]).getPropertyValue());
-			int[] breweryFieldRent = (((BreweryFields)fields[newPlayerPosition]).returnValue());
+			int[] breweryFieldRent = (((BreweryFields)fields[newPlayerPosition]).getReturnValue());
 			int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(newPlayerPosition, fields, owner));
 
 			if(owner == 0) {
@@ -463,7 +463,7 @@ public class ActionCTRL {
 	public void shippingFieldRules(int playerNumber, int multiplier, int newPlayerPosition) {
 		int shippingPropertyValue = (((ShipFields)fields[newPlayerPosition]).getPropertyValue());
 		int owner = (((ShipFields)fields[newPlayerPosition]).getOwner());
-		int[] fieldRent = (((ShipFields)fields[newPlayerPosition]).returnValue());
+		int[] fieldRent = (((ShipFields)fields[newPlayerPosition]).getReturnValue());
 		int numOfOwnedShipFields = (toolbox.getNumberOfOwnedPropertiesInGroup(newPlayerPosition, fields, owner));
 
 		if(owner == 0) {
@@ -506,6 +506,7 @@ public class ActionCTRL {
 			int transactionValue = chanceCardValueArray[0];
 			if (transactionValue < 0) {
 				toolbox.payMoney(playerNumber, 0, players, fields, transactionValue);
+				
 			} else {
 				players[playerNumber].recieveMoney(transactionValue);
 			}
