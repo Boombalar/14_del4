@@ -123,8 +123,9 @@ public class ActionCTRL {
 					}
 
 					players[currentPlayer].setPosition(newPlayerPosition);
-					view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 					view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
+					view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
+					
 
 					fieldRulesSwitch(currentPlayer, oldPlayerPosition, newPlayerPosition);
 					if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
