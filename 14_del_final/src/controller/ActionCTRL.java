@@ -127,7 +127,7 @@ public class ActionCTRL {
 					view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 					
 
-					fieldRulesSwitch(currentPlayer, oldPlayerPosition, newPlayerPosition);
+					fieldRulesSwitch(currentPlayer, newPlayerPosition);
 					if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 						currentPlayer--;
 						/*
@@ -351,7 +351,7 @@ public class ActionCTRL {
 	 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
 	 * @param playerNumber - Modtager et spiller nummer
 	 */
-	private void fieldRulesSwitch (int playerNumber, int oldPlayerPosition, int newPlayerPosition) {
+	private void fieldRulesSwitch (int playerNumber, int newPlayerPosition) {
 		int fieldType = fields[players[playerNumber].getPosition()].getType();
 		int owner=0;
 		if ((fields[newPlayerPosition]) instanceof OwnerFields) {
@@ -367,7 +367,7 @@ public class ActionCTRL {
 			int numberOfHouses = fieldRent[6];
 			int propertyRent = fieldRent[numberOfHouses];
 			if(owner == 0) {
-				boolean	answer = view.getUserAnswer(players[playerNumber].getPlayerName() + "er landet på " + fields[newPlayerPosition].getName() + "vil du købe grunden", "ja", "nej");		
+				boolean	answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " vil du købe grunden", "ja", "nej");		
 				if(answer == true) {
 					toolbox.payMoney(playerNumber, owner, players, fields, propertyValue); 				//spiller køber grunden af brættet
 					view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); 		//Update af gui.
@@ -396,7 +396,7 @@ public class ActionCTRL {
 
 		case 1:
 			//ShipFields
-			shippingFieldRules(playerNumber, 1, oldPlayerPosition, newPlayerPosition);
+			shippingFieldRules(playerNumber, 1, newPlayerPosition);
 			break;
 
 		case 2:
@@ -406,7 +406,7 @@ public class ActionCTRL {
 			int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(newPlayerPosition, fields, owner));
 
 			if(owner == 0) {
-				boolean answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + "vil du købe grunden", "ja", "nej");
+				boolean answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " vil du købe grunden", "ja", "nej");
 				if(answer == true) {
 					toolbox.payMoney(playerNumber, owner, players, fields, breweryPropertyValue);
 					view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
@@ -442,7 +442,7 @@ public class ActionCTRL {
 			view.writeText(players[playerNumber].getPlayerName() + " er landet på 'Prøv lykken', du trækker et chance kort"); //Tekst fra gui 
 			chanceCard.draw();   														//ChanceCardCRTL trækker et kort	
 			view.showChanceCard(chanceCard.getDescription());							//Teksten fra Chancekortet vises i gui 
-			chanceCardRules(playerNumber, oldPlayerPosition, newPlayerPosition); //kald af metode som fortæller hvilket slags kort man har trukket.
+			chanceCardRules(playerNumber, newPlayerPosition); //kald af metode som fortæller hvilket slags kort man har trukket.
 			break;
 
 		case 7:
@@ -460,7 +460,7 @@ public class ActionCTRL {
 	 * @param playerNumber - modtager et spillernummer
 	 * @param multiplier - Hvis feltet er ejet af en spiller ganges den totale leje med multiplier.
 	 */
-	public void shippingFieldRules(int playerNumber, int multiplier, int oldPlayerPosition, int newPlayerPosition) {
+	public void shippingFieldRules(int playerNumber, int multiplier, int newPlayerPosition) {
 		int shippingPropertyValue = (((ShipFields)fields[newPlayerPosition]).getPropertyValue());
 		int owner = (((ShipFields)fields[newPlayerPosition]).getOwner());
 		int[] fieldRent = (((ShipFields)fields[newPlayerPosition]).returnValue());
@@ -497,7 +497,7 @@ public class ActionCTRL {
 	 * @param playerNumber - modtager et playernummer.
 	 */
 
-	public void chanceCardRules (int playerNumber, int oldPlayerPosition, int newPlayerPosition) {
+	public void chanceCardRules (int playerNumber, int newPlayerPosition) {
 		int chanceCardType = chanceCard.getType();
 		int[] chanceCardValueArray = chanceCard.getReturnValue();
 		switch (chanceCardType) {
@@ -513,9 +513,7 @@ public class ActionCTRL {
 			break;
 
 		case 2: // MoveToCards
-			MoveToCardsRules(playerNumber, oldPlayerPosition, newPlayerPosition); // logik og viewCTRL-kald ligger i denne metode.
-			if(toolbox.CheckForPassingStart(oldPlayerPosition, newPlayerPosition) == true)
-				view.updatePlayerPosition(playerNumber, oldPlayerPosition, newPlayerPosition);
+			MoveToCardsRules(playerNumber, newPlayerPosition); // logik og viewCTRL-kald ligger i denne metode.
 			break;
 
 		case 3: // ReleaseCards
@@ -536,23 +534,26 @@ public class ActionCTRL {
 	 * MoveToCardRules - En Metode som switcher på hvilket type MoveToCard man har trukket.
 	 * @param playerNumber - modtager et playernummer.
 	 */
-	public void MoveToCardsRules (int playerNumber, int oldPlayerPosition, int newPlayerPosition) {
+	public void MoveToCardsRules (int playerNumber, int newPlayerPosition) {
 		int[] chanceCardValueArray = chanceCard.getReturnValue();
 		int moveToField = chanceCardValueArray[0];
 
+		if(toolbox.CheckForPassingStart(newPlayerPosition, moveToField) == true)
+			view.updatePlayerPosition(playerNumber, newPlayerPosition, moveToField);
+		
 		switch (chanceCardValueArray[1]){
 
 		case 1:
 			// Blot flyttekort til et bestemt felt.
 			if((chanceCard.cardNumber == 19) || (chanceCard.cardNumber == 22)) {
 				players[playerNumber].setPosition(moveToField);
-				view.updatePlayerPosition(playerNumber,oldPlayerPosition, moveToField);
+				view.updatePlayerPosition(playerNumber,newPlayerPosition, moveToField);
 				players[playerNumber].setTurnsInJail(1);
 			}
 			else {
 				players[playerNumber].setPosition(moveToField);
-				view.updatePlayerPosition(playerNumber, oldPlayerPosition, moveToField);
-				fieldRulesSwitch(playerNumber, oldPlayerPosition, newPlayerPosition);
+				view.updatePlayerPosition(playerNumber, newPlayerPosition, moveToField);
+				fieldRulesSwitch(playerNumber, moveToField);
 			}
 			break;
 
@@ -569,38 +570,36 @@ public class ActionCTRL {
 					shippingArray[i] = i;
 				}
 			}
-			System.out.println(oldPlayerPosition);
-			System.out.println(newPlayerPosition);
 			// Herefter kommer der et tjek om hvilket efterfølgende shippingField er nærmest.
-			if( oldPlayerPosition < shippingArray[0]) {
+			if( newPlayerPosition < shippingArray[0]) {
 				players[playerNumber].setPosition(shippingArray[0]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[0]);
-				shippingFieldRules(playerNumber, 2, newPlayerPosition, shippingArray[0]);
+				shippingFieldRules(playerNumber, 2, shippingArray[0]);
 			}
 
-			else if( oldPlayerPosition > shippingArray[0] && oldPlayerPosition < shippingArray[1]) {
+			else if( newPlayerPosition > shippingArray[0] && newPlayerPosition < shippingArray[1]) {
 				players[playerNumber].setPosition(shippingArray[1]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[1]);
-				shippingFieldRules(playerNumber, 2, newPlayerPosition, shippingArray[1]);
+				shippingFieldRules(playerNumber, 2, shippingArray[1]);
 			}
 
-			else if( oldPlayerPosition > shippingArray[1] && oldPlayerPosition < shippingArray[2]) {
+			else if( newPlayerPosition > shippingArray[1] && newPlayerPosition < shippingArray[2]) {
 				players[playerNumber].setPosition(shippingArray[2]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[2]);
-				shippingFieldRules(playerNumber, 2, newPlayerPosition, shippingArray[2]);
+				shippingFieldRules(playerNumber, 2, shippingArray[2]);
 			}
 
-			else if( oldPlayerPosition > shippingArray[2] && oldPlayerPosition < shippingArray[3]) {
+			else if( newPlayerPosition > shippingArray[2] && newPlayerPosition < shippingArray[3]) {
 				players[playerNumber].setPosition(shippingArray[3]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[3]);
-				shippingFieldRules(playerNumber, 2, newPlayerPosition, shippingArray[3]);
+				shippingFieldRules(playerNumber, 2, shippingArray[3]);
 			}
 			break;
 
 		case 3: // Ryk tre felter tilbage.
 			players[playerNumber].setPosition(newPlayerPosition - 3);
 			view.updatePlayerPosition(playerNumber, newPlayerPosition, newPlayerPosition - 3);
-			fieldRulesSwitch(playerNumber, newPlayerPosition, (newPlayerPosition - 3));
+			fieldRulesSwitch(playerNumber, (newPlayerPosition - 3));
 			break;
 		}
 	}
