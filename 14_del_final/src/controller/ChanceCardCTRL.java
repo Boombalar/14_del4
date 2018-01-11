@@ -38,8 +38,7 @@ public class ChanceCardCTRL {
             {
                 plads2 = random.nextInt(chanceCard.length);
             }
-            //          chanceCard[plads]=chanceCard[plads2];
-            //          chanceCard[plads2]=tempAdress;
+
             shuffledDeck[plads]=shuffledDeck[plads2];
             shuffledDeck[plads2]=tal;
         }
@@ -55,9 +54,7 @@ public class ChanceCardCTRL {
             shuffle();
             cardPointer=0;
         }
- 
         cardNumber = shuffledDeck[cardPointer];
-        //  cardnumber = chanceCard[cardPointer].getNumber();
         cardPointer = cardPointer + 1;
     }
  
