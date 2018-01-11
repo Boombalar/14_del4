@@ -31,7 +31,7 @@ public class TradeCTRL {
 		int numberOfHouses;
 		int priceOfBuilding;
 
-		numberOfHouses = toolbox.getHousesOnProperty(currentPlayer, fields, fieldNumber);
+		numberOfHouses = toolbox.getHousesOnProperty(currentPlayer, fieldNumber, fields);
 		if (numberOfHouses > 0) {
 			numberOfHouses = numberOfHouses - 1;
 			returnValue[6] = numberOfHouses;
