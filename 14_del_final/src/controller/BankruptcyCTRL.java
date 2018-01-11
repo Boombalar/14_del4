@@ -47,7 +47,7 @@ public class BankruptcyCTRL {
 						//Vi sælger husene 1 ad gangen
 						for (int houseCount = 0; houseCount <= numberOfHouses; houseCount++ ) {
 							valueOfSale = valueOfSale + priceOfHouse;
-							tradeCTRL.sellBuilding(fieldCount, currentPlayer, players, fields);
+							tradeCTRL.sellBuilding(currentPlayer, fieldCount, players, fields);
 							if (valueOfSale >= amountNeeded) {
 								break;
 							}

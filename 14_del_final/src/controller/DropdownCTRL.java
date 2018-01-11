@@ -141,7 +141,7 @@ public class DropdownCTRL {
 		if (propertyArray.length != 0) {
 			choice = view.getDropDownChoice("Vælg grund du vil sælge huse fra", propertyArray);
 			int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
-			tradectrl.sellBuilding(currentPlayer, players, fields, chosenFieldNumber);
+			tradectrl.sellBuilding(currentPlayer, chosenFieldNumber, players, fields);
 		}
 		else 
 		{

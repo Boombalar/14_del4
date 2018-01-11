@@ -3,7 +3,7 @@ package controller;
 import model.*;
 
 public class FieldRuleCTRL {
-	landOnFieldCTRL landonfield;
+	LandOnFieldCTRL landonfield;
 
 	/**
 	 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på

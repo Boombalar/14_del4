@@ -1,12 +1,15 @@
 package controller;
 
+import model.*;
 import java.util.concurrent.TimeUnit;
+import view.*;
 
 public class WinnerCTRL {
-	
-	public boolean checkWinner() {
+
+	public boolean checkWinner(int numberOfPlayers, Player[] players) {
 		int numberOfPlayersBroke = 0;
 		boolean winner = false;
+
 		for (int i = 1; i <= numberOfPlayers; i++) {
 			if (players[i].checkBroke())
 				numberOfPlayersBroke++;
@@ -16,8 +19,8 @@ public class WinnerCTRL {
 		return winner;
 	}
 
-	public void printWinner() {
-		if (checkWinner()) {
+	public void printWinner(int numberOfPlayers, Player[] players, ViewCTRL view) {
+		if (checkWinner(numberOfPlayers, players)) {
 			for (int i = 1; i <= numberOfPlayers; i++) {
 				boolean checkPlayerBroke = players[i].checkBroke();
 				if (!checkPlayerBroke) {
