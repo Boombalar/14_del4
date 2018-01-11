@@ -441,7 +441,7 @@ public class ActionCTRL {
 			view.writeText(players[playerNumber].getPlayerName() + "er landet på 'Prøv lykken', du trækker et chance kort"); //Tekst fra gui 
 			chanceCard.draw();   														//ChanceCardCRTL trækker et kort	
 			view.showChanceCard(chanceCard.getDescription());							//Teksten fra Chancekortet vises i gui 
-			chanceCardRules(playerNumber, oldPlayerPosition, newPlayerPosition);												//kald af metode som fortæller hvilket slags kort man har trukket.
+			chanceCardRules(playerNumber, oldPlayerPosition, newPlayerPosition); //kald af metode som fortæller hvilket slags kort man har trukket.
 			break;
 
 		case 7:
@@ -568,6 +568,8 @@ public class ActionCTRL {
 					shippingArray[i] = i;
 				}
 			}
+			System.out.println(oldPlayerPosition);
+			System.out.println(newPlayerPosition);
 			// Herefter kommer der et tjek om hvilket efterfølgende shippingField er nærmest.
 			if( oldPlayerPosition < shippingArray[0]) {
 				players[playerNumber].setPosition(shippingArray[0]);
