@@ -32,7 +32,7 @@ public class DropdownCTRL {
 		view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
 		view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
-		fieldRuleCTRL.fieldRulesSwitch(currentPlayer, newPlayerPosition, players, fields, landonfield, view, toolbox, bankruptcy, trade, chancecard, fieldRuleSwitch);
+		fieldRuleCTRL.fieldRulesSwitch(currentPlayer, newPlayerPosition, players, fields, landonfield, view, toolbox, bankruptcy, trade, chancecard, fieldRuleCTRL);
 		
 		if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 			currentPlayer--;
@@ -47,7 +47,7 @@ public class DropdownCTRL {
 		}
 	}
 
-	public void buyHousesAndHotel(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, TradeCTRL tradectrl, Toolbox toolbox) {
+	public void buyHousesAndHotel(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, TradeCTRL trade, Toolbox toolbox) {
 		
 		int amountOfProperties = 0;
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {//Går hele brættet igennem
@@ -104,7 +104,7 @@ public class DropdownCTRL {
 
 
 	}
-	public void sellHousesAndHotels(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, Toolbox toolbox, TradeCTRL tradectrl) {
+	public void sellHousesAndHotels(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, Toolbox toolbox, TradeCTRL trade) {
 		int amountOfProperties=0;
 		int[] returnValue;
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
@@ -142,7 +142,7 @@ public class DropdownCTRL {
 		if (propertyArray.length != 0) {
 			choice = view.getDropDownChoice("Vælg grund du vil sælge huse fra", propertyArray);
 			int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
-			tradectrl.sellBuilding(currentPlayer, chosenFieldNumber, players, fields);
+			trade.sellBuilding(currentPlayer, chosenFieldNumber, players, fields);
 		}
 		else 
 		{

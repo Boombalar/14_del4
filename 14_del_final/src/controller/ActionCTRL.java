@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.concurrent.TimeUnit;
-
 import model.*;
 import view.*;
 
@@ -22,7 +20,7 @@ public class ActionCTRL {
 	private WinnerCTRL winner;
 	private BankruptcyCTRL bankruptcy;
 	private FieldRuleCTRL fieldRuleCTRL;
-	
+
 	public ActionCTRL() {
 		initialiseGame();
 		gameSequence();
@@ -58,14 +56,14 @@ public class ActionCTRL {
 		int currentPlayer = 1; //Den første spiller instantieres til spiller 1
 		int diceValue; //Den samlede mængde af terningerne
 		int amountOfProperties=0; //Den mængde grunde en given spiller ejer?
-		int index; //Index til hvad?
+		int index;
 		String[] propertyArray; //Det String array som indeholder alle de grunde en given spiller ejer.
 		String choice; //Det valg en given spiller vælger ud fra propertyString array.
 		int[] returnValue; //Hvilken specifik returværdi det dette?s
 
-		while (!checkWinner()) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
-			
-		jail.jailHandling(currentPlayer, players, fields, view, toolbox, trade);
+		while (!winner.checkWinner(index, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
+
+			jail.jailHandling(currentPlayer, players, fields, view, toolbox, trade);
 
 			while (true) {
 				// Hvis en spiller er broke, så gå ud af loop
@@ -93,8 +91,8 @@ public class ActionCTRL {
 					//Vi starter med at finde ud af hvor mange PropertyFields man ejer hvor man har hele gruppen
 					//Således vi kan opbygge et array til dropdownlisten.
 
-					buyHouseAndHotels
-					
+					dropdown.buyHousesAndHotel(currentPlayer, players, fields, view, trade, toolbox);
+
 					break;
 
 					//Sælg huse og hoteller.
@@ -105,27 +103,28 @@ public class ActionCTRL {
 					//Find antal propertyfields med huse
 					//Således vi kan lave Array til dropdown
 
-					
-					sellHOusesAndHotels();
+
+					dropdown.sellHousesAndHotels(currentPlayer, players, fields, view, toolbox, trade);
 					break;
 
 					//Sælg grund hvis man ejer den og der ikke er nogle huse på
 					//Man kan sælge til banken eller anden spiller
 				case "Sælg grund":
 
-					sellProperty
-				break;
-				//Lav logik for spillers choice
-			}
-			//			view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
-			currentPlayer++;
-			if (currentPlayer > players.length-1){
-				currentPlayer = 1;
-			}
+					dropdown.sellProperty(currentPlayer, players, fields, view, toolbox, trade);
+					break;
+					//Lav logik for spillers choice
+				}
+				//			view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
+				currentPlayer++;
+				if (currentPlayer > players.length-1){
+					currentPlayer = 1;
+				}
 
-			if (checkWinner()) {
-				printWinner();
-				break;
+				if (winner.checkWinner(index, players)) {
+					winner.printWinner(index, players, view);
+					break;
+				}
 			}
 		}
 	}
