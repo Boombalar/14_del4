@@ -57,7 +57,7 @@ public class ActionCTRL {
 	private void gameSequence() {
 		int oldPlayerPosition = 0; //En given spiller start position på en runde
 		int newPlayerPosition; //Den position en given spiller rykkes til når terningerne er slået
-		int currentPlayer = 1; //Den første spiller instaniseres til spiller 1
+		int currentPlayer = 1; //Den første spiller instantieres til spiller 1
 		int diceValue; //Den samlede mængde af terningerne
 		int amountOfProperties=0; //Den mængde grunde en given spiller ejer?
 		int index; //Index til hvad?
@@ -151,7 +151,7 @@ public class ActionCTRL {
 					amountOfProperties = 0;
 					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {//Går hele brættet igennem
 						if (fields[fieldCount] instanceof PropertyFields) {
-							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkForGroupOwnership(currentPlayer, fields, fieldCount) == true) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkPropertyGroupOwnership(currentPlayer, fields, fieldCount) == true) {
 								amountOfProperties++;
 							}
 						}
@@ -167,7 +167,7 @@ public class ActionCTRL {
 					//3. Rødovrevej
 					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 						if (fields[fieldCount] instanceof PropertyFields) {
-							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkForGroupOwnership(currentPlayer, fields, fieldCount) == true) {
+							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkPropertyGroupOwnership(currentPlayer, fields, fieldCount) == true) {
 								propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
 							}
 						}
@@ -179,7 +179,7 @@ public class ActionCTRL {
 					int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
 
 					//Vi bygger hvis man ejer hele gruppen, og har råd
-					if( toolbox.checkForGroupOwnership(currentPlayer, fields, chosenFieldNumber)) {
+					if( toolbox.checkPropertyGroupOwnership(currentPlayer, fields, chosenFieldNumber)) {
 						if (players[currentPlayer].getBalance() > toolbox.getHousePrice(chosenFieldNumber, fields)) {
 							returnValue = (((OwnerFields)fields[chosenFieldNumber]).returnValue());
 							if (returnValue[6]<5) {//hvis der er mindre end 5 huse på feltet
@@ -379,7 +379,7 @@ public class ActionCTRL {
 				}
 			}
 			if(owner != 0 && owner != playerNumber) {
-				if ((toolbox.checkForGroupOwnership(owner, fields, newPlayerPosition) == true) && (fieldRent[6] == 0)) {
+				if ((toolbox.checkPropertyGroupOwnership(owner, fields, newPlayerPosition) == true) && (fieldRent[6] == 0)) {
 					propertyRent *= 2;
 				}
 				toolbox.payMoney(playerNumber, owner, players, fields, propertyRent);				 //transaction mellem to spiller.

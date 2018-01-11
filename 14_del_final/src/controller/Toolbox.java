@@ -7,25 +7,29 @@ public class Toolbox {
 
 	public Toolbox() {
 	}
-
+	//Bruges til at overføre mellem 2 spillere hvor man på forhånd har bestemt
+	//at ingen går.
 	public void safeTransferMoney(int fromPlayer, int toPlayer, Player[] players, int amount) {
 		players[fromPlayer].removeMoney(amount);
 		players[toPlayer].recieveMoney(amount);
 	}
 
-
+	//Overfører aktiver fra 1 spiller til en anden.
+	//hvis toPlayer er 0 så gives grundene tilbage til spillet
+	//og der gives ikke penge til anden spiller.
 	public void transferAssets(int fromPlayer, int toPlayer, Player[] players, Field[] fields) {
-		for(int fieldcount = 0;fieldcount <=39;fieldcount++) {
-			if (fields[fieldcount] instanceof OwnerFields) {
-				if (((OwnerFields)fields[fieldcount]).getOwner() == fromPlayer) {
-					((OwnerFields)fields[fieldcount]).setOwner(toPlayer);	
-				}
+		for(int fieldCount = 0;fieldCount <=39;fieldCount++) {
+			if (fields[fieldCount] instanceof OwnerFields) {
+				changeOwnerShip(fromPlayer, toPlayer, fields, fieldCount);
 			}
 		}
-		players[toPlayer].recieveMoney(players[fromPlayer].getBalance());
+		if (toPlayer != 0) {
+			players[toPlayer].recieveMoney(players[fromPlayer].getBalance());
+		}
 		players[fromPlayer].removeMoney(players[fromPlayer].getBalance());
 	}
 
+	//Sælg en bygning til halv pris og overfør pengene til ejeren
 	public void sellBuilding(int currentPlayer, Player[] players, Field[] fields, int fieldNumber) {
 		int[] returnValue = new int[8];
 		int numberOfHouses;
@@ -40,64 +44,64 @@ public class Toolbox {
 		players[currentPlayer].recieveMoney(priceOfBuilding);			
 	}
 
+	// sælg en grund til en spiller eller banken. Hvis toPlayer = 0 så overføres pengene ikke til nogen
 	public void sellProperty(int currentPlayer, int toPlayer, Player[] players, Field[] fields, int fieldNumber) {
 		int priceOfProperty;
 
-		changeOwnerShip(toPlayer, fields, fieldNumber);
+		changeOwnerShip(currentPlayer, toPlayer, fields, fieldNumber);
 		priceOfProperty = ((OwnerFields)fields[fieldNumber]).getPropertyValue();
 		if (toPlayer == 0) {
 			players[currentPlayer].recieveMoney(priceOfProperty);
 		}else {
-			safeTransferMoney(currentPlayer, toPlayer, players, priceOfProperty);
+			safeTransferMoney(toPlayer, currentPlayer, players, priceOfProperty);
 		}
 	}
+
+	//Håndterer en bankerot.
 
 	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields) {
-		int[] returnValue;
+		int numberOfBuildings;
 
-		for (int fieldCount = 0 ; fieldCount <=39 ; fieldCount++) {
-
-			if(fields[fieldCount] instanceof OwnerFields) {
-				if (((OwnerFields)fields[fieldCount]).getOwner() == currentPlayer) {
-					returnValue = (((OwnerFields)fields[fieldCount]).returnValue());
-					int numberOfBuildings=returnValue[6];
-					if (numberOfBuildings>0) {
-						for (int numberOfBuildingSales = 1 ; numberOfBuildingSales <= numberOfBuildings ; numberOfBuildingSales++) {
-							sellBuilding(currentPlayer, players, fields, fieldCount);
-						}
+		//Sælg alle bygninger.
+		for (int fieldCount = 0 ; fieldCount <=39 ; fieldCount++) {//Gå brættet igennem.
+			if(fields[fieldCount] instanceof OwnerFields) {//Er feltet et OwnerFields, så kan vi roligt Caste metoderne.
+				numberOfBuildings = getHousesOnProperty(currentPlayer, fields, fieldCount); //Returner antal bygninger hvis feltet ejes af currentPlayer		
+				if (numberOfBuildings > 0) {//Hvis der er bygninger på grunden
+					//Sælg bygninger
+					for (int numberOfBuildingCount = 1; numberOfBuildingCount <= numberOfBuildings ; numberOfBuildingCount++) {
+						sellBuilding(currentPlayer, players, fields, fieldCount);
 					}
-					changeOwnerShip(toPlayer, fields, fieldCount);	
 				}
 			}
+		}
+		transferAssets(currentPlayer, toPlayer, players, fields);
+		players[currentPlayer].setBroke(true);
+	}
 
-			if (toPlayer==0) {
-				players[currentPlayer].removeMoney(players[currentPlayer].getBalance());
-			}else {
-				safeTransferMoney(currentPlayer, toPlayer, players, players[currentPlayer].getBalance());
-			}
+	//Skift ejerskab på en grund hvis den ejes af fromPlayer
+	public void changeOwnerShip(int fromPlayer, int toPlayer, Field[] fields, int fieldNumber) {
+		if(((OwnerFields)fields[fieldNumber]).getOwner() == fromPlayer) {
+			((OwnerFields)fields[fieldNumber]).setOwner(toPlayer);
 		}
 	}
 
-	public void changeOwnerShip( int toPlayer, Field[] fields, int fieldNumber) {
-		((OwnerFields)fields[fieldNumber]).setOwner(toPlayer);
-	}
-
-	public boolean checkForBankruptcy(int currentPlayer, Player[] players, int amount) {
+	//Check for om man har penge nok til at foretage en transaktion mellem to spillere.
+	public boolean checkForEnoughMoneyToForcepay(int currentPlayer, Player[] players, int amount) {
 		boolean returnValue = false;
 		if ((players[currentPlayer].getBalance() - amount) < 0) {
-			players[currentPlayer].setBroke(true);
 			returnValue = true;
 		}		
 		return returnValue;
 	}
 
-	public boolean checkForGroupOwnership(int fieldOwner, Field[] fields, int fieldNumber) {
+	//Check om man ejer alle grunde i en gruppe af PropertyFields.
+	public boolean checkPropertyGroupOwnership(int fieldOwner, Field[] fields, int fieldNumber) {
 		boolean returnValue = true;
 		for (int fieldCount = 0;fieldCount <=39;fieldCount++) {
-			if (fields[fieldCount] instanceof OwnerFields) {
-				if (((OwnerFields)fields[fieldCount]).getGroupNumber() == ((OwnerFields)fields[fieldNumber]).getGroupNumber()) {
-					if (((OwnerFields)fields[fieldCount]).getOwner() != fieldOwner) {
-						returnValue=false;
+			if (fields[fieldCount] instanceof PropertyFields) {
+				if (((PropertyFields)fields[fieldCount]).getGroupNumber() == ((PropertyFields)fields[fieldNumber]).getGroupNumber()) {//Hvis feltet man er nået til er samme ejer som feltet man checker ud fra
+					if (((PropertyFields)fields[fieldCount]).getOwner() != fieldOwner) {//Hvis feltet ikke har samme ejer som det felt man checker ud fra.
+						returnValue=false; //Så falsk
 					}
 				}
 			}
@@ -105,24 +109,26 @@ public class Toolbox {
 		return returnValue;
 	}
 
+	//Returner hvor mange huse der er på grunden, hvis man ejer den.
 	public int getHousesOnProperty(int currentPlayer, Field[] fields, int fieldNumber) {
 		int value = 0;
-		if (((OwnerFields)fields[fieldNumber]).getOwner()==currentPlayer) {
+		if (((OwnerFields)fields[fieldNumber]).getOwner() == currentPlayer) {
 			int[] returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
 			value = returnValue[6];
 		}
 		return value;
 	}
 
+	//Returner hvor mange huse der er på en hel gruppe hvis man ejer gruppen
 	public int getHousesOnGroup(int currentPlayer, Field[] fields, int fieldNumber) {
 		int returnValue=0;
-		int[] returnField = null;
+		int housesOnProperty = 0;
 
 		for (int fieldCount = 0;fieldCount<= 39;fieldCount++) {
 			if(fields[fieldCount] instanceof PropertyFields) {
-				returnField = ((PropertyFields)fields[fieldNumber]).getReturnValue();
-				if(((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer && getHousesOnProperty(currentPlayer, fields, fieldNumber)>0) {
-					returnValue = returnValue + getHousesOnProperty(currentPlayer, fields, fieldNumber);
+				housesOnProperty = getHousesOnProperty(currentPlayer, fields, fieldNumber);
+				if(housesOnProperty > 0) {
+					returnValue = returnValue + housesOnProperty;
 				}
 			}
 		}
@@ -251,7 +257,7 @@ public class Toolbox {
 	}
 
 	public void payMoney(int currentPlayer, int toPlayer, Player[] players, Field[] fields, int amount) {
-		if (checkForBankruptcy(currentPlayer, players, amount)) {
+		if (checkForEnoughMoneyToForcepay(currentPlayer, players, amount)) {
 			if (raiseMoney(currentPlayer, players, fields, amount) == false){
 				bankruptcy(currentPlayer, toPlayer, players, fields);
 			}
