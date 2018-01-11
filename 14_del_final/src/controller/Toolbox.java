@@ -87,9 +87,9 @@ public class Toolbox {
 
 	//Check for om man har penge nok til at foretage en transaktion mellem to spillere.
 	public boolean checkForEnoughMoneyToForcepay(int currentPlayer, Player[] players, int amount) {
-		boolean returnValue = false;
+		boolean returnValue = true;
 		if ((players[currentPlayer].getBalance() - amount) < 0) {
-			returnValue = true;
+			returnValue = false;
 		}		
 		return returnValue;
 	}
@@ -257,7 +257,7 @@ public class Toolbox {
 	}
 
 	public void payMoney(int currentPlayer, int toPlayer, Player[] players, Field[] fields, int amount) {
-		if (checkForEnoughMoneyToForcepay(currentPlayer, players, amount)) {
+		if (checkForEnoughMoneyToForcepay(currentPlayer, players, amount)==false) {
 			if (raiseMoney(currentPlayer, players, fields, amount) == false){
 				bankruptcy(currentPlayer, toPlayer, players, fields);
 			}
