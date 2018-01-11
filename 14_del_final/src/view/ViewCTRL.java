@@ -284,4 +284,19 @@ public class ViewCTRL {
 	public void turnOffPlayer (int player) {
 		gui.getFields()[players[player].getPosition()].setCar(guiPlayer[player], false);
 	}
+	
+	public void updateEntireBoard(Field[] fields, Player[] players) {
+
+		//Updater fields ownership på bræt
+		for (int fieldCount = 0;fieldCount <= 39; fieldCount++) {
+			if (fields[fieldCount] instanceof PropertyFields) {
+				updateOwnership(((PropertyFields)fields[fieldCount]).getOwner(), fieldCount);
+			}
+		}
+		for (int playerCount = 1 ; playerCount <= players.length; playerCount++) {
+			if (players[playerCount].getBroke()) {
+				turnOffPlayer(playerCount);
+			}
+		}
+	}
 }
