@@ -8,7 +8,7 @@ public class BankruptcyCTRL {
 	public void payMoney(int currentPlayer, int toPlayer, int amount, Player[] players, Field[] fields, Toolbox toolbox, TradeCTRL tradeCTRL) {
 		if (checkForEnoughMoneyToForcepay(currentPlayer, amount, players)==false) {
 			if (raiseMoney(currentPlayer, amount, players, fields, toolbox, tradeCTRL) == false){
-				bankruptcy(currentPlayer, toPlayer, players, fields);
+				bankruptcy(currentPlayer, toPlayer, players, fields, toolbox, tradeCTRL);
 			}
 		} else {						
 			players[currentPlayer].removeMoney(amount);
@@ -41,7 +41,7 @@ public class BankruptcyCTRL {
 		for (int fieldCount = 0 ; fieldCount<=39;fieldCount++) {
 			if(fields[fieldCount] instanceof PropertyFields && valueOfSale < amountNeeded) {
 				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
-					numberOfHouses = toolbox.getHousesOnGroup(currentPlayer, fields, fieldCount);
+					numberOfHouses = toolbox.getHousesOnGroup(currentPlayer, fieldCount, fields);
 					priceOfHouse = toolbox.getHousePrice(fieldCount, fields)/2;
 					if(numberOfHouses > 0) {
 						//Vi sælger husene 1 ad gangen
