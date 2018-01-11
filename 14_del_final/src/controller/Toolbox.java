@@ -12,7 +12,7 @@ public class Toolbox {
 	//Håndterer en bankerot.
 
 	//Returner hvor mange huse der er på grunden, hvis man ejer den.
-	public int getHousesOnProperty(int currentPlayer, Field[] fields, int fieldNumber) {
+	public int getHousesOnProperty(int currentPlayer, int fieldNumber, Field[] fields) {
 		int value = 0;
 		if (((OwnerFields)fields[fieldNumber]).getOwner() == currentPlayer) {
 			int[] returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
@@ -22,7 +22,7 @@ public class Toolbox {
 	}
 
 	//Returner hvor mange huse der er på en hel gruppe hvis man ejer gruppen
-	public int getHousesOnGroup(int currentPlayer, Field[] fields, int fieldNumber) {
+	public int getHousesOnGroup(int currentPlayer, int fieldNumber, Field[] fields) {
 		int returnValue=0;
 		int housesOnProperty = 0;
 
@@ -43,7 +43,7 @@ public class Toolbox {
 		return returnValue[7];
 	}
 
-	public int getNumberOfOwnedPropertiesInGroup(int fieldNumber, Field[] fields, int playerOwner) {
+	public int getNumberOfOwnedPropertiesInGroup(int playerOwner, int fieldNumber, Field[] fields) {
 		int returnValue=0;
 		int groupNumber = ((OwnerFields)fields[fieldNumber]).getGroupNumber();
 		for (int fieldCount=0;fieldCount<=39;fieldCount++) {
@@ -86,7 +86,7 @@ public class Toolbox {
 		return numbOfHotels;
 	}
 
-	public boolean checkPropertySaleValue(int currentPlayer, Field[] fields, int amountNeeded) {
+	public boolean checkPropertySaleValue(int currentPlayer, int amountNeeded, Field[] fields) {
 		boolean returnValue = false;
 		int valueOfSale=0;
 		int priceOfProperty;
