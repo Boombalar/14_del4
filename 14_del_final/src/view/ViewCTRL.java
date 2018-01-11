@@ -154,6 +154,8 @@ public class ViewCTRL {
 	 * @return Returnere GUIens dropdown menu
 	 */
 	public String getDropDownChoice(String buttonText, String[] lines) {
+		if (lines == null)
+			writeText("Det har du ikke mulighed for");
 		return gui.getUserSelection(buttonText, lines);
 	}
 
