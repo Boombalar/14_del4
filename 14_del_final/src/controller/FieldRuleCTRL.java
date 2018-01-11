@@ -4,12 +4,6 @@ import model.*;
 import view.ViewCTRL;
 
 public class FieldRuleCTRL {
-<<<<<<< Updated upstream
-	LandOnFieldCTRL landonfield;
-=======
-	;
->>>>>>> Stashed changes
-
 	/**
 	 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
 	 * @param playerNumber - Modtager et spiller nummer
