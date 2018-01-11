@@ -16,6 +16,7 @@ public class FieldRuleCTRL {
 			owner = (((OwnerFields)fields[newPlayerPosition]).getOwner());
 		}
 
+		
 		switch (fieldType) {
 
 		case 0:			
