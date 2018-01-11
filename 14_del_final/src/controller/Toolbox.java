@@ -114,4 +114,19 @@ public class Toolbox {
 		}
 		return checkForPassingStart;
 	}	
+	
+	//Check om man ejer alle grunde i en gruppe af PropertyFields.
+		public boolean checkPropertyGroupOwnership(int fieldOwner, int fieldNumber, Field[] fields) {
+			boolean returnValue = true;
+			for (int fieldCount = 0;fieldCount <=39;fieldCount++) {
+				if (fields[fieldCount] instanceof PropertyFields) {
+					if (((PropertyFields)fields[fieldCount]).getGroupNumber() == ((PropertyFields)fields[fieldNumber]).getGroupNumber()) {//Hvis feltet man er nået til er samme ejer som feltet man checker ud fra
+						if (((PropertyFields)fields[fieldCount]).getOwner() != fieldOwner) {//Hvis feltet ikke har samme ejer som det felt man checker ud fra.
+							returnValue=false; //Så falsk
+						}
+					}
+				}
+			}
+			return returnValue;
+		}
 }

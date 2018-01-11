@@ -1,13 +1,14 @@
 package controller;
 
-import model.OwnerFields;
+import model.*;
 
-public class FieldRuleSwitch {
+public class FieldRuleCTRL {
+
 	/**
 	 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
 	 * @param playerNumber - Modtager et spiller nummer
 	 */
-	private void fieldRulesSwitch (int playerNumber, int newPlayerPosition) {
+	public void fieldRulesSwitch (int playerNumber, int newPlayerPosition, Player[] players, Field[] fields, LandOnFieldCTRL landonfield) {
 		int fieldType = fields[players[playerNumber].getPosition()].getType();
 		int owner=0;
 		if ((fields[newPlayerPosition]) instanceof OwnerFields) {
@@ -17,30 +18,31 @@ public class FieldRuleSwitch {
 		switch (fieldType) {
 
 		case 0:			
-			propertyField
+			landonfield.propertyField();
 			break;
 		case 1:
 			//ShipFields
-			shippingFieldRules(playerNumber, 1, newPlayerPosition);
+			landonfield.shippingFieldRules(playerNumber, 1, newPlayerPosition);
 			break;
 		case 2:
 			//Breweryfields
-			breweryField
+			landonfield.breweryField();
 			break;
 
 		case 3:
 			//Taxfields
-			taxField
+			landonfield.taxField();
 			break;
 		case 4:
 			//Chancefield			
-			chanceField.
+			landonfield.chanceField();
 			break;
 		case 7:
 			//GoToJailField
-			gotoJailField.
+			landonfield.goToJailField();
 			break;
 		}
 	}	
-
 }
+
+
