@@ -168,6 +168,7 @@ public class ActionCTRL {
 					for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 						if (fields[fieldCount] instanceof PropertyFields) {
 							if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkPropertyGroupOwnership(currentPlayer, fields, fieldCount) == true) {
+								index = toolbox.getNumberOfOwnedPropertiesInGroup(fieldCount, fields, currentPlayer);
 								propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
 							}
 						}
@@ -417,7 +418,7 @@ public class ActionCTRL {
 					}
 			}
 			if(owner != 0 && owner != playerNumber) {
-				int breweryRent = breweryFieldRent[numOfOwnedBrewFields];
+				int breweryRent = breweryFieldRent[numOfOwnedBrewFields-1];
 				view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " du skal betale " + breweryRent + " til " + players[owner].getPlayerName());
 				toolbox.payMoney(playerNumber, owner, players, fields, breweryRent);
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
