@@ -16,7 +16,12 @@ public class ActionCTRL {
 	private DieCup dieCup;
 	private Toolbox toolbox;
 	private JailCTRL jail;
-
+	private DropdownCTRL dropdown;
+	private LandOnFieldCTRL landonfield;
+	private TradeCTRL trade;
+	private WinnerCTRL winner;
+	private BankruptcyCTRL bankruptcy;
+	
 	public ActionCTRL() {
 		initialiseGame();
 		gameSequence();
@@ -35,6 +40,11 @@ public class ActionCTRL {
 		dieCup = new DieCup(); 		//Lav raflebæger.
 		toolbox = new Toolbox();
 		jail = new JailCTRL();
+		dropdown = new DropdownCTRL();
+		landonfield = new LandOnFieldCTRL();
+		trade = new TradeCTRL();
+		winner = new WinnerCTRL();
+		bankruptcy = new BankruptcyCTRL();
 	}
 	/**
 	 * gameSequence

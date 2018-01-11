@@ -1,11 +1,9 @@
 package controller;
 
-import model.Field;
-import model.OwnerFields;
-import model.Player;
+import model.*;
 
 public class TradeCTRL {
-
+	Toolbox toolbox;
 	
 	public void safeTransferMoney(int fromPlayer, int toPlayer, Player[] players, int amount) {
 		players[fromPlayer].removeMoney(amount);
@@ -33,7 +31,7 @@ public class TradeCTRL {
 		int numberOfHouses;
 		int priceOfBuilding;
 
-		numberOfHouses = getHousesOnProperty(currentPlayer, fields, fieldNumber);
+		numberOfHouses = toolbox.getHousesOnProperty(currentPlayer, fields, fieldNumber);
 		if (numberOfHouses > 0) {
 			numberOfHouses = numberOfHouses - 1;
 			returnValue[6] = numberOfHouses;

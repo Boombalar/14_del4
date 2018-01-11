@@ -4,6 +4,7 @@ import model.*;
 import view.*;
 
 public class JailCTRL {
+	BankruptcyCTRL bankrupt;
 
 	public void jailHandling(int currentPlayer, Player[] players, ViewCTRL view, Toolbox toolbox, Field[] fields) {
 
@@ -20,12 +21,12 @@ public class JailCTRL {
 
 				if (choiceJailPlayer=="Betal 1000kr") {
 					view.writeText("Betal 1000 kr for at komme ud af fængsel");
-					toolbox.payMoney(currentPlayer, 0, players, fields, 1000);
+					bankrupt.payMoney(currentPlayer, 0, players, fields, 1000);
 				}
 
 			} else {					
 				playerChoiceRelease = "Betal 1000 kr for at komme ud af fængsel";
-				toolbox.payMoney(currentPlayer, 0, players, fields, 1000);
+				bankrupt.payMoney(currentPlayer, 0, players, fields, 1000);
 			}
 		}
 	}
