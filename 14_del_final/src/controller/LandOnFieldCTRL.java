@@ -105,7 +105,7 @@ public class LandOnFieldCTRL {
 		int newPlayerPosition = players[playerNumber].getPosition();
 		int breweryPropertyValue = (((BreweryFields)fields[newPlayerPosition]).getPropertyValue());
 		int[] breweryFieldRent = (((BreweryFields)fields[newPlayerPosition]).getReturnValue());
-		int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(newPlayerPosition, owner));
+		int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition));
 		if(owner == 0) {
 			boolean answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " vil du købe grunden", "ja", "nej");
 			if(answer == true) {

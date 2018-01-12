@@ -93,11 +93,11 @@ public class BankruptcyCTRL {
 		//Sælg alle bygninger.
 		for (int fieldCount = 0 ; fieldCount <=39 ; fieldCount++) {//Gå brættet igennem.
 			if(fields[fieldCount] instanceof OwnerFields) {//Er feltet et OwnerFields, så kan vi roligt Caste metoderne.
-				numberOfBuildings = toolbox.getHousesOnProperty(fieldCount, currentPlayer); //Returner antal bygninger hvis feltet ejes af currentPlayer		
+				numberOfBuildings = toolbox.getHousesOnProperty(currentPlayer, fieldCount); //Returner antal bygninger hvis feltet ejes af currentPlayer		
 				if (numberOfBuildings > 0) {//Hvis der er bygninger på grunden
 					//Sælg bygninger
 					for (int numberOfBuildingCount = 1; numberOfBuildingCount <= numberOfBuildings ; numberOfBuildingCount++) {
-						trade.sellBuilding(fieldCount, currentPlayer, players);
+						trade.sellBuilding(currentPlayer, fieldCount, players);
 					}
 				}
 			}
