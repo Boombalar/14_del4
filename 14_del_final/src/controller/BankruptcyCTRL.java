@@ -4,23 +4,20 @@ import model.*;
 
 public class BankruptcyCTRL {
 	
-	Player[] players;
-	Field[] fields;
+
 	Toolbox toolbox;
 	TradeCTRL trade;
 	
-	public BankruptcyCTRL (Player[] players, Field[] fields, Toolbox toolbox, TradeCTRL trade) {
-		this.players = players;
-		this.fields = fields;
+	public BankruptcyCTRL (Toolbox toolbox, TradeCTRL trade) {
 		this.toolbox = toolbox;
 		this.trade = trade;
 	}
 	
 	
-	public void payMoney(int currentPlayer, int toPlayer, int amount) {
-		if (checkForEnoughMoneyToForcepay(currentPlayer, amount)==false) {
-			if (raiseMoney(currentPlayer, amount) == false){
-				bankruptcy(currentPlayer, toPlayer);
+	public void payMoney(int currentPlayer, int toPlayer, int amount, Player[] players, Field[] fields) {
+		if (checkForEnoughMoneyToForcepay(currentPlayer, amount, players)==false) {
+			if (raiseMoney(currentPlayer, amount, players, fields) == false){
+				bankruptcy(currentPlayer, toPlayer, players, fields);
 			}
 		} else {						
 			players[currentPlayer].removeMoney(amount);
@@ -31,7 +28,7 @@ public class BankruptcyCTRL {
 	}
 
 	//Check for om man har penge nok til at foretage en transaktion mellem to spillere.
-	public boolean checkForEnoughMoneyToForcepay(int currentPlayer, int amount) {
+	public boolean checkForEnoughMoneyToForcepay(int currentPlayer, int amount, Player[] players) {
 		boolean returnValue = true;
 		if ((players[currentPlayer].getBalance() - amount) < 0) {
 			returnValue = false;
@@ -39,7 +36,7 @@ public class BankruptcyCTRL {
 		return returnValue;
 	}
 
-	public boolean raiseMoney(int currentPlayer, int amountReached) {
+	public boolean raiseMoney(int currentPlayer, int amountReached, Player[] players, Field[] fields) {
 		boolean returnValue=true;
 		int numberOfHouses;
 		int priceOfHouse;
@@ -90,7 +87,7 @@ public class BankruptcyCTRL {
 		return returnValue;
 	}
 
-	public void bankruptcy(int currentPlayer, int toPlayer) {
+	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields) {
 		int numberOfBuildings;
 
 		//Sælg alle bygninger.
