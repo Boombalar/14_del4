@@ -179,8 +179,8 @@ public class LandOnFieldCTRL {
 			break;
 
 		case 4: //TaxCards
-			int numberofhouses = toolbox.getNumberOfHousesFromPlayer(playerNumber, fields);
-			int numberofhotels = toolbox.getNumberOfHotelsFromPlayer(playerNumber, fields);
+			int numberofhouses = toolbox.getNumberOfHousesFromPlayer(playerNumber);
+			int numberofhotels = toolbox.getNumberOfHotelsFromPlayer(playerNumber);
 			int totalSum = (chanceCardValueArray[0] * numberofhouses)+(chanceCardValueArray[1] * numberofhotels);
 			players[playerNumber].removeMoney(totalSum);
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
