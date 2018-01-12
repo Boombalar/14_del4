@@ -64,61 +64,59 @@ public class DropdownCTRL {
 
 	public void buyHousesAndHotel(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 
+		backToDropdown = true;
+		//Find ud af hvor mange proporties man ejer hvor man har hele gruppen til array.
 		int amountOfProperties = 0;
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {//Går hele brættet igennem
 			if (fields[fieldCount] instanceof PropertyFields) {
-				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount, fields) == true) {
+				//check om man ejer gruppen
+				if (toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount, fields) == true && toolbox.getHousesOnProperty(currentPlayer, fieldCount) != 5) {
 					amountOfProperties++;
 				}
 			}
 		}
-
 		//Vi laver Array til DropDown listen
 		String [] propertyArray = new String[amountOfProperties];
 		int index = 0;
-		String choice;
 		int[] returnValue;
 
-
-		//Vi populerer Array
-		//populer array med felt hvis man ejer det og har hele gruppen eks.
-		//1. Hvidovrevej
-		//3. Rødovrevej
+		//Vi populer array med felt hvis man ejer det og har hele gruppen eks.
+		//1-Hvidovrevej
+		//3-Rødovrevej
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			if (fields[fieldCount] instanceof PropertyFields) {
-				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount,fields) == true) {
-					index = toolbox.getNumberOfOwnedPropertiesInGroup(currentPlayer, fieldCount);
-					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
+				if (toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount,fields) == true && toolbox.getHousesOnProperty(currentPlayer, fieldCount) != 5) {
+					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + "-" + fields[fieldCount].getName(); 
+					index++;
 				}
 			}
-			index++;
 		}
-
 		//Vi modtager svar fra dropdown listen
 		if (propertyArray.length != 0) {
-			choice = view.getDropDownChoice("Vælg grund du vil bygge på", propertyArray);
-			int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
+			//Vælg hvilken grund du vil købe hus på
+			String[] choice = view.getDropDownChoice("Vælg hvilken grund til vil købe hus på", propertyArray).split("-");
+			int chosenFieldNumber=Integer.parseInt(choice[0]);
 
-			//Vi bygger hvis man ejer hele gruppen, og har råd
-			if( toolbox.checkPropertyGroupOwnership(currentPlayer,chosenFieldNumber, fields)) {
+			//Vi bygger hvis man har råd
 				if (players[currentPlayer].getBalance() > toolbox.getHousePrice(chosenFieldNumber)) {
-					returnValue = (((OwnerFields)fields[chosenFieldNumber]).returnValue());
-					if (returnValue[6]<5) {//hvis der er mindre end 5 huse på feltet
+					returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
+					if (returnValue[6] < 6) {//hvis der er mindre end 6 huse på feltet
 						returnValue[6]++;
+						//BYG FOR FANDEN!!
 						players[currentPlayer].removeMoney(toolbox.getHousePrice(chosenFieldNumber));
+						toolbox.setHousesOnProperty(returnValue[6], chosenFieldNumber);
+						view.updateBuildings(chosenFieldNumber, returnValue[6]);
 					}else {
-						view.writeText("Du kan ikke bygge flere huse på denne grund");
+						view.writeText("Du har ikke råd til at bygge");
 					}
 				}
-			}
+			
 		}
 		else {
 			view.writeText("Du ejer ikke nogle grunde");
-			backToDropdown = true;
 		}
-
-
 	}
+	
 	public void sellHousesAndHotels(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		int amountOfProperties=0;
 		int[] returnValue;
@@ -162,9 +160,12 @@ public class DropdownCTRL {
 		else 
 		{
 			view.writeText("Du har ikke nogle grunde at sælge huse på");
-			backToDropdown = true;
+
 		}
+		backToDropdown = true;
 	}
+	
+	
 	public void sellProperty(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		int amountOfProperties=0;
 		int[] returnValue;
@@ -190,13 +191,11 @@ public class DropdownCTRL {
 
 		//vælge grund i dropdown
 		if (propertyArray.length != 0) {
-			
-			String choice = view.getDropDownChoice("Vælg hvilken grund du vil sælge", propertyArray);
-			String[] part = choice.split("-");
-			int chosenFieldNumber=Integer.parseInt(part[0]);
 
 			//Vælge hvilken spiller man vil sælge til 
 			//0 er banken.
+			String[] choice = view.getDropDownChoice("Vælg hvilken grund du vil sælge", propertyArray).split("-");
+			int chosenFieldNumber=Integer.parseInt(choice[0]);
 
 			//Lav array og populer
 			String[] playerCountArray = new String[players.length];
@@ -220,7 +219,7 @@ public class DropdownCTRL {
 			backToDropdown = true;
 		}
 	}
-	
+
 	public boolean getBackToDropDown() {
 		return backToDropdown;
 	}

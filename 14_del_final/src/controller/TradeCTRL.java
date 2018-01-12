@@ -31,6 +31,18 @@ public class TradeCTRL {
 		players[fromPlayer].removeMoney(players[fromPlayer].getBalance());
 	}
 
+	public void buyBuilding(int currentPlayer, int fieldNumber, Player[] players) {
+		int[] returnValue = new int[8];
+		int numberOfHouses;
+		int priceOfBuilding;
+		
+		numberOfHouses = toolbox.getHousesOnProperty(currentPlayer, fieldNumber);
+		if (numberOfHouses < 5) {
+			returnValue[6]++;
+		}
+		
+	}
+	
 	//Sælg en bygning til halv pris og overfør pengene til ejeren
 	public void sellBuilding(int currentPlayer, int fieldNumber, Player[] players) {
 		int[] returnValue = new int[8];

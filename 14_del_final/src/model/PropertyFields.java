@@ -44,6 +44,10 @@ public class PropertyFields extends OwnerFields {
 		return this.rent;
 	}
 	
+	public void setNumberOfHouses(int returnValue) {
+		this.rent[6] = returnValue;
+	}
+	
 }
 
 //pris 0-5 huse = 6 pladser i array

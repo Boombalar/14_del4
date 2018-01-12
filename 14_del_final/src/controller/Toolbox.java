@@ -25,6 +25,10 @@ public class Toolbox {
 		}
 		return value;
 	}
+	
+	public void setHousesOnProperty(int amountOfHouses, int fieldNumber) {
+		((PropertyFields)fields[fieldNumber]).setNumberOfHouses(amountOfHouses);
+	}
 
 	//Returner hvor mange huse der er på en hel gruppe hvis man ejer gruppen
 	public int getHousesOnGroup(int currentPlayer, int fieldNumber) {
