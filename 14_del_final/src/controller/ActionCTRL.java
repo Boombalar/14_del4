@@ -43,7 +43,7 @@ public class ActionCTRL {
 		landonfield = new LandOnFieldCTRL();
 		trade = new TradeCTRL();
 		winner = new WinnerCTRL();
-		bankruptcy = new BankruptcyCTRL();
+		bankruptcy = new BankruptcyCTRL(players, fields, toolbox, trade);
 	}
 	/**
 	 * gameSequence

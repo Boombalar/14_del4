@@ -1,14 +1,26 @@
 package controller;
 
 import model.*;
-import view.*;
 
 public class BankruptcyCTRL {
 	
-	public void payMoney(int currentPlayer, int toPlayer, int amount, Player[] players, Field[] fields, Toolbox toolbox, TradeCTRL tradeCTRL) {
-		if (checkForEnoughMoneyToForcepay(currentPlayer, amount, players)==false) {
-			if (raiseMoney(currentPlayer, amount, players, fields, toolbox, tradeCTRL) == false){
-				bankruptcy(currentPlayer, toPlayer, players, fields, toolbox, tradeCTRL);
+	Player[] players;
+	Field[] fields;
+	Toolbox toolbox;
+	TradeCTRL trade;
+	
+	public BankruptcyCTRL (Player[] players, Field[] fields, Toolbox toolbox, TradeCTRL trade) {
+		this.players = players;
+		this.fields = fields;
+		this.toolbox = toolbox;
+		this.trade = trade;
+	}
+	
+	
+	public void payMoney(int currentPlayer, int toPlayer, int amount) {
+		if (checkForEnoughMoneyToForcepay(currentPlayer, amount)==false) {
+			if (raiseMoney(currentPlayer, amount) == false){
+				bankruptcy(currentPlayer, toPlayer);
 			}
 		} else {						
 			players[currentPlayer].removeMoney(amount);
@@ -19,7 +31,7 @@ public class BankruptcyCTRL {
 	}
 
 	//Check for om man har penge nok til at foretage en transaktion mellem to spillere.
-	public boolean checkForEnoughMoneyToForcepay(int currentPlayer, int amount, Player[] players) {
+	public boolean checkForEnoughMoneyToForcepay(int currentPlayer, int amount) {
 		boolean returnValue = true;
 		if ((players[currentPlayer].getBalance() - amount) < 0) {
 			returnValue = false;
@@ -27,7 +39,7 @@ public class BankruptcyCTRL {
 		return returnValue;
 	}
 
-	public boolean raiseMoney(int currentPlayer, int amountReached, Player[] players, Field[] fields, Toolbox toolbox, TradeCTRL tradeCTRL) {
+	public boolean raiseMoney(int currentPlayer, int amountReached) {
 		boolean returnValue=true;
 		int numberOfHouses;
 		int priceOfHouse;
@@ -47,7 +59,7 @@ public class BankruptcyCTRL {
 						//Vi sælger husene 1 ad gangen
 						for (int houseCount = 0; houseCount <= numberOfHouses; houseCount++ ) {
 							valueOfSale = valueOfSale + priceOfHouse;
-							tradeCTRL.sellBuilding(currentPlayer, fieldCount, players, fields);
+							trade.sellBuilding(currentPlayer, fieldCount, players, fields);
 							if (valueOfSale >= amountNeeded) {
 								break;
 							}
@@ -65,7 +77,7 @@ public class BankruptcyCTRL {
 								priceOfProperty = ((OwnerFields)fields[fieldCount2]).getPropertyValue();
 								valueOfSale2 = valueOfSale + priceOfProperty;
 								if (valueOfSale2 >= amountNeeded) {
-									tradeCTRL.sellProperty(currentPlayer, 0, players, fields, fieldCount2);
+									trade.sellProperty(currentPlayer, 0, players, fields, fieldCount2);
 								}
 							}
 						}
@@ -78,9 +90,7 @@ public class BankruptcyCTRL {
 		return returnValue;
 	}
 
-	
-
-	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields, Toolbox toolbox, TradeCTRL tradeCTRL) {
+	public void bankruptcy(int currentPlayer, int toPlayer) {
 		int numberOfBuildings;
 
 		//Sælg alle bygninger.
@@ -90,12 +100,12 @@ public class BankruptcyCTRL {
 				if (numberOfBuildings > 0) {//Hvis der er bygninger på grunden
 					//Sælg bygninger
 					for (int numberOfBuildingCount = 1; numberOfBuildingCount <= numberOfBuildings ; numberOfBuildingCount++) {
-						tradeCTRL.sellBuilding(fieldCount, currentPlayer, players, fields);
+						trade.sellBuilding(fieldCount, currentPlayer, players, fields);
 					}
 				}
 			}
 		}
-		tradeCTRL.transferAssets(currentPlayer, toPlayer, players, fields);
+		trade.transferAssets(currentPlayer, toPlayer, players, fields);
 		players[currentPlayer].setBroke(true);
 	}	
 }
