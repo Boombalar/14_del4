@@ -1,9 +1,5 @@
 package model;
 
-import java.awt.Desktop.Action;
-
-import controller.ActionCTRL;
-
 public class Player {
 	
 	private String name; //Spillerens navn
