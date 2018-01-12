@@ -4,21 +4,16 @@ import model.*;
 import view.*;
 
 public class JailCTRL {
-	Player[] players;
-	Field[] fields;
-	ViewCTRL view;
 	Toolbox toolbox;
 	TradeCTRL trade;
 	BankruptcyCTRL bankruptcy;
 	
 	
-	public JailCTRL(Player[] players, ViewCTRL view, BankruptcyCTRL bankruptcy) {
-		this.players = players;
-		this.view = view;
+	public JailCTRL(BankruptcyCTRL bankruptcy) {
 		this.bankruptcy = bankruptcy;
 	}
 
-	public void jailHandling(int currentPlayer) {
+	public void jailHandling(int currentPlayer, Player[] players, ViewCTRL view) {
 
 		if(players[currentPlayer].getTurnsInJail()==1) {
 			if (players[currentPlayer].getReleaseCard() > 0) {
