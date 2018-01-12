@@ -26,6 +26,7 @@ public class DropdownCTRL {
 		this.bankruptcy = bankruptcy;
 		this.trade = trade;
 		this.chanceCard = chanceCard;
+
 		
 	}
 
@@ -55,7 +56,7 @@ public class DropdownCTRL {
 		view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
 		view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
-		fieldRule.ruleSwitch(currentPlayer, newPlayerPosition, players, fields, landonfield, view, toolbox, bankruptcy, trade, chanceCard, fieldRule);
+		fieldRule.ruleSwitch(currentPlayer, newPlayerPosition);
 		
 		if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 			currentPlayer--;

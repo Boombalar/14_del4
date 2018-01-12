@@ -53,13 +53,13 @@ public class BankruptcyCTRL {
 		for (int fieldCount = 0 ; fieldCount<=39;fieldCount++) {
 			if(fields[fieldCount] instanceof PropertyFields && valueOfSale < amountNeeded) {
 				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
-					numberOfHouses = toolbox.getHousesOnGroup(currentPlayer, fieldCount, fields);
-					priceOfHouse = toolbox.getHousePrice(fieldCount, fields)/2;
+					numberOfHouses = toolbox.getHousesOnGroup(currentPlayer, fieldCount);
+					priceOfHouse = toolbox.getHousePrice(fieldCount)/2;
 					if(numberOfHouses > 0) {
 						//Vi sælger husene 1 ad gangen
 						for (int houseCount = 0; houseCount <= numberOfHouses; houseCount++ ) {
 							valueOfSale = valueOfSale + priceOfHouse;
-							trade.sellBuilding(currentPlayer, fieldCount, players, fields);
+							trade.sellBuilding(currentPlayer, fieldCount);
 							if (valueOfSale >= amountNeeded) {
 								break;
 							}
@@ -69,15 +69,15 @@ public class BankruptcyCTRL {
 			}
 		}
 		if (valueOfSale < amountNeeded) {
-			if (toolbox.checkPropertySaleValue(amountNeeded-valueOfSale, currentPlayer, fields)) {
+			if (toolbox.checkPropertySaleValue(amountNeeded-valueOfSale, currentPlayer)) {
 				if(valueOfSale2 < amountNeeded) {
 					for (int fieldCount2 = 0; fieldCount2<=39;fieldCount2++) {
 						if(fields[fieldCount2] instanceof PropertyFields && valueOfSale2 < amountNeeded) {
-							if (((PropertyFields)fields[fieldCount2]).getOwner() == currentPlayer && toolbox.getHousesOnProperty(fieldCount2, currentPlayer, fields)==0) {
+							if (((PropertyFields)fields[fieldCount2]).getOwner() == currentPlayer && toolbox.getHousesOnProperty(fieldCount2, currentPlayer)==0) {
 								priceOfProperty = ((OwnerFields)fields[fieldCount2]).getPropertyValue();
 								valueOfSale2 = valueOfSale + priceOfProperty;
 								if (valueOfSale2 >= amountNeeded) {
-									trade.sellProperty(currentPlayer, 0, players, fields, fieldCount2);
+									trade.sellProperty(currentPlayer, 0, fieldCount2);
 								}
 							}
 						}
@@ -96,16 +96,16 @@ public class BankruptcyCTRL {
 		//Sælg alle bygninger.
 		for (int fieldCount = 0 ; fieldCount <=39 ; fieldCount++) {//Gå brættet igennem.
 			if(fields[fieldCount] instanceof OwnerFields) {//Er feltet et OwnerFields, så kan vi roligt Caste metoderne.
-				numberOfBuildings = toolbox.getHousesOnProperty(fieldCount, currentPlayer, fields); //Returner antal bygninger hvis feltet ejes af currentPlayer		
+				numberOfBuildings = toolbox.getHousesOnProperty(fieldCount, currentPlayer); //Returner antal bygninger hvis feltet ejes af currentPlayer		
 				if (numberOfBuildings > 0) {//Hvis der er bygninger på grunden
 					//Sælg bygninger
 					for (int numberOfBuildingCount = 1; numberOfBuildingCount <= numberOfBuildings ; numberOfBuildingCount++) {
-						trade.sellBuilding(fieldCount, currentPlayer, players, fields);
+						trade.sellBuilding(fieldCount, currentPlayer);
 					}
 				}
 			}
 		}
-		trade.transferAssets(currentPlayer, toPlayer, players, fields);
+		trade.transferAssets(currentPlayer, toPlayer);
 		players[currentPlayer].setBroke(true);
 	}	
 }
