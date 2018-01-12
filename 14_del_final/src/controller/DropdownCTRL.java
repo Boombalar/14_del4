@@ -49,7 +49,7 @@ public class DropdownCTRL {
 		landonfield.ruleSwitch(currentPlayer, newPlayerPosition, players, fields, view);
 		
 		if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
-			currentPlayer--;
+			players[currentPlayer].setExtraTurn(true);
 			/*
 		players[currentPlayer].changeEqualEyes() ++;
 		if(players[currentPlayer].changeEqualEyes() == 3) {

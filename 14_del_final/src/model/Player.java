@@ -32,7 +32,7 @@ public class Player {
 	 * @return false hvis spilleren ikke er og true hvis hvis spilleren er.
 	 */
 	public boolean checkBroke() {
-		if (getBalance() < 0)
+		if (getBalance() <= 0)
 			broke = true;
 		return broke;
 	}

@@ -82,6 +82,10 @@ public class ActionCTRL {
 				// Håndterer om man kommer over start og får 4.000.
 				case "Slå terninger":
 					dropdown.rollDice(currentPlayer, players, fields, view);
+					if (players[currentPlayer].getExtraTurn() == true) {
+						players[currentPlayer].setExtraTurn(false);
+						currentPlayer--;
+					}
 					break;
 
 					// Køb huse og hoteller.
