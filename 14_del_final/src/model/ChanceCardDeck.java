@@ -42,6 +42,11 @@ public class ChanceCardDeck {
 		chancecards[29] = new ReleaseJailCard(29,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares, indtil De får brug for det.");
 		chancecards[30] = new ReleaseJailCard(30,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares, indtil De får brug for det.");
 		chancecards[31] = new MoveToCard(31,2,"Ryk frem til Grønningen. Hvis De passerer Start, Indkassér da kr. 4.000",24,1);
+	
+//		// til at lave dine egne chancekort
+//		for (int i = 0; i<=39 ; i++) {
+//			chancecards[i] = new MoveToCard(31,2,"Ryk frem til Grønningen. Hvis De passerer Start, Indkassér da kr. 4.000",24,1);
+//		}
 	}
 	
 	/**

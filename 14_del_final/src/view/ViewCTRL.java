@@ -206,6 +206,11 @@ public class ViewCTRL {
 		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
 		gui.getFields()[newPosition].setCar(guiPlayer[player], true);
 	}
+	
+	public void removePlayerCar(int player, int oldPosition) {
+		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
+	}
+	
 
 	/**
 	 * Metode der får GUIen til at vise en spillers account
