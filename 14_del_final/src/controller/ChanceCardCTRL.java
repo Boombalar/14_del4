@@ -21,10 +21,6 @@ public class ChanceCardCTRL {
         int plads=0;
         int tal=0;
  
- 
-        for (int x = 0;x<=31;x++) {
-            shuffledDeck[x]=x;
-        }
         for (int i = 0; i < shuffledDeck.length; i++) {
             System.out.println(shuffledDeck[i]);                      
         }
@@ -42,11 +38,7 @@ public class ChanceCardCTRL {
             shuffledDeck[plads]=shuffledDeck[plads2];
             shuffledDeck[plads2]=tal;
         }
- 
-        for (int i = 0; i < shuffledDeck.length; i++) {
-//            System.out.println(shuffledDeck[i]);                      
-        }
-    }
+     }
  
     public void draw() {
  
