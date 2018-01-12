@@ -158,9 +158,9 @@ public class LandOnFieldCTRL {
 	 */
 	public void shippingFieldRules(int playerNumber, int multiplier, Player[] players,Field[] fields,ViewCTRL view) {
 		int newPlayerPosition = players[playerNumber].getPosition();
-		int shippingPropertyValue = (((ShipFields)fields[newPlayerPosition]).getPropertyValue());
-		int owner = (((ShipFields)fields[newPlayerPosition]).getOwner());
-		int[] fieldRent = (((ShipFields)fields[newPlayerPosition]).getReturnValue());
+		int shippingPropertyValue = (((ShippingFields)fields[newPlayerPosition]).getPropertyValue());
+		int owner = (((ShippingFields)fields[newPlayerPosition]).getOwner());
+		int[] fieldRent = (((ShippingFields)fields[newPlayerPosition]).getReturnValue());
 		int numOfOwnedShipFields = (toolbox.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition));
 
 		if(owner == 0) {
@@ -170,7 +170,7 @@ public class LandOnFieldCTRL {
 				bankruptcy.payMoney(playerNumber, owner, shippingPropertyValue, players, fields);				//transaktionen forgår mellem spiller og bræt
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());								//Update af spillerens konto i gui
 				view.updateOwnership(playerNumber, newPlayerPosition);									//Update af spillerens ejerskab.
-				ShipFields wantedFieldChange = ((ShipFields)fields[newPlayerPosition]);
+				ShippingFields wantedFieldChange = ((ShippingFields)fields[newPlayerPosition]);
 				wantedFieldChange.setOwner(playerNumber);													//Køberen bliver sat til ejer af feltet
 			}
 		}

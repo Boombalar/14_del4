@@ -15,7 +15,7 @@ public class Board {
 		field[2] = new ChanceField("?",4,2);
 		field[3] = new PropertyFields("Hvidovrevej",0,3,1200,0,1,50,250,750,2250,4000,6000,0,1000);
 		field[4] = new TaxField("Betal indkomst Skat",3,4,4000);
-		field[5] = new ShipFields("SFL",1,5,4000,0,9,500,1000,2000,4000);
+		field[5] = new ShippingFields("SFL",1,5,4000,0,9,500,1000,2000,4000);
 		field[6] = new PropertyFields("Roskildevej",0,6,2000,0,2,100,600,1800,5400,8000,11000,0,1000);
 		field[7] = new ChanceField("?", 4, 7);
 		field[8] = new PropertyFields("Valby Langgade",0,8,2000,0,2,100,600,1800,5400,8000,11000,0,1000);
@@ -25,7 +25,7 @@ public class Board {
 		field[12] = new BreweryFields("Tuborg",2,12,3000, 0, 10,100,200);
 		field[13] = new PropertyFields("Bülowsvej",0,13,2800,0,3,200,1000,3000,9000,12500,15000,0,2000);
 		field[14] = new PropertyFields("Gl.Kongevej", 0,14,3200,0,3,250,1250,3750,10000,14000,18000,0,2000);
-		field[15] = new ShipFields("Kalu & Årh",1,15,4000,0,9,500,1000,2000,4000);
+		field[15] = new ShippingFields("Kalu & Årh",1,15,4000,0,9,500,1000,2000,4000);
 		field[16] = new PropertyFields("Bernstorffsvej",0,16,3600,0,4,300,1400,4000,11000,15000,19000,0,2000);
 		field[17] = new ChanceField("?",4,17);
 		field[18] = new PropertyFields("Hellerupvej",0,18,3600,0,4,300,1400,4000,11000,15000,19000,0,2000);
@@ -35,7 +35,7 @@ public class Board {
 		field[22] = new ChanceField("?", 4,22);
 		field[23] = new PropertyFields("Østerbrogade",0,23,4400,0,5,350,1800,5000,14000,17500,21000,0,3000);
 		field[24] = new PropertyFields("Grønningen",0,24,4800,0,5,400,2000,6000,15000,18500,22000,0,3000);
-		field[25] = new ShipFields("DFDS",1,25,4000,0,9,500,1000,2000,4000);
+		field[25] = new ShippingFields("DFDS",1,25,4000,0,9,500,1000,2000,4000);
 		field[26] = new PropertyFields("Bredgade",0,26,5200,0,6,450,2200,6600,16000,19500,23000,0,3000);
 		field[27] = new PropertyFields("Kgs.Nytorv",0,27,5200,0,6,450,2200,6600,16000,19500,23000,0,3000);
 		field[28] = new BreweryFields("Coca-Cola",2,28,3000, 0, 10,100,200);
@@ -45,7 +45,7 @@ public class Board {
 		field[32] = new PropertyFields("Vimmelskaftet",0,32,6000,0,7,550,2600,7800,18000,22000,25000,0,4000);
 		field[33] = new ChanceField("?",4,33);
 		field[34] = new PropertyFields("Nygade",0,34,6400,0,7,600,3000,9000,20000,24000,28000,0,4000);
-		field[35] = new ShipFields("Hals & Knud",1,35,4000,0,9,500,1000,2000,4000);
+		field[35] = new ShippingFields("Hals & Knud",1,35,4000,0,9,500,1000,2000,4000);
 		field[36] = new NoActionField("?",4,36);
 		field[37] = new PropertyFields("Frederiksberggade",0,37,7000,0,8,700,3500,10000,22000,26000,30000,0,4000);
 		field[38] = new TaxField("Betal skat",3,38,2000);

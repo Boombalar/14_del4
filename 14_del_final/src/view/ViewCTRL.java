@@ -87,7 +87,7 @@ public class ViewCTRL {
 				break; 
 
 			case 1: //ShipField
-				price = Integer.toString(((ShipFields)fields[i]).getPropertyValue())+ " kr.";
+				price = Integer.toString(((ShippingFields)fields[i]).getPropertyValue())+ " kr.";
 				guiFields[i] = new GUI_Shipping("",fields[i].getName(),price,"","arg4",Color.cyan,Color.black);
 				break; 
 

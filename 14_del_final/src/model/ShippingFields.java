@@ -1,6 +1,6 @@
 package model;
 
-public class ShipFields extends OwnerFields {
+public class ShippingFields extends OwnerFields {
 	
 	private int[] rent = new int[4]; //array på de 5 forskellige priser det kan koste at lande på et ejet redderi.
 	
@@ -17,7 +17,7 @@ public class ShipFields extends OwnerFields {
 	 * @param value2 Hvad det koster hvis en spiller ejer 3
 	 * @param value3 Hvad det koster hvis en spiller ejer 4
 	 */
-	public ShipFields (String name, int type, int number, int propertyValue, int owner, int groupNumber, int value0, int value1, int value2, int value3 ) {
+	public ShippingFields (String name, int type, int number, int propertyValue, int owner, int groupNumber, int value0, int value1, int value2, int value3 ) {
 		super(name, type, number, propertyValue, owner, groupNumber);
 		rent[0] = value0;
 		rent[1] = value1;
