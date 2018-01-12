@@ -96,7 +96,7 @@ public class DropdownCTRL {
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			if (fields[fieldCount] instanceof PropertyFields) {
 				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount,fields) == true) {
-					index = toolbox.getNumberOfOwnedPropertiesInGroup(currentPlayer, fieldCount, fields );
+					index = toolbox.getNumberOfOwnedPropertiesInGroup(currentPlayer, fieldCount);
 					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
 				}
 			}
@@ -110,11 +110,11 @@ public class DropdownCTRL {
 
 			//Vi bygger hvis man ejer hele gruppen, og har råd
 			if( toolbox.checkPropertyGroupOwnership(currentPlayer,chosenFieldNumber, fields)) {
-				if (players[currentPlayer].getBalance() > toolbox.getHousePrice(chosenFieldNumber, fields)) {
+				if (players[currentPlayer].getBalance() > toolbox.getHousePrice(chosenFieldNumber)) {
 					returnValue = (((OwnerFields)fields[chosenFieldNumber]).returnValue());
 					if (returnValue[6]<5) {//hvis der er mindre end 5 huse på feltet
 						returnValue[6]++;
-						players[currentPlayer].removeMoney(toolbox.getHousePrice(chosenFieldNumber, fields));
+						players[currentPlayer].removeMoney(toolbox.getHousePrice(chosenFieldNumber));
 					}else {
 						view.writeText("Du kan ikke bygge flere huse på denne grund");
 					}
@@ -135,7 +135,7 @@ public class DropdownCTRL {
 			if (fields[fieldCount] instanceof PropertyFields) {
 				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
 					returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
-					if (toolbox.getHousesOnProperty(currentPlayer, fieldCount, fields)>0) {
+					if (toolbox.getHousesOnProperty(currentPlayer, fieldCount)>0) {
 						amountOfProperties++;
 					}	
 				}
@@ -154,7 +154,7 @@ public class DropdownCTRL {
 			if (fields[fieldCount] instanceof PropertyFields) {
 				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
 					returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
-					if (toolbox.getHousesOnProperty(currentPlayer, fieldCount, fields)>0) {
+					if (toolbox.getHousesOnProperty(currentPlayer, fieldCount)>0) {
 						propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
 					}
 				}
@@ -166,7 +166,7 @@ public class DropdownCTRL {
 		if (propertyArray.length != 0) {
 			choice = view.getDropDownChoice("Vælg grund du vil sælge huse fra", propertyArray);
 			int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
-			trade.sellBuilding(currentPlayer, chosenFieldNumber, players, fields);
+			trade.sellBuilding(currentPlayer, chosenFieldNumber);
 		}
 		else 
 		{
@@ -179,7 +179,7 @@ public class DropdownCTRL {
 		int[] returnValue;
 		//Find ud af hvor mange grunde man ejer som ikke har huse på sin gruppe til array
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-			if (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fieldCount,fields)==0) {
+			if (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fieldCount)==0) {
 				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
 					amountOfProperties++;
 				}
@@ -192,7 +192,7 @@ public class DropdownCTRL {
 
 		//populer array med felt hvis man ejer det og der ikke er huse på gruppen
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-			if (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fieldCount,fields)==0) {
+			if (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fieldCount)==0) {
 				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
 					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
 				}
@@ -220,7 +220,7 @@ public class DropdownCTRL {
 
 			//Sælg grund.
 			returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
-			trade.sellProperty(currentPlayer, chosenPlayerNumber, players, fields, chosenFieldNumber);
+			trade.sellProperty(currentPlayer, chosenPlayerNumber,chosenFieldNumber);
 		}
 		else {
 			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
