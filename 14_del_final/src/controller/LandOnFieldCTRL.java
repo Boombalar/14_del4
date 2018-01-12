@@ -206,8 +206,8 @@ public class LandOnFieldCTRL {
 
 		case 1: // TransactionCard
 			int transactionValue = chanceCardValueArray[0];
-			if (transactionValue < 0) {
-				bankruptcy.payMoney(playerNumber, owner, transactionValue, players, fields);
+			if ((transactionValue) < 0) {
+				bankruptcy.payMoney(playerNumber, owner, (transactionValue * -1), players, fields);
 				view.writeText(players[playerNumber].getPlayerName() + "");
 
 			} else {
