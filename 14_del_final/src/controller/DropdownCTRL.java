@@ -40,7 +40,7 @@ public class DropdownCTRL {
 		if (newPlayerPosition > 39) {
 			newPlayerPosition -= 40;
 			players[currentPlayer].recieveMoney(4000);
-			view.writeText("Spiller " + currentPlayer + " har passeret start og får 4000 kroner");
+			view.writeText(players[currentPlayer].getPlayerName() + " har passeret start, og får 4000 kr.");
 		}
 
 		players[currentPlayer].setPosition(newPlayerPosition);
