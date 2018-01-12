@@ -33,7 +33,7 @@ public class JailCTRL {
 				bankruptcy.payMoney(currentPlayer, 0, 1000, players, fields);
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 			}
-			players[currentPlayer].addTurnsInJail(-1);}
+			players[currentPlayer].removeTurnsInJail();}
 		}
 	}
 }

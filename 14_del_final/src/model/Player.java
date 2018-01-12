@@ -108,15 +108,17 @@ public class Player {
 	}
 	
 	/**
-	 * Hardsetter en spillers tur i fængsel.
-	 * @param turnsInJail Antal turer det ønskes at sætte en spillers tur i fængsel.
+	 * Tilføjer en spillers tur i fængsel.
 	 */
-	public void addTurnsInJail(int addTurns) {
-		this.turnsInJail += addTurns;
+	public void addTurnsInJail() {
+		this.turnsInJail ++;
 	}
 	
-	public void removeTurnsInJail(int removeTurns) {
-		this.turnsInJail -= removeTurns;
+	/**
+	 * Fjerner en spillers tur i fængsel.
+	 */
+	public void removeTurnsInJail() {
+		this.turnsInJail --;
 	}
 	
 	/**
@@ -131,7 +133,6 @@ public class Player {
 	 * Køres denne metode tilføjes 1 til antal releaseCards.
 	 */
 	public void addReleaseCard() {
-		System.out.println("Spiller" + getPlayerName() +" har modtaget et release card og har totalt " + getReleaseCard() + "releaseCard kort");
 		this.releaseCard++;
 	}
 	
@@ -139,7 +140,6 @@ public class Player {
 	 * Køres denne metode fjernes 1 release card fra spilleren
 	 */
 	public void useReleaseCard() {
-		System.out.println("Spiller" + getPlayerName() + " har brugt releasecard");
 		this.releaseCard--;
 	}
 }

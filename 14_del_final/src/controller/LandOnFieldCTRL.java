@@ -156,7 +156,7 @@ public class LandOnFieldCTRL {
 		int newPlayerPosition = players[playerNumber].getPosition();
 		view.writeText(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du skal nu i fængsel"); //tekst til spilleren.
 		players[playerNumber].setPosition(10); // spilleren position bliver rykket til felt nr 10
-		players[playerNumber].addTurnsInJail(1); // Spilleren sidder i fængsel.
+		players[playerNumber].addTurnsInJail(); // Spilleren sidder i fængsel.
 		view.updatePlayerPosition(playerNumber, newPlayerPosition, 10); //update af gui
 	}
 
@@ -284,7 +284,7 @@ public class LandOnFieldCTRL {
 
 		case 3:
 			// Flyttekort til fængsel
-			players[currentPlayer].addTurnsInJail(1);
+			players[currentPlayer].addTurnsInJail();
 			players[currentPlayer].setPosition(moveToField);
 			view.updatePlayerPosition(currentPlayer, playerPosition, moveToField);
 			break;
