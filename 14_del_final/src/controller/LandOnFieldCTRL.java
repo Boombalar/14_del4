@@ -59,6 +59,8 @@ public class LandOnFieldCTRL {
 			//GoToJailField
 			goToJailField(playerNumber, players, fields, view);
 			break;
+		default:
+			view.writeText("Du er landet på " + fields[players[playerNumber].getPosition()].getName());
 		}
 	}	
 	
