@@ -61,9 +61,9 @@ public class ActionCTRL {
 		String choice; //Det valg en given spiller vælger ud fra propertyString array.
 		int[] returnValue; //Hvilken specifik returværdi det dette?s
 
-		while (!winner.checkWinner(numberOfPlayers, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
+		while (!winner.checkWinner(numberOfPlayers)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 
-			jail.jailHandling(currentPlayer, players, fields, view, toolbox, trade);
+			jail.jailHandling(currentPlayer);
 
 			while (true) {
 				// Hvis en spiller er broke, så gå ud af loop
@@ -81,7 +81,7 @@ public class ActionCTRL {
 				// Slår terningerne, ændrer position i model lag og opdaterer view lag
 				// Håndterer om man kommer over start og får 4.000.
 				case "Slå terninger":
-					dropdown.rollDice(currentPlayer, dieCup, players, fields, view, fieldRuleCTRL, landonfield, toolbox, bankruptcy, trade, chanceCard);
+					dropdown.rollDice(currentPlayer);
 					break;
 
 					// Køb huse og hoteller.
@@ -91,7 +91,7 @@ public class ActionCTRL {
 					//Vi starter med at finde ud af hvor mange PropertyFields man ejer hvor man har hele gruppen
 					//Således vi kan opbygge et array til dropdownlisten.
 
-					dropdown.buyHousesAndHotel(currentPlayer, players, fields, view, trade, toolbox);
+					dropdown.buyHousesAndHotel(currentPlayer);
 
 					break;
 
@@ -104,14 +104,14 @@ public class ActionCTRL {
 					//Således vi kan lave Array til dropdown
 
 
-					dropdown.sellHousesAndHotels(currentPlayer, players, fields, view, toolbox, trade);
+					dropdown.sellHousesAndHotels(currentPlayer);
 					break;
 
 					//Sælg grund hvis man ejer den og der ikke er nogle huse på
 					//Man kan sælge til banken eller anden spiller
 				case "Sælg grund":
 
-					dropdown.sellProperty(currentPlayer, players, fields, view, toolbox, trade);
+					dropdown.sellProperty(currentPlayer);
 					break;
 					//Lav logik for spillers choice
 				}
