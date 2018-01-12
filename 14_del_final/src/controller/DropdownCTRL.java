@@ -211,7 +211,7 @@ public class DropdownCTRL {
 			trade.sellProperty(currentPlayer, chosenPlayerNumber,chosenFieldNumber, players, fields);
 			view.updateOwnership(chosenPlayerNumber, chosenFieldNumber);
 			view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
-			view.updatePlayerAccount(currentPlayer, players[chosenPlayerNumber].getBalance());
+			view.updatePlayerAccount(chosenPlayerNumber, players[chosenPlayerNumber].getBalance());
 		}
 		else {
 			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
