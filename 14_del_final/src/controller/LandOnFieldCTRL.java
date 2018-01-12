@@ -8,19 +8,59 @@ public class LandOnFieldCTRL {
 	Toolbox toolbox;
 	TradeCTRL trade;
 	ChanceCardCTRL chancecard;
-	LandOnFieldCTRL landonfield;
 	BankruptcyCTRL bankruptcy;
-	FieldRuleCTRL fieldRuleSwitch;
 	
-	public LandOnFieldCTRL (Toolbox toolbox,BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chancecard, FieldRuleCTRL fieldrule) {
-
+	public LandOnFieldCTRL (Toolbox toolbox,BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chancecard) {
 		this.toolbox = toolbox;	
 		this.chancecard = chancecard;
 		this.trade = trade;
-		this.landonfield = landonfield;
 		this.bankruptcy = bankruptcy;
-		this.fieldRuleSwitch = fieldRuleSwitch;
 	}
+	
+	/**
+	 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
+	 * @param playerNumber - Modtager et spiller numer
+	 * @param view 
+	 * @param toolbox 
+	 * @param bankruptcy 
+	 * @param trade 
+	 * @param chancecard 
+	 * @param fieldRuleSwitch 
+	 */
+	public void ruleSwitch (int playerNumber, int newPlayerPosition, Player[] players, Field[] fields, ViewCTRL view) {
+		int fieldType = fields[players[playerNumber].getPosition()].getType();
+		int owner=0;
+		if ((fields[newPlayerPosition]) instanceof OwnerFields) {
+			owner = (((OwnerFields)fields[newPlayerPosition]).getOwner());
+		}
+
+		switch (fieldType) {
+		
+		case 0:			
+			propertyField(playerNumber, newPlayerPosition, owner, players, fields, view);
+			break;
+		case 1:
+			//ShipFields
+			shippingFieldRules(playerNumber, 1, newPlayerPosition, players, fields, view);
+			break;
+		case 2:
+			//Breweryfields
+			breweryField(playerNumber, newPlayerPosition, owner, players, fields, view);
+			break;
+		case 3:
+			//Taxfields
+			taxField(playerNumber, newPlayerPosition, owner, players, fields, view);
+			break;
+		case 4:
+			//Chancefield			
+			chanceField(playerNumber, newPlayerPosition, owner, players, fields, view);
+			break;
+		case 7:
+			//GoToJailField
+			goToJailField(playerNumber, newPlayerPosition, players, fields, view);
+			break;
+		}
+	}	
 	
 	public void propertyField(int playerNumber, int newPlayerPosition, int owner, Player[] players,Field[] fields,ViewCTRL view) {
 		//ProbertyField
@@ -207,7 +247,7 @@ public class LandOnFieldCTRL {
 			else {
 				players[playerNumber].setPosition(moveToField);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, moveToField);
-				fieldRuleSwitch.ruleSwitch(playerNumber, newPlayerPosition, players, fields, view);
+				ruleSwitch(playerNumber, newPlayerPosition, players, fields, view);
 			}
 			break;
 
@@ -249,7 +289,7 @@ public class LandOnFieldCTRL {
 		case 3: // Ryk tre felter tilbage.
 			players[playerNumber].setPosition(newPlayerPosition - 3);
 			view.updatePlayerPosition(playerNumber, newPlayerPosition, newPlayerPosition - 3);
-			fieldRuleSwitch.ruleSwitch(playerNumber, newPlayerPosition, players, fields, view);
+			ruleSwitch(playerNumber, newPlayerPosition, players, fields, view);
 			break;
 		}
 	}
