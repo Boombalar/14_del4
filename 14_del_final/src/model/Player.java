@@ -115,6 +115,10 @@ public class Player {
 		this.turnsInJail += addTurns;
 	}
 	
+	public void removeTurnsInJail(int removeTurns) {
+		this.turnsInJail -= removeTurns;
+	}
+	
 	/**
 	 * En getter på hvor mange releaseCards en given spiller har
 	 * @return Antal release cards, defualt 0.
