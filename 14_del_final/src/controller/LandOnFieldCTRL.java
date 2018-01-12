@@ -211,11 +211,11 @@ public class LandOnFieldCTRL {
 			int transactionValue = chanceCardValueArray[0];
 			if ((transactionValue) < 0) {
 				bankruptcy.payMoney(playerNumber, owner, (transactionValue * -1), players, fields);
-				view.writeText(players[playerNumber].getPlayerName() + "");
+				view.writeText(players[playerNumber].getPlayerName() + "Godkend Transaktionen");
 
 			} else {
 				players[playerNumber].recieveMoney(transactionValue);
-				view.writeText(players[playerNumber].getPlayerName() + "");
+				view.writeText(players[playerNumber].getPlayerName() + "Godkend Transaktionen");
 			}
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			break;
