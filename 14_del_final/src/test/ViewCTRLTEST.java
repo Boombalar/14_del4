@@ -38,7 +38,7 @@ public class ViewCTRLTEST {
 		System.out.println("Dropdown og writeText testet");
 
 		//Lav player array.
-		makePlayers = new CreatePlayers(6); 
+		makePlayers = new CreatePlayers(6, view); 
 		players = makePlayers.getPlayers();
 
 		//Opret antal spillere på bræt.

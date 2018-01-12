@@ -290,6 +290,10 @@ public class ViewCTRL {
 		gui.getFields()[players[player].getPosition()].setCar(guiPlayer[player], false);
 	}
 	
+	public String getUserTextInput(String displayText) {
+		return gui.getUserString(displayText);
+	}
+	
 	public void updateEntireBoard(Field[] fields, Player[] players) {
 
 		//Updater fields ownership på bræt

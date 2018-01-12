@@ -1,5 +1,7 @@
 package model;
 
+import view.*;
+
 public class CreatePlayers {
 
 	private Player[] players; //Arrayet der indeholder alle objekterne på spillerne 2-6.
@@ -10,10 +12,10 @@ public class CreatePlayers {
 	 * Sørger for logikken bag at hver spiller hedder "Player 1/2/3/4" via et forloop, som får fra 1 til antal spillere.
 	 * @param numberOfPlayers Den mængde spillere der er i spillet
 	 */
-	public CreatePlayers(int numberOfPlayers) {
+	public CreatePlayers(int numberOfPlayers, ViewCTRL view) {
 		players = new Player[numberOfPlayers+1];
 		for (int x=1;x<=numberOfPlayers;x++) {
-			playerName = "Player "+x;
+			playerName = view.getUserTextInput("Skriv spiller " + x + "'s navn");
 			players[x]= new Player(playerName);
 		}
 	}

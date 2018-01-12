@@ -40,7 +40,7 @@ public class ActionCTRL {
 		view = new ViewCTRL(fields);//Opret bræt.
 		String[] lines = {"2","3","4","5","6"};		//Hent antal spillere.
 		numberOfPlayers = Integer.parseInt(view.getDropDownChoice("Vælg antal spillere 2-6", lines));
-		makePlayers = new CreatePlayers(numberOfPlayers);  		//Lav player array.
+		makePlayers = new CreatePlayers(numberOfPlayers, view);  		//Lav player array.
 		players = makePlayers.getPlayers();
 		view.makeGuiPlayers(players); //Opret antal spillere på bræt.
 		dropdown = new DropdownCTRL(dieCup, landonfield, toolbox, bankruptcy, trade, chancecard);
