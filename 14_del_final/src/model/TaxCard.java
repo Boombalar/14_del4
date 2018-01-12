@@ -21,7 +21,7 @@ public class TaxCard extends ChanceCard {
 	/**
 	 * En getter til hvad returværdien skal være for hvis dette kort trækkes.
 	 */
-	public int[] returnValue() {
+	public int[] getReturnValue() {
 		return this.returnvalue;
 	}
 }

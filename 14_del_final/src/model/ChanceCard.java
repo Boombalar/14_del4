@@ -55,8 +55,8 @@ public class ChanceCard {
 	 * 
 	 * @return returnerer et array med to pladser, som bliver overwritet af de nedarvede klasser
 	 */
-	public int[] returnValue() {
-		int[] returnvalue = {number,type};
+	public int[] getReturnValue() {
+		int[] returnvalue = {0,1};
 		return returnvalue;
 	}
 }

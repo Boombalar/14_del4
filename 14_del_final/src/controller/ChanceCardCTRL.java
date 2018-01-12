@@ -52,7 +52,7 @@ public class ChanceCardCTRL {
     }
  
     public int[] getReturnValue() {
-        return chanceCard[cardNumber].returnValue();
+        return chanceCard[cardNumber].getReturnValue();
     }
  
     public String getDescription() {

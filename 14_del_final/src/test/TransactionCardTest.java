@@ -42,7 +42,7 @@ public class TransactionCardTest {
 		int actualNumber = transactioncard.getNumber();
 		int actualType = transactioncard.getType();
 		String actualDescription = transactioncard.getDescription();
-		actualreturnValue = transactioncard.returnValue();
+		actualreturnValue = transactioncard.getReturnValue();
 		
 		assertEquals("getNumber virker ikke", expectedNumber, actualNumber);
 		assertEquals("getType virker ikke", expectedType, actualType);

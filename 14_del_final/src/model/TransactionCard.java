@@ -20,7 +20,7 @@ public class TransactionCard extends ChanceCard {
 	 * En getter til hvad returværdien skal være for hvad det koster at trække dette kort.
 	 * @return prisen det koster at trække dette kort
 	 */
-	public int[] returnValue() {
+	public int[] getReturnValue() {
 		return this.returnvalue;
 	}
 }
