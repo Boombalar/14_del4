@@ -44,7 +44,7 @@ public class ChanceCardCTRL {
         }
  
         for (int i = 0; i < shuffledDeck.length; i++) {
-            System.out.println(shuffledDeck[i]);                      
+//            System.out.println(shuffledDeck[i]);                      
         }
     }
  
