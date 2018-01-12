@@ -5,8 +5,17 @@ import java.util.concurrent.TimeUnit;
 import view.*;
 
 public class WinnerCTRL {
+	Player[] players;
+	ViewCTRL view;
+	
+	public WinnerCTRL (Player[] players, ViewCTRL view){
+		this.players = players;
+		this.view = view;
+		
+		
+	}
 
-	public boolean checkWinner(int numberOfPlayers, Player[] players) {
+	public boolean checkWinner(int numberOfPlayers) {
 		int numberOfPlayersBroke = 0;
 		boolean winner = false;
 
@@ -19,8 +28,8 @@ public class WinnerCTRL {
 		return winner;
 	}
 
-	public void printWinner(int numberOfPlayers, Player[] players, ViewCTRL view) {
-		if (checkWinner(numberOfPlayers, players)) {
+	public void printWinner(int numberOfPlayers) {
+		if (checkWinner(numberOfPlayers)) {
 			for (int i = 1; i <= numberOfPlayers; i++) {
 				boolean checkPlayerBroke = players[i].checkBroke();
 				if (!checkPlayerBroke) {
