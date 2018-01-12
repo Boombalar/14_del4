@@ -197,7 +197,10 @@ public class LandOnFieldCTRL {
 	public void chanceCardRules (int playerNumber, Player[] players,Field[] fields,ViewCTRL view) {
 		int chanceCardType = chancecard.getType();
 		int[] chanceCardValueArray = chancecard.getReturnValue();
-		int owner = (((OwnerFields)fields[chanceCardValueArray[0]]).getOwner());
+		int owner = 0;
+		if ((fields[players[playerNumber].getPosition()]) instanceof OwnerFields) {
+			owner = (((OwnerFields)fields[players[playerNumber].getPosition()]).getOwner());
+		}
 		switch (chanceCardType) {
 
 		case 1: // TransactionCard
