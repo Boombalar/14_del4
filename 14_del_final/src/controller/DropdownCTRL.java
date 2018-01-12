@@ -4,10 +4,33 @@ import model.*;
 import view.*;
 
 public class DropdownCTRL {
+	DieCup dieCup;
+	Player[] players;
+	Field[] fields;
+	ViewCTRL view;
+	FieldRuleCTRL fieldRule;
+	LandOnFieldCTRL landonfield;
+	Toolbox toolbox;
+	BankruptcyCTRL bankruptcy;
+	TradeCTRL trade;
+	ChanceCardCTRL chanceCard;
+	
+	public DropdownCTRL(DieCup dieCup, Player[] players, Field[] fields, ViewCTRL view, FieldRuleCTRL fieldRule, LandOnFieldCTRL landonfield, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chanceCard) {
+		this.dieCup = dieCup;
+		this.players = players;
+		this.fields = fields;
+		this.view = view;
+		this.fieldRule = fieldRule;
+		this.landonfield = landonfield;
+		this.toolbox = toolbox;
+		this.bankruptcy = bankruptcy;
+		this.trade = trade;
+		this.chanceCard = chanceCard;
+		
+	}
 
 
-
-	public void rollDice (int currentPlayer, DieCup dieCup, Player[] players, Field[] fields, ViewCTRL view, FieldRuleCTRL fieldRuleCTRL, LandOnFieldCTRL landonfield, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chancecard) {
+	public void rollDice (int currentPlayer) {
 
 		//slå terninger
 		dieCup.shake();
@@ -32,7 +55,7 @@ public class DropdownCTRL {
 		view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
 		view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
-		fieldRuleCTRL.ruleSwitch(currentPlayer, newPlayerPosition, players, fields, landonfield, view, toolbox, bankruptcy, trade, chancecard, fieldRuleCTRL);
+		fieldRule.ruleSwitch(currentPlayer, newPlayerPosition, players, fields, landonfield, view, toolbox, bankruptcy, trade, chanceCard, fieldRule);
 		
 		if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 			currentPlayer--;
@@ -47,7 +70,7 @@ public class DropdownCTRL {
 		}
 	}
 
-	public void buyHousesAndHotel(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, TradeCTRL trade, Toolbox toolbox) {
+	public void buyHousesAndHotel(int currentPlayer) {
 		
 		int amountOfProperties = 0;
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {//Går hele brættet igennem

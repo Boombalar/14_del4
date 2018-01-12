@@ -1,7 +1,7 @@
 package controller;
  
-import model.ChanceCardDeck;
-import model.ChanceCard;
+import model.*;
+
 import java.util.Random;
  
 public class ChanceCardCTRL {
