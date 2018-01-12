@@ -41,8 +41,8 @@ public class ActionCTRL {
 		jail = new JailCTRL(players, view, bankruptcy);
 		dropdown = new DropdownCTRL(dieCup, players, fields, view, fieldRuleCTRL, landonfield, toolbox, bankruptcy, trade, chanceCard);
 		landonfield = new LandOnFieldCTRL(players, fields, toolbox, view, bankruptcy, trade, landonfield, chanceCard, fieldRuleCTRL);
-		trade = new TradeCTRL();
-		winner = new WinnerCTRL();
+		trade = new TradeCTRL(players, fields, toolbox);
+		winner = new WinnerCTRL(players, view);
 		bankruptcy = new BankruptcyCTRL(players, fields, toolbox, trade);
 	}
 	/**
