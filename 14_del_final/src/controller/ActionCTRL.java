@@ -19,7 +19,7 @@ public class ActionCTRL {
 	private TradeCTRL trade;
 	private WinnerCTRL winner;
 	private BankruptcyCTRL bankruptcy;
-	private FieldRuleCTRL fieldrule;
+	
 
 	public ActionCTRL() {
 		initialiseGame();
@@ -43,7 +43,7 @@ public class ActionCTRL {
 		makePlayers = new CreatePlayers(numberOfPlayers);  		//Lav player array.
 		players = makePlayers.getPlayers();
 		view.makeGuiPlayers(players); //Opret antal spillere på bræt.
-		dropdown = new DropdownCTRL(dieCup, fieldrule, landonfield, toolbox, bankruptcy, trade, chancecard);
+		dropdown = new DropdownCTRL(dieCup, landonfield, toolbox, bankruptcy, trade, chancecard);
 	}
 	/**
 	 * gameSequence
