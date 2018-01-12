@@ -97,8 +97,8 @@ public class LandOnFieldCTRL {
 	}
 	
 	public void breweryField(int newPlayerPosition, int playerNumber,int owner,Player[] players,Field[] fields,ViewCTRL view) {
-		int breweryPropertyValue = (((BreweryFields)fields[newPlayerPosition]).getPropertyValue());
-		int[] breweryFieldRent = (((BreweryFields)fields[newPlayerPosition]).getReturnValue());
+		int breweryPropertyValue = (((OwnerFields)fields[newPlayerPosition]).getPropertyValue());
+		int[] breweryFieldRent = (((OwnerFields)fields[newPlayerPosition]).returnValue());
 		int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(newPlayerPosition, owner));
 		if(owner == 0) {
 			boolean answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " vil du købe grunden", "ja", "nej");
@@ -107,7 +107,7 @@ public class LandOnFieldCTRL {
 				bankruptcy.payMoney(playerNumber, owner, breweryPropertyValue, players, fields);
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 				view.updateOwnership(playerNumber, newPlayerPosition);
-				BreweryFields wantedFieldChange = ((BreweryFields)fields[newPlayerPosition]);
+				OwnerFields wantedFieldChange = ((OwnerFields)fields[newPlayerPosition]);
 				wantedFieldChange.setOwner(playerNumber);
 			}
 		}
