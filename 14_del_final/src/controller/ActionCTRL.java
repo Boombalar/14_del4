@@ -38,12 +38,12 @@ public class ActionCTRL {
 		chanceCard = new ChanceCardCTRL(); 		//Lav chancekort CTRL.
 		dieCup = new DieCup(); 		//Lav raflebæger.
 		toolbox = new Toolbox(fields);
-		jail = new JailCTRL(players, view, bankruptcy);
-		dropdown = new DropdownCTRL(dieCup, players, fields, view, fieldRuleCTRL, landonfield, toolbox, bankruptcy, trade, chanceCard);
-		landonfield = new LandOnFieldCTRL(players, fields, toolbox, view, bankruptcy, trade, landonfield, chanceCard, fieldRuleCTRL);
-		trade = new TradeCTRL(players, fields, toolbox);
-		winner = new WinnerCTRL(players, view);
-		bankruptcy = new BankruptcyCTRL(players, fields, toolbox, trade);
+		jail = new JailCTRL(bankruptcy);
+		dropdown = new DropdownCTRL(dieCup fieldRuleCTRL, landonfield, toolbox, bankruptcy, trade, chanceCard);
+		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, trade, landonfield, chanceCard, fieldRuleCTRL);
+		trade = new TradeCTRL(toolbox);
+		winner = new WinnerCTRL();
+		bankruptcy = new BankruptcyCTRL(toolbox);
 	}
 	/**
 	 * gameSequence
