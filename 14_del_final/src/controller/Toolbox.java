@@ -63,7 +63,7 @@ public class Toolbox {
 		return returnValue;
 	}
 
-	public int getNumberOfHousesFromPlayer (int playerNumber, Field[] fields) {
+	public int getNumberOfHousesFromPlayer (int playerNumber) {
 		int numbOfHouses=0;
 		for(int i=0 ; i < 39 ; i++) {
 			if(fields[i] instanceof PropertyFields) {
@@ -77,7 +77,7 @@ public class Toolbox {
 		return numbOfHouses;
 	}
 
-	public int getNumberOfHotelsFromPlayer (int playerNumber, Field[] fields) {
+	public int getNumberOfHotelsFromPlayer (int playerNumber) {
 		int numbOfHotels=0;
 		for(int i=0 ; i < 39 ; i++) {
 			if(fields[i] instanceof PropertyFields) {
@@ -91,7 +91,7 @@ public class Toolbox {
 		return numbOfHotels;
 	}
 
-	public boolean checkPropertySaleValue(int currentPlayer, int amountNeeded, Field[] fields) {
+	public boolean checkPropertySaleValue(int currentPlayer, int amountNeeded) {
 		boolean returnValue = false;
 		int valueOfSale=0;
 		int priceOfProperty;
@@ -99,7 +99,7 @@ public class Toolbox {
 		if(valueOfSale < amountNeeded) {
 			for (int fieldCount = 0; fieldCount<=39;fieldCount++) {
 				if(fields[fieldCount] instanceof PropertyFields && valueOfSale < amountNeeded) {
-					if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && getHousesOnProperty(currentPlayer, fieldCount, fields)==0) {
+					if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && getHousesOnProperty(currentPlayer, fieldCount)==0) {
 						priceOfProperty = ((OwnerFields)fields[fieldCount]).getPropertyValue();
 						valueOfSale = valueOfSale + priceOfProperty;
 						if (valueOfSale >= amountNeeded) {
