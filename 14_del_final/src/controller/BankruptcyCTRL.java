@@ -56,7 +56,7 @@ public class BankruptcyCTRL {
 						//Vi sælger husene 1 ad gangen
 						for (int houseCount = 0; houseCount <= numberOfHouses; houseCount++ ) {
 							valueOfSale = valueOfSale + priceOfHouse;
-							trade.sellBuilding(currentPlayer, fieldCount);
+							trade.sellBuilding(currentPlayer, fieldCount, players);
 							if (valueOfSale >= amountNeeded) {
 								break;
 							}
@@ -74,7 +74,7 @@ public class BankruptcyCTRL {
 								priceOfProperty = ((OwnerFields)fields[fieldCount2]).getPropertyValue();
 								valueOfSale2 = valueOfSale + priceOfProperty;
 								if (valueOfSale2 >= amountNeeded) {
-									trade.sellProperty(currentPlayer, 0, fieldCount2);
+									trade.sellProperty(currentPlayer, 0, fieldCount2, players, fields);
 								}
 							}
 						}
@@ -97,12 +97,12 @@ public class BankruptcyCTRL {
 				if (numberOfBuildings > 0) {//Hvis der er bygninger på grunden
 					//Sælg bygninger
 					for (int numberOfBuildingCount = 1; numberOfBuildingCount <= numberOfBuildings ; numberOfBuildingCount++) {
-						trade.sellBuilding(fieldCount, currentPlayer);
+						trade.sellBuilding(fieldCount, currentPlayer, players);
 					}
 				}
 			}
 		}
-		trade.transferAssets(currentPlayer, toPlayer);
+		trade.transferAssets(currentPlayer, toPlayer, players, fields);
 		players[currentPlayer].setBroke(true);
 	}	
 }
