@@ -280,6 +280,7 @@ public class LandOnFieldCTRL {
 			
 			players[playerNumber].setPosition(newPlayerPos);
 			view.updatePlayerPosition(playerNumber, oldPlayerPos, newPlayerPos);
+			break;
 
 		case 3: // Ryk tre felter tilbage.
 			players[playerNumber].setPosition(playerPosition - moveToField);
