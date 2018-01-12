@@ -32,13 +32,19 @@ public class Player {
 	}
 	
 	/**
-	 * Tjekker om spilleren er bankerot
-	 * @return false hvis spilleren ikke er og true hvis hvis spilleren er.
+	 * Getter til om en spiller er bankerot eller ej
+	 * @return true for bankerot, false for stadig aktiv
 	 */
-	public boolean checkBroke() {
-		if (getBalance() <= 0)
-			broke = true;
+	public boolean getBroke() {
 		return broke;
+	}
+	
+	/**
+	 * Setter til om en spiller er bankerot eller ej
+	 * @param status true hvis hvis broke skal være true og false, hvis ikke.
+	 */
+	public void setBroke(boolean status) {
+		broke = status;
 	}
 	
 	/**

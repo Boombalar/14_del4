@@ -17,7 +17,7 @@ public class WinnerCTRL {
 		boolean winner = false;
 
 		for (int i = 1; i <= numberOfPlayers; i++) {
-			if (players[i].checkBroke())
+			if (players[i].getBroke())
 				numberOfPlayersBroke++;
 		}
 		if (numberOfPlayersBroke == numberOfPlayers-1)
@@ -28,7 +28,7 @@ public class WinnerCTRL {
 	public void printWinner(int numberOfPlayers, Player[] players, ViewCTRL view) {
 		if (checkWinner(numberOfPlayers, players)) {
 			for (int i = 1; i <= numberOfPlayers; i++) {
-				boolean checkPlayerBroke = players[i].checkBroke();
+				boolean checkPlayerBroke = players[i].getBroke();
 				if (!checkPlayerBroke) {
 					view.getUserResponse("Afslut spil", "Spiller " + i + " har vundet!!");
 					try {

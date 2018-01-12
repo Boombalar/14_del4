@@ -67,7 +67,7 @@ public class ActionCTRL {
 
 			while (true) {
 				// Hvis en spiller er broke, så gå ud af loop
-				if(players[currentPlayer].checkBroke()) {
+				if(players[currentPlayer].getBroke()) {
 					view.removePlayerCar(currentPlayer, players[currentPlayer].getPosition());
 					currentPlayer++;
 					break;				
