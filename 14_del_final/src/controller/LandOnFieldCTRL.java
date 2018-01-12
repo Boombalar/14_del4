@@ -127,7 +127,8 @@ public class LandOnFieldCTRL {
 	public void taxField(int playerNumber, int newPlayerPosition,int owner,Player[] players,Field[] fields,ViewCTRL view) {
 		int[] taxValue = (((TaxField)fields[newPlayerPosition]).getReturnValue());
 		view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " du skal betale " + taxValue[0] + " i skat"); // tekst til spilleren
-		bankruptcy.payMoney(playerNumber, owner, taxValue[0], players, fields); // Transaction som sker på spilleren ud fra hvilket taxfield han lander på
+		view.writeText("");
+		bankruptcy.payMoney(playerNumber, owner, taxValue[0], players, fields);// Transaction som sker på spilleren ud fra hvilket taxfield han lander på
 		view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); // update af gui.
 	}
 	
@@ -198,9 +199,11 @@ public class LandOnFieldCTRL {
 			int transactionValue = chanceCardValueArray[0];
 			if (transactionValue < 0) {
 				bankruptcy.payMoney(playerNumber, owner, transactionValue, players, fields);
+				view.writeText("");
 
 			} else {
 				players[playerNumber].recieveMoney(transactionValue);
+				view.writeText("");
 			}
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			break;
