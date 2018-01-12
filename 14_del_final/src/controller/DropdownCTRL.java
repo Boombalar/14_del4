@@ -10,7 +10,7 @@ public class DropdownCTRL {
 	BankruptcyCTRL bankruptcy;
 	TradeCTRL trade;
 	ChanceCardCTRL chanceCard;
-	
+
 	public DropdownCTRL(DieCup dieCup, LandOnFieldCTRL landonfield, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chanceCard) {
 		this.dieCup = dieCup;
 		this.landonfield = landonfield;
@@ -48,7 +48,7 @@ public class DropdownCTRL {
 		view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
 		landonfield.ruleSwitch(currentPlayer, players, fields, view);
-		
+
 		if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 			players[currentPlayer].setExtraTurn(true);
 			/*
@@ -63,7 +63,7 @@ public class DropdownCTRL {
 	}
 
 	public void buyHousesAndHotel(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
-		
+
 		int amountOfProperties = 0;
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {//Går hele brættet igennem
 			if (fields[fieldCount] instanceof PropertyFields) {
@@ -78,7 +78,7 @@ public class DropdownCTRL {
 		int index = 0;
 		String choice;
 		int[] returnValue;
-	
+
 
 		//Vi populerer Array
 		//populer array med felt hvis man ejer det og har hele gruppen eks.
@@ -170,25 +170,23 @@ public class DropdownCTRL {
 		int[] returnValue;
 		//Find ud af hvor mange grunde man ejer som ikke har huse på sin gruppe til array
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-			if (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fieldCount)==0) {
-				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
-					amountOfProperties++;
-				}
+			//Hvis feltet er enten et ejet OwnerField eller et ejet PropertyField uden huse.
+			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) || (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fieldCount)==0) && (((PropertyFields)fields[fieldCount]).getOwner()==currentPlayer)) {
+				amountOfProperties++;//tæl op
 			}
 		}
+
 		//Lav Array
 		String[] propertyArray = new String[amountOfProperties];
 		int index=0;
 		String choice;
 
-		//populer array med felt hvis man ejer det og der ikke er huse på gruppen
+		//Populer array med grunde hvor man enten ejer OwnerField eller ejer PropertyField uden huse.
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-			if (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fieldCount)==0) {
-				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
-					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
-				}
+			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) || (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fieldCount)==0) && (((PropertyFields)fields[fieldCount]).getOwner()==currentPlayer)) {
+				propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
+				index++;	
 			}
-			index++;
 		}
 
 		//vælge grund i dropdown

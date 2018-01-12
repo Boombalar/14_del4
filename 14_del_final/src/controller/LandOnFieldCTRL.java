@@ -280,7 +280,6 @@ public class LandOnFieldCTRL {
 					newPlayerPos =0;
 				}
 			}
-			
 			players[playerNumber].setPosition(newPlayerPos);
 			view.updatePlayerPosition(playerNumber, oldPlayerPos, newPlayerPos);
 			break;

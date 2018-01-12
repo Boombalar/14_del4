@@ -50,6 +50,11 @@ public class Board {
 		field[37] = new PropertyFields("Frederiksberggade",0,37,7000,0,8,700,3500,10000,22000,26000,30000,0,4000);
 		field[38] = new TaxField("Betal skat",3,38,2000);
 		field[39] = new PropertyFields("Rådhuspladsen",0,39,8000,0,8,1000,4000,12000,28000,34000,40000,0,4000);
+	
+//		// til at lave dine egne felter
+//		for (int i = 0; i<=39 ; i++) {
+//			field[i] = new ChanceField("?",4,33);
+//		}
 	}
 	
 	/**
