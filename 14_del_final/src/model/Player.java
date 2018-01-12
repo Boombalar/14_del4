@@ -1,5 +1,9 @@
 package model;
 
+import java.awt.Desktop.Action;
+
+import controller.ActionCTRL;
+
 public class Player {
 	
 	private String name; //Spillerens navn
@@ -137,6 +141,7 @@ public class Player {
 	 * Køres denne metode tilføjes 1 til antal releaseCards.
 	 */
 	public void addReleaseCard() {
+		System.out.println("Spiller" + getPlayerName() +" har modtaget et release card");
 		this.releaseCard++;
 	}
 	
@@ -145,6 +150,7 @@ public class Player {
 	 * @return Antal kort en spiller har.
 	 */
 	public int useReleaseCard() {
+		System.out.println("Spiller" + getPlayerName() + " har brugt releasecard");
 		return this.releaseCard;
 	}
 }
