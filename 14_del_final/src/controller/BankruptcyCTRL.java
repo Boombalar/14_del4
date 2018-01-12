@@ -18,7 +18,7 @@ public class BankruptcyCTRL {
 	public void payMoney(int currentPlayer, int toPlayer, int amount, Player[] players, Field[] fields, ViewCTRL view) {
 		if (checkForAvailability(currentPlayer, amount, players) == false) {
 			if (raiseMoney(currentPlayer, amount, players, fields) == false){
-				bankruptcy(currentPlayer, toPlayer, players, fields);
+				bankruptcy(currentPlayer, toPlayer, players, fields, view);
 			}
 		} else {						
 			players[currentPlayer].removeMoney(amount);
@@ -78,9 +78,10 @@ public class BankruptcyCTRL {
 		return false;
 	}
 
-	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields) {
+	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		int numberOfBuildings;
 		trade.transferAssets(currentPlayer, toPlayer, players, fields);
 		players[currentPlayer].setBroke(true);
+		view.writeText(players[currentPlayer].getPlayerName() + " er gået bankerot.");
 	}	
 }

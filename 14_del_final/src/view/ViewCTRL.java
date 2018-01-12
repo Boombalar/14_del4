@@ -307,11 +307,12 @@ public class ViewCTRL {
 			if (fields[fieldCount] instanceof ShippingFields) {
 				updateOwnership(((ShippingFields)fields[fieldCount]).getOwner(), fieldCount);
 			}
-			updatePlayerAccount(fieldCount, players[fieldCount].getBalance());
 		}
 		for (int playerCount = 1 ; playerCount <= players.length-1; playerCount++) {
+			updatePlayerAccount(playerCount, players[playerCount].getBalance());
 			if (players[playerCount].getBroke()) {
 				turnOffPlayer(playerCount);
+				
 			}
 		}
 	}
