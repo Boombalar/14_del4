@@ -208,8 +208,10 @@ public class DropdownCTRL {
 			int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
 
 			//Sælg grund.
-			returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
 			trade.sellProperty(currentPlayer, chosenPlayerNumber,chosenFieldNumber, players, fields);
+			view.updateOwnership(chosenPlayerNumber, chosenFieldNumber);
+			view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
+			view.updatePlayerAccount(currentPlayer, players[chosenPlayerNumber].getBalance());
 		}
 		else {
 			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
