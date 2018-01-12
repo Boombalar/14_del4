@@ -100,7 +100,7 @@ public class LandOnFieldCTRL {
 		}
 		//Her lander den aktivespiller på et felt som han selv ejer. 
 		if((owner == playerNumber)) {  
-			view.writeText(players[playerNumber].getPlayerName() +  " er landet på " + fields[newPlayerPosition].getName() + " du ejer selv denne grund");
+			view.writeText(players[playerNumber].getPlayerName() +  " er landet på " + fields[newPlayerPosition].getName() + players[playerNumber].getPlayerName() + "   ejer selv denne grund");
 		}
 
 	}
@@ -129,7 +129,7 @@ public class LandOnFieldCTRL {
 		}
 
 		if(owner == playerNumber) {
-			view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " du ejer selv dette bryggeri");
+			view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + players[playerNumber].getPlayerName() + "  ejer selv dette bryggeri");
 		}
 	}
 	
@@ -189,7 +189,7 @@ public class LandOnFieldCTRL {
 		}
 
 		if(owner == playerNumber) {
-			view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " du ejer selv dette rederi");
+			view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + players[playerNumber].getPlayerName() + "  ejer selv dette rederi");
 		}
 
 	}

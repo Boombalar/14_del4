@@ -76,7 +76,7 @@ public class ActionCTRL {
 				// Lav Startmenu for spiller
 				view.writeText("Det er spiller " + currentPlayer + "'s tur nu");
 				String[] playerChoice = {"Slå terninger", "Køb huse og hoteller","Sælg huse og hoteller", "Sælg grund"};
-				String choiceOfPlayer = view.getDropDownChoice(players[currentPlayer].getPlayerName() + " Vælg fra dropdown", playerChoice);
+				String choiceOfPlayer = view.getDropDownChoice(players[currentPlayer].getPlayerName() + " - vælg fra dropdown", playerChoice);
 
 				//Håndtér valg fra menu
 				switch(choiceOfPlayer) {
