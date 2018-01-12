@@ -19,11 +19,12 @@ public class ChanceCardCTRL {
     private void shuffle() {
         int plads2=0;
         int plads=0;
-        int tal=0;
- 
-        for (int i = 0; i < shuffledDeck.length; i++) {
-            System.out.println(shuffledDeck[i]);                      
+        int tal=0;        
+        
+        for (int x = 0;x<=31;x++) {
+            shuffledDeck[x]=x;
         }
+ 
  
         for (int i = 0;i < 60000; i++) {
             Random random = new Random();
