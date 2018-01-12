@@ -14,7 +14,7 @@ public class FieldRuleCTRL {
 	 * @param chancecard 
 	 * @param fieldRuleSwitch 
 	 */
-	public void fieldRulesSwitch (int playerNumber, int newPlayerPosition, Player[] players, Field[] fields, LandOnFieldCTRL landonfield, ViewCTRL view, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chancecard, FieldRuleCTRL fieldRuleSwitch) {
+	public void ruleSwitch (int playerNumber, int newPlayerPosition, Player[] players, Field[] fields, LandOnFieldCTRL landonfield, ViewCTRL view, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chancecard, FieldRuleCTRL fieldRuleSwitch) {
 		int fieldType = fields[players[playerNumber].getPosition()].getType();
 		int owner=0;
 		if ((fields[newPlayerPosition]) instanceof OwnerFields) {

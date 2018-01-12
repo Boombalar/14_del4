@@ -61,7 +61,7 @@ public class ActionCTRL {
 		String choice; //Det valg en given spiller vælger ud fra propertyString array.
 		int[] returnValue; //Hvilken specifik returværdi det dette?s
 
-		while (!winner.checkWinner(index, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
+		while (!winner.checkWinner(numberOfPlayers, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 
 			jail.jailHandling(currentPlayer, players, fields, view, toolbox, trade);
 
@@ -121,8 +121,8 @@ public class ActionCTRL {
 					currentPlayer = 1;
 				}
 
-				if (winner.checkWinner(index, players)) {
-					winner.printWinner(index, players, view);
+				if (winner.checkWinner(numberOfPlayers, players)) {
+					winner.printWinner(numberOfPlayers, players, view);
 					break;
 				}
 			}

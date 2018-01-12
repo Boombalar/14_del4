@@ -190,7 +190,7 @@ public class LandOnFieldCTRL {
 			else {
 				players[playerNumber].setPosition(moveToField);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, moveToField);
-				fieldRuleSwitch.fieldRulesSwitch(playerNumber, newPlayerPosition, players, fields, landOnField, view, toolbox, bankruptcy, trade, chanceCard, fieldRuleSwitch);
+				fieldRuleSwitch.ruleSwitch(playerNumber, newPlayerPosition, players, fields, landOnField, view, toolbox, bankruptcy, trade, chanceCard, fieldRuleSwitch);
 			}
 			break;
 
@@ -232,7 +232,7 @@ public class LandOnFieldCTRL {
 		case 3: // Ryk tre felter tilbage.
 			players[playerNumber].setPosition(newPlayerPosition - 3);
 			view.updatePlayerPosition(playerNumber, newPlayerPosition, newPlayerPosition - 3);
-			fieldRuleSwitch.fieldRulesSwitch(playerNumber, newPlayerPosition, players, fields, landOnField, view, toolbox, bankruptcy, trade, chanceCard, fieldRuleSwitch);
+			fieldRuleSwitch.ruleSwitch(playerNumber, newPlayerPosition, players, fields, landOnField, view, toolbox, bankruptcy, trade, chanceCard, fieldRuleSwitch);
 			break;
 		}
 	}

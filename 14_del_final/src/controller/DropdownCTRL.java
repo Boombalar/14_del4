@@ -32,7 +32,7 @@ public class DropdownCTRL {
 		view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
 		view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
-		fieldRuleCTRL.fieldRulesSwitch(currentPlayer, newPlayerPosition, players, fields, landonfield, view, toolbox, bankruptcy, trade, chancecard, fieldRuleCTRL);
+		fieldRuleCTRL.ruleSwitch(currentPlayer, newPlayerPosition, players, fields, landonfield, view, toolbox, bankruptcy, trade, chancecard, fieldRuleCTRL);
 		
 		if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 			currentPlayer--;
