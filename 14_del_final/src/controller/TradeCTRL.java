@@ -45,17 +45,15 @@ public class TradeCTRL {
 	
 	//Sælg en bygning til halv pris og overfør pengene til ejeren
 	public void sellBuilding(int currentPlayer, int fieldNumber, Player[] players) {
-		int[] returnValue = new int[8];
 		int numberOfHouses;
 		int priceOfBuilding;
 
 		numberOfHouses = toolbox.getHousesOnProperty(currentPlayer, fieldNumber);
 		if (numberOfHouses > 0) {
-			numberOfHouses = numberOfHouses - 1;
-			returnValue[6] = numberOfHouses;
+			toolbox.setHousesOnProperty(numberOfHouses-1, fieldNumber);
+			priceOfBuilding = toolbox.getHousePrice(fieldNumber)/2;
+			players[currentPlayer].recieveMoney(priceOfBuilding);		
 		}
-		priceOfBuilding = returnValue[7]/2;
-		players[currentPlayer].recieveMoney(priceOfBuilding);			
 	}
 
 	// sælg en grund til en spiller eller banken. Hvis toPlayer = 0 så overføres pengene ikke til nogen

@@ -97,22 +97,20 @@ public class Toolbox {
 
 	public boolean checkPropertySaleValue(int currentPlayer, int amountNeeded) {
 		boolean returnValue = false;
-		int valueOfSale=0;
 		int priceOfProperty;
 
-		if(valueOfSale < amountNeeded) {
 			for (int fieldCount = 0; fieldCount<=39;fieldCount++) {
-				if(fields[fieldCount] instanceof PropertyFields && valueOfSale < amountNeeded) {
-					if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && getHousesOnProperty(currentPlayer, fieldCount)==0) {
+				if(fields[fieldCount] instanceof PropertyFields && amountNeeded > 0) {
+					if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
 						priceOfProperty = ((OwnerFields)fields[fieldCount]).getPropertyValue();
-						valueOfSale = valueOfSale + priceOfProperty;
-						if (valueOfSale >= amountNeeded) {
+						amountNeeded = amountNeeded - priceOfProperty;
+						if (amountNeeded < 0) {
 							returnValue = true;
+							break;
 						}
 					}
 				}
 			}
-		}
 		return returnValue;
 	}
 
