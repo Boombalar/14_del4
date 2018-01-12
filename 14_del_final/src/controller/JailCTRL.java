@@ -4,9 +4,21 @@ import model.*;
 import view.*;
 
 public class JailCTRL {
-	BankruptcyCTRL bankrupt;
+	Player[] players;
+	Field[] fields;
+	ViewCTRL view;
+	Toolbox toolbox;
+	TradeCTRL trade;
+	BankruptcyCTRL bankruptcy;
+	
+	
+	public JailCTRL(Player[] players, ViewCTRL view, BankruptcyCTRL bankruptcy) {
+		this.players = players;
+		this.view = view;
+		this.bankruptcy = bankruptcy;
+	}
 
-	public void jailHandling(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, Toolbox toolbox, TradeCTRL trade ) {
+	public void jailHandling(int currentPlayer) {
 
 		if(players[currentPlayer].getTurnsInJail()==1) {
 			if (players[currentPlayer].getReleaseCard() > 0) {
@@ -19,10 +31,10 @@ public class JailCTRL {
 
 				if (choiceJailPlayer=="Betal 1000kr") {
 					view.writeText("Betal 1000 kr for at komme ud af fængsel");
-					bankrupt.payMoney(currentPlayer, 0, 1000, players, fields, toolbox,  trade);
+					bankruptcy.payMoney(currentPlayer, 0, 1000);
 				}
 			} else {					
-				bankrupt.payMoney(currentPlayer, 0, 1000, players, fields, toolbox, trade);
+				bankruptcy.payMoney(currentPlayer, 0, 1000);
 			}
 		}
 	}
