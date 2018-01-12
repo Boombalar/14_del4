@@ -206,11 +206,14 @@ public class ViewCTRL {
 		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
 		gui.getFields()[newPosition].setCar(guiPlayer[player], true);
 	}
-	
+
+	public void updatePlayerName(int playerName, String newName) {
+		this.guiPlayer[playerName].setName(newName);
+	}
+
 	public void removePlayerCar(int player, int oldPosition) {
 		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
 	}
-	
 
 	/**
 	 * Metode der får GUIen til at vise en spillers account
@@ -227,7 +230,7 @@ public class ViewCTRL {
 	 * @param fieldNumber Nummeret på det felt der skal opdateres
 	 */
 	public void updateOwnership(int player, int fieldNumber) {
-		
+
 		if(guiFields[fieldNumber] instanceof GUI_Shipping) {
 			if (player == 0) {
 				((GUI_Shipping)guiFields[fieldNumber]).setBorder(null);
@@ -249,9 +252,6 @@ public class ViewCTRL {
 			}
 			else ((GUI_Street)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
 		}
-
-		
-		
 	}
 
 	/**
@@ -285,34 +285,28 @@ public class ViewCTRL {
 	public void showChanceCard (String text) {
 		gui.displayChanceCard(text);
 	}
-	
+
 	public void turnOffPlayer (int player) {
 		gui.getFields()[players[player].getPosition()].setCar(guiPlayer[player], false);
 	}
-	
+
 	public String getUserTextInput(String displayText) {
 		return gui.getUserString(displayText);
 	}
-	
+
 	public void updateEntireBoard(Field[] fields, Player[] players) {
 		//Updater fields ownership på bræt
 		for (int fieldCount = 0;fieldCount <= 39; fieldCount++) {
-			if (fields[fieldCount] instanceof PropertyFields) {
-				updateOwnership(((PropertyFields)fields[fieldCount]).getOwner(), fieldCount);
+			if (fields[fieldCount] instanceof OwnerFields) {
+				updateOwnership(((OwnerFields)fields[fieldCount]).getOwner(), fieldCount);
 				updateBuildings(fieldCount, (((PropertyFields)fields[fieldCount]).getReturnValue()[6]));
 			}
-			if (fields[fieldCount] instanceof BreweryFields) {
-				updateOwnership(((BreweryFields)fields[fieldCount]).getOwner(), fieldCount);
-			}
-			if (fields[fieldCount] instanceof ShippingFields) {
-				updateOwnership(((ShippingFields)fields[fieldCount]).getOwner(), fieldCount);
-			}
-		}
-		for (int playerCount = 1 ; playerCount <= players.length-1; playerCount++) {
-			updatePlayerAccount(playerCount, players[playerCount].getBalance());
-			if (players[playerCount].getBroke()) {
-				turnOffPlayer(playerCount);
-				
+			for (int playerCount = 1 ; playerCount <= players.length-1; playerCount++) {
+				updatePlayerAccount(playerCount, players[playerCount].getBalance());
+				if (players[playerCount].getBroke()) {
+					turnOffPlayer(playerCount);
+
+				}
 			}
 		}
 	}

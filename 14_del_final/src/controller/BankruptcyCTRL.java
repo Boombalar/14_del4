@@ -83,5 +83,6 @@ public class BankruptcyCTRL {
 		trade.transferAssets(currentPlayer, toPlayer, players, fields);
 		players[currentPlayer].setBroke(true);
 		view.writeText(players[currentPlayer].getPlayerName() + " er gået bankerot.");
+		view.updatePlayerName(currentPlayer, players[currentPlayer].getPlayerName() + " [bankerot]");
 	}	
 }
