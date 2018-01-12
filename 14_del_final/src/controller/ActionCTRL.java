@@ -74,7 +74,11 @@ public class ActionCTRL {
 				}
 
 				// Lav Startmenu for spiller
-				view.writeText("Det er spiller " + currentPlayer + "'s tur nu");
+				if (players[currentPlayer].getExtraTurn()) {
+					view.writeText(players[currentPlayer].getPlayerName() + " slog to ens tidliger, og har derfor en ekstra tur");
+				} else {
+				view.writeText("Det er " + players[currentPlayer].getPlayerName() + "'s tur nu");
+				}
 				String[] playerChoice = {"Slå terninger", "Køb huse og hoteller","Sælg huse og hoteller", "Sælg grund"};
 				String choiceOfPlayer = view.getDropDownChoice(players[currentPlayer].getPlayerName() + " - vælg fra dropdown", playerChoice);
 
