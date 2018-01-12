@@ -55,6 +55,9 @@ public class LandOnFieldCTRL {
 			//Chancefield			
 			chanceField(playerNumber, players, fields, view);
 			break;
+		case 5: 
+			//startfelt
+			break;
 		case 7:
 			//GoToJailField
 			goToJailField(playerNumber, players, fields, view);
