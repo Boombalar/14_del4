@@ -278,7 +278,7 @@ public class LandOnFieldCTRL {
 				}
 			}
 			// Herefter kommer der et tjek om hvilket efterfølgende shippingField er nærmest.
-			if(playerPosition < shippingArray[0]) {
+			if(playerPosition > 0 && playerPosition < shippingArray[0]) {
 				players[playerNumber].setPosition(shippingArray[0]);
 				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[0]);
 				shippingFieldRules(playerNumber, 2, players, fields, view);
@@ -301,12 +301,16 @@ public class LandOnFieldCTRL {
 				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[3]);
 				shippingFieldRules(playerNumber, 2, players, fields, view);
 				}
+			else if(playerPosition > shippingArray[3] && playerPosition < 40) {
+				players[playerNumber].setPosition(shippingArray[0]);
+				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[0]);
+				shippingFieldRules(playerNumber, 2, players, fields, view);
+				}
 			break;
 
 		case 3: // Ryk tre felter tilbage.
-			int moveBack = chanceCardValueArray[1];
-			players[playerNumber].setPosition(playerPosition - moveBack);
-			view.updatePlayerPosition(playerNumber, playerPosition, (playerPosition - moveBack));
+			players[playerNumber].setPosition(playerPosition - moveToField);
+			view.updatePlayerPosition(playerNumber, playerPosition, (playerPosition - moveToField));
 			ruleSwitch(playerNumber, players, fields, view);
 			break;
 		}
