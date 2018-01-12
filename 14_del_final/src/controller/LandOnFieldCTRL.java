@@ -276,42 +276,10 @@ public class LandOnFieldCTRL {
 				if (newPlayerPos > 39) {
 					newPlayerPos =0;
 				}
-				players[playerNumber].setPosition(newPlayerPos);
-				view.updatePlayerPosition(playerNumber, oldPlayerPos, newPlayerPos);
 			}
 			
-			/*
-			// Herefter kommer der et tjek om hvilket efterfølgende shippingField er nærmest.
-			if(playerPosition > 0 && playerPosition < shippingArray[0]) {
-				players[playerNumber].setPosition(shippingArray[0]);
-				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[0]);
-				shippingFieldRules(playerNumber, 2, players, fields, view);
-			}
-
-			else if(playerPosition > shippingArray[0] && playerPosition < shippingArray[1]) {
-				players[playerNumber].setPosition(shippingArray[1]);
-				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[1]);
-				shippingFieldRules(playerNumber, 2, players, fields, view);
-				}
-
-			else if(playerPosition > shippingArray[1] && playerPosition < shippingArray[2]) {
-				players[playerNumber].setPosition(shippingArray[2]);
-				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[2]);
-				shippingFieldRules(playerNumber, 2, players, fields, view);
-				}
-
-			else if(playerPosition > shippingArray[2] && playerPosition < shippingArray[3]) {
-				players[playerNumber].setPosition(shippingArray[3]);
-				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[3]);
-				shippingFieldRules(playerNumber, 2, players, fields, view);
-				}
-			else if(playerPosition > shippingArray[3] && playerPosition < 40) {
-				players[playerNumber].setPosition(shippingArray[0]);
-				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[0]);
-				shippingFieldRules(playerNumber, 2, players, fields, view);
-				}
-				*/
-			break;
+			players[playerNumber].setPosition(newPlayerPos);
+			view.updatePlayerPosition(playerNumber, oldPlayerPos, newPlayerPos);
 
 		case 3: // Ryk tre felter tilbage.
 			players[playerNumber].setPosition(playerPosition - moveToField);
