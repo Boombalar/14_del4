@@ -301,6 +301,12 @@ public class ViewCTRL {
 			if (fields[fieldCount] instanceof PropertyFields) {
 				updateOwnership(((PropertyFields)fields[fieldCount]).getOwner(), fieldCount);
 			}
+			if (fields[fieldCount] instanceof BreweryFields) {
+				updateOwnership(((BreweryFields)fields[fieldCount]).getOwner(), fieldCount);
+			}
+			if (fields[fieldCount] instanceof ShippingFields) {
+				updateOwnership(((ShippingFields)fields[fieldCount]).getOwner(), fieldCount);
+			}
 		}
 		for (int playerCount = 1 ; playerCount <= players.length; playerCount++) {
 			if (players[playerCount].getBroke()) {

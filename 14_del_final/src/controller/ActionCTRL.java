@@ -44,6 +44,7 @@ public class ActionCTRL {
 		players = makePlayers.getPlayers(); // Modtag player array.
 		view.makeGuiPlayers(players); //Opret antal spillere på bræt.
 		dropdown = new DropdownCTRL(dieCup, landonfield, toolbox, bankruptcy, trade, chancecard);
+		view.updateEntireBoard(fields, players); // updatering af boardet på gui, så test / fejlfinding kan blive nemmere.
 	}
 	/**
 	 * gameSequence
