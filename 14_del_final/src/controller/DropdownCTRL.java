@@ -5,9 +5,6 @@ import view.*;
 
 public class DropdownCTRL {
 	DieCup dieCup;
-	Player[] players;
-	Field[] fields;
-	ViewCTRL view;
 	FieldRuleCTRL fieldRule;
 	LandOnFieldCTRL landonfield;
 	Toolbox toolbox;
@@ -15,23 +12,18 @@ public class DropdownCTRL {
 	TradeCTRL trade;
 	ChanceCardCTRL chanceCard;
 	
-	public DropdownCTRL(DieCup dieCup, Player[] players, Field[] fields, ViewCTRL view, FieldRuleCTRL fieldRule, LandOnFieldCTRL landonfield, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chanceCard) {
+	public DropdownCTRL(DieCup dieCup, FieldRuleCTRL fieldRule, LandOnFieldCTRL landonfield, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chanceCard) {
 		this.dieCup = dieCup;
-		this.players = players;
-		this.fields = fields;
-		this.view = view;
 		this.fieldRule = fieldRule;
 		this.landonfield = landonfield;
 		this.toolbox = toolbox;
 		this.bankruptcy = bankruptcy;
 		this.trade = trade;
 		this.chanceCard = chanceCard;
-
-		
 	}
 
 
-	public void rollDice (int currentPlayer) {
+	public void rollDice (int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 
 		//slå terninger
 		dieCup.shake();
@@ -71,7 +63,7 @@ public class DropdownCTRL {
 		}
 	}
 
-	public void buyHousesAndHotel(int currentPlayer) {
+	public void buyHousesAndHotel(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		
 		int amountOfProperties = 0;
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {//Går hele brættet igennem
@@ -128,7 +120,7 @@ public class DropdownCTRL {
 
 
 	}
-	public void sellHousesAndHotels(int currentPlayer) {
+	public void sellHousesAndHotels(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		int amountOfProperties=0;
 		int[] returnValue;
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
@@ -174,7 +166,7 @@ public class DropdownCTRL {
 			currentPlayer--;
 		}
 	}
-	public void sellProperty(int currentPlayer) {
+	public void sellProperty(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		int amountOfProperties=0;
 		int[] returnValue;
 		//Find ud af hvor mange grunde man ejer som ikke har huse på sin gruppe til array
