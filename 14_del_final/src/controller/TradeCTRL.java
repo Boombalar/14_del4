@@ -4,17 +4,15 @@ import model.*;
 
 public class TradeCTRL {
 	Toolbox toolbox;
-	Player[] players;
 	Field[] fields;
 	
 	
-	public TradeCTRL (Player[] players, Field[] fields, Toolbox toolbox) {
+	public TradeCTRL (Field[] fields, Toolbox toolbox) {
 		this.toolbox = toolbox;
-		this.players = players;
 		this.fields = fields;
 	}
 	
-	public void safeTransferMoney(int fromPlayer, int toPlayer, int amount) {
+	public void safeTransferMoney(int fromPlayer, int toPlayer, int amount, Player[] players) {
 		players[fromPlayer].removeMoney(amount);
 		players[toPlayer].recieveMoney(amount);
 	}
@@ -22,7 +20,7 @@ public class TradeCTRL {
 	//Overfører aktiver fra 1 spiller til en anden.
 	//hvis toPlayer er 0 så gives grundene tilbage til spillet
 	//og der gives ikke penge til anden spiller.
-	public void transferAssets(int fromPlayer, int toPlayer) {
+	public void transferAssets(int fromPlayer, int toPlayer, Player[] players) {
 		for(int fieldCount = 0;fieldCount <=39;fieldCount++) {
 			if (fields[fieldCount] instanceof OwnerFields) {
 				changeOwnerShip(fromPlayer, toPlayer, fieldCount);
@@ -35,7 +33,7 @@ public class TradeCTRL {
 	}
 
 	//Sælg en bygning til halv pris og overfør pengene til ejeren
-	public void sellBuilding(int currentPlayer, int fieldNumber) {
+	public void sellBuilding(int currentPlayer, int fieldNumber, Player[] players) {
 		int[] returnValue = new int[8];
 		int numberOfHouses;
 		int priceOfBuilding;
@@ -50,7 +48,7 @@ public class TradeCTRL {
 	}
 
 	// sælg en grund til en spiller eller banken. Hvis toPlayer = 0 så overføres pengene ikke til nogen
-	public void sellProperty(int currentPlayer, int toPlayer, int fieldNumber) {
+	public void sellProperty(int currentPlayer, int toPlayer, int fieldNumber, Player[] players) {
 		int priceOfProperty;
 
 		changeOwnerShip(currentPlayer, toPlayer, fieldNumber);
@@ -58,7 +56,7 @@ public class TradeCTRL {
 		if (toPlayer == 0) {
 			players[currentPlayer].recieveMoney(priceOfProperty);
 		}else {
-			safeTransferMoney(toPlayer, currentPlayer, priceOfProperty);
+			safeTransferMoney(toPlayer, currentPlayer, priceOfProperty, players);
 		}
 	}
 
