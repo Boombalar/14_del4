@@ -57,7 +57,7 @@ public class PlayerTest {
 		boolean expected = false;
 		assertFalse(expected);
 		playerTest.removeMoney(50000);
-		assertTrue(playerTest.checkBroke());
+		assertTrue(playerTest.getBroke());
 		
 	}
 
