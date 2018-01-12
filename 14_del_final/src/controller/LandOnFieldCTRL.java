@@ -139,7 +139,6 @@ public class LandOnFieldCTRL {
 	}
 	
 	public void chanceField(int playerNumber, Player[] players,Field[] fields,ViewCTRL view) {
-		int newPlayerPosition = players[playerNumber].getPosition();
 		view.writeText(players[playerNumber].getPlayerName() + " er landet på 'Prøv lykken', du trækker et chance kort"); //Tekst fra gui 
 		chancecard.draw(); //ChanceCardCRTL trækker et kort	
 		view.showChanceCard(chancecard.getDescription());	 //Teksten fra Chancekortet vises i gui 
@@ -244,65 +243,70 @@ public class LandOnFieldCTRL {
 	 * @param chancecard 
 	 */
 	public void MoveToCardsRules (int playerNumber, Player[] players,Field[] fields, ViewCTRL view) {
-		int newPlayerPosition = players[playerNumber].getPosition();
+		int playerPosition = players[playerNumber].getPosition();
 		int[] chanceCardValueArray = chancecard.getReturnValue();
 		int moveToField = chanceCardValueArray[0];
 		
-		if(toolbox.CheckForPassingStart(newPlayerPosition, moveToField) == true)
-			view.updatePlayerPosition(playerNumber, newPlayerPosition, moveToField);
+		if(toolbox.CheckForPassingStart(playerPosition, moveToField) == true)
+			view.updatePlayerPosition(playerNumber, playerPosition, moveToField);
 
 		switch (chanceCardValueArray[1]){
 
 		case 1:
 			// Blot flyttekort til et bestemt felt.
 			if((chancecard.cardNumber == 19) || (chancecard.cardNumber == 22)) {
-				players[playerNumber].setTurnsInJail(1);
+				players[playerNumber].setTurnsInJail(+1);
+				players[playerNumber].setPosition(moveToField);
+				view.updatePlayerPosition(playerNumber, playerPosition, moveToField);
 			}
 			else {
+				players[playerNumber].setPosition(moveToField);
+				view.updatePlayerPosition(playerNumber, playerPosition, moveToField);
 				ruleSwitch(playerNumber, players, fields, view);
 			}
-			players[playerNumber].setPosition(moveToField);
-			view.updatePlayerPosition(playerNumber, newPlayerPosition, moveToField);
 			break;
 
 		case 2: // Et flyttekort, hvor man flytter til det nærmeste felt med redderi.	
 
 			int[] shippingArray = new int[4];
 			// Der oprettes et loop, som smider lokationenerne fra feltnumrene, ind i et array, hvis typen er "1" - som er shippingField.
-			for(int i=0 ; i < 39 ; i++) {
+			int i, k=0;
+			for(i=0; i < 39 ; i++) {
 				if (fields[i].getType() == 1) {
-					shippingArray[i] = i;
+					shippingArray[k] = i;
+					k++;
 				}
 			}
 			// Herefter kommer der et tjek om hvilket efterfølgende shippingField er nærmest.
-			if( newPlayerPosition < shippingArray[0]) {
+			if(playerPosition < shippingArray[0]) {
 				players[playerNumber].setPosition(shippingArray[0]);
-				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[0]);
+				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[0]);
 				shippingFieldRules(playerNumber, 2, players, fields, view);
 			}
 
-			else if( newPlayerPosition > shippingArray[0] && newPlayerPosition < shippingArray[1]) {
+			else if(playerPosition > shippingArray[0] && playerPosition < shippingArray[1]) {
 				players[playerNumber].setPosition(shippingArray[1]);
-				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[1]);
+				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[1]);
 				shippingFieldRules(playerNumber, 2, players, fields, view);
 				}
 
-			else if( newPlayerPosition > shippingArray[1] && newPlayerPosition < shippingArray[2]) {
+			else if(playerPosition > shippingArray[1] && playerPosition < shippingArray[2]) {
 				players[playerNumber].setPosition(shippingArray[2]);
-				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[2]);
+				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[2]);
 				shippingFieldRules(playerNumber, 2, players, fields, view);
 				}
 
-			else if( newPlayerPosition > shippingArray[2] && newPlayerPosition < shippingArray[3]) {
+			else if(playerPosition > shippingArray[2] && playerPosition < shippingArray[3]) {
 				players[playerNumber].setPosition(shippingArray[3]);
-				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[3]);
+				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[3]);
 				shippingFieldRules(playerNumber, 2, players, fields, view);
 				}
 			break;
 
 		case 3: // Ryk tre felter tilbage.
-			players[playerNumber].setPosition(newPlayerPosition - 3);
-			view.updatePlayerPosition(playerNumber, newPlayerPosition, newPlayerPosition - 3);
+			int moveBack = chanceCardValueArray[1];
+			players[playerNumber].setPosition(playerPosition - moveBack);
+			view.updatePlayerPosition(playerNumber, playerPosition, (playerPosition - moveBack));
 			ruleSwitch(playerNumber, players, fields, view);
 			break;
 		}
