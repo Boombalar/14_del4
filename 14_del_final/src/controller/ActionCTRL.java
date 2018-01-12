@@ -10,7 +10,7 @@ public class ActionCTRL {
 	private CreatePlayers makePlayers;
 	private Player[] players;
 	private ViewCTRL view;
-	private ChanceCardCTRL chanceCard;
+	private ChanceCardCTRL chancecard;
 	private DieCup dieCup;
 	private Toolbox toolbox;
 	private JailCTRL jail;
@@ -19,7 +19,7 @@ public class ActionCTRL {
 	private TradeCTRL trade;
 	private WinnerCTRL winner;
 	private BankruptcyCTRL bankruptcy;
-	private FieldRuleCTRL fieldRuleCTRL;
+	private FieldRuleCTRL fieldrule;
 
 	public ActionCTRL() {
 		initialiseGame();
@@ -27,23 +27,31 @@ public class ActionCTRL {
 	}
 
 	public void initialiseGame() {
+		chancecard = new ChanceCardCTRL(); 		//Lav chancekort CTRL.
+		dieCup = new DieCup(); 		//Lav raflebæger.
 		board = new Board();		 //Lav bræt model.
 		fields = board.getFields();
+		winner = new WinnerCTRL();
+		toolbox = new Toolbox(fields);
+		trade = new TradeCTRL(toolbox);
+		bankruptcy = new BankruptcyCTRL(toolbox, trade);
+		jail = new JailCTRL(bankruptcy);
+		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, trade, chancecard, fieldrule);
+		fieldrule = new FieldRuleCTRL( toolbox, bankruptcy, trade, landonfield, chancecard);
 		view = new ViewCTRL(fields);//Opret bræt.
 		String[] lines = {"2","3","4","5","6"};		//Hent antal spillere.
 		numberOfPlayers = Integer.parseInt(view.getDropDownChoice("Vælg antal spillere 2-6", lines));
 		makePlayers = new CreatePlayers(numberOfPlayers);  		//Lav player array.
 		players = makePlayers.getPlayers();
 		view.makeGuiPlayers(players); //Opret antal spillere på bræt.
-		chanceCard = new ChanceCardCTRL(); 		//Lav chancekort CTRL.
-		dieCup = new DieCup(); 		//Lav raflebæger.
-		toolbox = new Toolbox(fields);
-		jail = new JailCTRL(bankruptcy);
-		dropdown = new DropdownCTRL(dieCup, fieldRuleCTRL, landonfield, toolbox, bankruptcy, trade, chanceCard);
-		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, trade, landonfield, chanceCard, fieldRuleCTRL);
-		trade = new TradeCTRL(toolbox);
-		winner = new WinnerCTRL();
-		bankruptcy = new BankruptcyCTRL(toolbox, trade);
+
+
+
+		dropdown = new DropdownCTRL(dieCup, fieldrule, landonfield, toolbox, bankruptcy, trade, chancecard);
+		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, trade, landonfield, chancecard, fieldrule);
+
+
+
 	}
 	/**
 	 * gameSequence

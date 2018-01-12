@@ -12,7 +12,7 @@ public class LandOnFieldCTRL {
 	BankruptcyCTRL bankruptcy;
 	FieldRuleCTRL fieldRuleSwitch;
 	
-	public LandOnFieldCTRL (Toolbox toolbox,BankruptcyCTRL bankruptcy, TradeCTRL trade, LandOnFieldCTRL landonfield, ChanceCardCTRL chancecard, FieldRuleCTRL fieldRuleSwitch) {
+	public LandOnFieldCTRL (Toolbox toolbox,BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chancecard, FieldRuleCTRL fieldrule) {
 
 		this.toolbox = toolbox;	
 		this.chancecard = chancecard;
