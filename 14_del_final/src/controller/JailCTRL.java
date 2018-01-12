@@ -22,7 +22,7 @@ public class JailCTRL {
 				String choiceJailPlayer = view.getDropDownChoice("Vælg hvordan du kommer ud af fængsel", playerChoiceJail);
 
 				if (choiceJailPlayer=="Brug releaseCard") {
-					players[currentPlayer].setTurnsInJail(0);}
+					players[currentPlayer].addTurnsInJail(0);}
 
 				if (choiceJailPlayer=="Betal 1000kr") {
 					view.writeText("Betal 1000 kr for at komme ud af fængsel");

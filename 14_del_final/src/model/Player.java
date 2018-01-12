@@ -115,8 +115,8 @@ public class Player {
 	 * Hardsetter en spillers tur i fængsel.
 	 * @param turnsInJail Antal turer det ønskes at sætte en spillers tur i fængsel.
 	 */
-	public void setTurnsInJail(int turnsInJail) {
-		this.turnsInJail = turnsInJail;
+	public void addTurnsInJail(int addTurns) {
+		this.turnsInJail += addTurns;
 	}
 	
 	/**
