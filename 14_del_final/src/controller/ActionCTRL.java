@@ -121,8 +121,8 @@ public class ActionCTRL {
 					currentPlayer = 1;
 				}
 
-				if (winner.checkWinner(numberOfPlayers, players)) {
-					winner.printWinner(numberOfPlayers, players, view);
+				if (winner.checkWinner(numberOfPlayers)) {
+					winner.printWinner(numberOfPlayers);
 					break;
 				}
 			}

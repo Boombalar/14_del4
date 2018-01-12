@@ -128,7 +128,7 @@ public class DropdownCTRL {
 
 
 	}
-	public void sellHousesAndHotels(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, Toolbox toolbox, TradeCTRL trade) {
+	public void sellHousesAndHotels(int currentPlayer) {
 		int amountOfProperties=0;
 		int[] returnValue;
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
@@ -174,7 +174,7 @@ public class DropdownCTRL {
 			currentPlayer--;
 		}
 	}
-	public void sellProperty(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, Toolbox toolbox, TradeCTRL trade ) {
+	public void sellProperty(int currentPlayer) {
 		int amountOfProperties=0;
 		int[] returnValue;
 		//Find ud af hvor mange grunde man ejer som ikke har huse på sin gruppe til array
