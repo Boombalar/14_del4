@@ -195,7 +195,6 @@ public class LandOnFieldCTRL {
 	 */
 
 	public void chanceCardRules (int playerNumber, Player[] players,Field[] fields,ViewCTRL view) {
-		int owner = (((OwnerFields)fields[players[playerNumber].getPosition()]).getOwner());
 		int chanceCardType = chancecard.getType();
 		int[] chanceCardValueArray = chancecard.getReturnValue();
 		switch (chanceCardType) {
@@ -203,7 +202,7 @@ public class LandOnFieldCTRL {
 		case 1: // TransactionCard
 			int transactionValue = chanceCardValueArray[0];
 			if (transactionValue < 0) {
-				bankruptcy.payMoney(playerNumber, owner, transactionValue, players, fields);
+				bankruptcy.payMoney(playerNumber, transactionValue, players, fields);
 				view.writeText(players[playerNumber].getPlayerName() + "");
 
 			} else {
