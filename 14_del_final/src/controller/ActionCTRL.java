@@ -39,11 +39,11 @@ public class ActionCTRL {
 		dieCup = new DieCup(); 		//Lav raflebæger.
 		toolbox = new Toolbox(fields);
 		jail = new JailCTRL(bankruptcy);
-		dropdown = new DropdownCTRL(dieCup fieldRuleCTRL, landonfield, toolbox, bankruptcy, trade, chanceCard);
+		dropdown = new DropdownCTRL(dieCup, fieldRuleCTRL, landonfield, toolbox, bankruptcy, trade, chanceCard);
 		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, trade, landonfield, chanceCard, fieldRuleCTRL);
 		trade = new TradeCTRL(toolbox);
 		winner = new WinnerCTRL();
-		bankruptcy = new BankruptcyCTRL(toolbox);
+		bankruptcy = new BankruptcyCTRL(toolbox, trade);
 	}
 	/**
 	 * gameSequence
@@ -61,7 +61,7 @@ public class ActionCTRL {
 		String choice; //Det valg en given spiller vælger ud fra propertyString array.
 		int[] returnValue; //Hvilken specifik returværdi det dette?s
 
-		while (!winner.checkWinner(numberOfPlayers)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
+		while (!winner.checkWinner(numberOfPlayers, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 
 			jail.jailHandling(currentPlayer, players, view);
 
