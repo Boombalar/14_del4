@@ -5,16 +5,14 @@ import view.*;
 
 public class DropdownCTRL {
 	DieCup dieCup;
-	FieldRuleCTRL fieldRule;
 	LandOnFieldCTRL landonfield;
 	Toolbox toolbox;
 	BankruptcyCTRL bankruptcy;
 	TradeCTRL trade;
 	ChanceCardCTRL chanceCard;
 	
-	public DropdownCTRL(DieCup dieCup, FieldRuleCTRL fieldRule, LandOnFieldCTRL landonfield, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chanceCard) {
+	public DropdownCTRL(DieCup dieCup, LandOnFieldCTRL landonfield, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chanceCard) {
 		this.dieCup = dieCup;
-		this.fieldRule = fieldRule;
 		this.landonfield = landonfield;
 		this.toolbox = toolbox;
 		this.bankruptcy = bankruptcy;
@@ -48,7 +46,7 @@ public class DropdownCTRL {
 		view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
 		view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
-		fieldRule.ruleSwitch(currentPlayer, newPlayerPosition, players, fields, view);
+		landonfield.ruleSwitch(currentPlayer, newPlayerPosition, players, fields, view);
 		
 		if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 			currentPlayer--;
