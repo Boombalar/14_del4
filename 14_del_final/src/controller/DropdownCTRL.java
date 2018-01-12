@@ -48,7 +48,7 @@ public class DropdownCTRL {
 		view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
 		view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
-		fieldRule.ruleSwitch(currentPlayer, newPlayerPosition);
+		fieldRule.ruleSwitch(currentPlayer, newPlayerPosition, players, fields, view);
 		
 		if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
 			currentPlayer--;
@@ -158,7 +158,7 @@ public class DropdownCTRL {
 		if (propertyArray.length != 0) {
 			choice = view.getDropDownChoice("Vælg grund du vil sælge huse fra", propertyArray);
 			int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
-			trade.sellBuilding(currentPlayer, chosenFieldNumber);
+			trade.sellBuilding(currentPlayer, chosenFieldNumber, players);
 		}
 		else 
 		{
@@ -212,7 +212,7 @@ public class DropdownCTRL {
 
 			//Sælg grund.
 			returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
-			trade.sellProperty(currentPlayer, chosenPlayerNumber,chosenFieldNumber);
+			trade.sellProperty(currentPlayer, chosenPlayerNumber,chosenFieldNumber, players, fields);
 		}
 		else {
 			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");

@@ -22,7 +22,7 @@ public class FieldRuleCTRL {
 	}
 	/**
 	 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
-	 * @param playerNumber - Modtager et spiller nummer
+	 * @param playerNumber - Modtager et spiller numer
 	 * @param view 
 	 * @param toolbox 
 	 * @param bankruptcy 
@@ -30,7 +30,7 @@ public class FieldRuleCTRL {
 	 * @param chancecard 
 	 * @param fieldRuleSwitch 
 	 */
-	public void ruleSwitch (int playerNumber, int newPlayerPosition, Player[] players, Field[] fields,ViewCTRL view) {
+	public void ruleSwitch (int playerNumber, int newPlayerPosition, Player[] players, Field[] fields, ViewCTRL view) {
 		int fieldType = fields[players[playerNumber].getPosition()].getType();
 		int owner=0;
 		if ((fields[newPlayerPosition]) instanceof OwnerFields) {
