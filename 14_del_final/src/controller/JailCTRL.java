@@ -13,7 +13,7 @@ public class JailCTRL {
 		this.bankruptcy = bankruptcy;
 	}
 
-	public void jailHandling(int currentPlayer, Player[] players, ViewCTRL view, Field[] fields) {
+	public void jailHandling(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 
 		if(players[currentPlayer].getTurnsInJail()==1) {
 			if (players[currentPlayer].getReleaseCard() > 0) {

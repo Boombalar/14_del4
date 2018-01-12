@@ -63,7 +63,7 @@ public class ActionCTRL {
 
 		while (!winner.checkWinner(numberOfPlayers, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 
-			jail.jailHandling(currentPlayer, players, view);
+			jail.jailHandling(currentPlayer, players, fields, view);
 
 			while (true) {
 				// Hvis en spiller er broke, så gå ud af loop
