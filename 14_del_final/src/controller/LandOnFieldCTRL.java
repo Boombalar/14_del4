@@ -4,19 +4,19 @@ import model.*;
 import view.*;
 
 public class LandOnFieldCTRL {
-	
+
 	Toolbox toolbox;
 	TradeCTRL trade;
 	ChanceCardCTRL chancecard;
 	BankruptcyCTRL bankruptcy;
-	
+
 	public LandOnFieldCTRL (Toolbox toolbox,BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chancecard) {
 		this.toolbox = toolbox;	
 		this.chancecard = chancecard;
 		this.trade = trade;
 		this.bankruptcy = bankruptcy;
 	}
-	
+
 	/**
 	 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
 	 * @param playerNumber - Modtager et spiller numer
@@ -35,7 +35,7 @@ public class LandOnFieldCTRL {
 		}
 
 		switch (fieldType) {
-		
+
 		case 0:		
 			propertyField(playerNumber, owner, players, fields, view);
 			break;
@@ -69,7 +69,7 @@ public class LandOnFieldCTRL {
 			view.writeText("Du er landet på " + fields[players[playerNumber].getPosition()].getName());
 		}
 	}	
-	
+
 	public void propertyField(int playerNumber, int owner, Player[] players,Field[] fields,ViewCTRL view) {
 		//ProbertyField
 		int newPlayerPosition = players[playerNumber].getPosition();
@@ -132,7 +132,7 @@ public class LandOnFieldCTRL {
 			view.writeText(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', " + players[playerNumber].getPlayerName() + ",  ejer selv dette bryggeri");
 		}
 	}
-	
+
 	public void taxField(int playerNumber,int owner,Player[] players,Field[] fields,ViewCTRL view) {
 		int newPlayerPosition = players[playerNumber].getPosition();
 		int[] taxValue = (((TaxField)fields[newPlayerPosition]).getReturnValue());
@@ -140,7 +140,7 @@ public class LandOnFieldCTRL {
 		bankruptcy.payMoney(playerNumber, owner, taxValue[0], players, fields);// Transaction som sker på spilleren ud fra hvilket taxfield han lander på
 		view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); // update af gui.
 	}
-	
+
 	public void chanceField(int playerNumber, Player[] players,Field[] fields,ViewCTRL view) {
 		int newPlayerPosition = players[playerNumber].getPosition();
 		view.writeText(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du trækker et chance kort"); //Tekst fra gui 
@@ -148,7 +148,7 @@ public class LandOnFieldCTRL {
 		view.showChanceCard(chancecard.getDescription());	 //Teksten fra Chancekortet vises i gui 
 		chanceCardRules(playerNumber, players, fields, view); //kald af metode som fortæller hvilket slags kort man har trukket.
 	}
-	
+
 	public void goToJailField(int playerNumber,Player[] players,Field[] fields,ViewCTRL view) {
 		int newPlayerPosition = players[playerNumber].getPosition();
 		view.writeText(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du skal nu i fængsel"); //tekst til spilleren.
@@ -248,7 +248,7 @@ public class LandOnFieldCTRL {
 		int playerPosition = players[playerNumber].getPosition();
 		int[] chanceCardValueArray = chancecard.getReturnValue();
 		int moveToField = chanceCardValueArray[0];
-		
+
 		if(toolbox.CheckForPassingStart(playerPosition, moveToField) == true)
 			view.updatePlayerPosition(playerNumber, playerPosition, moveToField);
 
@@ -256,23 +256,16 @@ public class LandOnFieldCTRL {
 
 		case 1:
 			// Blot flyttekort til et bestemt felt.
-			if((chancecard.cardNumber == 19) || (chancecard.cardNumber == 22)) {
-				players[playerNumber].addTurnsInJail(1);
-				players[playerNumber].setPosition(moveToField);
-				view.updatePlayerPosition(playerNumber, playerPosition, moveToField);
-			}
-			else {
-				players[playerNumber].setPosition(moveToField);
-				view.updatePlayerPosition(playerNumber, playerPosition, moveToField);
-				ruleSwitch(playerNumber, players, fields, view);
-			}
+			players[playerNumber].setPosition(moveToField);
+			view.updatePlayerPosition(playerNumber, playerPosition, moveToField);
+			ruleSwitch(playerNumber, players, fields, view);
 			break;
 
 		case 2: // Et flyttekort, hvor man flytter til det nærmeste felt med rederi.	
 
 			int oldPlayerPos = players[playerNumber].getPosition();
 			int newPlayerPos = players[playerNumber].getPosition();
-			
+
 			while (fields[newPlayerPos].getType() != 1) {
 				newPlayerPos++;
 				if (newPlayerPos > 39) {
@@ -283,7 +276,14 @@ public class LandOnFieldCTRL {
 			view.updatePlayerPosition(playerNumber, oldPlayerPos, newPlayerPos);
 			break;
 
-		case 3: // Ryk tre felter tilbage.
+		case 3:
+			// Flyttekort til fængsel
+			players[playerNumber].addTurnsInJail(1);
+			players[playerNumber].setPosition(moveToField);
+			view.updatePlayerPosition(playerNumber, playerPosition, moveToField);
+			break;
+
+		case 4: // Ryk tre felter tilbage.
 			players[playerNumber].setPosition(playerPosition - moveToField);
 			view.updatePlayerPosition(playerNumber, playerPosition, (playerPosition - moveToField));
 			ruleSwitch(playerNumber, players, fields, view);
