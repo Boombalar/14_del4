@@ -40,27 +40,27 @@ public class FieldRuleCTRL {
 		switch (fieldType) {
 		
 		case 0:			
-			landonfield.propertyField(playerNumber, newPlayerPosition, owner);
+			landonfield.propertyField(playerNumber, newPlayerPosition, owner, players, fields, view);
 			break;
 		case 1:
 			//ShipFields
-			landonfield.shippingFieldRules(playerNumber, 1, newPlayerPosition);
+			landonfield.shippingFieldRules(playerNumber, 1, newPlayerPosition, players, fields, view);
 			break;
 		case 2:
 			//Breweryfields
-			landonfield.breweryField(playerNumber, newPlayerPosition, owner);
+			landonfield.breweryField(playerNumber, newPlayerPosition, owner, players, fields, view);
 			break;
 		case 3:
 			//Taxfields
-			landonfield.taxField(playerNumber, newPlayerPosition, owner);
+			landonfield.taxField(playerNumber, newPlayerPosition, owner, players, fields, view);
 			break;
 		case 4:
 			//Chancefield			
-			landonfield.chanceField(playerNumber, newPlayerPosition, owner);
+			landonfield.chanceField(playerNumber, newPlayerPosition, owner, players, fields, view);
 			break;
 		case 7:
 			//GoToJailField
-			landonfield.goToJailField(playerNumber, newPlayerPosition);
+			landonfield.goToJailField(playerNumber, newPlayerPosition, players, fields, view);
 			break;
 		}
 	}	
