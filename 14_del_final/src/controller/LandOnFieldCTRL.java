@@ -96,17 +96,10 @@ public class LandOnFieldCTRL {
 		}
 
 	}
-	
-<<<<<<< Updated upstream
-	public void breweryField(int newPlayerPosition, int playerNumber,int owner,Player[] players,Field[] fields,ViewCTRL view) {
-		int breweryPropertyValue = (((OwnerFields)fields[newPlayerPosition]).getPropertyValue());
-		int[] breweryFieldRent = (((OwnerFields)fields[newPlayerPosition]).returnValue());
-=======
 	public void breweryField(int playerNumber,int owner,Player[] players,Field[] fields,ViewCTRL view) {
 		int newPlayerPosition = players[playerNumber].getPosition();
 		int breweryPropertyValue = (((BreweryFields)fields[newPlayerPosition]).getPropertyValue());
 		int[] breweryFieldRent = (((BreweryFields)fields[newPlayerPosition]).getReturnValue());
->>>>>>> Stashed changes
 		int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(newPlayerPosition, owner));
 		if(owner == 0) {
 			boolean answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " vil du købe grunden", "ja", "nej");
@@ -146,7 +139,7 @@ public class LandOnFieldCTRL {
 		view.writeText(players[playerNumber].getPlayerName() + " er landet på 'Prøv lykken', du trækker et chance kort"); //Tekst fra gui 
 		chancecard.draw(); //ChanceCardCRTL trækker et kort	
 		view.showChanceCard(chancecard.getDescription());	 //Teksten fra Chancekortet vises i gui 
-		chanceCardRules(playerNumber, newPlayerPosition, players, fields, view); //kald af metode som fortæller hvilket slags kort man har trukket.
+		chanceCardRules(playerNumber, players, fields, view); //kald af metode som fortæller hvilket slags kort man har trukket.
 	}
 	
 	public void goToJailField(int playerNumber,Player[] players,Field[] fields,ViewCTRL view) {
@@ -201,7 +194,8 @@ public class LandOnFieldCTRL {
 	 * @param  
 	 */
 
-	public void chanceCardRules (int playerNumber, int newPlayerPosition, Player[] players,Field[] fields,ViewCTRL view) {
+	public void chanceCardRules (int playerNumber, Player[] players,Field[] fields,ViewCTRL view) {
+		int owner = (((OwnerFields)fields[players[playerNumber].getPosition()]).getOwner());
 		int chanceCardType = chancecard.getType();
 		int[] chanceCardValueArray = chancecard.getReturnValue();
 		switch (chanceCardType) {
@@ -220,7 +214,7 @@ public class LandOnFieldCTRL {
 			break;
 
 		case 2: // MoveToCards
-			MoveToCardsRules(playerNumber, newPlayerPosition, players, fields, view); // logik og viewCTRL-kald ligger i denne metode.
+			MoveToCardsRules(playerNumber, players, fields, view); // logik og viewCTRL-kald ligger i denne metode.
 			break;
 
 		case 3: // ReleaseCards
@@ -242,7 +236,8 @@ public class LandOnFieldCTRL {
 	 * @param playerNumber - modtager et playernummer.
 	 * @param chancecard 
 	 */
-	public void MoveToCardsRules (int playerNumber, int newPlayerPosition, Player[] players,Field[] fields, ViewCTRL view) {
+	public void MoveToCardsRules (int playerNumber, Player[] players,Field[] fields, ViewCTRL view) {
+		int newPlayerPosition = players[playerNumber].getPosition();
 		int[] chanceCardValueArray = chancecard.getReturnValue();
 		int moveToField = chanceCardValueArray[0];
 		
@@ -257,7 +252,7 @@ public class LandOnFieldCTRL {
 				players[playerNumber].setTurnsInJail(1);
 			}
 			else {
-				ruleSwitch(playerNumber, moveToField, players, fields, view);
+				ruleSwitch(playerNumber, players, fields, view);
 			}
 			players[playerNumber].setPosition(moveToField);
 			view.updatePlayerPosition(playerNumber, newPlayerPosition, moveToField);
@@ -276,32 +271,32 @@ public class LandOnFieldCTRL {
 			if( newPlayerPosition < shippingArray[0]) {
 				players[playerNumber].setPosition(shippingArray[0]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[0]);
-				shippingFieldRules(playerNumber, 2, shippingArray[0], players, fields, view);
+				shippingFieldRules(playerNumber, 2, players, fields, view);
 			}
 
 			else if( newPlayerPosition > shippingArray[0] && newPlayerPosition < shippingArray[1]) {
 				players[playerNumber].setPosition(shippingArray[1]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[1]);
-				shippingFieldRules(playerNumber, 2, shippingArray[1], players, fields, view);
+				shippingFieldRules(playerNumber, 2, players, fields, view);
 				}
 
 			else if( newPlayerPosition > shippingArray[1] && newPlayerPosition < shippingArray[2]) {
 				players[playerNumber].setPosition(shippingArray[2]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[2]);
-				shippingFieldRules(playerNumber, 2, shippingArray[2], players, fields, view);
+				shippingFieldRules(playerNumber, 2, players, fields, view);
 				}
 
 			else if( newPlayerPosition > shippingArray[2] && newPlayerPosition < shippingArray[3]) {
 				players[playerNumber].setPosition(shippingArray[3]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[3]);
-				shippingFieldRules(playerNumber, 2, shippingArray[3], players, fields, view);
+				shippingFieldRules(playerNumber, 2, players, fields, view);
 				}
 			break;
 
 		case 3: // Ryk tre felter tilbage.
 			players[playerNumber].setPosition(newPlayerPosition - 3);
 			view.updatePlayerPosition(playerNumber, newPlayerPosition, newPlayerPosition - 3);
-			ruleSwitch(playerNumber, moveToField, players, fields, view);
+			ruleSwitch(playerNumber, players, fields, view);
 			break;
 		}
 	}
