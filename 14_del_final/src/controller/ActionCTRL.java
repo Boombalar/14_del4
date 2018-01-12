@@ -138,7 +138,7 @@ public class ActionCTRL {
 				}
 
 				if (winner.checkWinner(numberOfPlayers, players)) {
-					winner.printWinner(numberOfPlayers, players, view);
+					winner.printWinner(currentPlayer, numberOfPlayers, players, view);
 					break;
 				}
 			}

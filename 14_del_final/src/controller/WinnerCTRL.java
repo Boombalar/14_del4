@@ -6,9 +6,7 @@ import view.*;
 
 public class WinnerCTRL {
 	
-	public WinnerCTRL (){
-
-		
+	public WinnerCTRL (){	
 		
 	}
 
@@ -25,12 +23,12 @@ public class WinnerCTRL {
 		return winner;
 	}
 
-	public void printWinner(int numberOfPlayers, Player[] players, ViewCTRL view) {
+	public void printWinner(int currentPlayer, int numberOfPlayers, Player[] players, ViewCTRL view) {
 		if (checkWinner(numberOfPlayers, players)) {
 			for (int i = 1; i <= numberOfPlayers; i++) {
 				boolean checkPlayerBroke = players[i].getBroke();
 				if (!checkPlayerBroke) {
-					view.getUserResponse("Afslut spil", "Spiller " + i + " har vundet!!");
+					view.getUserResponse("Afslut spil", players[currentPlayer].getPlayerName() + " har vundet!!");
 					try {
 						TimeUnit.SECONDS.sleep(1);
 						System.exit(0);
