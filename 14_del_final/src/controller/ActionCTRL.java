@@ -70,7 +70,7 @@ public class ActionCTRL {
 				if(players[currentPlayer].checkBroke()) {
 					view.removePlayerCar(currentPlayer, players[currentPlayer].getPosition());
 					currentPlayer++;
-					break;					
+					break;				
 				}
 
 				// Lav Startmenu for spiller
@@ -99,7 +99,8 @@ public class ActionCTRL {
 					//Således vi kan opbygge et array til dropdownlisten.
 
 					dropdown.buyHousesAndHotel(currentPlayer, players, fields, view);
-
+					if (dropdown.getBackToDropDown())
+						currentPlayer--;
 					break;
 
 					//Sælg huse og hoteller.
@@ -112,6 +113,8 @@ public class ActionCTRL {
 
 
 					dropdown.sellHousesAndHotels(currentPlayer, players, fields, view);
+					if (dropdown.getBackToDropDown())
+						currentPlayer--;
 					break;
 
 					//Sælg grund hvis man ejer den og der ikke er nogle huse på
@@ -119,6 +122,8 @@ public class ActionCTRL {
 				case "Sælg grund":
 
 					dropdown.sellProperty(currentPlayer, players, fields, view);
+					if (dropdown.getBackToDropDown())
+						currentPlayer--;
 					break;
 					//Lav logik for spillers choice
 				}

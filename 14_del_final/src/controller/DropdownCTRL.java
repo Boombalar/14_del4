@@ -19,6 +19,7 @@ public class DropdownCTRL {
 		this.trade = trade;
 		this.chanceCard = chanceCard;
 	}
+	boolean backToDropdown = false;
 
 
 	public void rollDice (int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
@@ -113,7 +114,7 @@ public class DropdownCTRL {
 		}
 		else {
 			view.writeText("Du ejer ikke nogle grunde");
-			currentPlayer--;
+			backToDropdown = true;
 		}
 
 
@@ -161,7 +162,7 @@ public class DropdownCTRL {
 		else 
 		{
 			view.writeText("Du har ikke nogle grunde at sælge huse på");
-			currentPlayer--;
+			backToDropdown = true;
 		}
 	}
 	public void sellProperty(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
@@ -214,8 +215,12 @@ public class DropdownCTRL {
 		}
 		else {
 			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
-			currentPlayer--;
+			backToDropdown = true;
 		}
+	}
+	
+	public boolean getBackToDropDown() {
+		return backToDropdown;
 	}
 }
 
