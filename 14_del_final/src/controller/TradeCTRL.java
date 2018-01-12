@@ -7,7 +7,7 @@ public class TradeCTRL {
 
 	
 	
-	public TradeCTRL (Field[] fields, Toolbox toolbox) {
+	public TradeCTRL (Toolbox toolbox) {
 		this.toolbox = toolbox;
 	}
 	
