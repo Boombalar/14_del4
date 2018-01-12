@@ -266,17 +266,21 @@ public class LandOnFieldCTRL {
 			}
 			break;
 
-		case 2: // Et flyttekort, hvor man flytter til det nærmeste felt med redderi.	
+		case 2: // Et flyttekort, hvor man flytter til det nærmeste felt med rederi.	
 
-			int[] shippingArray = new int[4];
-			// Der oprettes et loop, som smider lokationenerne fra feltnumrene, ind i et array, hvis typen er "1" - som er shippingField.
-			int i, k=0;
-			for(i=0; i < 39 ; i++) {
-				if (fields[i].getType() == 1) {
-					shippingArray[k] = i;
-					k++;
+			int oldPlayerPos = players[playerNumber].getPosition();
+			int newPlayerPos = players[playerNumber].getPosition();
+			
+			while (fields[newPlayerPos].getType() != 1) {
+				newPlayerPos++;
+				if (newPlayerPos > 39) {
+					newPlayerPos =0;
 				}
+				players[playerNumber].setPosition(newPlayerPos);
+				view.updatePlayerPosition(playerNumber, oldPlayerPos, newPlayerPos);
 			}
+			
+			/*
 			// Herefter kommer der et tjek om hvilket efterfølgende shippingField er nærmest.
 			if(playerPosition > 0 && playerPosition < shippingArray[0]) {
 				players[playerNumber].setPosition(shippingArray[0]);
@@ -306,6 +310,7 @@ public class LandOnFieldCTRL {
 				view.updatePlayerPosition(playerNumber, playerPosition, shippingArray[0]);
 				shippingFieldRules(playerNumber, 2, players, fields, view);
 				}
+				*/
 			break;
 
 		case 3: // Ryk tre felter tilbage.
