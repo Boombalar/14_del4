@@ -51,15 +51,15 @@ public class ActionCTRL {
 	 * 
 	 */
 	private void gameSequence() {
-		int oldPlayerPosition = 0; //En given spiller start position på en runde
-		int newPlayerPosition; //Den position en given spiller rykkes til når terningerne er slået
+//		int oldPlayerPosition = 0; //En given spiller start position på en runde
+//		int newPlayerPosition; //Den position en given spiller rykkes til når terningerne er slået
 		int currentPlayer = 1; //Den første spiller instantieres til spiller 1
-		int diceValue; //Den samlede mængde af terningerne
-		int amountOfProperties=0; //Den mængde grunde en given spiller ejer?
-		int index;
-		String[] propertyArray; //Det String array som indeholder alle de grunde en given spiller ejer.
-		String choice; //Det valg en given spiller vælger ud fra propertyString array.
-		int[] returnValue; //Hvilken specifik returværdi det dette?s
+//		int diceValue; //Den samlede mængde af terningerne
+//		int amountOfProperties=0; //Den mængde grunde en given spiller ejer?
+//		int index;
+//		String[] propertyArray; //Det String array som indeholder alle de grunde en given spiller ejer.
+//		String choice; //Det valg en given spiller vælger ud fra propertyString array.
+//		int[] returnValue; //Hvilken specifik returværdi det dette?s
 
 		while (!winner.checkWinner(numberOfPlayers, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 
@@ -67,11 +67,14 @@ public class ActionCTRL {
 
 			while (true) {
 				// Hvis en spiller er broke, så gå ud af loop
-				if(players[currentPlayer].checkBroke())
-					break;
+				if(players[currentPlayer].checkBroke()) {
+					view.removePlayerCar(currentPlayer, players[currentPlayer].getPosition());
+					currentPlayer++;
+					break;					
+				}
 
 				// Lav Startmenu for spiller
-				view.writeText("Det er spiller  " + currentPlayer + "'s tur nu");
+				view.writeText("Det er spiller " + currentPlayer + "'s tur nu");
 				String[] playerChoice = {"Slå terninger", "Køb huse og hoteller","Sælg huse og hoteller", "Sælg grund"};
 				String choiceOfPlayer = view.getDropDownChoice("Vælg", playerChoice);
 
