@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import view.*;
 
 public class BankruptcyCTRL {
 	
@@ -14,7 +15,7 @@ public class BankruptcyCTRL {
 	}
 	
 	
-	public void payMoney(int currentPlayer, int toPlayer, int amount, Player[] players, Field[] fields) {
+	public void payMoney(int currentPlayer, int toPlayer, int amount, Player[] players, Field[] fields, ViewCTRL view) {
 		if (checkForEnoughMoneyToForcepay(currentPlayer, amount, players)==false) {
 			if (raiseMoney(currentPlayer, amount, players, fields) == false){
 				bankruptcy(currentPlayer, toPlayer, players, fields);
@@ -25,6 +26,7 @@ public class BankruptcyCTRL {
 				players[toPlayer].recieveMoney(amount);
 			}
 		}
+		view.updateEntireBoard(fields, players);
 	}
 
 	//Check for om man har penge nok til at foretage en transaktion mellem to spillere.

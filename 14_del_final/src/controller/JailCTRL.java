@@ -25,12 +25,12 @@ public class JailCTRL {
 
 				if (choiceJailPlayer=="Betal 1000kr.") {
 					view.writeText("Betal 1000 kr for at komme ud af fængsel");
-					bankruptcy.payMoney(currentPlayer, 0, 1000, players, fields);
+					bankruptcy.payMoney(currentPlayer, 0, 1000, players, fields, view);
 					view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 				}
 			} else {					
 				view.writeText("Du har intet løsladelseskort, og bliver derfor trukket 1000 kr., for at komme ud af fængslet.");
-				bankruptcy.payMoney(currentPlayer, 0, 1000, players, fields);
+				bankruptcy.payMoney(currentPlayer, 0, 1000, players, fields, view);
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 			}
 			players[currentPlayer].removeTurnsInJail();}

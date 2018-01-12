@@ -84,7 +84,7 @@ public class LandOnFieldCTRL {
 			boolean	answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', vil du købe grunden ?", "ja", "nej");		
 			if(answer == true) {
 				view.writeText(players[playerNumber].getPlayerName() + " har købt '" + fields[newPlayerPosition].getName() + "' for " + propertyValue + " kr."); //gui tekst til spilleren
-				bankruptcy.payMoney(playerNumber, owner, propertyValue, players, fields); //spiller køber grunden af brættet
+				bankruptcy.payMoney(playerNumber, owner, propertyValue, players, fields, view); //spiller køber grunden af brættet
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); 		//Update af gui.
 				PropertyFields wantedFieldChange = ((PropertyFields)fields[newPlayerPosition]);
 				//Herunder bliver feltets ejer skiftet.
@@ -97,7 +97,7 @@ public class LandOnFieldCTRL {
 				propertyRent *= 2;
 			}
 			view.writeText(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du skal betale " + propertyRent + "kr. til " + players[owner].getPlayerName()); //Gui i tekst til spilleren
-			bankruptcy.payMoney(playerNumber, owner, propertyRent, players, fields);			 //transaction mellem to spiller.
+			bankruptcy.payMoney(playerNumber, owner, propertyRent, players, fields, view);			 //transaction mellem to spiller.
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());			 //update af den aktive spillerens konto
 			view.updatePlayerAccount(owner, players[owner].getBalance());						 //Update af den spiller som modtager penge
 		}
@@ -116,7 +116,7 @@ public class LandOnFieldCTRL {
 			boolean answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', vil du købe dette bryggeri ?", "ja", "nej");
 			if(answer == true) {
 				view.writeText(players[playerNumber].getPlayerName() + " har købt '" + fields[newPlayerPosition].getName() + "' for " + breweryPropertyValue + "kr.");
-				bankruptcy.payMoney(playerNumber, owner, breweryPropertyValue, players, fields);
+				bankruptcy.payMoney(playerNumber, owner, breweryPropertyValue, players, fields, view);
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 				view.updateOwnership(playerNumber, newPlayerPosition);
 				OwnerFields wantedFieldChange = ((OwnerFields)fields[newPlayerPosition]);
@@ -126,7 +126,7 @@ public class LandOnFieldCTRL {
 		if(owner != 0 && owner != playerNumber) {
 			int breweryRent = breweryFieldRent[numOfOwnedBrewFields-1];
 			view.writeText(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "' du skal betale " + breweryRent + "kr. til " + players[owner].getPlayerName());
-			bankruptcy.payMoney(playerNumber, owner, breweryRent, players, fields);
+			bankruptcy.payMoney(playerNumber, owner, breweryRent, players, fields, view);
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			view.updatePlayerAccount(owner, players[owner].getBalance());
 		}
@@ -140,7 +140,7 @@ public class LandOnFieldCTRL {
 		int newPlayerPosition = players[playerNumber].getPosition();
 		int[] taxValue = (((TaxField)fields[newPlayerPosition]).getReturnValue());
 		view.writeText(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du skal betale " + taxValue[0] + "kr. i skat"); // tekst til spilleren
-		bankruptcy.payMoney(playerNumber, owner, taxValue[0], players, fields);// Transaction som sker på spilleren ud fra hvilket taxfield han lander på
+		bankruptcy.payMoney(playerNumber, owner, taxValue[0], players, fields, view);// Transaction som sker på spilleren ud fra hvilket taxfield han lander på
 		view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); // update af gui.
 	}
 
@@ -176,7 +176,7 @@ public class LandOnFieldCTRL {
 			boolean answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', vil du købe dette redderi ?", "ja", "nej"); //Spiller for mulighed for at købe grunden
 			if(answer == true) {
 				view.writeText(players[playerNumber].getPlayerName() + " har købt '" + fields[newPlayerPosition].getName() + "' for " + shippingPropertyValue + " kr" );	//Tekst til gui
-				bankruptcy.payMoney(playerNumber, owner, shippingPropertyValue, players, fields);				//transaktionen forgår mellem spiller og bræt
+				bankruptcy.payMoney(playerNumber, owner, shippingPropertyValue, players, fields, view);				//transaktionen forgår mellem spiller og bræt
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());								//Update af spillerens konto i gui
 				view.updateOwnership(playerNumber, newPlayerPosition);									//Update af spillerens ejerskab.
 				ShippingFields wantedFieldChange = ((ShippingFields)fields[newPlayerPosition]);
@@ -187,7 +187,7 @@ public class LandOnFieldCTRL {
 		if(owner != 0 && owner != playerNumber) {
 			int shipRent = ((fieldRent[numOfOwnedShipFields -1])*multiplier);
 			view.writeText(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du skal betale " + shipRent + "kr. til " + players[owner].getPlayerName());
-			bankruptcy.payMoney(playerNumber, owner, shipRent, players, fields);
+			bankruptcy.payMoney(playerNumber, owner, shipRent, players, fields, view);
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			view.updatePlayerAccount(owner, players[owner].getBalance());
 		}
@@ -216,7 +216,7 @@ public class LandOnFieldCTRL {
 		case 1: // TransactionCard
 			int transactionValue = chanceCardValueArray[0];
 			if ((transactionValue) < 0) {
-				bankruptcy.payMoney(currentPlayer, owner, (transactionValue * -1), players, fields);
+				bankruptcy.payMoney(currentPlayer, owner, (transactionValue * -1), players, fields, view);
 
 			} else {
 				players[currentPlayer].recieveMoney(transactionValue);

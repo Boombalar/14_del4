@@ -295,11 +295,11 @@ public class ViewCTRL {
 	}
 	
 	public void updateEntireBoard(Field[] fields, Player[] players) {
-
 		//Updater fields ownership på bræt
 		for (int fieldCount = 0;fieldCount <= 39; fieldCount++) {
 			if (fields[fieldCount] instanceof PropertyFields) {
 				updateOwnership(((PropertyFields)fields[fieldCount]).getOwner(), fieldCount);
+				updateBuildings(fieldCount, (((PropertyFields)fields[fieldCount]).getReturnValue()[6]));
 			}
 			if (fields[fieldCount] instanceof BreweryFields) {
 				updateOwnership(((BreweryFields)fields[fieldCount]).getOwner(), fieldCount);
@@ -307,8 +307,9 @@ public class ViewCTRL {
 			if (fields[fieldCount] instanceof ShippingFields) {
 				updateOwnership(((ShippingFields)fields[fieldCount]).getOwner(), fieldCount);
 			}
+			updatePlayerAccount(fieldCount, players[fieldCount].getBalance());
 		}
-		for (int playerCount = 1 ; playerCount <= players.length; playerCount++) {
+		for (int playerCount = 1 ; playerCount <= players.length-1; playerCount++) {
 			if (players[playerCount].getBroke()) {
 				turnOffPlayer(playerCount);
 			}
