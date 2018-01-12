@@ -5,7 +5,29 @@ import view.*;
 
 public class LandOnFieldCTRL {
 	
-	public void propertyField(int playerNumber, int newPlayerPosition, int owner, Player[] players, Field[] fields, ViewCTRL view, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL tradeCTRL) {
+	Player[] players;
+	Field[] fields;
+	Toolbox toolbox;
+	TradeCTRL trade;
+	ViewCTRL view;
+	ChanceCardCTRL chancecard;
+	LandOnFieldCTRL landonfield;
+	BankruptcyCTRL bankruptcy;
+	FieldRuleCTRL fieldRuleSwitch;
+	
+	public LandOnFieldCTRL (Player[] players, Field[] fields, Toolbox toolbox, ViewCTRL view, BankruptcyCTRL bankruptcy, TradeCTRL trade, LandOnFieldCTRL landonfield, ChanceCardCTRL chancecard, FieldRuleCTRL fieldRuleSwitch) {
+		this.players = players;
+		this.fields = fields;
+		this.toolbox = toolbox;
+		this.view = view;
+		this.chancecard = chancecard;
+		this.trade = trade;
+		this.landonfield = landonfield;
+		this.bankruptcy = bankruptcy;
+		this.fieldRuleSwitch = fieldRuleSwitch;
+	}
+	
+	public void propertyField(int playerNumber, int newPlayerPosition, int owner) {
 		//ProbertyField
 		int propertyValue = (((PropertyFields)fields[newPlayerPosition]).getPropertyValue());
 		int[] fieldRent = (((PropertyFields)fields[newPlayerPosition]).getReturnValue());
@@ -15,7 +37,7 @@ public class LandOnFieldCTRL {
 			boolean	answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " vil du købe grunden", "ja", "nej");		
 			if(answer == true) {
 				view.writeText(players[playerNumber].getPlayerName() + " har købt " + fields[newPlayerPosition].getName() + " for " + propertyValue + " kr."); //gui tekst til spilleren
-				bankruptcy.payMoney(playerNumber, owner, propertyValue, players, fields, toolbox, tradeCTRL); //spiller køber grunden af brættet
+				bankruptcy.payMoney(playerNumber, owner, propertyValue); //spiller køber grunden af brættet
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); 		//Update af gui.
 				PropertyFields wantedFieldChange = ((PropertyFields)fields[newPlayerPosition]);
 				//Herunder bliver feltets ejer skiftet.
@@ -28,7 +50,7 @@ public class LandOnFieldCTRL {
 				propertyRent *= 2;
 			}
 			view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " du skal betale " + propertyRent + " til " + players[owner].getPlayerName()); //Gui i tekst til spilleren
-			bankruptcy.payMoney(playerNumber, owner, propertyRent, players, fields, toolbox, tradeCTRL);			 //transaction mellem to spiller.
+			bankruptcy.payMoney(playerNumber, owner, propertyRent);			 //transaction mellem to spiller.
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());			 //update af den aktive spillerens konto
 			view.updatePlayerAccount(owner, players[owner].getBalance());						 //Update af den spiller som modtager penge
 		}
@@ -39,7 +61,7 @@ public class LandOnFieldCTRL {
 
 	}
 	
-	public void breweryField(int newPlayerPosition, int playerNumber,int owner, Player[] players, Field[] fields, ViewCTRL view, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL tradeCTRL) {
+	public void breweryField(int newPlayerPosition, int playerNumber,int owner) {
 		int breweryPropertyValue = (((BreweryFields)fields[newPlayerPosition]).getPropertyValue());
 		int[] breweryFieldRent = (((BreweryFields)fields[newPlayerPosition]).getReturnValue());
 		int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(newPlayerPosition, owner, fields));
@@ -47,7 +69,7 @@ public class LandOnFieldCTRL {
 			boolean answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " vil du købe grunden", "ja", "nej");
 			if(answer == true) {
 				view.writeText(players[playerNumber].getPlayerName() + " har købt " + fields[newPlayerPosition].getName() + " for " + breweryPropertyValue + " kr");
-				bankruptcy.payMoney(playerNumber, owner, breweryPropertyValue, players, fields, toolbox, tradeCTRL);
+				bankruptcy.payMoney(playerNumber, owner, breweryPropertyValue);
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 				view.updateOwnership(playerNumber, newPlayerPosition);
 				BreweryFields wantedFieldChange = ((BreweryFields)fields[newPlayerPosition]);
@@ -57,7 +79,7 @@ public class LandOnFieldCTRL {
 		if(owner != 0 && owner != playerNumber) {
 			int breweryRent = breweryFieldRent[numOfOwnedBrewFields-1];
 			view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " du skal betale " + breweryRent + " til " + players[owner].getPlayerName());
-			bankruptcy.payMoney(playerNumber, owner, breweryRent, players, fields, toolbox, tradeCTRL);
+			bankruptcy.payMoney(playerNumber, owner, breweryRent);
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			view.updatePlayerAccount(owner, players[owner].getBalance());
 		}
@@ -67,21 +89,21 @@ public class LandOnFieldCTRL {
 		}
 	}
 	
-	public void taxField(int playerNumber, int newPlayerPosition,int owner, Player[] players, Field[] fields, ViewCTRL view, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL tradeCTRL) {
+	public void taxField(int playerNumber, int newPlayerPosition,int owner) {
 		int[] taxValue = (((TaxField)fields[newPlayerPosition]).getReturnValue());
 		view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " du skal betale " + taxValue[0] + " i skat"); // tekst til spilleren
-		bankruptcy.payMoney(playerNumber, owner, taxValue[0], players, fields, toolbox, tradeCTRL); // Transaction som sker på spilleren ud fra hvilket taxfield han lander på
+		bankruptcy.payMoney(playerNumber, owner, taxValue[0]); // Transaction som sker på spilleren ud fra hvilket taxfield han lander på
 		view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance()); // update af gui.
 	}
 	
-	public void chanceField(int playerNumber, int newPlayerPosition, int toPlayer, Player[] players, Field[] fields, ViewCTRL view, ChanceCardCTRL chanceCard, Toolbox toolbox,BankruptcyCTRL bankruptcy, FieldRuleCTRL fieldRuleSwitch, LandOnFieldCTRL landOnField, TradeCTRL tradeCTRL) {
+	public void chanceField(int playerNumber, int newPlayerPosition, int toPlayer) {
 		view.writeText(players[playerNumber].getPlayerName() + " er landet på 'Prøv lykken', du trækker et chance kort"); //Tekst fra gui 
-		chanceCard.draw(); //ChanceCardCRTL trækker et kort	
-		view.showChanceCard(chanceCard.getDescription());	 //Teksten fra Chancekortet vises i gui 
-		chanceCardRules(playerNumber, newPlayerPosition, toPlayer, players, fields, toolbox, view, chanceCard, bankruptcy, fieldRuleSwitch, landOnField, tradeCTRL); //kald af metode som fortæller hvilket slags kort man har trukket.
+		chancecard.draw(); //ChanceCardCRTL trækker et kort	
+		view.showChanceCard(chancecard.getDescription());	 //Teksten fra Chancekortet vises i gui 
+		chanceCardRules(playerNumber, newPlayerPosition, toPlayer); //kald af metode som fortæller hvilket slags kort man har trukket.
 	}
 	
-	public void goToJailField(int playerNumber, int newPlayerPosition, Player[] players, Field[] fields, ViewCTRL view) {
+	public void goToJailField(int playerNumber, int newPlayerPosition) {
 		view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " du skal nu i fængsel"); //tekst til spilleren.
 		players[playerNumber].setPosition(10); // spilleren position bliver rykket til felt nr 10
 		players[playerNumber].setTurnsInJail(1); // Spilleren sidder i fængsel.
@@ -93,7 +115,7 @@ public class LandOnFieldCTRL {
 	 * @param playerNumber - modtager et spillernummer
 	 * @param multiplier - Hvis feltet er ejet af en spiller ganges den totale leje med multiplier.
 	 */
-	public void shippingFieldRules(int playerNumber, int multiplier, int newPlayerPosition, ViewCTRL view, Toolbox toolbox, Player[] players, Field[] fields, BankruptcyCTRL bankruptcy, TradeCTRL trade) {
+	public void shippingFieldRules(int playerNumber, int multiplier, int newPlayerPosition) {
 		int shippingPropertyValue = (((ShipFields)fields[newPlayerPosition]).getPropertyValue());
 		int owner = (((ShipFields)fields[newPlayerPosition]).getOwner());
 		int[] fieldRent = (((ShipFields)fields[newPlayerPosition]).getReturnValue());
@@ -103,7 +125,7 @@ public class LandOnFieldCTRL {
 			boolean answer = view.getUserAnswer(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " vil du købe grunden", "ja", "nej"); //Spiller for mulighed for at købe grunden
 			if(answer == true) {
 				view.writeText(players[playerNumber].getPlayerName() + " har købt " + fields[newPlayerPosition].getName() + " for " + shippingPropertyValue + " kr" );	//Tekst til gui
-				bankruptcy.payMoney(playerNumber, owner, shippingPropertyValue, players, fields, toolbox, trade);				//transaktionen forgår mellem spiller og bræt
+				bankruptcy.payMoney(playerNumber, owner, shippingPropertyValue);				//transaktionen forgår mellem spiller og bræt
 				view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());								//Update af spillerens konto i gui
 				view.updateOwnership(playerNumber, newPlayerPosition);									//Update af spillerens ejerskab.
 				ShipFields wantedFieldChange = ((ShipFields)fields[newPlayerPosition]);
@@ -114,7 +136,7 @@ public class LandOnFieldCTRL {
 		if(owner != 0 && owner != playerNumber) {
 			int shipRent = ((fieldRent[numOfOwnedShipFields -1])*multiplier);
 			view.writeText(players[playerNumber].getPlayerName() + " er landet på " + fields[newPlayerPosition].getName() + " du skal betale " + shipRent + " til " + players[owner].getPlayerName());
-			bankruptcy.payMoney(playerNumber, owner, shipRent, players, fields, toolbox, trade);
+			bankruptcy.payMoney(playerNumber, owner, shipRent);
 			view.updatePlayerAccount(playerNumber, players[playerNumber].getBalance());
 			view.updatePlayerAccount(owner, players[owner].getBalance());
 		}
@@ -132,15 +154,15 @@ public class LandOnFieldCTRL {
 	 * @param  
 	 */
 
-	public void chanceCardRules (int playerNumber, int newPlayerPosition, int owner, Player[] players, Field[] fields, Toolbox toolbox, ViewCTRL view,ChanceCardCTRL chanceCard, BankruptcyCTRL bankruptcy, FieldRuleCTRL fieldRuleSwitch, LandOnFieldCTRL landOnField,TradeCTRL trade) {
-		int chanceCardType = chanceCard.getType();
-		int[] chanceCardValueArray = chanceCard.getReturnValue();
+	public void chanceCardRules (int playerNumber, int newPlayerPosition, int owner) {
+		int chanceCardType = chancecard.getType();
+		int[] chanceCardValueArray = chancecard.getReturnValue();
 		switch (chanceCardType) {
 
 		case 1: // TransactionCard
 			int transactionValue = chanceCardValueArray[0];
 			if (transactionValue < 0) {
-				bankruptcy.payMoney(playerNumber, owner, transactionValue, players, fields, toolbox, trade);
+				bankruptcy.payMoney(playerNumber, owner, transactionValue);
 
 			} else {
 				players[playerNumber].recieveMoney(transactionValue);
@@ -149,7 +171,7 @@ public class LandOnFieldCTRL {
 			break;
 
 		case 2: // MoveToCards
-			MoveToCardsRules(playerNumber, newPlayerPosition, owner, view, players, toolbox, fields, chanceCard, bankruptcy, fieldRuleSwitch, landOnField, trade); // logik og viewCTRL-kald ligger i denne metode.
+			MoveToCardsRules(playerNumber, newPlayerPosition, owner); // logik og viewCTRL-kald ligger i denne metode.
 			break;
 
 		case 3: // ReleaseCards
@@ -171,8 +193,8 @@ public class LandOnFieldCTRL {
 	 * @param playerNumber - modtager et playernummer.
 	 * @param chancecard 
 	 */
-	public void MoveToCardsRules (int playerNumber, int newPlayerPosition,int toPlayer, ViewCTRL view, Player[] players, Toolbox toolbox, Field[] fields, ChanceCardCTRL chanceCard, BankruptcyCTRL bankruptcy, FieldRuleCTRL fieldRuleSwitch, LandOnFieldCTRL landOnField,TradeCTRL trade) {
-		int[] chanceCardValueArray = chanceCard.getReturnValue();
+	public void MoveToCardsRules (int playerNumber, int newPlayerPosition,int toPlayer) {
+		int[] chanceCardValueArray = chancecard.getReturnValue();
 		int moveToField = chanceCardValueArray[0];
 		
 		if(toolbox.CheckForPassingStart(newPlayerPosition, moveToField) == true)
@@ -182,7 +204,7 @@ public class LandOnFieldCTRL {
 
 		case 1:
 			// Blot flyttekort til et bestemt felt.
-			if((chanceCard.cardNumber == 19) || (chanceCard.cardNumber == 22)) {
+			if((chancecard.cardNumber == 19) || (chancecard.cardNumber == 22)) {
 				players[playerNumber].setPosition(moveToField);
 				view.updatePlayerPosition(playerNumber,newPlayerPosition, moveToField);
 				players[playerNumber].setTurnsInJail(1);
@@ -190,7 +212,7 @@ public class LandOnFieldCTRL {
 			else {
 				players[playerNumber].setPosition(moveToField);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, moveToField);
-				fieldRuleSwitch.ruleSwitch(playerNumber, newPlayerPosition, players, fields, landOnField, view, toolbox, bankruptcy, trade, chanceCard, fieldRuleSwitch);
+				fieldRuleSwitch.ruleSwitch(playerNumber, newPlayerPosition);
 			}
 			break;
 
@@ -207,32 +229,32 @@ public class LandOnFieldCTRL {
 			if( newPlayerPosition < shippingArray[0]) {
 				players[playerNumber].setPosition(shippingArray[0]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[0]);
-				shippingFieldRules(playerNumber, 2, shippingArray[0], view, toolbox, players, fields, bankruptcy, trade);
+				shippingFieldRules(playerNumber, 2, shippingArray[0]);
 			}
 
 			else if( newPlayerPosition > shippingArray[0] && newPlayerPosition < shippingArray[1]) {
 				players[playerNumber].setPosition(shippingArray[1]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[1]);
-				shippingFieldRules(playerNumber, 2, shippingArray[1], view, toolbox, players, fields, bankruptcy, trade);
+				shippingFieldRules(playerNumber, 2, shippingArray[1]);
 				}
 
 			else if( newPlayerPosition > shippingArray[1] && newPlayerPosition < shippingArray[2]) {
 				players[playerNumber].setPosition(shippingArray[2]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[2]);
-				shippingFieldRules(playerNumber, 2, shippingArray[2], view, toolbox, players, fields, bankruptcy, trade);
+				shippingFieldRules(playerNumber, 2, shippingArray[2]);
 				}
 
 			else if( newPlayerPosition > shippingArray[2] && newPlayerPosition < shippingArray[3]) {
 				players[playerNumber].setPosition(shippingArray[3]);
 				view.updatePlayerPosition(playerNumber, newPlayerPosition, shippingArray[3]);
-				shippingFieldRules(playerNumber, 2, shippingArray[3], view, toolbox, players, fields, bankruptcy, trade);
+				shippingFieldRules(playerNumber, 2, shippingArray[3]);
 				}
 			break;
 
 		case 3: // Ryk tre felter tilbage.
 			players[playerNumber].setPosition(newPlayerPosition - 3);
 			view.updatePlayerPosition(playerNumber, newPlayerPosition, newPlayerPosition - 3);
-			fieldRuleSwitch.ruleSwitch(playerNumber, newPlayerPosition, players, fields, landOnField, view, toolbox, bankruptcy, trade, chanceCard, fieldRuleSwitch);
+			fieldRuleSwitch.ruleSwitch(playerNumber, newPlayerPosition);
 			break;
 		}
 	}
