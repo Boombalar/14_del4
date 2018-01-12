@@ -44,19 +44,22 @@ public class LandOnFieldCTRL {
 			shippingFieldRules(playerNumber, 1, players, fields, view);
 			break;
 		case 2:
-			//Breweryfields
+			//BreweryFields
 			breweryField(playerNumber, owner, players, fields, view);
 			break;
 		case 3:
-			//Taxfields
+			//TaxFields
 			taxField(playerNumber, owner, players, fields, view);
 			break;
 		case 4:
-			//Chancefield			
+			//ChanceField			
 			chanceField(playerNumber, players, fields, view);
 			break;
 		case 5: 
-			//startfelt
+			//StartField
+			break;
+		case 6: 
+			//NoActionField
 			break;
 		case 7:
 			//GoToJailField
