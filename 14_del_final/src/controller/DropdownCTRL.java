@@ -65,12 +65,12 @@ public class DropdownCTRL {
 	public void buyHousesAndHotel(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 
 		backToDropdown = true;
-		//Find ud af hvor mange proporties man ejer hvor man har hele gruppen til array.
+		//Find ud af hvor mange proporties man ejer hvor man har hele gruppen til array, og hvor man har råd til at bygge.
 		int amountOfProperties = 0;
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {//Går hele brættet igennem
 			if (fields[fieldCount] instanceof PropertyFields) {
 				//check om man ejer gruppen
-				if (toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount, fields) == true && toolbox.getHousesOnProperty(currentPlayer, fieldCount) != 5) {
+				if (toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount, fields) == true && toolbox.getHousesOnProperty(currentPlayer, fieldCount) != 5 && toolbox.getHousePrice(fieldCount)<=players[currentPlayer].getBalance()) {
 					amountOfProperties++;
 				}
 			}
@@ -80,12 +80,12 @@ public class DropdownCTRL {
 		int index = 0;
 		int[] returnValue;
 
-		//Vi populer array med felt hvis man ejer det og har hele gruppen eks.
+		//Vi populer array med felt hvis man ejer hele gruppen OG har råd til at bygge på det felt.
 		//1-Hvidovrevej
 		//3-Rødovrevej
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			if (fields[fieldCount] instanceof PropertyFields) {
-				if (toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount,fields) == true && toolbox.getHousesOnProperty(currentPlayer, fieldCount) != 5) {
+				if (toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount,fields) == true && toolbox.getHousesOnProperty(currentPlayer, fieldCount) != 5 && toolbox.getHousePrice(fieldCount)<=players[currentPlayer].getBalance()) {
 					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + "-" + fields[fieldCount].getName(); 
 					index++;
 				}
@@ -97,75 +97,78 @@ public class DropdownCTRL {
 			String[] choice = view.getDropDownChoice("Vælg hvilken grund til vil købe hus på", propertyArray).split("-");
 			int chosenFieldNumber=Integer.parseInt(choice[0]);
 
-			//Vi bygger hvis man har råd
-				if (players[currentPlayer].getBalance() > toolbox.getHousePrice(chosenFieldNumber)) {
-					returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
-					if (returnValue[6] < 6) {//hvis der er mindre end 6 huse på feltet
-						returnValue[6]++;
-						//BYG FOR FANDEN!!
-						players[currentPlayer].removeMoney(toolbox.getHousePrice(chosenFieldNumber));
-						toolbox.setHousesOnProperty(returnValue[6], chosenFieldNumber);
-						view.updateBuildings(chosenFieldNumber, returnValue[6]);
-					}else {
-						view.writeText("Du har ikke råd til at bygge");
-					}
-				}
-			
-		}
-		else {
+			//Vi bygger
+			returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
+			if (returnValue[6] < 6) {//hvis der er mindre end 6 huse på feltet
+				returnValue[6]++;
+				//BYG FOR FANDEN!!
+				players[currentPlayer].removeMoney(toolbox.getHousePrice(chosenFieldNumber));	
+				toolbox.setHousesOnProperty(returnValue[6], chosenFieldNumber);
+				view.updateBuildings(chosenFieldNumber, returnValue[6]);
+				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
+
+			}else {
+				view.writeText("Du har ikke råd til at bygge");
+			}
+		}else {
 			view.writeText("Du ejer ikke nogle grunde");
 		}
 	}
-	
+
 	public void sellHousesAndHotels(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
+		backToDropdown = true;
 		int amountOfProperties=0;
+		int amountOfHouses=0;
 		int[] returnValue;
+
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			if (fields[fieldCount] instanceof PropertyFields) {
-				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
-					returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
-					if (toolbox.getHousesOnProperty(currentPlayer, fieldCount)>0) {
-						amountOfProperties++;
-					}	
-				}
+				amountOfHouses = toolbox.getHousesOnProperty(currentPlayer, fieldCount);
+				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && amountOfHouses > 0) {
+					amountOfProperties++;
+				}	
 			}
 		}
 
 		//Lav array til dropdown
 		String[] propertyArray = new String[amountOfProperties];
 		int index=0;
-		String choice;
 
-		//populer array med felt hvis feltet har huse på sig eks.
+		//populer array med felt hvis det opfylder kriterierne
 		//1. Hvidovrevej
 		//3. Rødovrevej
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			if (fields[fieldCount] instanceof PropertyFields) {
-				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
-					returnValue = (((PropertyFields)fields[fieldCount]).getReturnValue());
-					if (toolbox.getHousesOnProperty(currentPlayer, fieldCount)>0) {
-						propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
-					}
+				amountOfHouses = toolbox.getHousesOnProperty(currentPlayer, fieldCount);
+				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && amountOfHouses > 0) {
+					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + "-" + fields[fieldCount].getName();
+					index++;
 				}
 			}
-			index++;
 		}
 
-		//Sælg hus
+		//Vi sælger
 		if (propertyArray.length != 0) {
-			choice = view.getDropDownChoice("Vælg grund du vil sælge huse fra", propertyArray);
-			int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
-			trade.sellBuilding(currentPlayer, chosenFieldNumber, players);
+			String[] choice = view.getDropDownChoice("Vælg hvilken grund til vil købe hus på", propertyArray).split("-");
+			int chosenFieldNumber=Integer.parseInt(choice[0]);
+			returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
+			if (returnValue[6] > 0) {//hvis der er mere end 1 hus på feltet.
+				returnValue[6]--;
+				//SÆLG FOR HELVEDE
+				players[currentPlayer].recieveMoney(toolbox.getHousePrice(chosenFieldNumber)/2);	
+				toolbox.setHousesOnProperty(returnValue[6], chosenFieldNumber);
+				view.updateBuildings(chosenFieldNumber, returnValue[6]);
+				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
+			}
 		}
 		else 
 		{
 			view.writeText("Du har ikke nogle grunde at sælge huse på");
-
 		}
-		backToDropdown = true;
 	}
-	
-	
+
+
+
 	public void sellProperty(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		int amountOfProperties=0;
 		int[] returnValue;
