@@ -1,18 +1,23 @@
 package controller;
 
 import model.*;
+import view.*;
 
 public class Toolbox {
 
-	public Toolbox() {
+	Field[] fields;
+	
+	public Toolbox (Field[] fields) {
+		this.fields = fields;
 	}
+
 	//Bruges til at overføre mellem 2 spillere hvor man på forhånd har bestemt
 	//at ingen går.
 	
 	//Håndterer en bankerot.
 
 	//Returner hvor mange huse der er på grunden, hvis man ejer den.
-	public int getHousesOnProperty(int currentPlayer, int fieldNumber, Field[] fields) {
+	public int getHousesOnProperty(int currentPlayer, int fieldNumber) {
 		int value = 0;
 		if (((OwnerFields)fields[fieldNumber]).getOwner() == currentPlayer) {
 			int[] returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
@@ -22,13 +27,13 @@ public class Toolbox {
 	}
 
 	//Returner hvor mange huse der er på en hel gruppe hvis man ejer gruppen
-	public int getHousesOnGroup(int currentPlayer, int fieldNumber, Field[] fields) {
+	public int getHousesOnGroup(int currentPlayer, int fieldNumber) {
 		int returnValue=0;
 		int housesOnProperty = 0;
 
 		for (int fieldCount = 0;fieldCount<= 39;fieldCount++) {
 			if(fields[fieldCount] instanceof PropertyFields) {
-				housesOnProperty = getHousesOnProperty(currentPlayer, fieldNumber, fields);
+				housesOnProperty = getHousesOnProperty(currentPlayer, fieldNumber);
 				if(housesOnProperty > 0) {
 					returnValue = returnValue + housesOnProperty;
 				}
@@ -37,13 +42,13 @@ public class Toolbox {
 		return returnValue;
 	}
 
-	public int getHousePrice(int fieldNumber, Field[] fields) {
+	public int getHousePrice(int fieldNumber) {
 		int[] returnValue;
 		returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();
 		return returnValue[7];
 	}
 
-	public int getNumberOfOwnedPropertiesInGroup(int playerOwner, int fieldNumber, Field[] fields) {
+	public int getNumberOfOwnedPropertiesInGroup(int playerOwner, int fieldNumber) {
 		int returnValue=0;
 		int groupNumber = ((OwnerFields)fields[fieldNumber]).getGroupNumber();
 		for (int fieldCount=0;fieldCount<=39;fieldCount++) {

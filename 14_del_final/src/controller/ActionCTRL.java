@@ -37,10 +37,10 @@ public class ActionCTRL {
 		view.makeGuiPlayers(players); //Opret antal spillere på bræt.
 		chanceCard = new ChanceCardCTRL(); 		//Lav chancekort CTRL.
 		dieCup = new DieCup(); 		//Lav raflebæger.
-		toolbox = new Toolbox();
-		jail = new JailCTRL();
-		dropdown = new DropdownCTRL();
-		landonfield = new LandOnFieldCTRL();
+		toolbox = new Toolbox(fields);
+		jail = new JailCTRL(players, view, bankruptcy);
+		dropdown = new DropdownCTRL(dieCup, players, fields, view, fieldRuleCTRL, landonfield, toolbox, bankruptcy, trade, chanceCard);
+		landonfield = new LandOnFieldCTRL(players, fields, toolbox, view, bankruptcy, trade, landonfield, chanceCard, fieldRuleCTRL);
 		trade = new TradeCTRL();
 		winner = new WinnerCTRL();
 		bankruptcy = new BankruptcyCTRL(players, fields, toolbox, trade);
