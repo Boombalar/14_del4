@@ -39,8 +39,8 @@ public class ChanceCardDeck {
 		chancecards[26] = new MoveToCard(26,2,"Ryk frem 3 felter tilbage",0,3);// Her er moveto parametret ligegyldigt
 		chancecards[27] = new TaxCard(27,4,"Ejendomsskatterne er steget, ekstraudgifterne er: kr. 800 pr. hus og kr. 2.300 pr. hotel",800,2300);
 		chancecards[28] = new TaxCard(28,4,"Oliepriserne er steget, og De skal betale: kr. 500 pr. hus og kr. 2.000 pr. hotel",500,2000);
-		chancecards[29] = new ReleaseJailCard(29,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kor kan opbevares, indtil De får brug for det.");
-		chancecards[30] = new ReleaseJailCard(30,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kor kan opbevares, indtil De får brug for det.");
+		chancecards[29] = new ReleaseJailCard(29,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares, indtil De får brug for det.");
+		chancecards[30] = new ReleaseJailCard(30,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares, indtil De får brug for det.");
 		chancecards[31] = new MoveToCard(31,2,"Ryk frem til Grønningen. Hvis De passerer Start, Indkassér da kr. 4.000",24,1);
 	}
 	
