@@ -112,22 +112,6 @@ public class Player {
 	public void setTurnsInJail(int turnsInJail) {
 		this.turnsInJail = turnsInJail;
 	}
-
-	/**
-	 * Endnu en metode der returnere om en spiller er bankerot.
-	 * @return Returnerer om den tidligere metode giver true/false.
-	 */
-	public boolean getBroke() {
-		return this.broke;
-	}
-	
-	/**
-	 * En setter til om en spiller har tabt.
-	 * @param broke Boolean, true så er spilleren bankerot.
-	 */
-	public void setBroke(boolean broke) {
-		this.broke = broke;
-	}
 	
 	/**
 	 * En getter på hvor mange releaseCards en given spiller har
@@ -141,16 +125,15 @@ public class Player {
 	 * Køres denne metode tilføjes 1 til antal releaseCards.
 	 */
 	public void addReleaseCard() {
-		System.out.println("Spiller" + getPlayerName() +" har modtaget et release card");
+		System.out.println("Spiller" + getPlayerName() +" har modtaget et release card og har totalt " + getReleaseCard() + "releaseCard kort");
 		this.releaseCard++;
 	}
 	
 	/**
-	 * En camougeret getter til antal releaseCards en spiller har.
-	 * @return Antal kort en spiller har.
+	 * Køres denne metode fjernes 1 release card fra spilleren
 	 */
-	public int useReleaseCard() {
+	public void useReleaseCard() {
 		System.out.println("Spiller" + getPlayerName() + " har brugt releasecard");
-		return this.releaseCard;
+		this.releaseCard--;
 	}
 }
