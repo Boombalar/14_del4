@@ -179,27 +179,29 @@ public class DropdownCTRL {
 		//Lav Array
 		String[] propertyArray = new String[amountOfProperties];
 		int index=0;
-		String choice;
 
 		//Populer array med grunde hvor man enten ejer OwnerField eller ejer PropertyField uden huse.
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) || (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fieldCount)==0) && (((PropertyFields)fields[fieldCount]).getOwner()==currentPlayer)) {
-				propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + ". " + fields[fieldCount].getName(); 
+				propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + "-" + fields[fieldCount].getName(); 
 				index++;	
 			}
 		}
 
 		//vælge grund i dropdown
 		if (propertyArray.length != 0) {
-			choice = view.getDropDownChoice("Vælg hvilken grund du vil sælge", propertyArray);
-			int chosenFieldNumber=Character.getNumericValue(choice.charAt(0));
+			
+			String choice = view.getDropDownChoice("Vælg hvilken grund du vil sælge", propertyArray);
+			String[] part = choice.split("-");
+			int chosenFieldNumber=Integer.parseInt(part[0]);
 
 			//Vælge hvilken spiller man vil sælge til 
 			//0 er banken.
 
 			//Lav array og populer
-			String[] playerCountArray = new String[players.length+1];
-			for (int playerCount = 0;playerCount <= players.length;playerCount++) {
+			String[] playerCountArray = new String[players.length];
+			for (int playerCount = 0;playerCount <= players.length-1;
+					playerCount++) {
 				playerCountArray[playerCount]= Integer.toString(playerCount);
 			}
 
