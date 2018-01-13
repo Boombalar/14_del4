@@ -37,7 +37,7 @@ public class ActionCTRL {
 		trade = new TradeCTRL(toolbox);
 		bankruptcy = new BankruptcyCTRL(toolbox, trade);
 		jail = new JailCTRL(bankruptcy);
-		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, trade, chancecarddeck, chancecardrule);
+		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, chancecarddeck, chancecardrule);
 		view = new ViewCTRL(fields);//Opret bræt.
 		String[] lines = {"2","3","4","5","6"};		//Hent antal spillere.
 		numberOfPlayers = Integer.parseInt(view.getDropDownChoice("Vælg antal spillere 2-6", lines));
