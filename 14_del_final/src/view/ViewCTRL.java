@@ -81,24 +81,24 @@ public class ViewCTRL {
 				}
 				fgColor = Color.black;
 				price = Integer.toString(((PropertyFields)fields[i]).getPropertyValue()) + " kr.";
-				guiFields[i] = new GUI_Street(fields[i].getName(),price, "", "100", bgColor, fgColor);
+				guiFields[i] = new GUI_Street(fields[i].getName(),price, fields[i].getName(), "100", bgColor, fgColor);
 				break; 
 
 			case 1: //ShipField
 				price = Integer.toString(((ShippingFields)fields[i]).getPropertyValue())+ " kr.";
-				guiFields[i] = new GUI_Shipping("",fields[i].getName(),price,"","arg4",Color.cyan,Color.black);
+				guiFields[i] = new GUI_Shipping("",fields[i].getName(),price,fields[i].getName(),"arg4",Color.cyan,Color.black);
 				break; 
 
 			case 2: //BreweryField
 				price = Integer.toString(((BreweryFields)fields[i]).getPropertyValue()) + " kr.";
-				guiFields[i] = new GUI_Brewery("",fields[i].getName(),price,"","arg4",Color.orange,Color.black);
+				guiFields[i] = new GUI_Brewery("",fields[i].getName(),price,fields[i].getName(),"arg4",Color.orange,Color.black);
 
 				break; 
 
 			case 3: //TaxField
 				int[] taxint = ((TaxField)fields[i]).getReturnValue();
 				String tax = Integer.toString(taxint[0]) + " kr."; 
-				guiFields[i] = new GUI_Tax(fields[i].getName(),tax,"",Color.white, Color.black);
+				guiFields[i] = new GUI_Tax(fields[i].getName(),tax,fields[i].getName() ,Color.white, Color.black);
 				break; 
 
 			case 4: //ChanceField
