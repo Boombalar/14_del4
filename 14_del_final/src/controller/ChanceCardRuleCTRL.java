@@ -78,8 +78,9 @@ public class ChanceCardRuleCTRL {
 		int[] chanceCardValueArray = chancecarddeck.getReturnValue();
 		int moveToField = chanceCardValueArray[0];
 		int moveToType = chanceCardValueArray[1];
-		
+
 		switch (moveToType){
+
 		case 1:
 			// Blot flyttekort til et bestemt felt.
 			view.writeText(players[currentPlayer].getPlayerName() + " flyttes til " + fields[moveToField].getName());
@@ -106,6 +107,7 @@ public class ChanceCardRuleCTRL {
 			view.writeText(players[currentPlayer].getPlayerName() + " flyttes til " + fields[newPlayerPos].getName() + ", som er det nærmeste redderi");
 			players[currentPlayer].setPosition(newPlayerPos);
 			view.updatePlayerPosition(currentPlayer, oldPlayerPos, newPlayerPos);
+			landonfield.shippingField(currentPlayer, 2, players, fields, view);
 			break;
 
 		case 3:
