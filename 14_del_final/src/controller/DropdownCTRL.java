@@ -108,10 +108,10 @@ public class DropdownCTRL {
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
 			}else {
-				view.writeText("Du har ikke råd til at bygge");
+				view.writeText(players[currentPlayer].getPlayerName() + " har ikke råd til at bygge");
 			}
 		}else {
-			view.writeText("Du ejer ikke nogle grunde");
+			view.writeText(players[currentPlayer].getPlayerName() + " ejer ikke nogle grunde");
 		}
 	}
 
@@ -163,7 +163,7 @@ public class DropdownCTRL {
 		}
 		else 
 		{
-			view.writeText("Du har ikke nogle grunde at sælge huse på");
+			view.writeText(players[currentPlayer].getPlayerName() + " har ikke nogle grunde at sælge huse på");
 		}
 	}
 
@@ -208,7 +208,7 @@ public class DropdownCTRL {
 			}
 
 			//Vælg spiller eller bank
-			String playerSellChoice = view.getDropDownChoice("Hvilken spiller vil du sælge til? 0 er til banken", playerCountArray);
+			String playerSellChoice = view.getDropDownChoice("Hvilken spiller vil " + players[currentPlayer].getPlayerName() + " du sælge til? 0 er til banken", playerCountArray);
 			int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
 
 			//Sælg grund.
