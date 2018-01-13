@@ -26,7 +26,8 @@ public class WinnerCTRL {
 			for (int i = 1; i <= numberOfPlayers; i++) {
 				boolean checkPlayerBroke = players[i].getBroke();
 				if (!checkPlayerBroke) {
-					view.getUserResponse("Afslut spil", players[currentPlayer].getPlayerName() + " har vundet!!");
+					view.showChanceCard(players[currentPlayer].getPlayerName() + " har vundet spillet!! - ønsker du at spille igen, skal du starte spillet igen.");
+					view.getUserResponse("Spillet slutter efter du trykker på 'Afslut spil'", "Afslut spil");
 					try {
 						TimeUnit.SECONDS.sleep(1);
 						System.exit(0);
