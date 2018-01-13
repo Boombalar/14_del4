@@ -73,14 +73,13 @@ public class ActionCTRL {
 
 				// Lav Startmenu for spiller
 				if (players[currentPlayer].getExtraTurn()) {
-					view.writeText(players[currentPlayer].getPlayerName() + " slog to ens tidliger, og har derfor en ekstra tur");
 				} else {
 				view.writeText("Det er " + players[currentPlayer].getPlayerName() + "'s tur nu");
 				}
 				
 				jail.jailHandling(currentPlayer, players, fields, view);
 				
-				String[] playerChoice = {"Slå terninger", "Køb huse og hoteller","Sælg huse og hoteller", "Sælg grund"};
+				String[] playerChoice = {"Slå terninger", "Køb hus og hotel","Sælg hus og hotel", "Sælg grund"};
 				String choiceOfPlayer = view.getDropDownChoice(players[currentPlayer].getPlayerName() + " - vælg fra dropdown", playerChoice);
 
 				//Håndtér valg fra menu
@@ -91,6 +90,7 @@ public class ActionCTRL {
 				case "Slå terninger":
 					dropdown.rollDice(currentPlayer, players, fields, view);
 					if (players[currentPlayer].getExtraTurn() == true) {
+						view.writeText(players[currentPlayer].getPlayerName() + " slog to ens, og har derfor en ekstra tur");
 						players[currentPlayer].setExtraTurn(false);
 						currentPlayer--;
 					}

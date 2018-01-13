@@ -14,6 +14,7 @@ public class JailCTRL {
 
 	public void jailHandling(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		if(players[currentPlayer].getTurnsInJail()==1) {
+			view.writeText(players[currentPlayer].getPlayerName() + " er i fængsel, og skal nu ud af fængslet");
 			if (players[currentPlayer].getReleaseCard() > 0) {
 				String[] playerChoiceJail = {"Brug løsladelseskort", "Betal 1000kr."};
 				String choiceJailPlayer = view.getDropDownChoice("Vælg hvordan " + players[currentPlayer].getPlayerName() + " kommer ud af fængsel, der er " + players[currentPlayer].getReleaseCard() + " løsladelseskort tilgængeligt", playerChoiceJail);
