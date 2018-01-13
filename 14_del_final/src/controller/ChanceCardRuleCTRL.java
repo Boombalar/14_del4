@@ -36,11 +36,11 @@ public class ChanceCardRuleCTRL {
 			int transactionValue = chanceCardValueArray[0];
 			if ((transactionValue) < 0) {
 				int realvalue = (transactionValue * (-1)); 
-				view.writeText("Der trækkes " + realvalue + " fra " + players[currentPlayer].getPlayerName() + "'s konto.");
+				view.writeText("Der trækkes " + realvalue + "kr. fra " + players[currentPlayer].getPlayerName() + "'s konto.");
 				bankruptcy.payMoney(currentPlayer, owner, (realvalue), players, fields, view);
 
 			} else {
-				view.writeText("Der tilføjes " + transactionValue + " til " + players[currentPlayer].getPlayerName() + "'s konto.");
+				view.writeText("Der tilføjes " + transactionValue + "kr. til " + players[currentPlayer].getPlayerName() + "'s konto.");
 				players[currentPlayer].recieveMoney(transactionValue);
 			}
 			view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
@@ -59,7 +59,7 @@ public class ChanceCardRuleCTRL {
 			int numberofhouses = toolbox.getNumberOfHousesFromPlayer(currentPlayer);
 			int numberofhotels = toolbox.getNumberOfHotelsFromPlayer(currentPlayer);
 			int totalSum = (chanceCardValueArray[0] * numberofhouses)+(chanceCardValueArray[1] * numberofhotels);
-			view.writeText("Der trækkes " + totalSum + " fra " + players[currentPlayer].getPlayerName() + "'s konto.");
+			view.writeText("Der trækkes " + totalSum + "kr. fra " + players[currentPlayer].getPlayerName() + "'s konto.");
 			bankruptcy.payMoney(currentPlayer, owner, (totalSum), players, fields, view);
 			break;
 		default:
