@@ -127,6 +127,7 @@ public class ViewCTRL {
 		guiPlayer = new GUI_Player[players.length+1];
 
 		//Opretter 6 farver på bilerne
+		carColor[0] = new Color(1,1,1);
 		carColor[1] = new Color(70,250,0);
 		carColor[2] = new Color(10,160,230);
 		carColor[3] = new Color(200,200,200);
@@ -295,9 +296,15 @@ public class ViewCTRL {
 	public void updateEntireBoard(Field[] fields, Player[] players) {
 		//Updater fields ownership på bræt
 		for (int fieldCount = 0;fieldCount <= 39; fieldCount++) {
-			if (fields[fieldCount] instanceof OwnerFields) {
-				updateOwnership(((OwnerFields)fields[fieldCount]).getOwner(), fieldCount);
+			if (fields[fieldCount] instanceof PropertyFields) {
+				updateOwnership(((PropertyFields)fields[fieldCount]).getOwner(), fieldCount);
 				updateBuildings(fieldCount, (((PropertyFields)fields[fieldCount]).getReturnValue()[6]));
+			}
+			if (fields[fieldCount] instanceof BreweryFields) {
+				updateOwnership(((BreweryFields)fields[fieldCount]).getOwner(), fieldCount);
+			}
+			if (fields[fieldCount] instanceof ShippingFields) {
+				updateOwnership(((ShippingFields)fields[fieldCount]).getOwner(), fieldCount);
 			}
 			for (int playerCount = 1 ; playerCount <= players.length-1; playerCount++) {
 				updatePlayerAccount(playerCount, players[playerCount].getBalance());
