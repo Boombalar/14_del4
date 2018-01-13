@@ -57,11 +57,11 @@ public class LandOnFieldCTRL {
 			break;
 		case 5: 
 			//StartField
-			view.writeText("Du er landet på '" + fields[players[playerNumber].getPosition()].getName() + "'");
+			view.writeText(players[playerNumber].getPlayerName() + " er landet på '" + fields[players[playerNumber].getPosition()].getName() + "'");
 			break;
 		case 6: 
 			//NoActionField
-			view.writeText("Du er landet på '" + fields[players[playerNumber].getPosition()].getName() + "'");
+			view.writeText(players[playerNumber].getPlayerName() + " er landet på '" + fields[players[playerNumber].getPosition()].getName() + "'");
 			break;
 		case 7:
 			//GoToJailField
