@@ -45,7 +45,7 @@ public class DropdownCTRL {
 
 		landonfield.ruleSwitch(currentPlayer, players, fields, view);
 
-		if (dieCup.getDie1Value() == dieCup.getDie2Value()) {
+		if (dieCup.getDie1Value() == dieCup.getDie2Value() && (players[currentPlayer].getTurnsInJail() != 1)) {
 			players[currentPlayer].setExtraTurn(true);
 			/*
 		players[currentPlayer].changeEqualEyes() ++;
