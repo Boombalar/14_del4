@@ -47,7 +47,7 @@ public class ChanceCardRuleCTRL {
 			break;
 
 		case 2: // MoveToCards
-			MoveToCardsRules(currentPlayer, players, fields, view); // logik og viewCTRL-kald ligger i denne metode.
+			moveToCardsRules(currentPlayer, players, fields, view); // logik og viewCTRL-kald ligger i denne metode.
 			break;
 
 		case 3: // ReleaseCards
@@ -68,11 +68,13 @@ public class ChanceCardRuleCTRL {
 	}
 
 	/**
-	 * MoveToCardRules - En Metode som switcher på hvilket type MoveToCard man har trukket.
-	 * @param currentPlayer - modtager et playernummer.
-	 * @param chancedeck 
+	 * moveToCardRules() - En Metode som switcher på hvilket type MoveToCard man har trukket.
+	 * @param currentPlayer
+	 * @param players
+	 * @param fields
+	 * @param view
 	 */
-	public void MoveToCardsRules (int currentPlayer, Player[] players,Field[] fields, ViewCTRL view) {
+	public void moveToCardsRules (int currentPlayer, Player[] players,Field[] fields, ViewCTRL view) {
 		int playerPosition = players[currentPlayer].getPosition();
 		int[] chanceCardValueArray = chancecarddeck.getReturnValue();
 		int moveToField = chanceCardValueArray[0];

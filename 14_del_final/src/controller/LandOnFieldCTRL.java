@@ -19,16 +19,13 @@ public class LandOnFieldCTRL {
 		this.bankruptcy = bankruptcy;
 	}
 
-	/**
-	 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
-	 * @param playerNumber - Modtager et spiller numer
-	 * @param view 
-	 * @param toolbox 
-	 * @param bankruptcy 
-	 * @param trade 
-	 * @param chancedeck 
-	 * @param fieldRuleSwitch 
-	 */
+/**
+ * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
+ * @param playerNumber
+ * @param players
+ * @param fields
+ * @param view
+ */
 	public void ruleSwitch (int playerNumber, Player[] players, Field[] fields, ViewCTRL view) {
 		int fieldType = fields[players[playerNumber].getPosition()].getType();
 		int owner = 0;
