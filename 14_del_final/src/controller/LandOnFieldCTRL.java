@@ -5,27 +5,25 @@ import view.*;
 
 public class LandOnFieldCTRL {
 
-	Toolbox toolbox;
-	TradeCTRL trade;
-	ChanceCardDeckCTRL chancecarddeck;
-	ChanceCardRuleCTRL chancecardrule;
-	BankruptcyCTRL bankruptcy;
+	private Toolbox toolbox;
+	private ChanceCardDeckCTRL chancecarddeck;
+	private ChanceCardRuleCTRL chancecardrule;
+	private BankruptcyCTRL bankruptcy;
 
-	public LandOnFieldCTRL (Toolbox toolbox,BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardDeckCTRL chancecarddeck, ChanceCardRuleCTRL chancecardrule) {
+	public LandOnFieldCTRL (Toolbox toolbox,BankruptcyCTRL bankruptcy, ChanceCardDeckCTRL chancecarddeck, ChanceCardRuleCTRL chancecardrule) {
 		this.toolbox = toolbox;	
 		this.chancecarddeck = chancecarddeck;
 		this.chancecardrule = chancecardrule;
-		this.trade = trade;
 		this.bankruptcy = bankruptcy;
 	}
 
-/**
- * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
- * @param playerNumber
- * @param players
- * @param fields
- * @param view
- */
+	/**
+	 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
+	 * @param playerNumber
+	 * @param players
+	 * @param fields
+	 * @param view
+	 */
 	public void ruleSwitch (int playerNumber, Player[] players, Field[] fields, ViewCTRL view) {
 		int fieldType = fields[players[playerNumber].getPosition()].getType();
 		int owner = 0;
@@ -40,7 +38,7 @@ public class LandOnFieldCTRL {
 			break;
 		case 1:
 			//ShipFields
-			shippingFieldRules(playerNumber, 1, players, fields, view);
+			shippingField(playerNumber, 1, players, fields, view);
 			break;
 		case 2:
 			//BreweryFields
@@ -135,7 +133,6 @@ public class LandOnFieldCTRL {
 	}
 
 	public void chanceField(int playerNumber, Player[] players,Field[] fields,ViewCTRL view) {
-		int newPlayerPosition = players[playerNumber].getPosition();
 		view.writeText(players[playerNumber].getPlayerName() + " er landet på 'Prøv lykken', du trækker et chance kort"); //Tekst fra gui 
 		chancecarddeck.draw(); //ChanceCardCRTL trækker et kort	
 		view.showChanceCard(chancecarddeck.getDescription());	 //Teksten fra Chancekortet vises i gui 
@@ -155,7 +152,7 @@ public class LandOnFieldCTRL {
 	 * @param playerNumber - modtager et spillernummer
 	 * @param multiplier - Hvis feltet er ejet af en spiller ganges den totale leje med multiplier.
 	 */
-	public void shippingFieldRules(int playerNumber, int multiplier, Player[] players,Field[] fields,ViewCTRL view) {
+	public void shippingField(int playerNumber, int multiplier, Player[] players,Field[] fields,ViewCTRL view) {
 		int newPlayerPosition = players[playerNumber].getPosition();
 		int shippingPropertyValue = (((ShippingFields)fields[newPlayerPosition]).getPropertyValue());
 		int owner = (((ShippingFields)fields[newPlayerPosition]).getOwner());
@@ -185,8 +182,7 @@ public class LandOnFieldCTRL {
 		if(owner == playerNumber) {
 			view.writeText(players[playerNumber].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', " + players[playerNumber].getPlayerName() + ", ejer selv dette rederi");
 		}
-
 	}
-}
 
+}
 
