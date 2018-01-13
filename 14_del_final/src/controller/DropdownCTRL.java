@@ -39,27 +39,17 @@ public class DropdownCTRL {
 			view.writeText(players[currentPlayer].getPlayerName() + " har passeret start, og får 4000 kr.");
 		}
 
+		//flyt spiller til ny pos i modellaget
 		players[currentPlayer].setPosition(newPlayerPosition);
+		//flyt spiller til ny pos i viewlaget, og opdater han balance.
 		view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);
 		view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
+		//Kør regel på nyt felt.
 		landonfield.ruleSwitch(currentPlayer, players, fields, view);
-
-		if (dieCup.getDie1Value() == dieCup.getDie2Value() && (players[currentPlayer].getTurnsInJail() != 1)) {
-			players[currentPlayer].setExtraTurn(true);
-			/*
-		players[currentPlayer].changeEqualEyes() ++;
-		if(players[currentPlayer].changeEqualEyes() == 3) {
-			jail();
-			players[currentPlayer].changeEqualEyes(-3);
-		}
-			 */
-
-		}
 	}
 
 	public void buyHousesAndHotel(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
-
 		backToDropdown = true;
 		//Find ud af hvor mange proporties man ejer hvor man har hele gruppen til array, og hvor man har råd til at bygge.
 		int amountOfProperties = 0;
@@ -71,6 +61,7 @@ public class DropdownCTRL {
 				}
 			}
 		}
+
 		//Vi laver Array til DropDown listen
 		String [] propertyArray = new String[amountOfProperties];
 		int index = 0;
@@ -156,8 +147,7 @@ public class DropdownCTRL {
 				view.updateBuildings(chosenFieldNumber, returnValue[6]);
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 			}
-		}
-		else 
+		} else 
 		{
 			view.writeText(players[currentPlayer].getPlayerName() + " har ikke nogle grunde at sælge huse på");
 		}
@@ -205,7 +195,7 @@ public class DropdownCTRL {
 			}
 
 			//Vælg spiller eller bank
-			String playerSellChoice = view.getDropDownChoice("Hvilken spiller vil " + players[currentPlayer].getPlayerName() + " du sælge til? 0 er til banken", playerCountArray);
+			String playerSellChoice = view.getDropDownChoice( players[currentPlayer].getPlayerName() + ", hvilken spiller vil du sælge til?   0 er til banken", playerCountArray);
 			int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
 
 			//Sælg grund.
@@ -218,7 +208,7 @@ public class DropdownCTRL {
 		}
 		else {
 			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
-			backToDropdown = true;
+
 		}
 	}
 

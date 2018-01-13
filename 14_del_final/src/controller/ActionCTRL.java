@@ -77,12 +77,15 @@ public class ActionCTRL {
 					view.writeText("Det er " + players[currentPlayer].getPlayerName() + "'s tur nu");
 				}
 
+				//Hvis spiller er i fængsel håndter det.
 				jail.jailHandling(currentPlayer, players, fields, view);
 
+				//Spillermenu
 				String[] playerChoice = {"Slå terninger", "Køb hus og hotel","Sælg hus og hotel", "Sælg grund"};
 				String choiceOfPlayer = view.getDropDownChoice(players[currentPlayer].getPlayerName() + " - vælg fra dropdown", playerChoice);
 
 				//Håndtér valg fra menu
+				//I ver. 8 kan man switche på en streng :)
 				switch(choiceOfPlayer) {
 
 				// Slår terningerne, ændrer position i model lag og opdaterer view lag
@@ -99,40 +102,34 @@ public class ActionCTRL {
 					// Køb huse og hoteller.
 					// Finder de felter hvor spilleren ejer hele grupper. 
 					// Giver mulighed for at bygge på de felter.
-				case "Køb huse og hoteller":
-					//Vi starter med at finde ud af hvor mange PropertyFields man ejer hvor man har hele gruppen
-					//Således vi kan opbygge et array til dropdownlisten.
-
+				case "Køb hus og hotel":
 					dropdown.buyHousesAndHotel(currentPlayer, players, fields, view);
-					if (dropdown.getBackToDropDown())
+					if (dropdown.getBackToDropDown()) {
 						currentPlayer--;
+					}
 					break;
 
 					//Sælg huse og hoteller.
 					//Find de grunde hvor spilleren ejer huse
 					//sælg et hus.
-				case "Sælg huse og hoteller":
-
-					//Find antal propertyfields med huse
-					//Således vi kan lave Array til dropdown
-
-
+				case "Sælg hus og hotel":
 					dropdown.sellHousesAndHotels(currentPlayer, players, fields, view);
-					if (dropdown.getBackToDropDown())
+					if (dropdown.getBackToDropDown()) {
 						currentPlayer--;
+					}
 					break;
 
 					//Sælg grund hvis man ejer den og der ikke er nogle huse på
 					//Man kan sælge til banken eller anden spiller
 				case "Sælg grund":
-
 					dropdown.sellProperty(currentPlayer, players, fields, view);
-					if (dropdown.getBackToDropDown())
+					if (dropdown.getBackToDropDown()) {
 						currentPlayer--;
+					}
 					break;
-					//Lav logik for spillers choice
+
 				}
-				//			view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
+
 				currentPlayer++;
 				if (currentPlayer > players.length-1){
 					currentPlayer = 1;
