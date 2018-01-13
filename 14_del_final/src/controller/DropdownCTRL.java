@@ -166,6 +166,7 @@ public class DropdownCTRL {
 
 
 	public void sellProperty(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
+		backToDropdown = true;
 		int amountOfProperties=0;
 		int[] returnValue;
 		//Find ud af hvor mange grunde man ejer som ikke har huse på sin gruppe til array
