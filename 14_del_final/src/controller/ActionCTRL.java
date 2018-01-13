@@ -63,8 +63,6 @@ public class ActionCTRL {
 
 		while (!winner.checkWinner(numberOfPlayers, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 
-			jail.jailHandling(currentPlayer, players, fields, view);
-
 			while (true) {
 				// Hvis en spiller er broke, så gå ud af loop
 				if(players[currentPlayer].getBroke()) {
@@ -79,6 +77,9 @@ public class ActionCTRL {
 				} else {
 				view.writeText("Det er " + players[currentPlayer].getPlayerName() + "'s tur nu");
 				}
+				
+				jail.jailHandling(currentPlayer, players, fields, view);
+				
 				String[] playerChoice = {"Slå terninger", "Køb huse og hoteller","Sælg huse og hoteller", "Sælg grund"};
 				String choiceOfPlayer = view.getDropDownChoice(players[currentPlayer].getPlayerName() + " - vælg fra dropdown", playerChoice);
 
