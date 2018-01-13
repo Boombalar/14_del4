@@ -159,10 +159,10 @@ public class DropdownCTRL {
 		backToDropdown = true;
 		int amountOfProperties=0;
 		int[] returnValue;
-		//Find ud af hvor mange grunde man ejer som ikke har huse på sin gruppe til array
+		//Find ud af hvor mange grunde man ejer som ikke har huse på sig til array
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			//Hvis feltet er enten et ejet OwnerField eller et ejet PropertyField uden huse.
-			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) || (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fieldCount)==0) && (((PropertyFields)fields[fieldCount]).getOwner()==currentPlayer)) {
+			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) && !((fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnProperty(currentPlayer, fieldCount)>0))) {
 				amountOfProperties++;//tæl op
 			}
 		}
@@ -171,9 +171,9 @@ public class DropdownCTRL {
 		String[] propertyArray = new String[amountOfProperties];
 		int index=0;
 
-		//Populer array med grunde hvor man enten ejer OwnerField eller ejer PropertyField uden huse.
+		//Populer array med grunde man ejer som ikke har huse på sig til array
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) || (fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnGroup(currentPlayer, fieldCount)==0) && (((PropertyFields)fields[fieldCount]).getOwner()==currentPlayer)) {
+			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) && !((fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnProperty(currentPlayer, fieldCount)>0))) {
 				propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + "-" + fields[fieldCount].getName(); 
 				index++;	
 			}
