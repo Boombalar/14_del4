@@ -114,12 +114,12 @@ public class Toolbox {
 		return returnValue;
 	}
 
-	public boolean CheckForPassingStart(int oldPosition, int newPosition) {
-		Boolean checkForPassingStart = false;
+	public boolean checkForPassingStart(int oldPosition, int newPosition) {
+		Boolean didPassStart = false;
 		if (newPosition < oldPosition) {
-			checkForPassingStart = true;
+			didPassStart = true;
 		}
-		return checkForPassingStart;
+		return didPassStart;
 	}	
 
 	//Check om man ejer alle grunde i en gruppe af PropertyFields.
