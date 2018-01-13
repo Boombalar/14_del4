@@ -38,11 +38,9 @@ public class BankruptcyCTRL {
 	}
 
 	public boolean raiseMoney(int currentPlayer, int amountToPay, Player[] players, Field[] fields) {
-		boolean returnValue=true;
 		int numberOfHouses;
 		int priceOfHouse;
 		int priceOfProperty;
-		int expectedSaleValue=0;
 		int playerbalance = players[currentPlayer].getBalance();
 		int amountNeeded = amountToPay - playerbalance;
 
@@ -78,7 +76,6 @@ public class BankruptcyCTRL {
 	}
 
 	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields, ViewCTRL view) {
-		int numberOfBuildings;
 		trade.transferAssets(currentPlayer, toPlayer, players, fields);
 		players[currentPlayer].setBroke(true);
 		view.writeText(players[currentPlayer].getPlayerName() + " er gået bankerot.");
