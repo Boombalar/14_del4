@@ -250,8 +250,8 @@ public class LandOnFieldCTRL {
 			// Blot flyttekort til et bestemt felt.
 			view.writeText(players[currentPlayer].getPlayerName() + " flyttes til " + fields[moveToField].getName());
 			if(toolbox.checkForPassingStart(playerPosition, moveToField)) {
-				players[currentPlayer].setPosition(40-moveToField);
-				view.updatePlayerPosition(currentPlayer, playerPosition, (40-moveToField));
+				players[currentPlayer].setPosition(moveToField);
+				view.updatePlayerPosition(currentPlayer, playerPosition, (moveToField));
 			} else {
 				players[currentPlayer].setPosition(moveToField);
 				view.updatePlayerPosition(currentPlayer, playerPosition, moveToField);
