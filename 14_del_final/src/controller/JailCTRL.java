@@ -15,20 +15,20 @@ public class JailCTRL {
 	public void jailHandling(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		if(players[currentPlayer].getTurnsInJail()==1) {
 			if (players[currentPlayer].getReleaseCard() > 0) {
-				String[] playerChoiceJail = {"Betal 1000 kr.", "Brug løsladelseskort"};
-				String choiceJailPlayer = view.getDropDownChoice("Vælg hvordan du kommer ud af fængsel", playerChoiceJail);
+				String[] playerChoiceJail = {"Brug løsladelseskort", "Betal 1000kr."};
+				String choiceJailPlayer = view.getDropDownChoice("Vælg hvordan " + players[currentPlayer].getReleaseCard() + " kommer ud af fængsel, der er " + players[currentPlayer].getReleaseCard() + " løsladelseskort tilgængeligt", playerChoiceJail);
 				if (choiceJailPlayer=="Brug løsladelseskort") {
+				}
 				if (choiceJailPlayer=="Betal 1000kr.") {
-					view.writeText("Betal 1000 kr for at komme ud af fængsel");
 					bankruptcy.payMoney(currentPlayer, 0, 1000, players, fields, view);
 					view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 				}
-			} else {					
-				view.writeText("Du har intet løsladelseskort, og bliver derfor trukket 1000 kr., for at komme ud af fængslet.");
+			}else {					
+				view.writeText(players[currentPlayer].getReleaseCard() + " har intet løsladelseskort, og bliver derfor trukket 1000 kr., for at komme ud af fængslet.");
 				bankruptcy.payMoney(currentPlayer, 0, 1000, players, fields, view);
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 			}
-			players[currentPlayer].removeTurnsInJail();}
+			players[currentPlayer].removeTurnsInJail();
 		}
 	}
 }
