@@ -78,16 +78,17 @@ public class ChanceCardRuleCTRL {
 		int moveToField = chanceCardValueArray[0];
 		int moveToType = chanceCardValueArray[1];
 
-		if(toolbox.CheckForPassingStart(playerPosition, moveToField) == true)
-			view.updatePlayerPosition(currentPlayer, playerPosition, moveToField);
-
 		switch (moveToType){
-
 		case 1:
 			// Blot flyttekort til et bestemt felt.
 			view.writeText(players[currentPlayer].getPlayerName() + " flyttes til " + fields[moveToField].getName());
-			players[currentPlayer].setPosition(moveToField);
-			view.updatePlayerPosition(currentPlayer, playerPosition, moveToField);
+			if(toolbox.CheckForPassingStart(playerPosition, moveToField)) {
+				players[currentPlayer].setPosition(moveToField-40);
+				view.updatePlayerPosition(currentPlayer, playerPosition, (moveToField-40));
+			} else {
+				players[currentPlayer].setPosition(moveToField);
+				view.updatePlayerPosition(currentPlayer, playerPosition, moveToField);
+			}
 			landonfield.ruleSwitch(currentPlayer, players, fields, view);
 			break;
 
@@ -101,7 +102,7 @@ public class ChanceCardRuleCTRL {
 					newPlayerPos =0;
 				}
 			}
-			view.writeText(players[currentPlayer].getPlayerName() + " flyttes til " + fields[moveToField].getName() + ", som er det nærmeste redderi");
+			view.writeText(players[currentPlayer].getPlayerName() + " flyttes til " + fields[newPlayerPos].getName() + ", som er det nærmeste redderi");
 			players[currentPlayer].setPosition(newPlayerPos);
 			view.updatePlayerPosition(currentPlayer, oldPlayerPos, newPlayerPos);
 			break;
@@ -116,9 +117,10 @@ public class ChanceCardRuleCTRL {
 			break;
 
 		case 4: // Ryk tre felter tilbage.
-			view.writeText(players[currentPlayer].getPlayerName() + " rykkes tre felter tilbage til " + fields[moveToField].getName());
-			players[currentPlayer].setPosition(playerPosition - moveToField);
-			view.updatePlayerPosition(currentPlayer, playerPosition, (playerPosition - moveToField));
+			int actualMove = (playerPosition - moveToField);
+			view.writeText(players[currentPlayer].getPlayerName() + " rykkes tre felter tilbage til " + fields[actualMove].getName());
+			players[currentPlayer].setPosition(actualMove);
+			view.updatePlayerPosition(currentPlayer, playerPosition, actualMove);
 			landonfield.ruleSwitch(currentPlayer, players, fields, view);
 			break;
 
