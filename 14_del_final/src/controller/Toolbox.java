@@ -6,14 +6,14 @@ import view.*;
 public class Toolbox {
 
 	Field[] fields;
-	
+
 	public Toolbox (Field[] fields) {
 		this.fields = fields;
 	}
 
 	//Bruges til at overføre mellem 2 spillere hvor man på forhånd har bestemt
 	//at ingen går.
-	
+
 	//Håndterer en bankerot.
 
 	//Returner hvor mange huse der er på grunden, hvis man ejer den.
@@ -25,7 +25,7 @@ public class Toolbox {
 		}
 		return value;
 	}
-	
+
 	public void setHousesOnProperty(int amountOfHouses, int fieldNumber) {
 		((PropertyFields)fields[fieldNumber]).setNumberOfHouses(amountOfHouses);
 	}
@@ -99,18 +99,18 @@ public class Toolbox {
 		boolean returnValue = false;
 		int priceOfProperty;
 
-			for (int fieldCount = 0; fieldCount<=39;fieldCount++) {
-				if(fields[fieldCount] instanceof PropertyFields && amountNeeded > 0) {
-					if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
-						priceOfProperty = ((OwnerFields)fields[fieldCount]).getPropertyValue();
-						amountNeeded = amountNeeded - priceOfProperty;
-						if (amountNeeded < 0) {
-							returnValue = true;
-							break;
-						}
+		for (int fieldCount = 0; fieldCount<=39;fieldCount++) {
+			if(fields[fieldCount] instanceof PropertyFields && amountNeeded > 0) {
+				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+					priceOfProperty = ((OwnerFields)fields[fieldCount]).getPropertyValue();
+					amountNeeded = amountNeeded - priceOfProperty;
+					if (amountNeeded < 0) {
+						returnValue = true;
+						break;
 					}
 				}
 			}
+		}
 		return returnValue;
 	}
 
@@ -121,19 +121,19 @@ public class Toolbox {
 		}
 		return checkForPassingStart;
 	}	
-	
+
 	//Check om man ejer alle grunde i en gruppe af PropertyFields.
-		public boolean checkPropertyGroupOwnership(int fieldOwner, int fieldNumber, Field[] fields) {
-			boolean returnValue = true;
-			for (int fieldCount = 0;fieldCount <=39;fieldCount++) {
-				if (fields[fieldCount] instanceof PropertyFields) {
-					if (((PropertyFields)fields[fieldCount]).getGroupNumber() == ((PropertyFields)fields[fieldNumber]).getGroupNumber()) {//Hvis feltet man er nået til er samme ejer som feltet man checker ud fra
-						if (((PropertyFields)fields[fieldCount]).getOwner() != fieldOwner) {//Hvis feltet ikke har samme ejer som det felt man checker ud fra.
-							returnValue=false; //Så falsk
-						}
+	public boolean checkPropertyGroupOwnership(int fieldOwner, int fieldNumber, Field[] fields) {
+		boolean returnValue = true;
+		for (int fieldCount = 0;fieldCount <=39;fieldCount++) {
+			if (fields[fieldCount] instanceof PropertyFields) {
+				if (((PropertyFields)fields[fieldCount]).getGroupNumber() == ((PropertyFields)fields[fieldNumber]).getGroupNumber()) {//Hvis feltet man er nået til er samme ejer som feltet man checker ud fra
+					if (((PropertyFields)fields[fieldCount]).getOwner() != fieldOwner) {//Hvis feltet ikke har samme ejer som det felt man checker ud fra.
+						returnValue=false; //Så falsk
 					}
 				}
 			}
-			return returnValue;
 		}
+		return returnValue;
+	}
 }

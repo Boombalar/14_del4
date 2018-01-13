@@ -5,7 +5,6 @@ import view.*;
 
 public class BankruptcyCTRL {
 
-
 	Toolbox toolbox;
 	TradeCTRL trade;
 

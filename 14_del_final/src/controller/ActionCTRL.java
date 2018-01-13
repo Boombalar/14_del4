@@ -10,7 +10,8 @@ public class ActionCTRL {
 	private CreatePlayers makePlayers;
 	private Player[] players;
 	private ViewCTRL view;
-	private ChanceCardCTRL chancecard;
+	private ChanceCardDeckCTRL chancedeck;
+	private ChanceCardRuleCTRL chancecardrule;
 	private DieCup dieCup;
 	private Toolbox toolbox;
 	private JailCTRL jail;
@@ -26,7 +27,8 @@ public class ActionCTRL {
 	}
 
 	public void initialiseGame() {
-		chancecard = new ChanceCardCTRL(); 		//Lav chancekort CTRL.
+		chancedeck = new ChanceCardDeckCTRL(); 		//Lav chancekort CTRL.
+		chancecardrule = new ChanceCardRuleCTRL(toolbox, bankruptcy, chancedeck, landonfield);
 		dieCup = new DieCup(); 		//Lav raflebæger.
 		board = new Board();		 //Lav bræt model.
 		fields = board.getFields();
@@ -35,14 +37,14 @@ public class ActionCTRL {
 		trade = new TradeCTRL(toolbox);
 		bankruptcy = new BankruptcyCTRL(toolbox, trade);
 		jail = new JailCTRL(bankruptcy);
-		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, trade, chancecard);
+		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, trade, chancedeck, chancecardrule);
 		view = new ViewCTRL(fields);//Opret bræt.
 		String[] lines = {"2","3","4","5","6"};		//Hent antal spillere.
 		numberOfPlayers = Integer.parseInt(view.getDropDownChoice("Vælg antal spillere 2-6", lines));
 		makePlayers = new CreatePlayers(numberOfPlayers, view);  		//Lav player array.
 		players = makePlayers.getPlayers(); // Modtag player array.
 		view.makeGuiPlayers(players); //Opret antal spillere på bræt.
-		dropdown = new DropdownCTRL(dieCup, landonfield, toolbox, bankruptcy, trade, chancecard);
+		dropdown = new DropdownCTRL(dieCup, landonfield, toolbox, trade);
 		view.updateEntireBoard(fields, players); // updatering af boardet på gui, så test / fejlfinding kan blive nemmere.
 	}
 	/**
@@ -51,15 +53,15 @@ public class ActionCTRL {
 	 * 
 	 */
 	private void gameSequence() {
-//		int oldPlayerPosition = 0; //En given spiller start position på en runde
-//		int newPlayerPosition; //Den position en given spiller rykkes til når terningerne er slået
+		//		int oldPlayerPosition = 0; //En given spiller start position på en runde
+		//		int newPlayerPosition; //Den position en given spiller rykkes til når terningerne er slået
 		int currentPlayer = 1; //Den første spiller instantieres til spiller 1
-//		int diceValue; //Den samlede mængde af terningerne
-//		int amountOfProperties=0; //Den mængde grunde en given spiller ejer?
-//		int index;
-//		String[] propertyArray; //Det String array som indeholder alle de grunde en given spiller ejer.
-//		String choice; //Det valg en given spiller vælger ud fra propertyString array.
-//		int[] returnValue; //Hvilken specifik returværdi det dette?s
+		//		int diceValue; //Den samlede mængde af terningerne
+		//		int amountOfProperties=0; //Den mængde grunde en given spiller ejer?
+		//		int index;
+		//		String[] propertyArray; //Det String array som indeholder alle de grunde en given spiller ejer.
+		//		String choice; //Det valg en given spiller vælger ud fra propertyString array.
+		//		int[] returnValue; //Hvilken specifik returværdi det dette?s
 
 		while (!winner.checkWinner(numberOfPlayers, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 
@@ -74,11 +76,11 @@ public class ActionCTRL {
 				// Lav Startmenu for spiller
 				if (players[currentPlayer].getExtraTurn()) {
 				} else {
-				view.writeText("Det er " + players[currentPlayer].getPlayerName() + "'s tur nu");
+					view.writeText("Det er " + players[currentPlayer].getPlayerName() + "'s tur nu");
 				}
-				
+
 				jail.jailHandling(currentPlayer, players, fields, view);
-				
+
 				String[] playerChoice = {"Slå terninger", "Køb hus og hotel","Sælg hus og hotel", "Sælg grund"};
 				String choiceOfPlayer = view.getDropDownChoice(players[currentPlayer].getPlayerName() + " - vælg fra dropdown", playerChoice);
 

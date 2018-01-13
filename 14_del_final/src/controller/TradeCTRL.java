@@ -5,12 +5,10 @@ import model.*;
 public class TradeCTRL {
 	Toolbox toolbox;
 
-	
-	
 	public TradeCTRL (Toolbox toolbox) {
 		this.toolbox = toolbox;
 	}
-	
+
 	public void safeTransferMoney(int fromPlayer, int toPlayer, int amount, Player[] players) {
 		players[fromPlayer].removeMoney(amount);
 		players[toPlayer].recieveMoney(amount);
@@ -35,14 +33,14 @@ public class TradeCTRL {
 		int[] returnValue = new int[8];
 		int numberOfHouses;
 		int priceOfBuilding;
-		
+
 		numberOfHouses = toolbox.getHousesOnProperty(currentPlayer, fieldNumber);
 		if (numberOfHouses < 5) {
 			returnValue[6]++;
 		}
-		
+
 	}
-	
+
 	//Sælg en bygning til halv pris og overfør pengene til ejeren
 	public void sellBuilding(int currentPlayer, int fieldNumber, Player[] players) {
 		int numberOfHouses;
@@ -77,5 +75,5 @@ public class TradeCTRL {
 	}
 
 
-	
+
 }

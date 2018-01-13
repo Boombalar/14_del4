@@ -14,7 +14,7 @@ public class ViewCTRLTEST {
 	Player[] players;
 
 	ViewCTRL view;
-	ChanceCardCTRL chanceCard;
+	ChanceCardDeckCTRL chanceCard;
 	DieCup dieCup;
 
 	public ViewCTRLTEST() {
@@ -45,7 +45,7 @@ public class ViewCTRLTEST {
 		view.makeGuiPlayers(players);
 
 		//Lav chancekort CTRL.
-		chanceCard = new ChanceCardCTRL();
+		chanceCard = new ChanceCardDeckCTRL();
 		view.showChanceCard(chanceCard.getDescription());// Vis et chancekort er testet
 		System.out.println("Chancekort er testet");
 

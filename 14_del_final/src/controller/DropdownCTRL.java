@@ -7,17 +7,13 @@ public class DropdownCTRL {
 	DieCup dieCup;
 	LandOnFieldCTRL landonfield;
 	Toolbox toolbox;
-	BankruptcyCTRL bankruptcy;
 	TradeCTRL trade;
-	ChanceCardCTRL chanceCard;
 
-	public DropdownCTRL(DieCup dieCup, LandOnFieldCTRL landonfield, Toolbox toolbox, BankruptcyCTRL bankruptcy, TradeCTRL trade, ChanceCardCTRL chanceCard) {
+	public DropdownCTRL(DieCup dieCup, LandOnFieldCTRL landonfield, Toolbox toolbox, TradeCTRL trade) {
 		this.dieCup = dieCup;
 		this.landonfield = landonfield;
 		this.toolbox = toolbox;
-		this.bankruptcy = bankruptcy;
 		this.trade = trade;
-		this.chanceCard = chanceCard;
 	}
 	boolean backToDropdown = false;
 
