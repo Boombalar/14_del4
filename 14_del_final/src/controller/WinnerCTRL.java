@@ -5,15 +5,13 @@ import java.util.concurrent.TimeUnit;
 import view.*;
 
 public class WinnerCTRL {
-	
-	public WinnerCTRL (){	
-		
+
+	public WinnerCTRL (){
 	}
 
 	public boolean checkWinner(int numberOfPlayers, Player[] players) {
 		int numberOfPlayersBroke = 0;
 		boolean winner = false;
-
 		for (int i = 1; i <= numberOfPlayers; i++) {
 			if (players[i].getBroke())
 				numberOfPlayersBroke++;
@@ -41,5 +39,4 @@ public class WinnerCTRL {
 			}
 		}
 	}
-
 }

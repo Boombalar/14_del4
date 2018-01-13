@@ -19,7 +19,6 @@ public class ActionCTRL {
 	private TradeCTRL trade;
 	private WinnerCTRL winner;
 	private BankruptcyCTRL bankruptcy;
-	
 
 	public ActionCTRL() {
 		initialiseGame();
@@ -145,4 +144,4 @@ public class ActionCTRL {
 			}
 		}
 	}
-}
+//}

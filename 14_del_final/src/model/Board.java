@@ -9,7 +9,7 @@ public class Board {
 
 		//Opsætning er som følgende
 		//field[<nummer i arrayet>] = new (<klassen som feltet hører til>, <navn>, <data som stammer fra hver af felternes klasses opbygning af arrayet>)
-//
+
 //		field[0] = new StartField("Start",5,0);
 //		field[1] = new PropertyFields("Rødovrevej",0,1,1200,0,1,50,250,750,2250,4000,6000,0,1000);
 //		field[2] = new ChanceField("?",4,2);

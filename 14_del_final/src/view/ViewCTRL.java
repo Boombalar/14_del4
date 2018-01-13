@@ -51,8 +51,6 @@ public class ViewCTRL {
 
 			//Bestem farve til grupperne
 			switch(fieldType) {
-
-
 			case 0: //PropertyField
 				int groupNumber = (((PropertyFields)fields[i]).getGroupNumber());
 				switch(groupNumber) {
@@ -305,7 +303,6 @@ public class ViewCTRL {
 				updatePlayerAccount(playerCount, players[playerCount].getBalance());
 				if (players[playerCount].getBroke()) {
 					turnOffPlayer(playerCount);
-
 				}
 			}
 		}
