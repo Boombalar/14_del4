@@ -139,7 +139,7 @@ public class ViewCTRL {
 		for (int counter = 1 ; counter <= players.length-1 ; counter++) {
 			guiCar[counter] = new GUI_Car();
 			guiCar[counter].setPrimaryColor(carColor[counter]);
-			guiPlayer[counter] = new GUI_Player(players[counter].getPlayerName(),players[counter].getBalance(),guiCar[counter]);
+			guiPlayer[counter] = new GUI_Player(counter + ". " + players[counter].getPlayerName(),players[counter].getBalance(),guiCar[counter]);
 			gui.addPlayer(guiPlayer[counter]);
 			gui.getFields()[players[counter].getPosition()].setCar(guiPlayer[counter], true);
 		}
