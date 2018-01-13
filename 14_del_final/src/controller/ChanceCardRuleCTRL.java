@@ -22,7 +22,6 @@ public class ChanceCardRuleCTRL {
 	 * @param currentPlayer - modtager et playernummer.
 	 * @param  
 	 */
-
 	public void chanceCardRules (int currentPlayer, Player[] players,Field[] fields,ViewCTRL view) {
 		int chanceCardType = chancecarddeck.getType();
 		int[] chanceCardValueArray = chancecarddeck.getReturnValue();
@@ -79,12 +78,12 @@ public class ChanceCardRuleCTRL {
 		int[] chanceCardValueArray = chancecarddeck.getReturnValue();
 		int moveToField = chanceCardValueArray[0];
 		int moveToType = chanceCardValueArray[1];
-
+		
 		switch (moveToType){
 		case 1:
 			// Blot flyttekort til et bestemt felt.
 			view.writeText(players[currentPlayer].getPlayerName() + " flyttes til " + fields[moveToField].getName());
-			if(toolbox.CheckForPassingStart(playerPosition, moveToField)) {
+			if(playerPosition > moveToField) {
 				players[currentPlayer].setPosition(moveToField-40);
 				view.updatePlayerPosition(currentPlayer, playerPosition, (moveToField-40));
 			} else {
