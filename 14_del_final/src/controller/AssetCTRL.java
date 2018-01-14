@@ -2,7 +2,7 @@ package controller;
 
 import model.*;
 
-public class Toolbox {
+public class AssetCTRL {
 
 	/**
 	 * Hvis playerNumber ejer feltet, så får man antal huse på feltet.
@@ -150,20 +150,6 @@ public class Toolbox {
 		}
 		return returnValue;
 	}
-
-	/**
-	 * 
-	 * @param oldPosition
-	 * @param newPosition
-	 * @return
-	 */
-	public boolean checkForPassingStart(int oldPosition, int newPosition) {
-		Boolean didPassStart = false;
-		if (newPosition < oldPosition) {
-			didPassStart = true;
-		}
-		return didPassStart;
-	}	
 
 	//Check om man ejer alle grunde i en gruppe af PropertyFields.
 	/**

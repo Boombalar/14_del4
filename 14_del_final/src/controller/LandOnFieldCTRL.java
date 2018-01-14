@@ -5,7 +5,7 @@ import view.*;
 
 public class LandOnFieldCTRL {
 
-	private Toolbox toolbox;
+	private AssetCTRL toolbox;
 	private ChanceDeckCTRL chancedeck;
 	private BankruptcyCTRL bankruptcy;
 
@@ -15,7 +15,7 @@ public class LandOnFieldCTRL {
 	 * @param bankruptcy - indtast objectnavn af typen BankruptcyCTRL
 	 * @param chancecarddeck - indtast objectnavn af typen ChanceCardDeckCTRL
 	 */
-	public LandOnFieldCTRL (Toolbox toolbox,BankruptcyCTRL bankruptcy, ChanceDeckCTRL chancedeck) {
+	public LandOnFieldCTRL (AssetCTRL toolbox,BankruptcyCTRL bankruptcy, ChanceDeckCTRL chancedeck) {
 		this.toolbox = toolbox;	
 		this.chancedeck = chancedeck;
 		this.bankruptcy = bankruptcy;
@@ -72,7 +72,21 @@ public class LandOnFieldCTRL {
 			System.out.println("Felt-typen der pharses er ikke korrekt.");
 
 		}
-	}	
+	}
+	
+	/**
+	 * 
+	 * @param oldPosition
+	 * @param newPosition
+	 * @return
+	 */
+	public boolean checkForPassingStart(int oldPosition, int newPosition) {
+		Boolean didPassStart = false;
+		if (newPosition < oldPosition) {
+			didPassStart = true;
+		}
+		return didPassStart;
+	}
 
 	/**
 	 * PropertyField()
@@ -295,7 +309,7 @@ public class LandOnFieldCTRL {
 		switch (moveToType){
 		case 1:
 			// Blot flyttekort til et bestemt felt.
-			if(toolbox.checkForPassingStart(playerPosition, moveToField)) {
+			if(checkForPassingStart(playerPosition, moveToField)) {
 				view.writeText(players[currentPlayer].getPlayerName() + " flyttes til " + fields[moveToField].getName() + ", men passerer samtidigt også start og får 4000 kr.");
 				players[currentPlayer].recieveMoney(4000);
 				players[currentPlayer].setPosition(moveToField);

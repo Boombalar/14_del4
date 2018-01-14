@@ -5,10 +5,10 @@ import view.*;
 
 public class BankruptcyCTRL {
 
-	Toolbox toolbox;
+	AssetCTRL toolbox;
 	TradeCTRL trade;
 
-	public BankruptcyCTRL (Toolbox toolbox, TradeCTRL trade) {
+	public BankruptcyCTRL (AssetCTRL toolbox, TradeCTRL trade) {
 		this.toolbox = toolbox;
 		this.trade = trade;
 	}

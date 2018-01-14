@@ -13,7 +13,7 @@ public class ActionCTRL {
 	private ViewCTRL view;
 	private ChanceDeckCTRL chancedeck;
 	private DieCup dieCup;
-	private Toolbox toolbox;
+	private AssetCTRL toolbox;
 	private JailCTRL jail;
 	private DropdownCTRL dropdown;
 	private LandOnFieldCTRL landonfield;
@@ -32,7 +32,7 @@ public class ActionCTRL {
 		board = new Board();		 //Lav bræt model.
 		fields = board.getFields();
 		winner = new WinnerCTRL();
-		toolbox = new Toolbox();
+		toolbox = new AssetCTRL();
 		trade = new TradeCTRL(toolbox);
 		bankruptcy = new BankruptcyCTRL(toolbox, trade);
 		jail = new JailCTRL(bankruptcy);

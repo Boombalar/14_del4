@@ -6,10 +6,10 @@ import view.*;
 public class DropdownCTRL {
 	DieCup dieCup;
 	LandOnFieldCTRL landonfield;
-	Toolbox toolbox;
+	AssetCTRL toolbox;
 	TradeCTRL trade;
 
-	public DropdownCTRL(DieCup dieCup, LandOnFieldCTRL landonfield, Toolbox toolbox, TradeCTRL trade) {
+	public DropdownCTRL(DieCup dieCup, LandOnFieldCTRL landonfield, AssetCTRL toolbox, TradeCTRL trade) {
 		this.dieCup = dieCup;
 		this.landonfield = landonfield;
 		this.toolbox = toolbox;

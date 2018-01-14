@@ -3,13 +3,13 @@ package controller;
 import model.*;
 
 public class TradeCTRL {
-	Toolbox toolbox;
+	AssetCTRL toolbox;
 
 	/**
 	 * Konstruktør til TradeCTRL
 	 * @param toolbox - indtast objectnavn af typen Toolbox
 	 */
-	public TradeCTRL (Toolbox toolbox) {
+	public TradeCTRL (AssetCTRL toolbox) {
 		this.toolbox = toolbox;
 	}
 
