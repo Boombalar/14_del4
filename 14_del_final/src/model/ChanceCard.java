@@ -1,6 +1,6 @@
 package model;
 
-public class ChanceCard {
+public abstract class ChanceCard {
 
 	protected int number; //Nummeret på chancekortet
 	protected int type; //Typen på chancekortet

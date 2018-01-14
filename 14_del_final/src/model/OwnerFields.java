@@ -1,5 +1,5 @@
 package model;
-public class OwnerFields extends Field {
+public abstract class OwnerFields extends Field {
 
 	protected int propertyValue;
 	protected int owner;

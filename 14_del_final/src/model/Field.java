@@ -1,6 +1,6 @@
 package model;
 
-public class Field {
+public abstract class Field {
 	protected String name; //Navnet på det givne felt
 	protected int type; //Typen på feltet.
 	protected int number; //Nummeret feltet har på brættet.
