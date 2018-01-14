@@ -38,41 +38,42 @@ public class BankruptcyCTRL {
 	}
 
 	public boolean raiseMoney(int currentPlayer, int amountToPay, Player[] players, Field[] fields) {
+		boolean returnValue = false;
 		int numberOfHouses;
 		int priceOfHouse;
 		int priceOfProperty;
-		int playerbalance = players[currentPlayer].getBalance();
-		int amountNeeded = amountToPay - playerbalance;
 
 		//Vi sælger huse
 		for (int fieldCount = 0 ; fieldCount<=39;fieldCount++) {
-			if(fields[fieldCount] instanceof PropertyFields &&  amountNeeded < 0) {					
+			if(fields[fieldCount] instanceof PropertyFields &&  checkForAvailability(currentPlayer, amountToPay, players)==false) {					
 				numberOfHouses = toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields);		
 				//Vi sælger husene 1 ad gangen
 				for (int houseCount = 1; houseCount <= numberOfHouses; houseCount++ ) {
 					trade.sellBuilding(currentPlayer, fieldCount, players, fields);
 					priceOfHouse = toolbox.getHousePrice(fieldCount, fields)/2;
-					amountNeeded = amountNeeded - priceOfHouse;
-					if (amountNeeded < 0) {
+					if (	checkForAvailability(currentPlayer, amountToPay, players)) {
+						returnValue = true;
 						break;
 					}
 				}
 			}
+			
 		}
 
-		if (amountNeeded > 0 && toolbox.checkPropertySaleValue(amountNeeded, currentPlayer, fields)) {
+		int amountNeeded = amountToPay - players[currentPlayer].getBalance();
+		if (checkForAvailability(currentPlayer, amountToPay, players)==false && (toolbox.checkPropertySaleValue(amountNeeded, currentPlayer, fields))==true) {
 			for (int fieldCount = 0; fieldCount<=39;fieldCount++) {
-				if(fields[fieldCount] instanceof PropertyFields && amountNeeded > 0 && ((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+				if(fields[fieldCount] instanceof OwnerFields && checkForAvailability(currentPlayer, amountToPay, players) && ((OwnerFields)fields[fieldCount]).getOwner() == currentPlayer) {
 					priceOfProperty = ((OwnerFields)fields[fieldCount]).getPropertyValue();
 					trade.sellProperty(currentPlayer, 0, fieldCount, players, fields);
-					amountNeeded = amountNeeded - priceOfProperty;
-					if (amountNeeded < 0) {
+					if (checkForAvailability(currentPlayer, amountToPay, players)) {
+						returnValue = true;
 						break;
 					}
 				}
 			}
 		}
-		return false;
+		return returnValue;
 	}
 
 	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields, ViewCTRL view) {
