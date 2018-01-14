@@ -10,12 +10,17 @@ public class ChanceDeckCTRL {
 	int cardNumber = 0;
 	int[] shuffledDeck = new int[32];
 
+	/**
+	 * ChanceDeckCTRL() - Opretter alle chancekortene. 
+	 */
 	public ChanceDeckCTRL () {
 		ChanceDeck deck = new ChanceDeck();
 		chanceCard = deck.getChanceCards();
 		shuffle();
 	}
-
+/**
+ * shuffle() - blander alle chancekortene
+ */
 	private void shuffle() {
 		int plads2=0;
 		int plads=0;
@@ -39,7 +44,9 @@ public class ChanceDeckCTRL {
 			shuffledDeck[plads2]=tal;
 		}
 	}
-
+/**
+ * draw() - Trækker et chancekort.
+ */
 	public void draw() {
 
 		if (cardPointer > 31) {
@@ -49,15 +56,24 @@ public class ChanceDeckCTRL {
 		cardNumber = shuffledDeck[cardPointer];
 		cardPointer = cardPointer + 1;
 	}
-
+/**
+ * 
+ * @return
+ */
 	public int[] getReturnValue() {
 		return chanceCard[cardNumber].getReturnValue();
 	}
-
+/**
+ * 
+ * @return
+ */
 	public String getDescription() {
 		return chanceCard[cardNumber].getDescription();
 	}
-
+/**
+ * 
+ * @return
+ */
 	public int getType() {
 		return chanceCard[cardNumber].getType();
 	}
