@@ -264,7 +264,7 @@ public class LandOnFieldCTRL {
 			if ((transactionValue) < 0) {
 				int realvalue = (transactionValue * (-1)); 
 				view.writeText("Der trækkes " + realvalue + "kr. fra " + players[currentPlayer].getPlayerName() + "'s konto.");
-				bankruptcy.payMoney(currentPlayer, owner, (realvalue), players, fields, view);
+				bankruptcy.payMoney(currentPlayer, owner, realvalue, players, fields, view);
 
 			} else {
 				view.writeText("Der tilføjes " + transactionValue + "kr. til " + players[currentPlayer].getPlayerName() + "'s konto.");
