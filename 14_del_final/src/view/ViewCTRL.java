@@ -118,7 +118,10 @@ public class ViewCTRL {
 		}
 		gui = new GUI(guiFields);
 	}
-
+/**
+ * Laver spiller så man kan se dem på brættet.
+ * @param players objekt at Player[]
+ */
 	public void makeGuiPlayers(Player[] players) {
 
 		this.players = players;
@@ -205,12 +208,12 @@ public class ViewCTRL {
 	}
 
 	/**
-	 * 
-	 * @param playerName
-	 * @param newName
+	 * updatere og overskriver navn så det vises på brættet.
+	 * @param playerNumber spiller nummer
+	 * @param newName spiller navn
 	 */
-	public void updatePlayerName(int playerName, String newName) {
-		this.guiPlayer[playerName].setName(newName);
+	public void updatePlayerName(int playerNumber, String newName) {
+		this.guiPlayer[playerNumber].setName(newName);
 	}
 	
 	/**
@@ -221,7 +224,11 @@ public class ViewCTRL {
 	public void updatePlayerAccount(int player, int amount) {
 		guiPlayer[player].setBalance(amount);
 	}
-
+/**
+ * Fjerner bilen fra brættet
+ * @param player int som er aktivspiller.
+ * @param oldPosition int som den gamle position som spilleren kom fra.
+ */
 	public void removePlayerCar(int player, int oldPosition) {
 		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
 	}

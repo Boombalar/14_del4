@@ -235,8 +235,9 @@ public class DropdownCTRL {
 			}
 		}
 		else {
-			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
+			view.writeText("Du ejer ikke nogle grunde, som du kan sælge eller har ikke råd");
 		}
+		
 	}
 	/**
 	 * Går tilbage til dropdownmenu.
