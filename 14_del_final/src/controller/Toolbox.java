@@ -5,11 +5,11 @@ import model.*;
 public class Toolbox {
 
 	/**
-	 * getHousesOnPropertyWithOwner() - Hvis playerNumber ejer feltet, så får man antal huse på feltet.
-	 * @param owner - spillernummeret der skal trækkes info på.
-	 * @param fieldNumber - feltnummeret hvor der skal trækkes info på.
-	 * @param fields - indtast objectnavn af typen Field[]
-	 * @return - Returner hvor mange huse der er på grunden, hvis man ejer den.
+	 * Hvis playerNumber ejer feltet, så får man antal huse på feltet.
+	 * @param owner spillernummeret der skal trækkes info på.
+	 * @param fieldNumber feltnummeret hvor der skal trækkes info på.
+	 * @param fields indtast objectnavn af typen Field[]
+	 * @return Returner hvor mange huse der er på grunden, hvis man ejer den.
 	 */
 	public int getHousesOnPropertyWithOwner(int owner, int fieldNumber, Field[] fields) {
 		int value = 0;
@@ -21,21 +21,21 @@ public class Toolbox {
 	}
 
 	/**
-	 * setHousesOnProperty() - Overskriver det antal huse der står på grunden.
-	 * @param amountOfHouses - Antal af huse der skal sættes til at være på ejerfeltet.
-	 * @param fieldNumber - hvilket feltnummer der skal sættes huse på.
-	 * @param fields - indtast objectnavn af typen Field[]
+	 * Overskriver det antal huse der står på grunden.
+	 * @param amountOfHouses Antal af huse der skal sættes til at være på ejerfeltet.
+	 * @param fieldNumber hvilket feltnummer der skal sættes huse på.
+	 * @param fields indtast objectnavn af typen Field[]
 	 */
 	public void setHousesOnProperty(int amountOfHouses, int fieldNumber, Field[] fields) {
 		((PropertyFields)fields[fieldNumber]).setNumberOfHouses(amountOfHouses);
 	}
 
 	/**
-	 * getHousesOnGroup() - hvis playerNumber er ejer, så træk info på hvor mange huse der er på en gruppe af grunde.
-	 * @param owner - ejeren man sammenligner info på, sammen med feltet.
-	 * @param fieldNumber - feltnummeret der skal undersøges.
-	 * @param fields - indtast objectnavn af typen Field[]
-	 * @return - Returner hvor mange huse der er på en hel gruppe, hvis man ejer gruppen.
+	 * Hvis playerNumber er ejer, så træk info på hvor mange huse der er på en gruppe af grunde.
+	 * @param owner ejeren man sammenligner info på, sammen med feltet.
+	 * @param fieldNumber feltnummeret der skal undersøges.
+	 * @param fields indtast objectnavn af typen Field[]
+	 * @return Returner hvor mange huse der er på en hel gruppe, hvis man ejer gruppen.
 	 */
 	public int getHousesOnGroup(int owner, int fieldNumber, Field[] fields) {
 		int returnValue=0;
@@ -52,10 +52,10 @@ public class Toolbox {
 	}
 
 	/**
-	 * getHousePrice() - få husprisen på et felt.
-	 * @param fieldNumber - feltet man skal undersøge
-	 * @param fields - indtast objectnavn af typen Field[]
-	 * @return - prisen på at bygge huse, på det pågældende felt.
+	 * Få husprisen på et felt.
+	 * @param fieldNumber feltet man skal undersøge
+	 * @param fields indtast objectnavn af typen Field[]
+	 * @return prisen på at bygge huse, på det pågældende felt.
 	 */
 	public int getHousePrice(int fieldNumber, Field[] fields) {
 		int[] returnValue;
@@ -64,10 +64,10 @@ public class Toolbox {
 	}
 
 	/**
-	 * getNumberOfOwnedPropertiesInGroup() - finder hvor mange felter der ejes af owner, i en gruppe.
-	 * @param owner - ejeren der skal undersøges.
-	 * @param fieldNumber - feltnummeret, hvorfra man finder den ønskede gruppe.
-	 * @param fields - indtast objectnavn af typen Field[]
+	 * Finder hvor mange felter der ejes af owner, i en gruppe.
+	 * @param owner ejeren der skal undersøges.
+	 * @param fieldNumber feltnummeret, hvorfra man finder den ønskede gruppe.
+	 * @param fields indtast objectnavn af typen Field[]
 	 * @return antallet af ejede felter.
 	 */
 	public int getNumberOfOwnedPropertiesInGroup(int owner, int fieldNumber, Field[] fields) {
@@ -88,7 +88,7 @@ public class Toolbox {
 	/**
 	 * 
 	 * @param playerNumber
-	 * @param fields - indtast objectnavn af typen Field[]
+	 * @param fields indtast objectnavn af typen Field[]
 	 * @return
 	 */
 	public int getNumberOfHousesFromPlayer(int playerNumber, Field[] fields) {
