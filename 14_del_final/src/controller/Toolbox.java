@@ -137,8 +137,8 @@ public class Toolbox {
 		int priceOfProperty;
 
 		for (int fieldCount = 0; fieldCount<=39;fieldCount++) {
-			if(fields[fieldCount] instanceof PropertyFields && amountNeeded > 0) {
-				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
+			if(fields[fieldCount] instanceof OwnerFields && amountNeeded > 0) {
+				if (((OwnerFields)fields[fieldCount]).getOwner() == currentPlayer) {
 					priceOfProperty = ((OwnerFields)fields[fieldCount]).getPropertyValue();
 					amountNeeded = amountNeeded - priceOfProperty;
 					if (amountNeeded < 0) {

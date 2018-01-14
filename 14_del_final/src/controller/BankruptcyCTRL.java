@@ -15,7 +15,7 @@ public class BankruptcyCTRL {
 
 
 	public void payMoney(int currentPlayer, int toPlayer, int amount, Player[] players, Field[] fields, ViewCTRL view) {
-		if (checkForAvailability(currentPlayer, amount, players) == false) {
+		if (checkForEnoughMoneyOnAccount(currentPlayer, amount, players) == false) {
 			if (raiseMoney(currentPlayer, toPlayer, amount, players, fields) == false){
 				bankruptcy(currentPlayer, toPlayer, players, fields, view);
 			}
@@ -29,7 +29,7 @@ public class BankruptcyCTRL {
 	}
 
 	//Check for om man har penge nok til at foretage en transaktion mellem to spillere.
-	public boolean checkForAvailability(int currentPlayer, int amount, Player[] players) {
+	public boolean checkForEnoughMoneyOnAccount(int currentPlayer, int amount, Player[] players) {
 		boolean returnValue = true;
 		if ((players[currentPlayer].getBalance() - amount) < 0) {
 			returnValue = false;
@@ -38,37 +38,45 @@ public class BankruptcyCTRL {
 	}
 
 	public boolean raiseMoney(int currentPlayer, int toPlayer, int amountToPay, Player[] players, Field[] fields) {
-		boolean returnValue = false;
-		int numberOfHouses;
+		int numberOfHouses = 0;
 
 		//Vi sælger huse
 		for (int fieldCount = 0 ; fieldCount<=39;fieldCount++) {
-			if(fields[fieldCount] instanceof PropertyFields &&  checkForAvailability(currentPlayer, amountToPay, players)==false) {					
+			//Er feltet et propertyfelt. Hvis vi ikke ejer feltet, så er numberOfHouses = 0
+			if(fields[fieldCount] instanceof PropertyFields) {					
 				numberOfHouses = toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields);		
-				//Vi sælger husene 1 ad gangen
-				for (int houseCount = 1; houseCount <= numberOfHouses; houseCount++ ) {
-					trade.sellBuilding(currentPlayer, fieldCount, players, fields);
-					trade.safeTransferMoney(currentPlayer, toPlayer, amountToPay, players);
-					break;
+				//Er der huse på feltet ?
+				if (numberOfHouses > 0) {
+					//Vi sælger husene 1 ad gangen
+					for (int houseCount = 1; houseCount <= numberOfHouses; houseCount++ ) {
+						trade.sellBuilding(currentPlayer, fieldCount, players, fields);
+						//Check for om salget af huset gav nok penge.
+						if (checkForEnoughMoneyOnAccount(currentPlayer, amountToPay, players)) {
+							trade.safeTransferMoney(currentPlayer, toPlayer, amountToPay, players);
+							return true;
+						}
+					}
 				}
 			}
-			returnValue = true;
 		}	
 
 
 		int amountToRaise = amountToPay - players[currentPlayer].getBalance();
-		if (checkForAvailability(currentPlayer, amountToPay, players)==false && (toolbox.checkPropertySaleValue(amountToRaise, currentPlayer, fields))==true) {
+		// Hvis vi kan rejse de penge der mangler ved at sælge grunde
+		if ((toolbox.checkPropertySaleValue(currentPlayer, amountToRaise, fields))==true) {
+
+			//Vi begynder at sælge grunde indtil der er solgt nok grunde til at vi kan betale.
 			for (int fieldCount = 0; fieldCount<=39;fieldCount++) {
-				if(fields[fieldCount] instanceof OwnerFields && checkForAvailability(currentPlayer, amountToPay, players) && ((OwnerFields)fields[fieldCount]).getOwner() == currentPlayer) {
+				if(fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner() == currentPlayer  && (checkForEnoughMoneyOnAccount(currentPlayer, amountToPay, players) == false)) {
 					trade.sellProperty(currentPlayer, 0, fieldCount, players, fields);
-					trade.safeTransferMoney(currentPlayer, toPlayer, amountToPay, players);
-					break;
 				}
-				returnValue = true;
 			}
+			trade.safeTransferMoney(currentPlayer, toPlayer, amountToPay, players);
+			return true;
 		}
-		return returnValue;
+		return false;
 	}
+
 
 	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		trade.transferAssets(currentPlayer, toPlayer, players, fields);
