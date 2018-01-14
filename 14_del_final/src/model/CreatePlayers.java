@@ -27,4 +27,5 @@ public class CreatePlayers {
 	public Player[] getPlayers() {
 		return players;
 	}
+
 }

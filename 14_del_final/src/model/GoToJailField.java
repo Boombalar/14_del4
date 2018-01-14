@@ -22,4 +22,5 @@ public class GoToJailField extends Field{
 	public int[] getReturnValue() {
 		return this.returnValue;	
 	}
+
 }

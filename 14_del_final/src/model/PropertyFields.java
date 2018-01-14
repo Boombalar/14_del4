@@ -45,4 +45,5 @@ public class PropertyFields extends OwnerFields {
 	public void setNumberOfHouses(int returnValue) {
 		this.rent[6] = returnValue;
 	}
+	
 }

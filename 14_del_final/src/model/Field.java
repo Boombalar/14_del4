@@ -49,4 +49,5 @@ public abstract class Field {
 		int[] returnValue = {0};
 		return returnValue;
 	}
+
 }

@@ -50,4 +50,5 @@ public abstract class OwnerFields extends Field {
 	public int getGroupNumber() {
 		return this.groupNumber;
 	}
+
 }

@@ -22,4 +22,5 @@ public class TaxField extends Field{
 	public int[] getReturnValue() {
 		return this.returnValue;
 	}
+	
 }

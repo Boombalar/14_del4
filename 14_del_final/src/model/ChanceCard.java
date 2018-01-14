@@ -63,4 +63,5 @@ public abstract class ChanceCard {
 		int[] returnvalue = {0,1};
 		return returnvalue;
 	}
+	
 }

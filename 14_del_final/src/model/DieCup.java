@@ -56,4 +56,5 @@ public class DieCup {
 	public int getDie2Value () {
 		return die2;
 	}
+
 }

@@ -24,4 +24,5 @@ public class TaxCard extends ChanceCard {
 	public int[] getReturnValue() {
 		return this.returnvalue;
 	}
+	
 }

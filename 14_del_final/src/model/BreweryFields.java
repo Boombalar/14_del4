@@ -29,4 +29,5 @@ public class BreweryFields extends OwnerFields {
 	public int[] getReturnValue() {
 		return this.multiplier;
 	}
+
 }

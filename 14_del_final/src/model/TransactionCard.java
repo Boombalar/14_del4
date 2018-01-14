@@ -23,4 +23,5 @@ public class TransactionCard extends ChanceCard {
 	public int[] getReturnValue() {
 		return this.returnvalue;
 	}
+	
 }

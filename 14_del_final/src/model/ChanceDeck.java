@@ -8,9 +8,9 @@ public class ChanceDeck {
 	 * ChanceCardDeck() - Konstruktør til ChanceCardDeck
 	 */
 	public ChanceDeck() {
-	//Opsætning er som følgende
-	//De sidste pladser i arrayet bliver bestemt i de klasser der nedarves.
-	//chancecards[<nr. i arrayet>] = new <klassen som chancekortet hører til> (<nr. på kortet>, <typen 1-4>, <beskrivelsen af kortet>, <eventuel betaling eller feltet der skal rykkes til>)
+		//Opsætning er som følgende
+		//De sidste pladser i arrayet bliver bestemt i de klasser der nedarves.
+		//chancecards[<nr. i arrayet>] = new <klassen som chancekortet hører til> (<nr. på kortet>, <typen 1-4>, <beskrivelsen af kortet>, <eventuel betaling eller feltet der skal rykkes til>)
 		chancecards[0] = new TransactionCard(0,1,"De har måttet vedtage en parkeringsbøde. Betal 200 kr.",-200);
 		chancecards[1] = new TransactionCard(1,1,"Betal kr. 3.000 for reperation af Deres vogn",-3000);
 		chancecards[2] = new TransactionCard(2,1,"Deres præmieobligation er kommet ud. De modtager kr. 1.000 af banken.",1000);
@@ -53,4 +53,5 @@ public class ChanceDeck {
 	public ChanceCard[] getChanceCards() {
 		return chancecards;
 	}
+	
 }

@@ -33,4 +33,5 @@ public class ShippingFields extends OwnerFields {
 	public int[] getReturnValue() {
 		return this.rent;
 	}
+	
 }

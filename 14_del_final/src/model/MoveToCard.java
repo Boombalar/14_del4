@@ -25,4 +25,5 @@ public class MoveToCard extends ChanceCard{
 	public int[] getReturnValue() {
 		return this.returnvalue;
 	}
+	
 }
