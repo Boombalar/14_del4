@@ -5,18 +5,34 @@ import model.*;
 public class TradeCTRL {
 	Toolbox toolbox;
 
+	/**
+	 * Konstruktør til TradeCTRL
+	 * @param toolbox - indtast objectnavn af typen Toolbox
+	 */
 	public TradeCTRL (Toolbox toolbox) {
 		this.toolbox = toolbox;
 	}
 
+	/**
+	 * safeTransferMoney() - overfører penge fra 1 konto til en anden.
+	 * @param fromPlayer - spillernummer på den der skal trækkes i penge.
+	 * @param toPlayer - spillernummer på den der skal modtage penge.
+	 * @param amount - beløbet der skal overføres.
+	 * @param players - indtast objectnavn af typen Player[]
+	 */
 	public void safeTransferMoney(int fromPlayer, int toPlayer, int amount, Player[] players) {
 		players[fromPlayer].removeMoney(amount);
 		players[toPlayer].recieveMoney(amount);
 	}
 
-	//Overfører aktiver fra 1 spiller til en anden.
-	//hvis toPlayer er 0 så gives grundene tilbage til spillet
-	//og der gives ikke penge til anden spiller.
+	/**
+	 * transferAssets() - Overfører aktiver fra 1 spiller til en anden.
+	 * Hvis toPlayer er 0 så gives grundene tilbage til spillet, og der gives ikke penge til anden spiller.
+	 * @param fromPlayer - spillernummer på den der skal trækkes i penge.
+	 * @param toPlayer - spillernummer på den der skal modtage penge.
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param fields - indtast objectnavn af typen Field[]
+	 */
 	public void transferAssets(int fromPlayer, int toPlayer, Player[] players, Field[] fields) {
 		for(int fieldCount = 0;fieldCount <=39;fieldCount++) {
 			if (fields[fieldCount] instanceof OwnerFields) {
@@ -29,32 +45,49 @@ public class TradeCTRL {
 		players[fromPlayer].removeMoney(players[fromPlayer].getBalance());
 	}
 
-	public void buyBuilding(int currentPlayer, int fieldNumber, Player[] players) {
+	/**
+	 * buyBuilding() - køber bygning til et felt.
+	 * @param currentPlayer - den spiller der skal købe.
+	 * @param fieldNumber - feltet der skal bygges på
+	 * @param players - indtast objectnavn af typen Player[]
+	 */
+	public void buyBuilding(int currentPlayer, int fieldNumber, Player[] players, Field[] fields) {
 		int[] returnValue = new int[8];
 		int numberOfHouses;
-		int priceOfBuilding;
 
-		numberOfHouses = toolbox.getHousesOnProperty(currentPlayer, fieldNumber);
+		numberOfHouses = toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldNumber, fields);
 		if (numberOfHouses < 5) {
 			returnValue[6]++;
 		}
-
 	}
 
-	//Sælg en bygning til halv pris og overfør pengene til ejeren
-	public void sellBuilding(int currentPlayer, int fieldNumber, Player[] players) {
+	/**
+	 * sellBuilding() - Sælg en bygning til halv pris og overfør pengene til ejeren
+	 * @param currentPlayer - den spiller der skal sælge.
+	 * @param fieldNumber - feltet hvor der skal fjernes et hus
+	 * @param players - indtast objektnavn af typen Player[]
+	 */
+	public void sellBuilding(int currentPlayer, int fieldNumber, Player[] players, Field[] fields) {
 		int numberOfHouses;
 		int priceOfBuilding;
 
-		numberOfHouses = toolbox.getHousesOnProperty(currentPlayer, fieldNumber);
+		numberOfHouses = toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldNumber, fields);
 		if (numberOfHouses > 0) {
-			toolbox.setHousesOnProperty(numberOfHouses-1, fieldNumber);
-			priceOfBuilding = toolbox.getHousePrice(fieldNumber)/2;
+			toolbox.setHousesOnProperty(numberOfHouses-1, fieldNumber, fields);
+			priceOfBuilding = toolbox.getHousePrice(fieldNumber, fields)/2;
 			players[currentPlayer].recieveMoney(priceOfBuilding);		
 		}
 	}
 
 	// sælg en grund til en spiller eller banken. Hvis toPlayer = 0 så overføres pengene ikke til nogen
+	/**
+	 * 
+	 * @param currentPlayer - den spiller der skal sælge
+	 * @param toPlayer - den spiller der skal modtage salget.
+	 * @param fieldNumber - feltet hvor der skal fjernes et hus
+	 * @param players - indtast objektnavn af typen Player[]
+	 * @param fields - indtast objektnavn af typen Field[]
+	 */
 	public void sellProperty(int currentPlayer, int toPlayer, int fieldNumber, Player[] players, Field[] fields) {
 		int priceOfProperty;
 
@@ -73,7 +106,4 @@ public class TradeCTRL {
 			((OwnerFields)fields[fieldNumber]).setOwner(toPlayer);
 		}
 	}
-
-
-
 }

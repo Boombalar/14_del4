@@ -47,11 +47,11 @@ public class BankruptcyCTRL {
 		//Vi sælger huse
 		for (int fieldCount = 0 ; fieldCount<=39;fieldCount++) {
 			if(fields[fieldCount] instanceof PropertyFields &&  amountNeeded < 0) {					
-				numberOfHouses = toolbox.getHousesOnProperty(currentPlayer, fieldCount);		
+				numberOfHouses = toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields);		
 				//Vi sælger husene 1 ad gangen
 				for (int houseCount = 1; houseCount <= numberOfHouses; houseCount++ ) {
-					trade.sellBuilding(currentPlayer, fieldCount, players);
-					priceOfHouse = toolbox.getHousePrice(fieldCount)/2;
+					trade.sellBuilding(currentPlayer, fieldCount, players, fields);
+					priceOfHouse = toolbox.getHousePrice(fieldCount, fields)/2;
 					amountNeeded = amountNeeded - priceOfHouse;
 					if (amountNeeded < 0) {
 						break;
@@ -60,7 +60,7 @@ public class BankruptcyCTRL {
 			}
 		}
 
-		if (amountNeeded > 0 && toolbox.checkPropertySaleValue(amountNeeded, currentPlayer)) {
+		if (amountNeeded > 0 && toolbox.checkPropertySaleValue(amountNeeded, currentPlayer, fields)) {
 			for (int fieldCount = 0; fieldCount<=39;fieldCount++) {
 				if(fields[fieldCount] instanceof PropertyFields && amountNeeded > 0 && ((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer) {
 					priceOfProperty = ((OwnerFields)fields[fieldCount]).getPropertyValue();

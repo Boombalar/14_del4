@@ -56,7 +56,7 @@ public class DropdownCTRL {
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {//Går hele brættet igennem
 			if (fields[fieldCount] instanceof PropertyFields) {
 				//check om man ejer gruppen
-				if (toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount, fields) == true && toolbox.getHousesOnProperty(currentPlayer, fieldCount) != 5 && toolbox.getHousePrice(fieldCount)<=players[currentPlayer].getBalance()) {
+				if (toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount, fields) == true && toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields) != 5 && toolbox.getHousePrice(fieldCount, fields)<=players[currentPlayer].getBalance()) {
 					amountOfProperties++;
 				}
 			}
@@ -72,7 +72,7 @@ public class DropdownCTRL {
 		//3-Rødovrevej
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			if (fields[fieldCount] instanceof PropertyFields) {
-				if (toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount,fields) == true && toolbox.getHousesOnProperty(currentPlayer, fieldCount) != 5 && toolbox.getHousePrice(fieldCount)<=players[currentPlayer].getBalance()) {
+				if (toolbox.checkPropertyGroupOwnership(currentPlayer, fieldCount,fields) == true && toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields) != 5 && toolbox.getHousePrice(fieldCount, fields)<=players[currentPlayer].getBalance()) {
 					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + "-" + fields[fieldCount].getName(); 
 					index++;
 				}
@@ -89,8 +89,8 @@ public class DropdownCTRL {
 			if (returnValue[6] < 6) {//hvis der er mindre end 6 huse på feltet
 				returnValue[6]++;
 				//BYG FOR FANDEN!!
-				players[currentPlayer].removeMoney(toolbox.getHousePrice(chosenFieldNumber));	
-				toolbox.setHousesOnProperty(returnValue[6], chosenFieldNumber);
+				players[currentPlayer].removeMoney(toolbox.getHousePrice(chosenFieldNumber, fields));	
+				toolbox.setHousesOnProperty(returnValue[6], chosenFieldNumber, fields);
 				view.updateBuildings(chosenFieldNumber, returnValue[6]);
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
@@ -110,7 +110,7 @@ public class DropdownCTRL {
 
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			if (fields[fieldCount] instanceof PropertyFields) {
-				amountOfHouses = toolbox.getHousesOnProperty(currentPlayer, fieldCount);
+				amountOfHouses = toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields);
 				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && amountOfHouses > 0) {
 					amountOfProperties++;
 				}	
@@ -126,7 +126,7 @@ public class DropdownCTRL {
 		//3. Rødovrevej
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			if (fields[fieldCount] instanceof PropertyFields) {
-				amountOfHouses = toolbox.getHousesOnProperty(currentPlayer, fieldCount);
+				amountOfHouses = toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields);
 				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer && amountOfHouses > 0) {
 					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + "-" + fields[fieldCount].getName();
 					index++;
@@ -142,8 +142,8 @@ public class DropdownCTRL {
 			if (returnValue[6] > 0) {//hvis der er mere end 1 hus på feltet.
 				returnValue[6]--;
 				//SÆLG FOR HELVEDE
-				players[currentPlayer].recieveMoney(toolbox.getHousePrice(chosenFieldNumber)/2);	
-				toolbox.setHousesOnProperty(returnValue[6], chosenFieldNumber);
+				players[currentPlayer].recieveMoney(toolbox.getHousePrice(chosenFieldNumber, fields)/2);	
+				toolbox.setHousesOnProperty(returnValue[6], chosenFieldNumber, fields);
 				view.updateBuildings(chosenFieldNumber, returnValue[6]);
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 			}
@@ -158,11 +158,10 @@ public class DropdownCTRL {
 	public void sellProperty(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		backToDropdown = true;
 		int amountOfProperties=0;
-		int[] returnValue;
 		//Find ud af hvor mange grunde man ejer som ikke har huse på sig til array
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			//Hvis feltet er enten et ejet OwnerField eller et ejet PropertyField uden huse.
-			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) && !((fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnProperty(currentPlayer, fieldCount)>0))) {
+			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) && !((fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields)>0))) {
 				amountOfProperties++;//tæl op
 			}
 		}
@@ -173,7 +172,7 @@ public class DropdownCTRL {
 
 		//Populer array med grunde man ejer som ikke har huse på sig til array
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) && !((fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnProperty(currentPlayer, fieldCount)>0))) {
+			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) && !((fields[fieldCount] instanceof PropertyFields && toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields)>0))) {
 				propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + "-" + fields[fieldCount].getName(); 
 				index++;	
 			}
@@ -208,7 +207,6 @@ public class DropdownCTRL {
 		}
 		else {
 			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
-
 		}
 	}
 
@@ -216,5 +214,3 @@ public class DropdownCTRL {
 		return backToDropdown;
 	}
 }
-
-

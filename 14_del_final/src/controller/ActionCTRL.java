@@ -31,7 +31,7 @@ public class ActionCTRL {
 		board = new Board();		 //Lav bræt model.
 		fields = board.getFields();
 		winner = new WinnerCTRL();
-		toolbox = new Toolbox(fields);
+		toolbox = new Toolbox();
 		trade = new TradeCTRL(toolbox);
 		bankruptcy = new BankruptcyCTRL(toolbox, trade);
 		jail = new JailCTRL(bankruptcy);
