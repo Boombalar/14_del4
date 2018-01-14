@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ChanceDeck.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">ChanceDeck.java</span></div><h1>ChanceDeck.java</h1><pre class="source lang-java linenums">package model;
+
+public class ChanceDeck {
+
+<span class="fc" id="L5">	private ChanceCard[] chancecards = new ChanceCard[32]; //Danner et array med de 32 chancekort vi har.</span>
+
+	/**
+	 * ChanceCardDeck() - Konstruktør til ChanceCardDeck
+	 */
+<span class="fc" id="L10">	public ChanceDeck() {</span>
+	//Opsætning er som følgende
+	//De sidste pladser i arrayet bliver bestemt i de klasser der nedarves.
+	//chancecards[&lt;nr. i arrayet&gt;] = new &lt;klassen som chancekortet hører til&gt; (&lt;nr. på kortet&gt;, &lt;typen 1-4&gt;, &lt;beskrivelsen af kortet&gt;, &lt;eventuel betaling eller feltet der skal rykkes til&gt;)
+<span class="fc" id="L14">		chancecards[0] = new TransactionCard(0,1,&quot;De har måttet vedtage en parkeringsbøde. Betal 200 kr.&quot;,-200);</span>
+<span class="fc" id="L15">		chancecards[1] = new TransactionCard(1,1,&quot;Betal kr. 3.000 for reperation af Deres vogn&quot;,-3000);</span>
+<span class="fc" id="L16">		chancecards[2] = new TransactionCard(2,1,&quot;Deres præmieobligation er kommet ud. De modtager kr. 1.000 af banken.&quot;,1000);</span>
+<span class="fc" id="L17">		chancecards[3] = new TransactionCard(3,1,&quot;Kommunen har eftergivet et kvartals skat. Hæv i banken kr. 3.000&quot;,3000);</span>
+<span class="fc" id="L18">		chancecards[4] = new TransactionCard(4,1,&quot;De har været en tur i udlandet og haft for mange cigaretter med hjem. Betal told kr. 200&quot;, -200);</span>
+<span class="fc" id="L19">		chancecards[5] = new TransactionCard(5,1,&quot;Betal Deres bilforsikring kr. 1.000&quot;,-1000);</span>
+<span class="fc" id="L20">		chancecards[6] = new TransactionCard(6,1,&quot;Deres præmieobligation er kommet ud. De modtager kr. 1.000 af banken.&quot;,1000);</span>
+<span class="fc" id="L21">		chancecards[7] = new TransactionCard(7,1,&quot;Værdien af egen avl fra nyttehaven udgør kr. 200 som De modtager af banken&quot;, 200);</span>
+<span class="fc" id="L22">		chancecards[8] = new TransactionCard(8,1,&quot;Betal kr. 3.000 for reperation af Deres vogn&quot;,-3000);</span>
+<span class="fc" id="L23">		chancecards[9] = new TransactionCard(9,1,&quot;De har måttet vedtage en parkeringsbøde. Betal 200 kr.&quot;,-200);</span>
+<span class="fc" id="L24">		chancecards[10] = new TransactionCard(10,1,&quot;De modtager Deres aktieudbytte. Modtag kr. 1.000 af banken.&quot;,1000);</span>
+<span class="fc" id="L25">		chancecards[11] = new TransactionCard(11,1,&quot;Modtag udbytte af Deres aktier kr. 1.000&quot;,1000);</span>
+<span class="fc" id="L26">		chancecards[12] = new TransactionCard(12,1,&quot;De har kørt frem for Fuld Stop. Betal kr. 1.000 i bøde&quot;,-1000);</span>
+<span class="fc" id="L27">		chancecards[13] = new TransactionCard(13,1,&quot;De har vundet i Klasselotteriet. Modtag kr. 500&quot;,500);</span>
+<span class="fc" id="L28">		chancecards[14] = new TransactionCard(14,1,&quot;De har modtaget Deres tandlægeregning. Betal kr. 2.000&quot;,-2000);</span>
+<span class="fc" id="L29">		chancecards[15] = new TransactionCard(15,1,&quot;Modtag udbytte af Deres aktier kr. 1.000&quot;,1000);</span>
+<span class="fc" id="L30">		chancecards[16] = new TransactionCard(16,1,&quot;Grundet dyrtiden har De fået gageforhøjelse. Modtag kr. 1.000&quot;,1000);</span>
+<span class="fc" id="L31">		chancecards[17] = new TransactionCard(17,1,&quot;De har en række med elleve rigtige i tipning. Modtag kr. 1.000&quot;,1000);</span>
+<span class="fc" id="L32">		chancecards[18] = new MoveToCard(18,2,&quot;Ryk frem til start&quot;,0,1);</span>
+<span class="fc" id="L33">		chancecards[19] = new MoveToCard(19,2,&quot;Gå i fængsel. Ryk direkte til fængslet. Selvom De passerer start indkasserer De ikke kr. 4.000&quot;,10,3);</span>
+<span class="fc" id="L34">		chancecards[20] = new MoveToCard(20,2,&quot;Ryk frem til Frederiksberg Allé. Hvis De passerer Start, indkassér kr. 4.000&quot;,11,1);</span>
+<span class="fc" id="L35">		chancecards[21] = new MoveToCard(21,2,&quot;Tag ind på Rådhuspladsen&quot;,39,1);</span>
+<span class="fc" id="L36">		chancecards[22] = new MoveToCard(22,2,&quot;Gå i fængsel. Ryk direkte til fængslet. Selvom De passerer start indkasserer De ikke kr. 4.000&quot;,10,3);</span>
+<span class="fc" id="L37">		chancecards[23] = new MoveToCard(23,2,&quot;Ryk brikken frem til det nærmeste rederi og betal ejeren to gange den leje, han ellers er berettiget til. Hvis selskabet ikke ejes af nogen kan De købe det af banken.&quot;,0,2);// Her er moveto parametret ligegyldigt</span>
+<span class="fc" id="L38">		chancecards[24] = new MoveToCard(24,2,&quot;Ryk brikken frem til det nærmeste rederi og betal ejeren to gange den leje, han ellers er berettiget til. Hvis selskabet ikke ejes af nogen kan De købe det af banken.&quot;,0,2);// Her er moveto parametret ligegyldigt</span>
+<span class="fc" id="L39">		chancecards[25] = new MoveToCard(25,2,&quot;Ryk brikken frem til det nærmeste rederi og betal ejeren to gange den leje, han ellers er berettiget til. Hvis selskabet ikke ejes af nogen kan De købe det af banken.&quot;,0,2);// Her er moveto parametret ligegyldigt</span>
+<span class="fc" id="L40">		chancecards[26] = new MoveToCard(26,2,&quot;Ryk frem 3 felter tilbage&quot;,3,4);</span>
+<span class="fc" id="L41">		chancecards[27] = new TaxCard(27,4,&quot;Ejendomsskatterne er steget, ekstraudgifterne er: kr. 800 pr. hus og kr. 2.300 pr. hotel&quot;,800,2300);</span>
+<span class="fc" id="L42">		chancecards[28] = new TaxCard(28,4,&quot;Oliepriserne er steget, og De skal betale: kr. 500 pr. hus og kr. 2.000 pr. hotel&quot;,500,2000);</span>
+<span class="fc" id="L43">		chancecards[29] = new ReleaseJailCard(29,3,&quot;I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares, indtil De får brug for det.&quot;);</span>
+<span class="fc" id="L44">		chancecards[30] = new ReleaseJailCard(30,3,&quot;I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares, indtil De får brug for det.&quot;);</span>
+<span class="fc" id="L45">		chancecards[31] = new MoveToCard(31,2,&quot;Ryk frem til Grønningen. Hvis De passerer Start, Indkassér da kr. 4.000&quot;,24,1);</span>
+<span class="fc" id="L46">	}</span>
+
+	/**
+	 * getChanceCards()
+	 * Getter til et chancekort
+	 * @return Arrayet der indeholder alle chancekortne.
+	 */
+	public ChanceCard[] getChanceCards() {
+<span class="fc" id="L54">		return chancecards;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

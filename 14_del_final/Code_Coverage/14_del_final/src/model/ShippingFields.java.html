@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ShippingFields.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">ShippingFields.java</span></div><h1>ShippingFields.java</h1><pre class="source lang-java linenums">package model;
+
+public class ShippingFields extends OwnerFields {
+
+<span class="fc" id="L5">	private int[] rent = new int[4]; //array på de 5 forskellige priser det kan koste at lande på et ejet redderi.</span>
+
+	/**
+	 * Konstruktør til ShipFields(Redderi)
+	 * @param name Navnet på redderiet
+	 * @param type Typen OwnerFields det er
+	 * @param number Hvilket nummer det har på brættet.
+	 * @param propertyValue Hvad det koster for en spiller at købe grunden af 'banken'
+	 * @param owner Tallet på ejeren af grunden, defaualt ingen ejer er null/0.
+	 * @param groupNumber Nummeret på den gruppe ShipFields hører til.
+	 * @param value0 Hvad det koster hvis en spiller ejer 1
+	 * @param value1 Hvad det koster hvis en spiller ejer 2
+	 * @param value2 Hvad det koster hvis en spiller ejer 3
+	 * @param value3 Hvad det koster hvis en spiller ejer 4
+	 */
+	public ShippingFields (String name, int type, int number, int propertyValue, int owner, int groupNumber, int value0, int value1, int value2, int value3 ) {
+<span class="fc" id="L21">		super(name, type, number, propertyValue, owner, groupNumber);</span>
+<span class="fc" id="L22">		rent[0] = value0;</span>
+<span class="fc" id="L23">		rent[1] = value1;</span>
+<span class="fc" id="L24">		rent[2] = value2;</span>
+<span class="fc" id="L25">		rent[3] = value3;</span>
+
+<span class="fc" id="L27">	}</span>
+
+	/**
+	 * En getter på hvad det koster for en spiller at lande på et ejet felt, alt efter hvor mange ShipFields ejeren har.
+	 * @return Hvad det koster for en spiller er lande på dette felt, hvis det er ejet.
+	 */
+	public int[] getReturnValue() {
+<span class="fc" id="L34">		return this.rent;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

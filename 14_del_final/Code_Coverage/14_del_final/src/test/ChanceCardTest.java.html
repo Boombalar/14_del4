@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ChanceCardTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">ChanceCardTest.java</span></div><h1>ChanceCardTest.java</h1><pre class="source lang-java linenums">package test;
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import model.*;
+
+<span class="nc" id="L12">public class ChanceCardTest {</span>
+
+<span class="nc" id="L14">	ChanceCard chancecard = new ChanceCard(1,1,&quot;description&quot;);</span>
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+	
+<span class="nc" id="L19">	}</span>
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+<span class="nc" id="L23">	}</span>
+
+	@Before
+	public void setUp() throws Exception {
+<span class="nc" id="L27">	}</span>
+
+	@After
+	public void tearDown() throws Exception {
+<span class="nc" id="L31">	}</span>
+
+	
+	/**
+	 * tester om konstruktøren ChanceCard er oprettet korrekt, om nummeret bliver returneret som forventet
+	 */
+	@Test
+	public void testGetNumber() {
+<span class="nc" id="L39">		int expected = 1;</span>
+<span class="nc" id="L40">		int actual = chancecard.getNumber();</span>
+<span class="nc" id="L41">		assertEquals(&quot;getNumber metoden virker ikke&quot;, expected, actual);</span>
+		
+<span class="nc" id="L43">	}</span>
+	
+	
+	/**
+	 * tester om konstruktøren ChanceCard er oprettet korrekt, om typen bliver returneret som forventet
+	 */
+	@Test
+	public void testGetType() {
+<span class="nc" id="L51">		int expected = 1;</span>
+<span class="nc" id="L52">		int actual = chancecard.getType();</span>
+<span class="nc" id="L53">		assertEquals(&quot;getType metoden virker ikke&quot;, expected, actual);</span>
+		
+<span class="nc" id="L55">	}</span>
+	
+	/**
+	 * tester om konstruktøren ChanceCard er oprettet korrekt, om beskrivelsen bliver returneret som forventet
+	 */
+	@Test
+	public void testGetDescription() {
+<span class="nc" id="L62">		String expected = &quot;description&quot;;</span>
+<span class="nc" id="L63">		String actual = chancecard.getDescription();</span>
+<span class="nc" id="L64">		assertEquals(&quot;GetDescription metoden virker ikke&quot;, expected, actual);</span>
+		
+<span class="nc" id="L66">	}</span>
+	 
+
+		
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

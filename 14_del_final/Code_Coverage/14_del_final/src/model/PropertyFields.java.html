@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>PropertyFields.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">PropertyFields.java</span></div><h1>PropertyFields.java</h1><pre class="source lang-java linenums">package model;
+
+public class PropertyFields extends OwnerFields {
+
+<span class="fc" id="L5">	private int[] rent = new int[8];</span>
+
+	/**
+	 * Konstruktør til propertyFields
+	 * @param propertyValue	Hvad koster feltet
+	 * @param owner			Hvem ejer felete
+	 * @param groupNumber	Gruppenummer eks. hvidovrevej, og rødovrevej er gruppe 1
+	 * @param value0	Rent 0 huse
+	 * @param value1	Rent 1 huse
+	 * @param value2	Rent 2 huse
+	 * @param value3	Rent 3 huse
+	 * @param value4	Rent 4 huse
+	 * @param value5	Rent 5 huse/Hotel
+	 * @param value6   Antal huse på felt.
+	 * @param value7   Pris for at bygge hus.
+	 */
+	public PropertyFields (String name, int type, int number, int propertyValue, int owner, int groupNumber, int value0, int value1, int value2, int value3, int value4, int value5, int value6, int value7) {
+<span class="fc" id="L22">		super(name, type, number, propertyValue, owner, groupNumber);</span>
+<span class="fc" id="L23">		rent[0] = value0; </span>
+<span class="fc" id="L24">		rent[1] = value1;</span>
+<span class="fc" id="L25">		rent[2] = value2;</span>
+<span class="fc" id="L26">		rent[3] = value3;</span>
+<span class="fc" id="L27">		rent[4] = value4;</span>
+<span class="fc" id="L28">		rent[5] = value5;</span>
+<span class="fc" id="L29">		rent[6] = value6; </span>
+<span class="fc" id="L30">		rent[7] = value7;</span>
+<span class="fc" id="L31">	}</span>
+
+	/**
+	 * En getter til huslejen på et givet propertyField felt.
+	 * @return Hvor mange huse en propertyField grund har
+	 */
+	public int[] getReturnValue() {
+<span class="fc" id="L38">		return this.rent;</span>
+	}
+
+	/**
+	 * setNumberOfHouses() - Bestemmer hvor mange huse man har på den pågældende grund.
+	 * @param returnValue - antal af huse der skal være på feltet.
+	 */
+	public void setNumberOfHouses(int returnValue) {
+<span class="fc" id="L46">		this.rent[6] = returnValue;</span>
+<span class="fc" id="L47">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

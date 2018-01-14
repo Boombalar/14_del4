@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>BreweryFieldsTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">BreweryFieldsTest.java</span></div><h1>BreweryFieldsTest.java</h1><pre class="source lang-java linenums">package test;
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import model.BreweryFields;
+
+<span class="nc" id="L12">public class BreweryFieldsTest {</span>
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+<span class="nc" id="L16">	}</span>
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+<span class="nc" id="L20">	}</span>
+
+	@Before
+	public void setUp() throws Exception {
+<span class="nc" id="L24">	}</span>
+
+	@After
+	public void tearDown() throws Exception {
+<span class="nc" id="L28">	}</span>
+	
+    
+	/**
+	 * BreweryFields klassen
+	 * opretter et object af Ship med udfyldte parameter i parameterlisten. Og et forventet array og et Faktisk (det der er udfyldt i parameterliste) array
+	 */
+	@Test
+	public void testBreweryFields() {
+<span class="nc" id="L37">		BreweryFields breweryFields = new BreweryFields (&quot;Tuborgvej&quot;,3,2,3000,1,4,100,200);</span>
+<span class="nc" id="L38">		int[] expectedReturnValue = new int[2];</span>
+<span class="nc" id="L39">		int[] actualReturnValue = new int[2];</span>
+		
+		
+<span class="nc" id="L42">		String expectedname = &quot;Tuborgvej&quot;;</span>
+<span class="nc" id="L43">		int expectedType = 3;</span>
+<span class="nc" id="L44">		int expectedNumber = 2;</span>
+<span class="nc" id="L45">		int expectedPropertyValue = 3000;</span>
+<span class="nc" id="L46">		int expectedOwner = 1;</span>
+<span class="nc" id="L47">		int expectedGroupNumber = 4;</span>
+<span class="nc" id="L48">		expectedReturnValue[0] = 100;</span>
+<span class="nc" id="L49">		expectedReturnValue[1] = 200;</span>
+		
+		
+<span class="nc" id="L52">		String actualname = breweryFields.getName();</span>
+<span class="nc" id="L53">		int actualType = breweryFields.getType();</span>
+<span class="nc" id="L54">		int actualNumber = breweryFields.getNumber();</span>
+<span class="nc" id="L55">		int actualPropertyValue = breweryFields.getPropertyValue();</span>
+<span class="nc" id="L56">		int actualOwner = breweryFields.getOwner();</span>
+<span class="nc" id="L57">		int actualGroupNumber = breweryFields.getGroupNumber();</span>
+<span class="nc" id="L58">		actualReturnValue = breweryFields.getReturnValue(); </span>
+		
+<span class="nc" id="L60">		assertEquals(&quot;Name virker ikke&quot;,expectedname, actualname);</span>
+<span class="nc" id="L61">		assertEquals(&quot;Type virker ikke&quot;, expectedType, actualType);</span>
+<span class="nc" id="L62">		assertEquals(&quot;Number virker ikke&quot;, expectedNumber, actualNumber);</span>
+<span class="nc" id="L63">		assertEquals(&quot;PropertyValue virker ikke&quot;, expectedPropertyValue, actualPropertyValue);</span>
+<span class="nc" id="L64">		assertEquals(&quot;Owner virker ikke&quot;, expectedOwner, actualOwner);</span>
+<span class="nc" id="L65">		assertEquals(&quot;GroupNumber virker ikke&quot;, expectedGroupNumber, actualGroupNumber);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (int index = 0;index &lt;= 1; index++) {</span>
+<span class="nc" id="L67">			assertEquals(&quot;returnvalue plads &quot; + index + &quot; virker ikke&quot;, expectedReturnValue[index], actualReturnValue[index]);</span>
+		}
+		
+		
+<span class="nc" id="L71">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>
