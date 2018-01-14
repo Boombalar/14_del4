@@ -48,27 +48,23 @@ public class BankruptcyCTRL {
 				//Vi sælger husene 1 ad gangen
 				for (int houseCount = 1; houseCount <= numberOfHouses; houseCount++ ) {
 					trade.sellBuilding(currentPlayer, fieldCount, players, fields);
-					if (	checkForAvailability(currentPlayer, amountToPay, players)) {
-						returnValue = true;
-						trade.safeTransferMoney(currentPlayer, toPlayer, amountToPay, players);
-						break;
-					}
+					trade.safeTransferMoney(currentPlayer, toPlayer, amountToPay, players);
+					break;
 				}
 			}
-			
-		}
+			returnValue = true;
+		}	
+
 
 		int amountToRaise = amountToPay - players[currentPlayer].getBalance();
 		if (checkForAvailability(currentPlayer, amountToPay, players)==false && (toolbox.checkPropertySaleValue(amountToRaise, currentPlayer, fields))==true) {
 			for (int fieldCount = 0; fieldCount<=39;fieldCount++) {
 				if(fields[fieldCount] instanceof OwnerFields && checkForAvailability(currentPlayer, amountToPay, players) && ((OwnerFields)fields[fieldCount]).getOwner() == currentPlayer) {
 					trade.sellProperty(currentPlayer, 0, fieldCount, players, fields);
-					if (checkForAvailability(currentPlayer, amountToPay, players)) {
-						returnValue = true;
-						trade.safeTransferMoney(currentPlayer, toPlayer, amountToPay, players);
-						break;
-					}
+					trade.safeTransferMoney(currentPlayer, toPlayer, amountToPay, players);
+					break;
 				}
+				returnValue = true;
 			}
 		}
 		return returnValue;
