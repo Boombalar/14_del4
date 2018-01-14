@@ -23,8 +23,8 @@ public class ViewCTRL {
 	private Field[] fields;
 	private GUI gui;
 	private GUI_Field[] guiFields = new GUI_Field[40];
-	private GUI_Player[] guiPlayer = new Color[7];
-	private Color[] carColor;
+	private GUI_Player[] guiPlayer;
+	private Color[] carColor = new Color[7];
 	private GUI_Car[] guiCar;
 
 
