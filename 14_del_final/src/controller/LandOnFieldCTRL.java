@@ -42,7 +42,7 @@ public class LandOnFieldCTRL {
 			break;
 		case 1:
 			//ShipFields
-			shippingField(currentPlayer, 1, players, fields, view);
+			shippingField(currentPlayer, owner, 1, players, fields, view);
 			break;
 		case 2:
 			//BreweryFields
@@ -50,7 +50,7 @@ public class LandOnFieldCTRL {
 			break;
 		case 3:
 			//TaxFields
-			taxField(currentPlayer, owner, players, fields, view);
+			taxField(currentPlayer, players, fields, view);
 			break;
 		case 4:
 			//ChanceField			
@@ -125,6 +125,46 @@ public class LandOnFieldCTRL {
 			view.writeText(players[currentPlayer].getPlayerName() +  " er landet på '" + fields[newPlayerPosition].getName() + "', " + players[currentPlayer].getPlayerName() + ", ejer selv denne grund");
 		}
 	}
+	
+	/**
+	 * shippingField()
+	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
+	 * @param multiplier - multiplier, der bestemmer multipliciteten af lejen, når man lander, og det er ejet i forvejen.
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @param view - indtast objectnavn af typen ViewCTRL
+	 */
+	public void shippingField(int currentPlayer, int owner, int multiplier, Player[] players,Field[] fields,ViewCTRL view) {
+		int newPlayerPosition = players[currentPlayer].getPosition();
+		int shippingPropertyValue = (((ShippingFields)fields[newPlayerPosition]).getPropertyValue());
+		int[] fieldRent = (((ShippingFields)fields[newPlayerPosition]).getReturnValue());
+		int numOfOwnedShipFields = (asset.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition, fields));
+
+		if(owner == 0) {
+			boolean answer = view.getUserAnswer(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', vil du købe dette redderi ?", "ja", "nej"); //Spiller for mulighed for at købe grunden
+			if(answer == true) {
+				view.writeText(players[currentPlayer].getPlayerName() + " har købt '" + fields[newPlayerPosition].getName() + "' for " + shippingPropertyValue + " kr" );	//Tekst til gui
+				ShippingFields wantedFieldChange = ((ShippingFields)fields[newPlayerPosition]);
+				wantedFieldChange.setOwner(currentPlayer);												//Køberen bliver sat til ejer af feltet
+				bankruptcy.payMoney(currentPlayer, owner, shippingPropertyValue, players, fields, view);	//transaktionen forgår mellem spiller og bræt
+			}
+		}
+
+		if(owner != 0 && owner != currentPlayer) {
+			int shipRent = ((fieldRent[numOfOwnedShipFields -1])*multiplier);
+			if(multiplier == 1) {
+				view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du skal betale " + shipRent + "kr. til " + players[owner].getPlayerName());
+			} else {
+				view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', og du skal betale dobbelt leje, " + shipRent + "kr. til " + players[owner].getPlayerName());
+			}
+			bankruptcy.payMoney(currentPlayer, owner, shipRent, players, fields, view);
+		}
+
+		if(owner == currentPlayer) {
+			view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', " + players[currentPlayer].getPlayerName() + ", ejer selv dette rederi");
+		}
+	}
+
 
 	/**
 	 * breweryField ()
@@ -167,11 +207,11 @@ public class LandOnFieldCTRL {
 	 * @param fields - indtast objectnavn af typen Field[]
 	 * @param view - indtast objectnavn af typen ViewCTRL
 	 */
-	public void taxField(int currentPlayer,int owner,Player[] players,Field[] fields,ViewCTRL view) {
+	public void taxField(int currentPlayer, Player[] players,Field[] fields,ViewCTRL view) {
 		int newPlayerPosition = players[currentPlayer].getPosition();
 		int[] taxValue = (((TaxField)fields[newPlayerPosition]).getReturnValue());
 		view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du skal betale " + taxValue[0] + "kr. i skat"); // tekst til spilleren
-		bankruptcy.payMoney(currentPlayer, owner, taxValue[0], players, fields, view);// Transaction som sker på spilleren ud fra hvilket taxfield han lander på
+		bankruptcy.payMoney(currentPlayer, 0, taxValue[0], players, fields, view);// Transaction som sker på spilleren ud fra hvilket taxfield han lander på
 	}
 
 	/**
@@ -203,46 +243,7 @@ public class LandOnFieldCTRL {
 		view.updatePlayerPosition(currentPlayer, newPlayerPosition, 10); //update af gui
 	}
 
-	/**
-	 * shippingField()
-	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
-	 * @param multiplier - multiplier, der bestemmer multipliciteten af lejen, når man lander, og det er ejet i forvejen.
-	 * @param players - indtast objectnavn af typen Player[]
-	 * @param fields - indtast objectnavn af typen Field[]
-	 * @param view - indtast objectnavn af typen ViewCTRL
-	 */
-	public void shippingField(int currentPlayer, int multiplier, Player[] players,Field[] fields,ViewCTRL view) {
-		int newPlayerPosition = players[currentPlayer].getPosition();
-		int shippingPropertyValue = (((ShippingFields)fields[newPlayerPosition]).getPropertyValue());
-		int owner = (((ShippingFields)fields[newPlayerPosition]).getOwner());
-		int[] fieldRent = (((ShippingFields)fields[newPlayerPosition]).getReturnValue());
-		int numOfOwnedShipFields = (asset.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition, fields));
-
-		if(owner == 0) {
-			boolean answer = view.getUserAnswer(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', vil du købe dette redderi ?", "ja", "nej"); //Spiller for mulighed for at købe grunden
-			if(answer == true) {
-				view.writeText(players[currentPlayer].getPlayerName() + " har købt '" + fields[newPlayerPosition].getName() + "' for " + shippingPropertyValue + " kr" );	//Tekst til gui
-				ShippingFields wantedFieldChange = ((ShippingFields)fields[newPlayerPosition]);
-				wantedFieldChange.setOwner(currentPlayer);												//Køberen bliver sat til ejer af feltet
-				bankruptcy.payMoney(currentPlayer, owner, shippingPropertyValue, players, fields, view);	//transaktionen forgår mellem spiller og bræt
-			}
-		}
-
-		if(owner != 0 && owner != currentPlayer) {
-			int shipRent = ((fieldRent[numOfOwnedShipFields -1])*multiplier);
-			if(multiplier == 1) {
-				view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du skal betale " + shipRent + "kr. til " + players[owner].getPlayerName());
-			} else {
-				view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', og du skal betale dobbelt leje, " + shipRent + "kr. til " + players[owner].getPlayerName());
-			}
-			bankruptcy.payMoney(currentPlayer, owner, shipRent, players, fields, view);
-		}
-
-		if(owner == currentPlayer) {
-			view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', " + players[currentPlayer].getPlayerName() + ", ejer selv dette rederi");
-		}
-	}
-
+	
 	/**
 	 * chanceCardRules () - Switcher på hvilken type ChanceCard man har trukket, og udfører alt handling.
 	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
@@ -334,7 +335,8 @@ public class LandOnFieldCTRL {
 			view.writeText(players[currentPlayer].getPlayerName() + " flyttes til " + fields[newPlayerPos].getName() + ", som er det nærmeste redderi");
 			players[currentPlayer].setPosition(newPlayerPos);
 			view.updatePlayerPosition(currentPlayer, oldPlayerPos, newPlayerPos);
-			shippingField(currentPlayer, 2, players, fields, view);
+			int owner=((OwnerFields)fields[newPlayerPos]).getOwner();
+			shippingField(currentPlayer, owner, 2, players, fields, view);
 			break;
 
 		case 3:
