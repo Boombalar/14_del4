@@ -3,7 +3,7 @@ package model;
 public class TransactionCard extends ChanceCard {
 
 	private int[] returnvalue = new int[1];
-	
+
 	/**
 	 * Konstruktør for TransactionCard
 	 * @param number Nummeret kortet har i ChanceCard arrayet
@@ -15,7 +15,7 @@ public class TransactionCard extends ChanceCard {
 		super(number, type, description);
 		this.returnvalue[0]=amount;
 	}
-	
+
 	/**
 	 * En getter til hvad returværdien skal være for hvad det koster at trække dette kort.
 	 * @return prisen det koster at trække dette kort

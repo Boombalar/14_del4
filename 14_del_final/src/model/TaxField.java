@@ -1,13 +1,9 @@
 package model;
-/**
- * 
- * @author kimsa
- *
- */
+
 public class TaxField extends Field{
-	
+
 	private int[] returnValue = new int[1]; //Er nødt til at være i et array, så det passer ind i strukturen på resten af felterne
-	
+
 	/**
 	 * Konstruktør på TaxField 
 	 * @param name Navnet på feltet
@@ -26,6 +22,4 @@ public class TaxField extends Field{
 	public int[] getReturnValue() {
 		return this.returnValue;
 	}
-	
-	
 }

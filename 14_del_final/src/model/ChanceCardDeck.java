@@ -3,13 +3,14 @@ package model;
 public class ChanceCardDeck {
 
 	private ChanceCard[] chancecards = new ChanceCard[32]; //Danner et array med de 32 chancekort vi har.
-	//Opretter chancekortne
 
-	//Opsætning er som følgende
-	//chancecards[<nummer i arrayet>] = new <klassen som chancekortet hører til> (<nummer på kortet>, <typen 1-4>, <beskrivelsen af kortet>, <eventuel betaling eller feltet der skal rykkes til>)
-	//De sidste pladser i arrayet bliver bestemt i de klasser der nedarves.
-
+	/**
+	 * ChanceCardDeck() - Konstruktør til ChanceCardDeck
+	 */
 	public ChanceCardDeck() {
+	//Opsætning er som følgende
+	//De sidste pladser i arrayet bliver bestemt i de klasser der nedarves.
+	//chancecards[<nr. i arrayet>] = new <klassen som chancekortet hører til> (<nr. på kortet>, <typen 1-4>, <beskrivelsen af kortet>, <eventuel betaling eller feltet der skal rykkes til>)
 		chancecards[0] = new TransactionCard(0,1,"De har måttet vedtage en parkeringsbøde. Betal 200 kr.",-200);
 		chancecards[1] = new TransactionCard(1,1,"Betal kr. 3.000 for reperation af Deres vogn",-3000);
 		chancecards[2] = new TransactionCard(2,1,"Deres præmieobligation er kommet ud. De modtager kr. 1.000 af banken.",1000);
@@ -42,14 +43,10 @@ public class ChanceCardDeck {
 		chancecards[29] = new ReleaseJailCard(29,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares, indtil De får brug for det.");
 		chancecards[30] = new ReleaseJailCard(30,3,"I anledning af kongens fødselsdag benådes De herved for fængsel. Dette kort kan opbevares, indtil De får brug for det.");
 		chancecards[31] = new MoveToCard(31,2,"Ryk frem til Grønningen. Hvis De passerer Start, Indkassér da kr. 4.000",24,1);
-
-		// til at lave dine egne chancekort
-		//		for (int i = 0; i<=31 ; i++) {
-		//			chancecards[i] = new MoveToCard(22,2,"Gå i fængsel",10,3);
-		//		}
 	}
 
 	/**
+	 * getChanceCards()
 	 * Getter til et chancekort
 	 * @return Arrayet der indeholder alle chancekortne.
 	 */

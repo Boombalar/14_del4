@@ -1,9 +1,9 @@
 package model;
 
 public class ShippingFields extends OwnerFields {
-	
+
 	private int[] rent = new int[4]; //array på de 5 forskellige priser det kan koste at lande på et ejet redderi.
-	
+
 	/**
 	 * Konstruktør til ShipFields(Redderi)
 	 * @param name Navnet på redderiet
@@ -23,14 +23,14 @@ public class ShippingFields extends OwnerFields {
 		rent[1] = value1;
 		rent[2] = value2;
 		rent[3] = value3;
-		
+
 	}
-	
+
 	/**
 	 * En getter på hvad det koster for en spiller at lande på et ejet felt, alt efter hvor mange ShipFields ejeren har.
 	 * @return Hvad det koster for en spiller er lande på dette felt, hvis det er ejet.
 	 */
 	public int[] getReturnValue() {
 		return this.rent;
-}
+	}
 }

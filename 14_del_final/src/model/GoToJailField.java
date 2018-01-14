@@ -1,9 +1,9 @@
 package model;
 
 public class GoToJailField extends Field{
-	
-	private int[] returnValue = new int[1]; //
-	
+
+	private int[] returnValue = new int[1];
+
 	/**
 	 * Konstruktør til GoToJailField
 	 * @param name Navnet på feltet, dette tilfælde 'DE FÆNGLES'
@@ -22,5 +22,4 @@ public class GoToJailField extends Field{
 	public int[] getReturnValue() {
 		return this.returnValue;	
 	}
-	
 }
