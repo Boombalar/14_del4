@@ -4,13 +4,11 @@ import model.*;
 import view.*;
 
 public class DropdownCTRL {
-	DieCup dieCup;
 	LandOnFieldCTRL landonfield;
 	AssetCTRL asset;
 	TradeCTRL trade;
 
-	public DropdownCTRL(DieCup dieCup, LandOnFieldCTRL landonfield, AssetCTRL asset, TradeCTRL trade) {
-		this.dieCup = dieCup;
+	public DropdownCTRL(LandOnFieldCTRL landonfield, AssetCTRL asset, TradeCTRL trade) {
 		this.landonfield = landonfield;
 		this.asset = asset;
 		this.trade = trade;
@@ -18,7 +16,7 @@ public class DropdownCTRL {
 	boolean backToDropdown = false;
 
 
-	public void rollDice (int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
+	public void rollDice (int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, DieCup dieCup) {
 
 		//slå terninger
 		dieCup.shake();

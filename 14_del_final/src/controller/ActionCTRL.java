@@ -42,7 +42,7 @@ public class ActionCTRL {
 		makePlayers = new CreatePlayers(numberOfPlayers, view);  		//Lav player array.
 		players = makePlayers.getPlayers(); // Modtag player array.
 		view.makeGuiPlayers(players); //Opret antal spillere på bræt.
-		dropdown = new DropdownCTRL(dieCup, landonfield, asset, trade);
+		dropdown = new DropdownCTRL(landonfield, asset, trade);
 		view.updateEntireBoard(fields, players); // updatering af boardet på gui, så test / fejlfinding kan blive nemmere.
 	}
 	/**
@@ -81,7 +81,7 @@ public class ActionCTRL {
 
 				// Slår terningerne, ændrer position i model lag og opdaterer view lag
 				case "Slå terninger":
-					dropdown.rollDice(currentPlayer, players, fields, view);
+					dropdown.rollDice(currentPlayer, players, fields, view, dieCup);
 					if (players[currentPlayer].getExtraTurn() == true) { //Tjekker om en spiller har slået 2 ens men en boolean.
 						view.writeText(players[currentPlayer].getPlayerName() + " slog to ens, og har derfor en ekstra tur");
 						players[currentPlayer].setExtraTurn(false); //Sætter en spillers extraTurn til false efter den blev sat til true.
