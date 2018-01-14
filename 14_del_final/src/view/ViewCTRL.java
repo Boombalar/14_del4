@@ -129,7 +129,7 @@ public class ViewCTRL {
 		carColor[1] = new Color(70,250,0);
 		carColor[2] = new Color(10,160,230);
 		carColor[3] = new Color(200,200,200);
-		carColor[4] = new Color(0,0,0);	
+		carColor[4] = new Color(0,0,250);	
 		carColor[5] = new Color(50,150,100);
 		carColor[6] = new Color(75,100,220);
 
