@@ -7,9 +7,10 @@ public class DropdownCTRL {
 	private LandOnFieldCTRL landonfield;
 	private AssetCTRL asset;
 	private TradeCTRL trade;
+	boolean backToDropdown = false;
 
 	/**
-	 * Konstruktør
+	 * Konstruktør til DropdownCTRL
 	 * @param landonfield Et objekt af LandOnFieldCTRL
 	 * @param asset Et objekt af AssetCTRL
 	 * @param trade Et objekt af TradeCTRL
@@ -19,7 +20,6 @@ public class DropdownCTRL {
 		this.asset = asset;
 		this.trade = trade;
 	}
-	boolean backToDropdown = false;
 
 	/**
 	 * En metode der slår med terninger
@@ -44,7 +44,6 @@ public class DropdownCTRL {
 
 		//Update view
 		view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());						  
-
 
 		//Håndter om man kommer over start og får 4000.
 		if (newPlayerPosition > 39) {
@@ -121,6 +120,7 @@ public class DropdownCTRL {
 			view.writeText(players[currentPlayer].getPlayerName() + " ejer ikke hele grupper af grunde");
 		}
 	}
+
 	/**
 	 * Metode der gør vi kan sælge huse eller hoteller.
 	 * @param currentPlayer int som er den aktive spiller.
@@ -173,12 +173,10 @@ public class DropdownCTRL {
 				view.updateBuildings(chosenFieldNumber, returnValue[6]);
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 			}
-		} else 
-		{
+		} else {
 			view.writeText(players[currentPlayer].getPlayerName() + " har ikke nogle grunde at sælge huse på");
 		}
 	}
-
 
 	/**
 	 * metode der gør vi kan sælge huse.
@@ -245,7 +243,6 @@ public class DropdownCTRL {
 			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
 		}
 
-
 	}
 	/**
 	 * Går tilbage til dropdownmenu.
@@ -254,4 +251,5 @@ public class DropdownCTRL {
 	public boolean getBackToDropDown() {
 		return backToDropdown;
 	}
+
 }

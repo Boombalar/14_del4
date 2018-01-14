@@ -18,9 +18,9 @@ public class ChanceDeckCTRL {
 		chanceCard = deck.getChanceCards();
 		shuffle();
 	}
-/**
- *blander alle chancekortene
- */
+	/**
+	 *Blander alle chancekortene
+	 */
 	private void shuffle() {
 		int plads2=0;
 		int plads=0;
@@ -44,9 +44,9 @@ public class ChanceDeckCTRL {
 			shuffledDeck[plads2]=tal;
 		}
 	}
-/**
- *Trækker et chancekort.
- */
+	/**
+	 *Trækker et chancekort.
+	 */
 	public void draw() {
 
 		if (cardPointer > 31) {
@@ -56,25 +56,26 @@ public class ChanceDeckCTRL {
 		cardNumber = shuffledDeck[cardPointer];
 		cardPointer = cardPointer + 1;
 	}
-/**
- * 
- * @return
- */
+	/**
+	 * Trækker chancekortets værdi-array ud af chancekortet. - dette er det array, der hører til f.eks. moveToCard. 
+	 * @return returnerer array på chancekortet. - int[]
+	 */
 	public int[] getReturnValue() {
 		return chanceCard[cardNumber].getReturnValue();
 	}
-/**
- * 
- * @return
- */
+	/**
+	 * Trækker beskrivelsen af chancekortet ud.
+	 * @return returner beskrivelsen på chancekortet - String
+	 */
 	public String getDescription() {
 		return chanceCard[cardNumber].getDescription();
 	}
-/**
- * Henter kort typen af chancekortet.
- * @return den retunere typen af chancekortet. 
- */
+	/**
+	 * Henter kort typen af chancekortet. - dette er den overordnede type, moveToCard, ReleaseJailCard osv.
+	 * @return den retunere typen af chancekortet. 
+	 */
 	public int getType() {
 		return chanceCard[cardNumber].getType();
 	}
+
 }

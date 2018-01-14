@@ -14,7 +14,7 @@ public class TradeCTRL {
 	}
 
 	/**
-	 * safeTransferMoney() - overfører penge fra 1 konto til en anden.
+	 * Overfører penge fra 1 konto til en anden.
 	 * @param fromPlayer - spillernummer på den der skal trækkes i penge.
 	 * @param toPlayer - spillernummer på den der skal modtage penge.
 	 * @param amount - beløbet der skal overføres.
@@ -26,7 +26,7 @@ public class TradeCTRL {
 	}
 
 	/**
-	 * transferAssets() - Overfører aktiver fra 1 spiller til en anden.
+	 * Overfører aktiver fra 1 spiller til en anden.
 	 * Hvis toPlayer er 0 så gives grundene tilbage til spillet, og der gives ikke penge til anden spiller.
 	 * @param fromPlayer - spillernummer på den der skal trækkes i penge.
 	 * @param toPlayer - spillernummer på den der skal modtage penge.
@@ -46,7 +46,7 @@ public class TradeCTRL {
 	}
 
 	/**
-	 * buyBuilding() - køber bygning til et felt.
+	 * Tilføjer en bygning til et felt.
 	 * @param currentPlayer - den spiller der skal købe.
 	 * @param fieldNumber - feltet der skal bygges på
 	 * @param players - indtast objectnavn af typen Player[]
@@ -62,7 +62,7 @@ public class TradeCTRL {
 	}
 
 	/**
-	 * sellBuilding() - Sælg en bygning til halv pris og overfør pengene til ejeren
+	 * Sælg en bygning til halv pris og overfør pengene til ejeren
 	 * @param currentPlayer - den spiller der skal sælge.
 	 * @param fieldNumber - feltet hvor der skal fjernes et hus
 	 * @param players - indtast objektnavn af typen Player[]
@@ -79,9 +79,8 @@ public class TradeCTRL {
 		}
 	}
 
-	// sælg en grund til en spiller eller banken. Hvis toPlayer = 0 så overføres pengene ikke til nogen
 	/**
-	 * 
+	 * Sælg en grund til en spiller eller banken. Hvis toPlayer = 0 så overføres pengene ikke til nogen
 	 * @param currentPlayer - den spiller der skal sælge
 	 * @param toPlayer - den spiller der skal modtage salget.
 	 * @param fieldNumber - feltet hvor der skal fjernes et hus
@@ -106,4 +105,5 @@ public class TradeCTRL {
 			((OwnerFields)fields[fieldNumber]).setOwner(toPlayer);
 		}
 	}
+
 }

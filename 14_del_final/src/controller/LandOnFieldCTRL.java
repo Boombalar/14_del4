@@ -73,7 +73,7 @@ public class LandOnFieldCTRL {
 
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param oldPosition
@@ -126,7 +126,7 @@ public class LandOnFieldCTRL {
 			view.writeText(players[currentPlayer].getPlayerName() +  " er landet på '" + fields[newPlayerPosition].getName() + "', " + players[currentPlayer].getPlayerName() + ", ejer selv denne grund");
 		}
 	}
-	
+
 	/**
 	 * shippingField()
 	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
@@ -165,7 +165,6 @@ public class LandOnFieldCTRL {
 			view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', " + players[currentPlayer].getPlayerName() + ", ejer selv dette rederi");
 		}
 	}
-
 
 	/**
 	 * breweryField ()
@@ -244,7 +243,6 @@ public class LandOnFieldCTRL {
 		view.updatePlayerPosition(currentPlayer, newPlayerPosition, 10); //update af gui
 	}
 
-	
 	/**
 	 * chanceCardRules () - Switcher på hvilken type ChanceCard man har trukket, og udfører alt handling.
 	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
@@ -361,4 +359,5 @@ public class LandOnFieldCTRL {
 			System.out.println("MoveTo-typen der pharses er ikke korrekt.");
 		}
 	}
+
 }

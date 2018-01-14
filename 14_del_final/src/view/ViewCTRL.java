@@ -27,7 +27,6 @@ public class ViewCTRL {
 	private Color[] carColor = new Color[7];
 	private GUI_Car[] guiCar;
 
-
 	/**
 	 * Kunstruktør til ViewCTRL. Opretter board og spillere.
 	 * @param players
@@ -38,6 +37,9 @@ public class ViewCTRL {
 		makeBoard();
 	}
 
+	/**
+	 * Laver gui-boardet, med felter.
+	 */
 	private void makeBoard() {
 		int fieldType;
 		Color bgColor = Color.white;
@@ -118,10 +120,11 @@ public class ViewCTRL {
 		}
 		gui = new GUI(guiFields);
 	}
-/**
- * Laver spiller så man kan se dem på brættet.
- * @param players objekt at Player[]
- */
+
+	/**
+	 * Laver spiller så man kan se dem på brættet.
+	 * @param players objekt at Player[]
+	 */
 	public void makeGuiPlayers(Player[] players) {
 
 		this.players = players;
@@ -215,7 +218,7 @@ public class ViewCTRL {
 	public void updatePlayerName(int playerNumber, String newName) {
 		this.guiPlayer[playerNumber].setName(newName);
 	}
-	
+
 	/**
 	 * Metode der får GUIen til at vise en spillers account
 	 * @param player Spillerens nummer
@@ -224,11 +227,12 @@ public class ViewCTRL {
 	public void updatePlayerAccount(int player, int amount) {
 		guiPlayer[player].setBalance(amount);
 	}
-/**
- * Fjerner bilen fra brættet
- * @param player int som er aktivspiller.
- * @param oldPosition int som den gamle position som spilleren kom fra.
- */
+
+	/**
+	 * Fjerner bilen fra brættet
+	 * @param player int som er aktivspiller.
+	 * @param oldPosition int som den gamle position som spilleren kom fra.
+	 */
 	public void removePlayerCar(int player, int oldPosition) {
 		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
 	}
@@ -295,14 +299,28 @@ public class ViewCTRL {
 		gui.displayChanceCard(text);
 	}
 
+	/**
+	 * Slukker for en spiller-bil
+	 * @param player - spillernummeret.
+	 */
 	public void turnOffPlayer (int player) {
 		gui.getFields()[players[player].getPosition()].setCar(guiPlayer[player], false);
 	}
 
+	/**
+	 * Modtager en string fra user
+	 * @param displayText - teksten der skrives på gui, f.eks. 'indtast navn i boks'
+	 * @return returnerer den indtastede tekst.
+	 */
 	public String getUserTextInput(String displayText) {
 		return gui.getUserString(displayText);
 	}
 
+	/**
+	 * Opdaterer hele boardet. Dette inkluderer ejerskab, spiller-konto, samt slukker spillere der er broke.
+	 * @param fields objekt at Field[]
+	 * @param players objekt at Player[]
+	 */
 	public void updateEntireBoard(Field[] fields, Player[] players) {
 		//Updater fields ownership på bræt
 		for (int fieldCount = 0;fieldCount <= 39; fieldCount++) {
@@ -324,4 +342,5 @@ public class ViewCTRL {
 			}
 		}
 	}
+
 }

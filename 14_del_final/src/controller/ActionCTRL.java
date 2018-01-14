@@ -25,6 +25,9 @@ public class ActionCTRL {
 		gameSequence();
 	}
 
+	/**
+	 * Starter spillet ved at lave alle objekter, og lagre dem i de pladser vi har skabt oven over.
+	 */
 	private void initialiseGame() {
 		chancedeck = new ChanceDeckCTRL(); //Lav chancekort CTRL.
 		dieCup = new DieCup(); 		//Lav raflebæger.
@@ -38,7 +41,7 @@ public class ActionCTRL {
 		landonfield = new LandOnFieldCTRL(asset, bankruptcy, chancedeck);
 		//Opret bræt.
 		view = new ViewCTRL(fields);
-		
+
 		//Hent antal spillere.
 		String[] lines = {"2","3","4","5","6"};		
 		numberOfPlayers = Integer.parseInt(view.getDropDownChoice("Vælg antal spillere 2-6", lines));
@@ -48,6 +51,7 @@ public class ActionCTRL {
 		dropdown = new DropdownCTRL(landonfield, asset, trade);
 		view.updateEntireBoard(fields, players); // updatering af boardet på gui, så test / fejlfinding kan blive nemmere.
 	}
+
 	/**
 	 * Kører gamesekvens for en spiller.
 	 */
@@ -65,7 +69,7 @@ public class ActionCTRL {
 				}
 
 				// Lav Startmenu for spiller
-					view.writeText("Det er " + players[currentPlayer].getPlayerName() + "'s tur nu");
+				view.writeText("Det er " + players[currentPlayer].getPlayerName() + "'s tur nu");
 
 				//Hvis spiller er i fængsel håndter det.
 				jail.jailHandling(currentPlayer, players, fields, view);
@@ -88,7 +92,7 @@ public class ActionCTRL {
 					}
 					break;
 
-				// Køb huse og hoteller.
+					// Køb huse og hoteller.
 				case "Køb hus og hotel":
 					dropdown.buyHousesAndHotel(currentPlayer, players, fields, view);
 					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til "start" menuen, hvis en spiller valgte noget andet end slå terninger
@@ -96,7 +100,7 @@ public class ActionCTRL {
 					}
 					break;
 
-				//Sælg huse og hoteller.
+					//Sælg huse og hoteller.
 				case "Sælg hus og hotel":
 					dropdown.sellHousesAndHotels(currentPlayer, players, fields, view);
 					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til "start" menuen, hvis en spiller valgte noget andet end slå terninger
@@ -127,4 +131,5 @@ public class ActionCTRL {
 			}
 		}
 	}
+	
 }
