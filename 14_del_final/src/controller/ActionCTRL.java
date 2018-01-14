@@ -5,20 +5,20 @@ import view.*;
 
 public class ActionCTRL {
 	private int numberOfPlayers;
+	private AssetCTRL asset;
+	private BankruptcyCTRL bankruptcy;
 	private Board board;
-	private Field[] fields;
 	private CreatePlayers makePlayers;
-	private Player[] players;
-	private ViewCTRL view;
 	private ChanceDeckCTRL chancedeck;
 	private DieCup dieCup;
-	private AssetCTRL asset;
-	private JailCTRL jail;
 	private DropdownCTRL dropdown;
+	private Field[] fields;
+	private JailCTRL jail;
 	private LandOnFieldCTRL landonfield;
+	private Player[] players;
 	private TradeCTRL trade;
+	private ViewCTRL view;
 	private WinnerCTRL winner;
-	private BankruptcyCTRL bankruptcy;
 
 	public ActionCTRL() {
 		initialiseGame();
