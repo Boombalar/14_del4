@@ -4,10 +4,16 @@ import model.*;
 import view.*;
 
 public class DropdownCTRL {
-	LandOnFieldCTRL landonfield;
-	AssetCTRL asset;
-	TradeCTRL trade;
+	private LandOnFieldCTRL landonfield;
+	private AssetCTRL asset;
+	private TradeCTRL trade;
 
+	/**
+	 * Konstruktør
+	 * @param landonfield Et objekt af LandOnFieldCTRL
+	 * @param asset Et objekt af AssetCTRL
+	 * @param trade Et objekt af TradeCTRL
+	 */
 	public DropdownCTRL(LandOnFieldCTRL landonfield, AssetCTRL asset, TradeCTRL trade) {
 		this.landonfield = landonfield;
 		this.asset = asset;
@@ -15,7 +21,14 @@ public class DropdownCTRL {
 	}
 	boolean backToDropdown = false;
 
-
+	/**
+	 * En metode der slår med terninger
+	 * @param currentPlayer modtager en int som er den aktivespiller.
+	 * @param players objekt af Player[]
+	 * @param fields objekt af Field[]	
+	 * @param view objekt af ViewCTRL
+	 * @param dieCup objekt af DieCup
+	 */
 	public void rollDice (int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, DieCup dieCup) {
 
 		//slå terninger
@@ -46,7 +59,13 @@ public class DropdownCTRL {
 		//Kør regel på nyt felt.
 		landonfield.ruleSwitch(currentPlayer, players, fields, view);
 	}
-
+	/**
+	 * metode der giver lov til at købe huse og hoteller hvis man ejer felter af samme gruppe. 
+	 * @param currentPlayer en int som er den aktive spiller.	
+	 * @param players et objekt af Player[]
+	 * @param fields et objekt af Field[]
+	 * @param view et objekt af ViewCTRL.
+	 */
 	public void buyHousesAndHotel(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		backToDropdown = true;
 		//Find ud af hvor mange proporties man ejer hvor man har hele gruppen til array, og hvor man har råd til at bygge.
@@ -99,7 +118,13 @@ public class DropdownCTRL {
 			view.writeText(players[currentPlayer].getPlayerName() + " ejer ikke nogle grunde");
 		}
 	}
-
+	/**
+	 * Metode der gør vi kan sælge huse eller hoteller.
+	 * @param currentPlayer int som er den aktive spiller.
+	 * @param players objekt af Player[]
+	 * @param fields objjekt af Field[]
+	 * @param view objekt af ViewCTRL
+	 */
 	public void sellHousesAndHotels(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		backToDropdown = true;
 		int amountOfProperties=0;
@@ -152,7 +177,13 @@ public class DropdownCTRL {
 	}
 
 
-
+	/**
+	 * metode der gør vi kan sælge huse.
+	 * @param currentPlayer int som er den aktivespiller.
+	 * @param players Objekt af Player[]	
+	 * @param fields Objekt af Field[]
+	 * @param view Objekt af ViewCTRL
+	 */
 	public void sellProperty(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		backToDropdown = true;
 		int amountOfProperties=0;
@@ -207,7 +238,10 @@ public class DropdownCTRL {
 			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
 		}
 	}
-
+	/**
+	 * Går tilbage til dropdownmenu.
+	 * @return
+	 */
 	public boolean getBackToDropDown() {
 		return backToDropdown;
 	}

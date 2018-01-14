@@ -5,27 +5,27 @@ import view.*;
 
 public class ActionCTRL {
 	private int numberOfPlayers;
+	private AssetCTRL asset;
+	private BankruptcyCTRL bankruptcy;
 	private Board board;
-	private Field[] fields;
 	private CreatePlayers makePlayers;
-	private Player[] players;
-	private ViewCTRL view;
 	private ChanceDeckCTRL chancedeck;
 	private DieCup dieCup;
-	private AssetCTRL asset;
-	private JailCTRL jail;
 	private DropdownCTRL dropdown;
+	private Field[] fields;
+	private JailCTRL jail;
 	private LandOnFieldCTRL landonfield;
+	private Player[] players;
 	private TradeCTRL trade;
+	private ViewCTRL view;
 	private WinnerCTRL winner;
-	private BankruptcyCTRL bankruptcy;
 
 	public ActionCTRL() {
 		initialiseGame();
 		gameSequence();
 	}
 
-	public void initialiseGame() {
+	private void initialiseGame() {
 		chancedeck = new ChanceDeckCTRL(); //Lav chancekort CTRL.
 		dieCup = new DieCup(); 		//Lav raflebæger.
 		board = new Board();		 //Lav bræt model.
@@ -46,8 +46,7 @@ public class ActionCTRL {
 		view.updateEntireBoard(fields, players); // updatering af boardet på gui, så test / fejlfinding kan blive nemmere.
 	}
 	/**
-	 * gameSequence
-	 * kører gamesekvens for en spiller.
+	 * Kører gamesekvens for en spiller.
 	 */
 	private void gameSequence() {
 		int currentPlayer = 1; //Den første spiller instantieres til spiller 1
@@ -114,10 +113,11 @@ public class ActionCTRL {
 					break;
 
 				}
-
+				//fortæller systemet af det er næsten spillers tur.
 				currentPlayer++;
+				//Når det har været sidste spillers tur bliver den sat til spiller 1 igen.
 				if (currentPlayer == players.length){
-					currentPlayer = 1;
+					currentPlayer = 1; 		
 				}
 
 				if (winner.checkWinner(numberOfPlayers, players)) { //Boolean på om der er 1 spiller tilbage
