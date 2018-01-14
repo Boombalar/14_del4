@@ -16,7 +16,7 @@ public class Account {
 	 * Withdraw(Udtræk) penge fra den givne spillers pengebeholdning.
 	 * @param value Den mængde der skal trækkes ud af spillerens account.
 	 */
-	public void withdraw(int value) {
+	public void withDraw(int value) {
 		this.balance -= value;
 		
 	}

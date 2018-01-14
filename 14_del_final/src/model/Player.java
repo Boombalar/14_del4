@@ -71,7 +71,7 @@ public class Player {
 	 * @param value Den mængde der trækkes fra spillerens pengebeholdning.
 	 */
 	public void removeMoney(int value) {
-		myAccount.withdraw(value);
+		myAccount.withDraw(value);
 	}
 
 	/**
