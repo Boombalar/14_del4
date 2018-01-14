@@ -25,7 +25,7 @@ public class ActionCTRL {
 		gameSequence();
 	}
 
-	public void initialiseGame() {
+	private void initialiseGame() {
 		chancedeck = new ChanceDeckCTRL(); //Lav chancekort CTRL.
 		dieCup = new DieCup(); 		//Lav raflebæger.
 		board = new Board();		 //Lav bræt model.

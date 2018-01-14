@@ -5,8 +5,8 @@ import view.*;
 
 public class BankruptcyCTRL {
 
-	AssetCTRL asset;
-	TradeCTRL trade;
+	private AssetCTRL asset;
+	private TradeCTRL trade;
 
 	public BankruptcyCTRL (AssetCTRL asset, TradeCTRL trade) {
 		this.asset = asset;

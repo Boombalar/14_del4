@@ -5,10 +5,10 @@ import model.*;
 import java.util.Random;
 
 public class ChanceDeckCTRL {
-	ChanceCard[] chanceCard;
-	int cardPointer = 0;
-	int cardNumber = 0;
-	int[] shuffledDeck = new int[32];
+	private ChanceCard[] chanceCard;
+	private int cardPointer = 0;
+	private int cardNumber = 0;
+	private int[] shuffledDeck = new int[32];
 
 	/**
 	 *Opretter alle chancekortene. 

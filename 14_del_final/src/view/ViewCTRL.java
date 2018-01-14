@@ -21,11 +21,10 @@ import model.*;
 public class ViewCTRL {
 	private Player[] players;
 	private Field[] fields;
-
 	private GUI gui;
 	private GUI_Field[] guiFields = new GUI_Field[40];
-	private GUI_Player[] guiPlayer;
-	private Color[] carColor = new Color[7];
+	private GUI_Player[] guiPlayer = new Color[7];
+	private Color[] carColor;
 	private GUI_Car[] guiCar;
 
 
@@ -36,10 +35,10 @@ public class ViewCTRL {
 	 */
 	public ViewCTRL(Field[] fields) {
 		this.fields = fields;
-		MakeBoard();
+		makeBoard();
 	}
 
-	private void MakeBoard() {
+	private void makeBoard() {
 		int fieldType;
 		Color bgColor = Color.white;
 		Color fgColor = Color.black;
@@ -205,14 +204,15 @@ public class ViewCTRL {
 		gui.getFields()[newPosition].setCar(guiPlayer[player], true);
 	}
 
+	/**
+	 * 
+	 * @param playerName
+	 * @param newName
+	 */
 	public void updatePlayerName(int playerName, String newName) {
 		this.guiPlayer[playerName].setName(newName);
 	}
-
-	public void removePlayerCar(int player, int oldPosition) {
-		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
-	}
-
+	
 	/**
 	 * Metode der får GUIen til at vise en spillers account
 	 * @param player Spillerens nummer
@@ -220,6 +220,10 @@ public class ViewCTRL {
 	 */
 	public void updatePlayerAccount(int player, int amount) {
 		guiPlayer[player].setBalance(amount);
+	}
+
+	public void removePlayerCar(int player, int oldPosition) {
+		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
 	}
 
 	/**

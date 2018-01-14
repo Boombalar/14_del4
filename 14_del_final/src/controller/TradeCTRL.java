@@ -3,7 +3,7 @@ package controller;
 import model.*;
 
 public class TradeCTRL {
-	AssetCTRL asset;
+	private AssetCTRL asset;
 
 	/**
 	 * Konstruktør til TradeCTRL

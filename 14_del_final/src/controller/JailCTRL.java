@@ -4,9 +4,7 @@ import model.*;
 import view.*;
 
 public class JailCTRL {
-	AssetCTRL asset;
-	TradeCTRL trade;
-	BankruptcyCTRL bankruptcy;
+	private BankruptcyCTRL bankruptcy;
 
 	public JailCTRL(BankruptcyCTRL bankruptcy) {
 		this.bankruptcy = bankruptcy;
