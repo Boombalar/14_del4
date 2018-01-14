@@ -14,13 +14,13 @@ public class BankruptcyCTRL {
 	}
 
 /**
- * payMoney() - En metode som laver en transaktion mellem to spillere. 
- * @param currentPlayer -  modtager en int som den aktivespiller.
- * @param toPlayer - modtager en int som er til den spiller der skal betales til.
- * @param amount - modtager en int som er det beløb der skal betales. 
- * @param players - Det er et player array af Player[]
- * @param fields - Det er et field array af Fields[]
- * @param view - Det er et view af ViewCTRL.
+ *En metode som laver en transaktion mellem to spillere. 
+ * @param currentPlayer modtager en int som den aktivespiller.
+ * @param toPlayer modtager en int som er til den spiller der skal betales til.
+ * @param amount modtager en int som er det beløb der skal betales. 
+ * @param players Det er et objekt af typen Player[]
+ * @param fields Det er et objekt af typen Fields[]
+ * @param view Det er et objekt af ViewCTRL.
  */ 
 	public void payMoney(int currentPlayer, int toPlayer, int amount, Player[] players, Field[] fields, ViewCTRL view) {
 		if (checkForEnoughMoneyOnAccount(currentPlayer, amount, players) == false) {
@@ -36,11 +36,11 @@ public class BankruptcyCTRL {
 		view.updateEntireBoard(fields, players);
 	}
 	/**
-	 * checkForEnoughMoneyOnAccount() - En metode der tjekke for om man kan foretage en transaktion mellem to spiller.
-	 * @param currentPlayer - modtager en int som er den aktive spiller.
-	 * @param amount - modtager en int som er det beløb der skal betales. 
-	 * @param players - Det er et player array af Player[]
-	 * @return - Retunere true, hvis der er penge nok ellers false. 
+	 * En metode der tjekke for om man kan foretage en transaktion mellem to spiller.
+	 * @param currentPlayer modtager en int som er den aktive spiller.
+	 * @param amount modtager en int som er det beløb der skal betales. 
+	 * @param players Det er et objekt af typen Player[]
+	 * @return Retunere true, hvis der er penge nok ellers false. 
 	 */
 	//Check for om man har penge nok til at foretage en transaktion mellem to spillere.
 	public boolean checkForEnoughMoneyOnAccount(int currentPlayer, int amount, Player[] players) {
@@ -51,12 +51,12 @@ public class BankruptcyCTRL {
 		return returnValue;
 	}
 /**
- * raiseMoney() - En metode som samler penge sammen ved salg af aktiver, hvis man ikke har nok penge på kontoen, 
- * @param currentPlayer - modtager en int som er den aktive spiller.
- * @param toPlayer - Modtager en int som er den spiller som skal modtage pengene. 
- * @param amountToPay - Modtager en int som er det beløb der skal betales. 
- * @param players - Det er et player array af players[]
- * @param fields - Det er et field array af Field[]
+ * En metode som samler penge sammen ved salg af aktiver, hvis man ikke har nok penge på kontoen, 
+ * @param currentPlayer modtager en int som er den aktive spiller.
+ * @param toPlayer Modtager en int som er den spiller som skal modtage pengene. 
+ * @param amountToPay Modtager en int som er det beløb der skal betales. 
+ * @param players Det er et objekt af players[]
+ * @param fields Det er et objekt af Field[]
  * @return - Retunere true hvis der er samlet nok penge sammen ved salg af huse eller grunde, ellers false. 
  */
 	public boolean raiseMoney(int currentPlayer, int toPlayer, int amountToPay, Player[] players, Field[] fields) {
@@ -102,8 +102,8 @@ public class BankruptcyCTRL {
 	 * bankruptcy() - En metode der overfører alle aktiver, "penge og grunde" til den spiller man er gået bankerot eller banken og giver en tekst til spiller at han er gået bankerot.
 	 * @param currentPlayer - Modtager en int som er den aktivespiller.
 	 * @param toPlayer - modtager en int som er den spiller han skal overfører til.
-	 * @param players - Det er et player array af Player[]
-	 * @param fields - Det er et field array af Field[]
+	 * @param players - Det er et objekt af typen Player[]
+	 * @param fields - Det er et objekt af typen Field[]
 	 * @param view - Det er et objekt af ViewCTRL.
 	 */
 	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields, ViewCTRL view) {

@@ -46,8 +46,7 @@ public class ActionCTRL {
 		view.updateEntireBoard(fields, players); // updatering af boardet på gui, så test / fejlfinding kan blive nemmere.
 	}
 	/**
-	 * gameSequence
-	 * kører gamesekvens for en spiller.
+	 * Kører gamesekvens for en spiller.
 	 */
 	private void gameSequence() {
 		int currentPlayer = 1; //Den første spiller instantieres til spiller 1
