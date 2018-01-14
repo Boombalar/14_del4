@@ -114,10 +114,11 @@ public class ActionCTRL {
 					break;
 
 				}
-
+				//fortæller systemet af det er næsten spillers tur.
 				currentPlayer++;
+				//Når det har været sidste spillers tur bliver den sat til spiller 1 igen.
 				if (currentPlayer == players.length){
-					currentPlayer = 1;
+					currentPlayer = 1; 		
 				}
 
 				if (winner.checkWinner(numberOfPlayers, players)) { //Boolean på om der er 1 spiller tilbage
