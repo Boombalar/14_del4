@@ -23,10 +23,10 @@ public class DropdownCTRL {
 /**
  * En metode der slår med terninger
  * @param currentPlayer modtager en int som er den aktivespiller.
- * @param players et playerobjekt af Player[]
- * @param fields et fieldsobjekt af Field[]	
- * @param view et objekt af ViewCTRL
- * @param dieCup et objekt af DieCup
+ * @param players objekt af Player[]
+ * @param fields objekt af Field[]	
+ * @param view objekt af ViewCTRL
+ * @param dieCup objekt af DieCup
  */
 	public void rollDice (int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, DieCup dieCup) {
 
@@ -117,7 +117,13 @@ public class DropdownCTRL {
 			view.writeText(players[currentPlayer].getPlayerName() + " ejer ikke nogle grunde");
 		}
 	}
-
+/**
+ * Metode der gør vi kan sælge huse eller hoteller.
+ * @param currentPlayer int som er den aktive spiller.
+ * @param players objekt af Player[]
+ * @param fields objjekt af Field[]
+ * @param view objekt af ViewCTRL
+ */
 	public void sellHousesAndHotels(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		backToDropdown = true;
 		int amountOfProperties=0;
@@ -170,7 +176,13 @@ public class DropdownCTRL {
 	}
 
 
-
+/**
+ * metode der gør vi kan sælge huse.
+ * @param currentPlayer int som er den aktivespiller.
+ * @param players Objekt af Player[]	
+ * @param fields Objekt af Field[]
+ * @param view Objekt af ViewCTRL
+ */
 	public void sellProperty(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		backToDropdown = true;
 		int amountOfProperties=0;
@@ -225,7 +237,10 @@ public class DropdownCTRL {
 			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
 		}
 	}
-
+/**
+ * Går tilbage til dropdownmenu.
+ * @return
+ */
 	public boolean getBackToDropDown() {
 		return backToDropdown;
 	}

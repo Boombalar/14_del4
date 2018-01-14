@@ -11,7 +11,13 @@ public class JailCTRL {
 	public JailCTRL(BankruptcyCTRL bankruptcy) {
 		this.bankruptcy = bankruptcy;
 	}
-
+/**
+ * Håndtere om man er kommet i fængsel.
+ * @param currentPlayer en int som er den aktivespiller.
+ * @param players objekt af Player[]
+ * @param fields Objekt af Field[]
+ * @param view Objekt af ViewCTRL
+ */
 	public void jailHandling(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
 		if(players[currentPlayer].getTurnsInJail()==1) {
 			view.writeText(players[currentPlayer].getPlayerName() + " er i fængsel, og skal nu ud af fængslet");
