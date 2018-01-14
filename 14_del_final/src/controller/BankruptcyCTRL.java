@@ -5,11 +5,11 @@ import view.*;
 
 public class BankruptcyCTRL {
 
-	AssetCTRL toolbox;
+	AssetCTRL asset;
 	TradeCTRL trade;
 
-	public BankruptcyCTRL (AssetCTRL toolbox, TradeCTRL trade) {
-		this.toolbox = toolbox;
+	public BankruptcyCTRL (AssetCTRL asset, TradeCTRL trade) {
+		this.asset = asset;
 		this.trade = trade;
 	}
 
@@ -44,7 +44,7 @@ public class BankruptcyCTRL {
 		for (int fieldCount = 0 ; fieldCount<=39;fieldCount++) {
 			//Er feltet et propertyfelt. Hvis vi ikke ejer feltet, så er numberOfHouses = 0
 			if(fields[fieldCount] instanceof PropertyFields) {					
-				numberOfHouses = toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields);		
+				numberOfHouses = asset.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields);		
 				//Er der huse på feltet ?
 				if (numberOfHouses > 0) {
 					//Vi sælger husene 1 ad gangen
@@ -63,7 +63,7 @@ public class BankruptcyCTRL {
 
 		int amountToRaise = amountToPay - players[currentPlayer].getBalance();
 		// Hvis vi kan rejse de penge der mangler ved at sælge grunde
-		if ((toolbox.checkPropertySaleValue(currentPlayer, amountToRaise, fields))==true) {
+		if ((asset.checkPropertySaleValue(currentPlayer, amountToRaise, fields))==true) {
 
 			//Vi begynder at sælge grunde indtil der er solgt nok grunde til at vi kan betale.
 			for (int fieldCount = 0; fieldCount<=39;fieldCount++) {

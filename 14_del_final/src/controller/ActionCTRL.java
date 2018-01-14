@@ -1,7 +1,6 @@
 package controller;
 
 import model.*;
-import test.ViewCTRLTEST;
 import view.*;
 
 public class ActionCTRL {
@@ -13,7 +12,7 @@ public class ActionCTRL {
 	private ViewCTRL view;
 	private ChanceDeckCTRL chancedeck;
 	private DieCup dieCup;
-	private AssetCTRL toolbox;
+	private AssetCTRL asset;
 	private JailCTRL jail;
 	private DropdownCTRL dropdown;
 	private LandOnFieldCTRL landonfield;
@@ -32,18 +31,18 @@ public class ActionCTRL {
 		board = new Board();		 //Lav bræt model.
 		fields = board.getFields();
 		winner = new WinnerCTRL();
-		toolbox = new AssetCTRL();
-		trade = new TradeCTRL(toolbox);
-		bankruptcy = new BankruptcyCTRL(toolbox, trade);
+		asset = new AssetCTRL();
+		trade = new TradeCTRL(asset);
+		bankruptcy = new BankruptcyCTRL(asset, trade);
 		jail = new JailCTRL(bankruptcy);
-		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, chancedeck);
+		landonfield = new LandOnFieldCTRL(asset, bankruptcy, chancedeck);
 		view = new ViewCTRL(fields);//Opret bræt.
 		String[] lines = {"2","3","4","5","6"};		//Hent antal spillere.
 		numberOfPlayers = Integer.parseInt(view.getDropDownChoice("Vælg antal spillere 2-6", lines));
 		makePlayers = new CreatePlayers(numberOfPlayers, view);  		//Lav player array.
 		players = makePlayers.getPlayers(); // Modtag player array.
 		view.makeGuiPlayers(players); //Opret antal spillere på bræt.
-		dropdown = new DropdownCTRL(dieCup, landonfield, toolbox, trade);
+		dropdown = new DropdownCTRL(dieCup, landonfield, asset, trade);
 		view.updateEntireBoard(fields, players); // updatering af boardet på gui, så test / fejlfinding kan blive nemmere.
 	}
 	/**

@@ -4,7 +4,7 @@ import model.*;
 import view.*;
 
 public class JailCTRL {
-	AssetCTRL toolbox;
+	AssetCTRL asset;
 	TradeCTRL trade;
 	BankruptcyCTRL bankruptcy;
 

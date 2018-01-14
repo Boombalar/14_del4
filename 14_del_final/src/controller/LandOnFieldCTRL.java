@@ -5,18 +5,18 @@ import view.*;
 
 public class LandOnFieldCTRL {
 
-	private AssetCTRL toolbox;
+	private AssetCTRL asset;
 	private ChanceDeckCTRL chancedeck;
 	private BankruptcyCTRL bankruptcy;
 
 	/**
 	 * Konstruktør til LandOnFieldCTRL
-	 * @param toolbox - indtast objectnavn af typen Toolbox
+	 * @param asset - indtast objectnavn af typen Toolbox
 	 * @param bankruptcy - indtast objectnavn af typen BankruptcyCTRL
 	 * @param chancecarddeck - indtast objectnavn af typen ChanceCardDeckCTRL
 	 */
-	public LandOnFieldCTRL (AssetCTRL toolbox,BankruptcyCTRL bankruptcy, ChanceDeckCTRL chancedeck) {
-		this.toolbox = toolbox;	
+	public LandOnFieldCTRL (AssetCTRL asset,BankruptcyCTRL bankruptcy, ChanceDeckCTRL chancedeck) {
+		this.asset = asset;	
 		this.chancedeck = chancedeck;
 		this.bankruptcy = bankruptcy;
 	}
@@ -114,7 +114,7 @@ public class LandOnFieldCTRL {
 			}
 		}
 		if(owner != 0 && owner != currentPlayer) {
-			if (toolbox.checkPropertyGroupOwnership(owner,newPlayerPosition,fields) && (fieldRent[6] == 0)) {
+			if (asset.checkPropertyGroupOwnership(owner,newPlayerPosition,fields) && (fieldRent[6] == 0)) {
 				propertyRent *= 2;
 			}
 			view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du skal betale " + propertyRent + "kr. til " + players[owner].getPlayerName()); //Gui i tekst til spilleren
@@ -138,7 +138,7 @@ public class LandOnFieldCTRL {
 		int newPlayerPosition = players[currentPlayer].getPosition();
 		int breweryPropertyValue = (((BreweryFields)fields[newPlayerPosition]).getPropertyValue());
 		int[] breweryFieldRent = (((BreweryFields)fields[newPlayerPosition]).getReturnValue());
-		int numOfOwnedBrewFields = (toolbox.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition, fields));
+		int numOfOwnedBrewFields = (asset.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition, fields));
 		if(owner == 0) {
 			boolean answer = view.getUserAnswer(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', vil du købe dette bryggeri ?", "ja", "nej");
 			if(answer == true) {
@@ -216,7 +216,7 @@ public class LandOnFieldCTRL {
 		int shippingPropertyValue = (((ShippingFields)fields[newPlayerPosition]).getPropertyValue());
 		int owner = (((ShippingFields)fields[newPlayerPosition]).getOwner());
 		int[] fieldRent = (((ShippingFields)fields[newPlayerPosition]).getReturnValue());
-		int numOfOwnedShipFields = (toolbox.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition, fields));
+		int numOfOwnedShipFields = (asset.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition, fields));
 
 		if(owner == 0) {
 			boolean answer = view.getUserAnswer(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', vil du købe dette redderi ?", "ja", "nej"); //Spiller for mulighed for at købe grunden
@@ -282,8 +282,8 @@ public class LandOnFieldCTRL {
 			break;
 
 		case 4: //TaxCards
-			int numberofhouses = toolbox.getNumberOfHousesFromPlayer(currentPlayer, fields);
-			int numberofhotels = toolbox.getNumberOfHotelsFromPlayer(currentPlayer, fields);
+			int numberofhouses = asset.getNumberOfHousesFromPlayer(currentPlayer, fields);
+			int numberofhotels = asset.getNumberOfHotelsFromPlayer(currentPlayer, fields);
 			int totalSum = (chanceCardValueArray[0] * numberofhouses)+(chanceCardValueArray[1] * numberofhotels);
 			view.writeText("Der trækkes " + totalSum + "kr. fra " + players[currentPlayer].getPlayerName() + "'s konto.");
 			bankruptcy.payMoney(currentPlayer, owner, (totalSum), players, fields, view);

@@ -3,14 +3,14 @@ package controller;
 import model.*;
 
 public class TradeCTRL {
-	AssetCTRL toolbox;
+	AssetCTRL asset;
 
 	/**
 	 * Konstruktør til TradeCTRL
 	 * @param toolbox - indtast objectnavn af typen Toolbox
 	 */
-	public TradeCTRL (AssetCTRL toolbox) {
-		this.toolbox = toolbox;
+	public TradeCTRL (AssetCTRL asset) {
+		this.asset = asset;
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class TradeCTRL {
 		int[] returnValue = new int[8];
 		int numberOfHouses;
 
-		numberOfHouses = toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldNumber, fields);
+		numberOfHouses = asset.getHousesOnPropertyWithOwner(currentPlayer, fieldNumber, fields);
 		if (numberOfHouses < 5) {
 			returnValue[6]++;
 		}
@@ -71,10 +71,10 @@ public class TradeCTRL {
 		int numberOfHouses;
 		int priceOfBuilding;
 
-		numberOfHouses = toolbox.getHousesOnPropertyWithOwner(currentPlayer, fieldNumber, fields);
+		numberOfHouses = asset.getHousesOnPropertyWithOwner(currentPlayer, fieldNumber, fields);
 		if (numberOfHouses > 0) {
-			toolbox.setHousesOnProperty(numberOfHouses-1, fieldNumber, fields);
-			priceOfBuilding = toolbox.getHousePrice(fieldNumber, fields)/2;
+			asset.setHousesOnProperty(numberOfHouses-1, fieldNumber, fields);
+			priceOfBuilding = asset.getHousePrice(fieldNumber, fields)/2;
 			players[currentPlayer].recieveMoney(priceOfBuilding);		
 		}
 	}
