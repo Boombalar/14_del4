@@ -49,19 +49,6 @@ public class PlayerTest {
 	}
 
 	/**
-	 * Tester checkBroke, da en spiller ikke starter bankerot forventes false, og derefter trækkes 50000 fra spilleren konto
-	 * og så forventes at checkBroke er true eftersom spillerens konto er under 0.
-	 */
-	@Test
-	public void testCheckBroke() {
-		boolean expected = false;
-		assertFalse(expected);
-		playerTest.removeMoney(50000);
-		assertTrue(playerTest.checkBroke());
-		
-	}
-
-	/**
 	 * Tester recieveMoney ved at lægge 5000 til spillerens konto og derefter køres en getBalance for at se om spilleren har 35000.
 	 */
 	@Test

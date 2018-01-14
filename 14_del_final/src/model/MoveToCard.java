@@ -3,7 +3,7 @@ package model;
 public class MoveToCard extends ChanceCard{
 
 	private int[] returnvalue = new int[2];
-	
+
 	/**
 	 * Konstruktør til MoveToCard
 	 * @param number Nummeret kortet har
@@ -17,7 +17,7 @@ public class MoveToCard extends ChanceCard{
 		this.returnvalue[0]=fieldnumber;
 		this.returnvalue[1]=movetotype; 
 	}
-	
+
 	/**
 	 * En getter til MoveToCard
 	 * @return Kortes nummer.

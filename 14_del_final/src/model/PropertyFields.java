@@ -3,14 +3,9 @@ package model;
 public class PropertyFields extends OwnerFields {
 
 	private int[] rent = new int[8];
-	/*private int numberOfHouse;
-	private int priceOfHouse;
-	Er lagt in i det sidste to pladser i arrayet. 
-	*/
-	
+
 	/**
 	 * Konstruktør til propertyFields
-	 * 
 	 * @param propertyValue	Hvad koster feltet
 	 * @param owner			Hvem ejer felete
 	 * @param groupNumber	Gruppenummer eks. hvidovrevej, og rødovrevej er gruppe 1
@@ -24,7 +19,7 @@ public class PropertyFields extends OwnerFields {
 	 * @param value7   Pris for at bygge hus.
 	 */
 	public PropertyFields (String name, int type, int number, int propertyValue, int owner, int groupNumber, int value0, int value1, int value2, int value3, int value4, int value5, int value6, int value7) {
-    	super(name, type, number, propertyValue, owner, groupNumber);
+		super(name, type, number, propertyValue, owner, groupNumber);
 		rent[0] = value0; 
 		rent[1] = value1;
 		rent[2] = value2;
@@ -33,9 +28,8 @@ public class PropertyFields extends OwnerFields {
 		rent[5] = value5;
 		rent[6] = value6; 
 		rent[7] = value7;
-				
 	}
-	
+
 	/**
 	 * En getter til huslejen på et givet propertyField felt.
 	 * @return Hvor mange huse en propertyField grund har
@@ -43,9 +37,12 @@ public class PropertyFields extends OwnerFields {
 	public int[] getReturnValue() {
 		return this.rent;
 	}
-	
-}
 
-//pris 0-5 huse = 6 pladser i array
-//hvor mange huse der er på grunden = 1
-//pris på hus
+	/**
+	 * setNumberOfHouses() - Bestemmer hvor mange huse man har på den pågældende grund.
+	 * @param returnValue - antal af huse der skal være på feltet.
+	 */
+	public void setNumberOfHouses(int returnValue) {
+		this.rent[6] = returnValue;
+	}
+}

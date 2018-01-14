@@ -1,9 +1,5 @@
 package model;
-/**
- * Her er der ingen returværdi.
- * @author kimsa
- *
- */
+
 public class NoActionField extends Field{
 
 	/**

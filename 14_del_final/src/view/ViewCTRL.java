@@ -21,7 +21,6 @@ import model.*;
 public class ViewCTRL {
 	private Player[] players;
 	private Field[] fields;
-
 	private GUI gui;
 	private GUI_Field[] guiFields = new GUI_Field[40];
 	private GUI_Player[] guiPlayer;
@@ -36,10 +35,10 @@ public class ViewCTRL {
 	 */
 	public ViewCTRL(Field[] fields) {
 		this.fields = fields;
-		MakeBoard();
+		makeBoard();
 	}
 
-	private void MakeBoard() {
+	private void makeBoard() {
 		int fieldType;
 		Color bgColor = Color.white;
 		Color fgColor = Color.black;
@@ -51,8 +50,6 @@ public class ViewCTRL {
 
 			//Bestem farve til grupperne
 			switch(fieldType) {
-
-
 			case 0: //PropertyField
 				int groupNumber = (((PropertyFields)fields[i]).getGroupNumber());
 				switch(groupNumber) {
@@ -83,56 +80,59 @@ public class ViewCTRL {
 				}
 				fgColor = Color.black;
 				price = Integer.toString(((PropertyFields)fields[i]).getPropertyValue()) + " kr.";
-				guiFields[i] = new GUI_Street(fields[i].getName(),price, "", "100", bgColor, fgColor);
+				guiFields[i] = new GUI_Street(fields[i].getName(),price, (((PropertyFields)fields[i]).getName()), "100", bgColor, fgColor);
 				break; 
 
 			case 1: //ShipField
-				price = Integer.toString(((ShipFields)fields[i]).getPropertyValue())+ " kr.";
-				guiFields[i] = new GUI_Shipping("",fields[i].getName(),price,"","arg4",Color.cyan,Color.black);
+				price = Integer.toString(((ShippingFields)fields[i]).getPropertyValue())+ " kr.";
+				guiFields[i] = new GUI_Shipping("",fields[i].getName(),price,(((ShippingFields)fields[i]).getName()),"arg4",Color.cyan,Color.black);
 				break; 
 
 			case 2: //BreweryField
 				price = Integer.toString(((BreweryFields)fields[i]).getPropertyValue()) + " kr.";
-				guiFields[i] = new GUI_Brewery("",fields[i].getName(),price,"","arg4",Color.orange,Color.black);
-
+				guiFields[i] = new GUI_Brewery("",fields[i].getName(),price,(((BreweryFields)fields[i]).getName()),"arg4",Color.orange,Color.black);
 				break; 
 
 			case 3: //TaxField
 				int[] taxint = ((TaxField)fields[i]).getReturnValue();
 				String tax = Integer.toString(taxint[0]) + " kr."; 
-				guiFields[i] = new GUI_Tax(fields[i].getName(),tax,"",Color.white, Color.black);
+				guiFields[i] = new GUI_Tax(fields[i].getName(),tax,(((TaxField)fields[i]).getName()),Color.white, Color.black);
 				break; 
 
 			case 4: //ChanceField
-				guiFields[i] = new GUI_Chance(fields[i].getName(),"","",Color.black, Color.white);
+				guiFields[i] = new GUI_Chance(fields[i].getName(),"","Prøv lykken",Color.black, Color.white);
 				break; 
 
 			case 5: //StartField
-				guiFields[i] = new GUI_Start(fields[i].getName(),"","",Color.red, Color.black);
+				guiFields[i] = new GUI_Start(fields[i].getName(),"",fields[i].getName(),Color.red, Color.black);
 				break; 
 
 			case 6: //NoActionField
-				guiFields[i] = new GUI_Refuge("", "", fields[i].getName(), "", Color.black, Color.white);
+				guiFields[i] = new GUI_Refuge("", "", fields[i].getName(),fields[i].getName(), Color.black, Color.white);
 				break; 
 
 			case 7: //GoToJailField
-				guiFields[i] = new GUI_Refuge("", "", fields[i].getName(), "", Color.black, Color.white);
+				guiFields[i] = new GUI_Refuge("", "", fields[i].getName(), fields[i].getName(), Color.black, Color.white);
 				break; 
 			}
 		}
 		gui = new GUI(guiFields);
 	}
-
+/**
+ * Laver spiller så man kan se dem på brættet.
+ * @param players objekt at Player[]
+ */
 	public void makeGuiPlayers(Player[] players) {
 
 		this.players = players;
 		guiPlayer = new GUI_Player[players.length+1];
 
 		//Opretter 6 farver på bilerne
+		carColor[0] = new Color(1,1,1);
 		carColor[1] = new Color(70,250,0);
 		carColor[2] = new Color(10,160,230);
 		carColor[3] = new Color(200,200,200);
-		carColor[4] = new Color(0,0,0);	
+		carColor[4] = new Color(0,0,250);	
 		carColor[5] = new Color(50,150,100);
 		carColor[6] = new Color(75,100,220);
 
@@ -141,7 +141,7 @@ public class ViewCTRL {
 		for (int counter = 1 ; counter <= players.length-1 ; counter++) {
 			guiCar[counter] = new GUI_Car();
 			guiCar[counter].setPrimaryColor(carColor[counter]);
-			guiPlayer[counter] = new GUI_Player(players[counter].getPlayerName(),players[counter].getBalance(),guiCar[counter]);
+			guiPlayer[counter] = new GUI_Player(counter + ". " + players[counter].getPlayerName(),players[counter].getBalance(),guiCar[counter]);
 			gui.addPlayer(guiPlayer[counter]);
 			gui.getFields()[players[counter].getPosition()].setCar(guiPlayer[counter], true);
 		}
@@ -208,12 +208,29 @@ public class ViewCTRL {
 	}
 
 	/**
+	 * updatere og overskriver navn så det vises på brættet.
+	 * @param playerNumber spiller nummer
+	 * @param newName spiller navn
+	 */
+	public void updatePlayerName(int playerNumber, String newName) {
+		this.guiPlayer[playerNumber].setName(newName);
+	}
+	
+	/**
 	 * Metode der får GUIen til at vise en spillers account
 	 * @param player Spillerens nummer
 	 * @param amount mængden der skal vises i GUIen
 	 */
 	public void updatePlayerAccount(int player, int amount) {
 		guiPlayer[player].setBalance(amount);
+	}
+/**
+ * Fjerner bilen fra brættet
+ * @param player int som er aktivspiller.
+ * @param oldPosition int som den gamle position som spilleren kom fra.
+ */
+	public void removePlayerCar(int player, int oldPosition) {
+		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);
 	}
 
 	/**
@@ -222,7 +239,7 @@ public class ViewCTRL {
 	 * @param fieldNumber Nummeret på det felt der skal opdateres
 	 */
 	public void updateOwnership(int player, int fieldNumber) {
-		
+
 		if(guiFields[fieldNumber] instanceof GUI_Shipping) {
 			if (player == 0) {
 				((GUI_Shipping)guiFields[fieldNumber]).setBorder(null);
@@ -244,9 +261,6 @@ public class ViewCTRL {
 			}
 			else ((GUI_Street)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());
 		}
-
-		
-		
 	}
 
 	/**
@@ -280,8 +294,34 @@ public class ViewCTRL {
 	public void showChanceCard (String text) {
 		gui.displayChanceCard(text);
 	}
-	
+
 	public void turnOffPlayer (int player) {
 		gui.getFields()[players[player].getPosition()].setCar(guiPlayer[player], false);
+	}
+
+	public String getUserTextInput(String displayText) {
+		return gui.getUserString(displayText);
+	}
+
+	public void updateEntireBoard(Field[] fields, Player[] players) {
+		//Updater fields ownership på bræt
+		for (int fieldCount = 0;fieldCount <= 39; fieldCount++) {
+			if (fields[fieldCount] instanceof PropertyFields) {
+				updateOwnership(((PropertyFields)fields[fieldCount]).getOwner(), fieldCount);
+				updateBuildings(fieldCount, (((PropertyFields)fields[fieldCount]).getReturnValue()[6]));
+			}
+			if (fields[fieldCount] instanceof BreweryFields) {
+				updateOwnership(((BreweryFields)fields[fieldCount]).getOwner(), fieldCount);
+			}
+			if (fields[fieldCount] instanceof ShippingFields) {
+				updateOwnership(((ShippingFields)fields[fieldCount]).getOwner(), fieldCount);
+			}
+			for (int playerCount = 1 ; playerCount <= players.length-1; playerCount++) {
+				updatePlayerAccount(playerCount, players[playerCount].getBalance());
+				if (players[playerCount].getBroke()) {
+					turnOffPlayer(playerCount);
+				}
+			}
+		}
 	}
 }

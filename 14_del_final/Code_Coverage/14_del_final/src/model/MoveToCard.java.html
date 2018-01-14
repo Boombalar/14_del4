@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MoveToCard.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">MoveToCard.java</span></div><h1>MoveToCard.java</h1><pre class="source lang-java linenums">package model;
+
+public class MoveToCard extends ChanceCard{
+
+<span class="fc" id="L5">	private int[] returnvalue = new int[2];</span>
+
+	/**
+	 * Konstruktør til MoveToCard
+	 * @param number Nummeret kortet har
+	 * @param type Typen kortet har, i dette tilfælde 2.
+	 * @param description En streng af beskrivelsen af kortet.
+	 * @param fieldnumber Det felt der rykkes til, hvis det er bestemt
+	 * @param movetotype Typen af typen MoveTo det er, om det er til nærmeste redderi, rådshuspladsen eller ryk 3 felter tilbage.
+	 */
+	public MoveToCard(int number, int type, String description, int fieldnumber, int movetotype) {
+<span class="fc" id="L16">		super(number, type, description);</span>
+<span class="fc" id="L17">		this.returnvalue[0]=fieldnumber;</span>
+<span class="fc" id="L18">		this.returnvalue[1]=movetotype; </span>
+<span class="fc" id="L19">	}</span>
+
+	/**
+	 * En getter til MoveToCard
+	 * @return Kortes nummer.
+	 */
+	public int[] getReturnValue() {
+<span class="fc" id="L26">		return this.returnvalue;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

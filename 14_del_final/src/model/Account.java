@@ -1,6 +1,7 @@
 package model;
 
 public class Account {
+	
 	private int balance = 30000; //Start værdi for hver spiller.
 	
 	/**
@@ -15,7 +16,7 @@ public class Account {
 	 * Withdraw(Udtræk) penge fra den givne spillers pengebeholdning.
 	 * @param value Den mængde der skal trækkes ud af spillerens account.
 	 */
-	public void withdraw(int value) {
+	public void withDraw(int value) {
 		this.balance -= value;
 		
 	}

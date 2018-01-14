@@ -14,7 +14,7 @@ public class ViewCTRLTEST {
 	Player[] players;
 
 	ViewCTRL view;
-	ChanceCardCTRL chanceCard;
+	ChanceDeckCTRL chanceCard;
 	DieCup dieCup;
 
 	public ViewCTRLTEST() {
@@ -38,14 +38,14 @@ public class ViewCTRLTEST {
 		System.out.println("Dropdown og writeText testet");
 
 		//Lav player array.
-		makePlayers = new CreatePlayers(6); 
+		makePlayers = new CreatePlayers(6, view); 
 		players = makePlayers.getPlayers();
 
 		//Opret antal spillere på bræt.
 		view.makeGuiPlayers(players);
 
 		//Lav chancekort CTRL.
-		chanceCard = new ChanceCardCTRL();
+		chanceCard = new ChanceDeckCTRL();
 		view.showChanceCard(chanceCard.getDescription());// Vis et chancekort er testet
 		System.out.println("Chancekort er testet");
 

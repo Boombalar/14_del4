@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>MoveToCardTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">MoveToCardTest.java</span></div><h1>MoveToCardTest.java</h1><pre class="source lang-java linenums">package test;
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import model.MoveToCard;
+
+<span class="nc" id="L12">public class MoveToCardTest {</span>
+
+	
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+<span class="nc" id="L18">	}</span>
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+<span class="nc" id="L22">	}</span>
+
+	@Before
+	public void setUp() throws Exception {
+<span class="nc" id="L26">	}</span>
+
+	@After
+	public void tearDown() throws Exception {
+<span class="nc" id="L30">	}</span>
+
+	@Test
+	public void testMoveToCard() {
+<span class="nc" id="L34">		int[] expectedreturnValue = new int [2];</span>
+<span class="nc" id="L35">		int[] actualreturnValue = new int [2];</span>
+			
+<span class="nc" id="L37">		MoveToCard movetocard = new MoveToCard(1,1,&quot;description&quot;,2,3);</span>
+<span class="nc" id="L38">		int expectedNumber = 1;</span>
+<span class="nc" id="L39">		int expectedType = 1;</span>
+<span class="nc" id="L40">		String expectedDescription = &quot;description&quot;;</span>
+<span class="nc" id="L41">		expectedreturnValue[0] = 2;</span>
+<span class="nc" id="L42">		expectedreturnValue[1] = 3;</span>
+
+		
+<span class="nc" id="L45">		int actualNumber = movetocard.getNumber();</span>
+<span class="nc" id="L46">		int actualType = movetocard.getType();</span>
+<span class="nc" id="L47">		String actualDescription = movetocard.getDescription();</span>
+<span class="nc" id="L48">		actualreturnValue=movetocard.getReturnValue();</span>
+		
+<span class="nc" id="L50">		assertEquals(&quot;getNumber virker ikke&quot;, expectedNumber, actualNumber);</span>
+<span class="nc" id="L51">		assertEquals(&quot;getType virker ikke&quot;, expectedType, actualType);</span>
+<span class="nc" id="L52">		assertEquals(&quot;getDescription virker ikke&quot;, expectedDescription, actualDescription);</span>
+<span class="nc" id="L53">		assertEquals(&quot;returnvalue value0 virker ikke&quot;, expectedreturnValue[0], actualreturnValue[0]);</span>
+<span class="nc" id="L54">		assertEquals(&quot;returnvalue value1 virker ikke&quot;, expectedreturnValue[1], actualreturnValue[1]);</span>
+		
+		
+		
+		
+		
+		
+		
+			
+	
+<span class="nc" id="L64">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

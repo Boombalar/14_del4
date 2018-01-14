@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>BankruptcyCTRL.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">BankruptcyCTRL.java</span></div><h1>BankruptcyCTRL.java</h1><pre class="source lang-java linenums">package controller;
+
+import model.*;
+import view.*;
+
+public class BankruptcyCTRL {
+
+	private AssetCTRL asset;
+	private TradeCTRL trade;
+
+<span class="fc" id="L11">	public BankruptcyCTRL (AssetCTRL asset, TradeCTRL trade) {</span>
+<span class="fc" id="L12">		this.asset = asset;</span>
+<span class="fc" id="L13">		this.trade = trade;</span>
+<span class="fc" id="L14">	}</span>
+
+/**
+ *En metode som laver en transaktion mellem to spillere. 
+ * @param currentPlayer modtager en int som den aktivespiller.
+ * @param toPlayer modtager en int som er til den spiller der skal betales til.
+ * @param amount modtager en int som er det beløb der skal betales. 
+ * @param players Det er et objekt af typen Player[]
+ * @param fields Det er et objekt af typen Fields[]
+ * @param view Det er et objekt af ViewCTRL.
+ */ 
+	public void payMoney(int currentPlayer, int toPlayer, int amount, Player[] players, Field[] fields, ViewCTRL view) {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">		if (checkForEnoughMoneyOnAccount(currentPlayer, amount, players) == false) {</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">			if (raiseMoney(currentPlayer, toPlayer, amount, players, fields) == false){</span>
+<span class="nc" id="L28">				bankruptcy(currentPlayer, toPlayer, players, fields, view);</span>
+			}
+<span class="nc" id="L30">		} else {						</span>
+<span class="fc" id="L31">			players[currentPlayer].removeMoney(amount);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">			if (toPlayer &gt; 0) {</span>
+<span class="fc" id="L33">				players[toPlayer].recieveMoney(amount);</span>
+			}
+		}
+<span class="fc" id="L36">		view.updateEntireBoard(fields, players);</span>
+<span class="fc" id="L37">	}</span>
+	/**
+	 * En metode der tjekke for om man kan foretage en transaktion mellem to spiller.
+	 * @param currentPlayer modtager en int som er den aktive spiller.
+	 * @param amount modtager en int som er det beløb der skal betales. 
+	 * @param players Det er et objekt af typen Player[]
+	 * @return Retunere true, hvis der er penge nok ellers false. 
+	 */
+	//Check for om man har penge nok til at foretage en transaktion mellem to spillere.
+	public boolean checkForEnoughMoneyOnAccount(int currentPlayer, int amount, Player[] players) {
+<span class="fc" id="L47">		boolean returnValue = true;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		if ((players[currentPlayer].getBalance() - amount) &lt; 0) {</span>
+<span class="fc" id="L49">			returnValue = false;</span>
+		}		
+<span class="fc" id="L51">		return returnValue;</span>
+	}
+/**
+ * En metode som samler penge sammen ved salg af aktiver, hvis man ikke har nok penge på kontoen, 
+ * @param currentPlayer modtager en int som er den aktive spiller.
+ * @param toPlayer Modtager en int som er den spiller som skal modtage pengene. 
+ * @param amountToPay Modtager en int som er det beløb der skal betales. 
+ * @param players Det er et objekt af players[]
+ * @param fields Det er et objekt af Field[]
+ * @return - Retunere true hvis der er samlet nok penge sammen ved salg af huse eller grunde, ellers false. 
+ */
+	public boolean raiseMoney(int currentPlayer, int toPlayer, int amountToPay, Player[] players, Field[] fields) {
+<span class="fc" id="L63">		int numberOfHouses = 0;</span>
+
+		//Vi sælger huse
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		for (int fieldCount = 0 ; fieldCount&lt;=39;fieldCount++) {</span>
+			//Er feltet et propertyfelt. Hvis vi ikke ejer feltet, så er numberOfHouses = 0
+<span class="fc bfc" id="L68" title="All 2 branches covered.">			if(fields[fieldCount] instanceof PropertyFields) {					</span>
+<span class="fc" id="L69">				numberOfHouses = asset.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields);		</span>
+				//Er der huse på feltet ?
+<span class="fc bfc" id="L71" title="All 2 branches covered.">				if (numberOfHouses &gt; 0) {</span>
+					//Vi sælger husene 1 ad gangen
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">					for (int houseCount = 1; houseCount &lt;= numberOfHouses; houseCount++ ) {</span>
+<span class="fc" id="L74">						trade.sellBuilding(currentPlayer, fieldCount, players, fields);</span>
+						//Check for om salget af huset gav nok penge.
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">						if (checkForEnoughMoneyOnAccount(currentPlayer, amountToPay, players)) {</span>
+<span class="fc" id="L77">							trade.safeTransferMoney(currentPlayer, toPlayer, amountToPay, players);</span>
+<span class="fc" id="L78">							return true;</span>
+						}
+					}
+				}
+			}
+		}	
+		 
+<span class="fc" id="L85">		int amountToRaise = amountToPay - players[currentPlayer].getBalance();</span>
+		// Hvis vi kan rejse de penge der mangler ved at sælge grunde
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if ((asset.checkPropertySaleValue(currentPlayer, amountToRaise, fields))==true) {</span>
+
+			//Vi begynder at sælge grunde indtil der er solgt nok grunde til at vi kan betale.
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			for (int fieldCount = 0; fieldCount&lt;=39;fieldCount++) {</span>
+<span class="fc bfc" id="L91" title="All 6 branches covered.">				if(fields[fieldCount] instanceof OwnerFields &amp;&amp; ((OwnerFields)fields[fieldCount]).getOwner() == currentPlayer  &amp;&amp; (checkForEnoughMoneyOnAccount(currentPlayer, amountToPay, players) == false)) {</span>
+<span class="fc" id="L92">					trade.sellProperty(currentPlayer, 0, fieldCount, players, fields);</span>
+				}
+			}
+<span class="fc" id="L95">			trade.safeTransferMoney(currentPlayer, toPlayer, amountToPay, players);</span>
+<span class="fc" id="L96">			return true;</span>
+		}
+<span class="nc" id="L98">		return false;</span>
+	}
+
+	/**
+	 * bankruptcy() - En metode der overfører alle aktiver, &quot;penge og grunde&quot; til den spiller man er gået bankerot eller banken og giver en tekst til spiller at han er gået bankerot.
+	 * @param currentPlayer - Modtager en int som er den aktivespiller.
+	 * @param toPlayer - modtager en int som er den spiller han skal overfører til.
+	 * @param players - Det er et objekt af typen Player[]
+	 * @param fields - Det er et objekt af typen Field[]
+	 * @param view - Det er et objekt af ViewCTRL.
+	 */
+	public void bankruptcy(int currentPlayer, int toPlayer, Player[] players, Field[] fields, ViewCTRL view) {
+<span class="nc" id="L110">		trade.transferAssets(currentPlayer, toPlayer, players, fields);</span>
+<span class="nc" id="L111">		players[currentPlayer].setBroke(true);</span>
+<span class="nc" id="L112">		view.writeText(players[currentPlayer].getPlayerName() + &quot; er gået bankerot.&quot;);</span>
+<span class="nc" id="L113">		view.updatePlayerName(currentPlayer, players[currentPlayer].getPlayerName() + &quot; [bankerot]&quot;);</span>
+<span class="nc" id="L114">	}	</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

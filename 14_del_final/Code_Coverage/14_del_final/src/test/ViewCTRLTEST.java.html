@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ViewCTRLTEST.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">test</a> &gt; <span class="el_source">ViewCTRLTEST.java</span></div><h1>ViewCTRLTEST.java</h1><pre class="source lang-java linenums">package test;
+import view.*;
+
+import java.util.Random;
+
+import controller.*;
+import model.*;
+
+public class ViewCTRLTEST {
+	Board board;
+	Field[] fields;
+
+	CreatePlayers makePlayers;
+	Player[] players;
+
+	ViewCTRL view;
+	ChanceDeckCTRL chanceCard;
+	DieCup dieCup;
+
+<span class="nc" id="L20">	public ViewCTRLTEST() {</span>
+<span class="nc" id="L21">		initialiseGame();</span>
+<span class="nc" id="L22">	}</span>
+
+	public void initialiseGame() {
+		int numberOfPlayers;
+
+		//Lav bræt model.
+<span class="nc" id="L28">		board = new Board();		</span>
+<span class="nc" id="L29">		fields = board.getFields();</span>
+
+		//Opret bræt.
+<span class="nc" id="L32">		view = new ViewCTRL(fields);</span>
+
+		//Hent antal spillere.
+<span class="nc" id="L35">		String[] lines = {&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;};</span>
+<span class="nc" id="L36">		numberOfPlayers = Integer.parseInt(view.getDropDownChoice(&quot;Vælg antal spillere 2-6&quot;, lines)); //DropDown testet.</span>
+<span class="nc" id="L37">		view.writeText(Integer.toString(numberOfPlayers));</span>
+<span class="nc" id="L38">		System.out.println(&quot;Dropdown og writeText testet&quot;);</span>
+
+		//Lav player array.
+<span class="nc" id="L41">		makePlayers = new CreatePlayers(6, view); </span>
+<span class="nc" id="L42">		players = makePlayers.getPlayers();</span>
+
+		//Opret antal spillere på bræt.
+<span class="nc" id="L45">		view.makeGuiPlayers(players);</span>
+
+		//Lav chancekort CTRL.
+<span class="nc" id="L48">		chanceCard = new ChanceDeckCTRL();</span>
+<span class="nc" id="L49">		view.showChanceCard(chanceCard.getDescription());// Vis et chancekort er testet</span>
+<span class="nc" id="L50">		System.out.println(&quot;Chancekort er testet&quot;);</span>
+
+		//Lav raflebæger.
+<span class="nc" id="L53">		dieCup = new DieCup();</span>
+<span class="nc" id="L54">		dieCup.shake();</span>
+<span class="nc" id="L55">		view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());//Terninger er testet</span>
+<span class="nc" id="L56">		System.out.println(&quot;terninger er testet&quot;);</span>
+
+		//test flyt alle 6 spillere
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		for(int x=1;x&lt;=6;x++) {</span>
+<span class="nc" id="L60">			Random number = new Random();</span>
+<span class="nc" id="L61">			int ranNum = number.nextInt(6)+1;</span>
+<span class="nc" id="L62">			view.updatePlayerPosition(x,0,ranNum);</span>
+<span class="nc" id="L63">			view.updatePlayerAccount(x, ranNum);</span>
+		} //updatePlayerPosition og updatePlayerAccount er testet
+<span class="nc" id="L65">		System.out.println(&quot;updatePlayerPosition og updatePlayerAccount er testet&quot;);</span>
+		
+<span class="nc" id="L67">		view.updateBuildings(1, 1);</span>
+<span class="nc" id="L68">		view.updateBuildings(3, 2);</span>
+<span class="nc" id="L69">		view.updateBuildings(6, 3);</span>
+<span class="nc" id="L70">		view.updateBuildings(8, 4);</span>
+<span class="nc" id="L71">		view.updateBuildings(9, 5);</span>
+<span class="nc" id="L72">		System.out.println(&quot;updateBuildings er testet&quot;);</span>
+		
+		
+		
+<span class="nc" id="L76">		view.updateOwnership(1, 1);</span>
+<span class="nc" id="L77">		view.updateOwnership(1, 3);</span>
+<span class="nc" id="L78">		view.updateOwnership(1, 6);</span>
+<span class="nc" id="L79">		view.updateOwnership(1, 8);</span>
+<span class="nc" id="L80">		view.updateOwnership(1, 9);</span>
+<span class="nc" id="L81">		System.out.println(&quot;updateOwnership er testet&quot;);</span>
+		
+
+<span class="nc" id="L84">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

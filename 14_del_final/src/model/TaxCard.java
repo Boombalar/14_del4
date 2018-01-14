@@ -1,9 +1,9 @@
 package model;
 
 public class TaxCard extends ChanceCard {
-	
+
 	private int[] returnvalue = new int[2]; //Et array som på plads 0 indeholder prisen for 1 hus og på plads 2 indeholder prisen for 1 hotel.
-	
+
 	/**
 	 * Konstruktør til TaxCard kortet
 	 * @param number Nummeret kortet har i ChanceCard arrayet.
@@ -17,11 +17,11 @@ public class TaxCard extends ChanceCard {
 		this.returnvalue[0]=housetax;
 		this.returnvalue[1]=hoteltax;
 	}
-	
+
 	/**
 	 * En getter til hvad returværdien skal være for hvis dette kort trækkes.
 	 */
-	public int[] returnValue() {
+	public int[] getReturnValue() {
 		return this.returnvalue;
 	}
 }

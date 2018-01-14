@@ -7,12 +7,6 @@ public class Die {
 	private int sides = 6; //Antal sidder på terningen.
 
 	/**
-	 * Die konstruktør
-	 */
-	public Die () {
-	}
-
-	/**
 	 * roll()
 	 * Finder et tilfældigt tal på Die-objektet.
 	 */
@@ -29,5 +23,4 @@ public class Die {
 	public int getEyes() { 
 		return this.eyes;
 	}
-
 }

@@ -1,15 +1,10 @@
 package controller;
-//import test.*;
 
 public class StartGame {
-	private ActionCTRL actionCTRL;
-
+	/**
+	 * main() - Starter spillet, og laver et objekt af ActionCTRL
+	 */
 	public static void main(String[] args) {
-		StartGame game = new StartGame();
-		game.actionCTRL = new ActionCTRL();
-//		game.actionCTRL.initialiseGame();
-		
-//		ViewCTRLTEST viewTest = new ViewCTRLTEST();
-		
+		new ActionCTRL();
 	}
 }

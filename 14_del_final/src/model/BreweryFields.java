@@ -1,9 +1,9 @@
 package model;
 
 public class BreweryFields extends OwnerFields {
-	
+
 	private int[] multiplier = new int[2]; //Hvis en spiller ejer begge bryggerierne, så er det dobbelt gange antal øjne, istedet for 1 gang.
-	
+
 	/**
 	 * Konstruktør til BreweryFields
 	 * @param name Navn på feltet.
@@ -22,12 +22,11 @@ public class BreweryFields extends OwnerFields {
 	}
 
 	/**
+	 * getReturnValue()
 	 * En getter på multiplieren, enten så er den 100 ellers så er den 200, hvis ejeren ejer begge breweries.
 	 * @return 100/200 alt efter om ejeren ejer dem begge.
 	 */
-    public int[] getReturnValue() {
-	return this.multiplier;
-			
-}
-
+	public int[] getReturnValue() {
+		return this.multiplier;
+	}
 }

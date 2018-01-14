@@ -42,7 +42,7 @@ public class TaxCardTest {
 		int actualNumber = taxcard.getNumber();
 		int actualType = taxcard.getType();
 		String actualDescription = taxcard.getDescription();
-		actualreturnValue = taxcard.returnValue();
+		actualreturnValue = taxcard.getReturnValue();
 		
 		assertEquals("getNumber virker ikke", expectedNumber, actualNumber);
 		assertEquals("getType virker ikke", expectedType, actualType);

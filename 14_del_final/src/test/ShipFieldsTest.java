@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import model.ShipFields;
+import model.ShippingFields;
 
 public class ShipFieldsTest {
 
@@ -33,7 +33,7 @@ public class ShipFieldsTest {
 	 */
 	@Test
 	public void testShipFields() {
-		ShipFields shipFields = new ShipFields ("Kalundborg/aarhus",3,2,5000,1,2,500,1000,2000,4000);
+		ShippingFields shipFields = new ShippingFields ("Kalundborg/aarhus",3,2,5000,1,2,500,1000,2000,4000);
 		int[] expectedReturnValue = new int[4];
 		int[] actualReturnValue = new int[4];
 		

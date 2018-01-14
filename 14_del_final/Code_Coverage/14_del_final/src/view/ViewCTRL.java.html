@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ViewCTRL.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">view</a> &gt; <span class="el_source">ViewCTRL.java</span></div><h1>ViewCTRL.java</h1><pre class="source lang-java linenums">package view;
+
+import gui_main.GUI;
+import java.awt.Color;
+
+//import gui_fields.GUI_Board;
+import gui_fields.GUI_Car;
+import gui_fields.GUI_Chance;
+import gui_fields.GUI_Field;
+//import gui_fields.GUI_Jail;
+import gui_fields.GUI_Player;
+import gui_fields.GUI_Refuge;
+import gui_fields.GUI_Shipping;
+import gui_fields.GUI_Start;
+import gui_fields.GUI_Street;
+import gui_fields.GUI_Brewery;
+import gui_fields.GUI_Tax;
+import model.*;
+
+
+public class ViewCTRL {
+	private Player[] players;
+	private Field[] fields;
+	private GUI gui;
+<span class="fc" id="L25">	private GUI_Field[] guiFields = new GUI_Field[40];</span>
+	private GUI_Player[] guiPlayer;
+<span class="fc" id="L27">	private Color[] carColor = new Color[7];</span>
+	private GUI_Car[] guiCar;
+
+
+	/**
+	 * Kunstruktør til ViewCTRL. Opretter board og spillere.
+	 * @param players
+	 * @param board
+	 */
+<span class="fc" id="L36">	public ViewCTRL(Field[] fields) {</span>
+<span class="fc" id="L37">		this.fields = fields;</span>
+<span class="fc" id="L38">		makeBoard();</span>
+<span class="fc" id="L39">	}</span>
+
+	private void makeBoard() {
+		int fieldType;
+<span class="fc" id="L43">		Color bgColor = Color.white;</span>
+<span class="fc" id="L44">		Color fgColor = Color.black;</span>
+<span class="fc" id="L45">		String price = &quot;&quot;;</span>
+
+		//Generer felter til board på baggrund af Model guiFields
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		for (int i = 0; i &lt; fields.length; i++) {</span>
+<span class="fc" id="L49">			fieldType = this.fields[i].getType();</span>
+
+			//Bestem farve til grupperne
+<span class="pc bpc" id="L52" title="1 of 9 branches missed.">			switch(fieldType) {</span>
+			case 0: //PropertyField
+<span class="fc" id="L54">				int groupNumber = (((PropertyFields)fields[i]).getGroupNumber());</span>
+<span class="pc bpc" id="L55" title="1 of 9 branches missed.">				switch(groupNumber) {</span>
+				case 1:
+<span class="fc" id="L57">					bgColor = Color.blue;</span>
+<span class="fc" id="L58">					break;</span>
+				case 2:
+<span class="fc" id="L60">					bgColor = Color.pink;</span>
+<span class="fc" id="L61">					break;</span>
+				case 3:
+<span class="fc" id="L63">					bgColor = Color.green;</span>
+<span class="fc" id="L64">					break;</span>
+				case 4:
+<span class="fc" id="L66">					bgColor = Color.gray;</span>
+<span class="fc" id="L67">					break;</span>
+				case 5:
+<span class="fc" id="L69">					bgColor = Color.red;</span>
+<span class="fc" id="L70">					break;</span>
+				case 6:
+<span class="fc" id="L72">					bgColor = Color.white;</span>
+<span class="fc" id="L73">					break;</span>
+				case 7:
+<span class="fc" id="L75">					bgColor = Color.yellow;</span>
+<span class="fc" id="L76">					break;</span>
+				case 8:
+<span class="fc" id="L78">					bgColor = Color.magenta;</span>
+					break;
+				}
+<span class="fc" id="L81">				fgColor = Color.black;</span>
+<span class="fc" id="L82">				price = Integer.toString(((PropertyFields)fields[i]).getPropertyValue()) + &quot; kr.&quot;;</span>
+<span class="fc" id="L83">				guiFields[i] = new GUI_Street(fields[i].getName(),price, (((PropertyFields)fields[i]).getName()), &quot;100&quot;, bgColor, fgColor);</span>
+<span class="fc" id="L84">				break; </span>
+
+			case 1: //ShipField
+<span class="fc" id="L87">				price = Integer.toString(((ShippingFields)fields[i]).getPropertyValue())+ &quot; kr.&quot;;</span>
+<span class="fc" id="L88">				guiFields[i] = new GUI_Shipping(&quot;&quot;,fields[i].getName(),price,(((ShippingFields)fields[i]).getName()),&quot;arg4&quot;,Color.cyan,Color.black);</span>
+<span class="fc" id="L89">				break; </span>
+
+			case 2: //BreweryField
+<span class="fc" id="L92">				price = Integer.toString(((BreweryFields)fields[i]).getPropertyValue()) + &quot; kr.&quot;;</span>
+<span class="fc" id="L93">				guiFields[i] = new GUI_Brewery(&quot;&quot;,fields[i].getName(),price,(((BreweryFields)fields[i]).getName()),&quot;arg4&quot;,Color.orange,Color.black);</span>
+<span class="fc" id="L94">				break; </span>
+
+			case 3: //TaxField
+<span class="fc" id="L97">				int[] taxint = ((TaxField)fields[i]).getReturnValue();</span>
+<span class="fc" id="L98">				String tax = Integer.toString(taxint[0]) + &quot; kr.&quot;; </span>
+<span class="fc" id="L99">				guiFields[i] = new GUI_Tax(fields[i].getName(),tax,(((TaxField)fields[i]).getName()),Color.white, Color.black);</span>
+<span class="fc" id="L100">				break; </span>
+
+			case 4: //ChanceField
+<span class="fc" id="L103">				guiFields[i] = new GUI_Chance(fields[i].getName(),&quot;&quot;,&quot;Prøv lykken&quot;,Color.black, Color.white);</span>
+<span class="fc" id="L104">				break; </span>
+
+			case 5: //StartField
+<span class="fc" id="L107">				guiFields[i] = new GUI_Start(fields[i].getName(),&quot;&quot;,fields[i].getName(),Color.red, Color.black);</span>
+<span class="fc" id="L108">				break; </span>
+
+			case 6: //NoActionField
+<span class="fc" id="L111">				guiFields[i] = new GUI_Refuge(&quot;&quot;, &quot;&quot;, fields[i].getName(),fields[i].getName(), Color.black, Color.white);</span>
+<span class="fc" id="L112">				break; </span>
+
+			case 7: //GoToJailField
+<span class="fc" id="L115">				guiFields[i] = new GUI_Refuge(&quot;&quot;, &quot;&quot;, fields[i].getName(), fields[i].getName(), Color.black, Color.white);</span>
+				break; 
+			}
+		}
+<span class="fc" id="L119">		gui = new GUI(guiFields);</span>
+<span class="fc" id="L120">	}</span>
+
+	public void makeGuiPlayers(Player[] players) {
+
+<span class="fc" id="L124">		this.players = players;</span>
+<span class="fc" id="L125">		guiPlayer = new GUI_Player[players.length+1];</span>
+
+		//Opretter 6 farver på bilerne
+<span class="fc" id="L128">		carColor[0] = new Color(1,1,1);</span>
+<span class="fc" id="L129">		carColor[1] = new Color(70,250,0);</span>
+<span class="fc" id="L130">		carColor[2] = new Color(10,160,230);</span>
+<span class="fc" id="L131">		carColor[3] = new Color(200,200,200);</span>
+<span class="fc" id="L132">		carColor[4] = new Color(0,0,250);	</span>
+<span class="fc" id="L133">		carColor[5] = new Color(50,150,100);</span>
+<span class="fc" id="L134">		carColor[6] = new Color(75,100,220);</span>
+
+		//Opret spillere på bræt.
+<span class="fc" id="L137">		guiCar = new GUI_Car[players.length+1];</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		for (int counter = 1 ; counter &lt;= players.length-1 ; counter++) {</span>
+<span class="fc" id="L139">			guiCar[counter] = new GUI_Car();</span>
+<span class="fc" id="L140">			guiCar[counter].setPrimaryColor(carColor[counter]);</span>
+<span class="fc" id="L141">			guiPlayer[counter] = new GUI_Player(counter + &quot;. &quot; + players[counter].getPlayerName(),players[counter].getBalance(),guiCar[counter]);</span>
+<span class="fc" id="L142">			gui.addPlayer(guiPlayer[counter]);</span>
+<span class="fc" id="L143">			gui.getFields()[players[counter].getPosition()].setCar(guiPlayer[counter], true);</span>
+		}
+<span class="fc" id="L145">	}</span>
+
+	/**
+	 * Metode der giver mulighed for at lave en dropdown menu i GUI
+	 * @param buttonText Teksten der kommer over dropdown menuen
+	 * @param lines Array med den tekst der skal stå på linjerne
+	 * @return Returnere GUIens dropdown menu
+	 */
+	public String getDropDownChoice(String buttonText, String[] lines) {
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (lines == null)</span>
+<span class="nc" id="L155">			writeText(&quot;Det har du ikke mulighed for&quot;);</span>
+<span class="fc" id="L156">		return gui.getUserSelection(buttonText, lines);</span>
+	}
+
+	/**
+	 * Metode der viser en yes/no knap i GUIen
+	 * @param buttonText Tekst over knapperne
+	 * @param yesMessage Tekst der skal stå på TRUE knappen
+	 * @param noMessage Tekst der skal stå på FALSE knappen
+	 * @return Returnere GUIens yes/no menu
+	 */
+	public boolean getUserAnswer(String buttonText, String yesMessage, String noMessage) {	
+<span class="fc" id="L167">		return gui.getUserLeftButtonPressed(buttonText, yesMessage, noMessage);</span>
+	}
+
+	/**
+	 * OK knappen der styrer flowet i spillet.
+	 * @param buttonText Tekst der skal stå i knappen
+	 * @param textMessage Tekst der skal stå over knappen
+	 */
+	public void getUserResponse(String buttonText, String textMessage) {
+<span class="nc" id="L176">		gui.getUserButtonPressed(buttonText, textMessage);</span>
+<span class="nc" id="L177">	}</span>
+
+	/**
+	 * Stiller spilleren et spørgsmål og returnerer svaret spilleren giver.
+	 * @return
+	 */
+	public String getTextField(String question) {
+<span class="nc" id="L184">		return gui.getUserString(question);</span>
+	}
+
+	/**
+	 * Viser terningerne i GUIen
+	 * @param die1 Den ene terning
+	 * @param die2 Den anden terning
+	 */
+	public void updateDice(int die1, int die2) {
+<span class="fc" id="L193">		gui.setDice(die1, die2);</span>
+<span class="fc" id="L194">	}</span>
+
+	/**
+	 * metode til at opdatere en spillers position.
+	 * @param player Spillerens nummer
+	 * @param oldPosition Den gamle position på spilleren.
+	 * @param newPosition Den nye position på spilleren.
+	 */
+	public void updatePlayerPosition(int player, int oldPosition, int newPosition) {
+<span class="fc" id="L203">		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);</span>
+<span class="fc" id="L204">		gui.getFields()[newPosition].setCar(guiPlayer[player], true);</span>
+<span class="fc" id="L205">	}</span>
+
+	/**
+	 * 
+	 * @param playerName
+	 * @param newName
+	 */
+	public void updatePlayerName(int playerName, String newName) {
+<span class="nc" id="L213">		this.guiPlayer[playerName].setName(newName);</span>
+<span class="nc" id="L214">	}</span>
+	
+	/**
+	 * Metode der får GUIen til at vise en spillers account
+	 * @param player Spillerens nummer
+	 * @param amount mængden der skal vises i GUIen
+	 */
+	public void updatePlayerAccount(int player, int amount) {
+<span class="fc" id="L222">		guiPlayer[player].setBalance(amount);</span>
+<span class="fc" id="L223">	}</span>
+
+	public void removePlayerCar(int player, int oldPosition) {
+<span class="nc" id="L226">		gui.getFields()[oldPosition].setCar(guiPlayer[player], false);</span>
+<span class="nc" id="L227">	}</span>
+
+	/**
+	 * Opdatere ejerskabet af et felt til spilleren
+	 * @param player Spillerens nummer
+	 * @param fieldNumber Nummeret på det felt der skal opdateres
+	 */
+	public void updateOwnership(int player, int fieldNumber) {
+
+<span class="fc bfc" id="L236" title="All 2 branches covered.">		if(guiFields[fieldNumber] instanceof GUI_Shipping) {</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">			if (player == 0) {</span>
+<span class="fc" id="L238">				((GUI_Shipping)guiFields[fieldNumber]).setBorder(null);</span>
+				//sæt til startborderfarve
+<span class="fc" id="L240">			}</span>
+<span class="fc" id="L241">			else ((GUI_Shipping)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());</span>
+		}
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		if(guiFields[fieldNumber] instanceof GUI_Brewery) {</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">			if (player == 0) {</span>
+<span class="fc" id="L245">				((GUI_Brewery)guiFields[fieldNumber]).setBorder(null);</span>
+				//sæt til startborderfarve
+<span class="fc" id="L247">			}</span>
+<span class="fc" id="L248">			else ((GUI_Brewery)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());</span>
+		}
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		if(guiFields[fieldNumber] instanceof GUI_Street) {</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">			if (player == 0) {</span>
+<span class="fc" id="L252">				((GUI_Street)guiFields[fieldNumber]).setBorder(null);</span>
+				//sæt til startborderfarve
+<span class="fc" id="L254">			}</span>
+<span class="fc" id="L255">			else ((GUI_Street)guiFields[fieldNumber]).setBorder(guiPlayer[player].getPrimaryColor());</span>
+		}
+<span class="fc" id="L257">	}</span>
+
+	/**
+	 * Opdatere et felt med huse, fra 0-5, og hvis der er &quot;5&quot; huse på feltet så placere den et hotel istedet.
+	 * @param fieldNumber Nummeret på feltet der skal opdateres
+	 * @param houses Mængden af huse der skal på feltet 0-5, hvor 0 er ingen huse og 5 er et hotel.
+	 */
+	public void updateBuildings(int fieldNumber, int houses) {
+<span class="fc" id="L265">		boolean hasHotel = false;</span>
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">		if (houses == 5) {</span>
+<span class="nc" id="L267">			hasHotel = true;</span>
+<span class="nc" id="L268">			((GUI_Street)guiFields[fieldNumber]).setHotel(hasHotel);</span>
+<span class="nc" id="L269">		}</span>
+<span class="pc bpc" id="L270" title="2 of 4 branches missed.">		else if (houses &lt; 5 &amp;&amp; houses &gt;= 0)</span>
+<span class="fc" id="L271">			((GUI_Street)guiFields[fieldNumber]).setHouses(houses);</span>
+<span class="nc" id="L272">		else System.out.println(&quot;Fejl i updateBuildings metode&quot;);</span>
+<span class="fc" id="L273">	}</span>
+
+	/**
+	 * Beskeden der står overst på skærmen, med ok knappen der styrer flowed på spillet
+	 * @param text Den tekst der skal vises til spilleren.
+	 */
+	public void writeText (String text) {
+<span class="fc" id="L280">		gui.showMessage(text);</span>
+<span class="fc" id="L281">	}</span>
+
+	/**
+	 * Viser chanceCard teksten i midten af spillebrættet
+	 * @param text Den tekst der skal stå i midten af spillebrættet.
+	 */
+	public void showChanceCard (String text) {
+<span class="fc" id="L288">		gui.displayChanceCard(text);</span>
+<span class="fc" id="L289">	}</span>
+
+	public void turnOffPlayer (int player) {
+<span class="nc" id="L292">		gui.getFields()[players[player].getPosition()].setCar(guiPlayer[player], false);</span>
+<span class="nc" id="L293">	}</span>
+
+	public String getUserTextInput(String displayText) {
+<span class="fc" id="L296">		return gui.getUserString(displayText);</span>
+	}
+
+	public void updateEntireBoard(Field[] fields, Player[] players) {
+		//Updater fields ownership på bræt
+<span class="fc bfc" id="L301" title="All 2 branches covered.">		for (int fieldCount = 0;fieldCount &lt;= 39; fieldCount++) {</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">			if (fields[fieldCount] instanceof PropertyFields) {</span>
+<span class="fc" id="L303">				updateOwnership(((PropertyFields)fields[fieldCount]).getOwner(), fieldCount);</span>
+<span class="fc" id="L304">				updateBuildings(fieldCount, (((PropertyFields)fields[fieldCount]).getReturnValue()[6]));</span>
+			}
+<span class="fc bfc" id="L306" title="All 2 branches covered.">			if (fields[fieldCount] instanceof BreweryFields) {</span>
+<span class="fc" id="L307">				updateOwnership(((BreweryFields)fields[fieldCount]).getOwner(), fieldCount);</span>
+			}
+<span class="fc bfc" id="L309" title="All 2 branches covered.">			if (fields[fieldCount] instanceof ShippingFields) {</span>
+<span class="fc" id="L310">				updateOwnership(((ShippingFields)fields[fieldCount]).getOwner(), fieldCount);</span>
+			}
+<span class="fc bfc" id="L312" title="All 2 branches covered.">			for (int playerCount = 1 ; playerCount &lt;= players.length-1; playerCount++) {</span>
+<span class="fc" id="L313">				updatePlayerAccount(playerCount, players[playerCount].getBalance());</span>
+<span class="pc bpc" id="L314" title="1 of 2 branches missed.">				if (players[playerCount].getBroke()) {</span>
+<span class="nc" id="L315">					turnOffPlayer(playerCount);</span>
+				}
+			}
+		}
+<span class="fc" id="L319">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

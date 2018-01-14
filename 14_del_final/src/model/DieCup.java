@@ -3,14 +3,7 @@ package model;
 public class DieCup {
 
 	private int die1=0, die2=0; //Instansiere terningerne.
-
-	private Die die = new Die();
-
-	/**
-	 * DieCup konstruktør
-	 */
-	public DieCup () {	
-	}
+	private Die die = new Die(); // Laver et object af typen Die
 
 	/**
 	 * shake()
@@ -45,8 +38,7 @@ public class DieCup {
 		boolean isEqual=false;
 		if (this.die1 == this.die2) {
 			isEqual = true;
-		}
-		return isEqual;
+		} return isEqual;
 	}
 
 	/**
