@@ -36,10 +36,13 @@ public class ActionCTRL {
 		bankruptcy = new BankruptcyCTRL(asset, trade);
 		jail = new JailCTRL(bankruptcy);
 		landonfield = new LandOnFieldCTRL(asset, bankruptcy, chancedeck);
-		view = new ViewCTRL(fields);//Opret bræt.
-		String[] lines = {"2","3","4","5","6"};		//Hent antal spillere.
+		//Opret bræt.
+		view = new ViewCTRL(fields);
+		
+		//Hent antal spillere.
+		String[] lines = {"2","3","4","5","6"};		
 		numberOfPlayers = Integer.parseInt(view.getDropDownChoice("Vælg antal spillere 2-6", lines));
-		makePlayers = new CreatePlayers(numberOfPlayers, view);  		//Lav player array.
+		makePlayers = new CreatePlayers(numberOfPlayers, view);  //Lav player array.
 		players = makePlayers.getPlayers(); // Modtag player array.
 		view.makeGuiPlayers(players); //Opret antal spillere på bræt.
 		dropdown = new DropdownCTRL(landonfield, asset, trade);
@@ -62,10 +65,7 @@ public class ActionCTRL {
 				}
 
 				// Lav Startmenu for spiller
-				if (players[currentPlayer].getExtraTurn()) {
-				} else {
 					view.writeText("Det er " + players[currentPlayer].getPlayerName() + "'s tur nu");
-				}
 
 				//Hvis spiller er i fængsel håndter det.
 				jail.jailHandling(currentPlayer, players, fields, view);

@@ -103,14 +103,15 @@ public class LandOnFieldCTRL {
 		int[] fieldRent = (((PropertyFields)fields[newPlayerPosition]).getReturnValue());
 		int numberOfHouses = fieldRent[6];
 		int propertyRent = fieldRent[numberOfHouses];
-		if(owner == 0) {
+		//Hvis banken ejer feltet, og man har råd til at købe
+		if(owner == 0 && propertyValue < players[currentPlayer].getBalance()) {
 			boolean	answer = view.getUserAnswer(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', vil du købe grunden ?", "ja", "nej");		
 			if(answer == true) {
 				view.writeText(players[currentPlayer].getPlayerName() + " har købt '" + fields[newPlayerPosition].getName() + "' for " + propertyValue + " kr."); //gui tekst til spilleren
-				PropertyFields wantedFieldChange = ((PropertyFields)fields[newPlayerPosition]);
 				//Herunder bliver feltets ejer skiftet.
-				wantedFieldChange.setOwner(currentPlayer);
-				bankruptcy.payMoney(currentPlayer, owner, propertyValue, players, fields, view); 	//spiller køber grunden af brættet
+				((PropertyFields)fields[newPlayerPosition]).setOwner(currentPlayer);
+				players[currentPlayer].removeMoney(propertyValue);; 	//spiller køber grunden af brættet
+				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 			}
 		}
 		if(owner != 0 && owner != currentPlayer) {

@@ -34,6 +34,9 @@ public class DropdownCTRL {
 		//slå terninger
 		dieCup.shake();
 		int diceValue = dieCup.getDiceValue();
+		if (dieCup.getEqualEyes()) {
+			players[currentPlayer].setExtraTurn(true);
+		}
 
 		//skift position på spiller i model lag
 		int oldPlayerPosition = players[currentPlayer].getPosition();
@@ -72,8 +75,8 @@ public class DropdownCTRL {
 		int amountOfProperties = 0;
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {//Går hele brættet igennem
 			if (fields[fieldCount] instanceof PropertyFields) {
-				//check om man ejer gruppen
-				if (asset.checkPropertyGroupOwnership(currentPlayer, fieldCount, fields) == true && asset.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields) != 5 && asset.getHousePrice(fieldCount, fields)<=players[currentPlayer].getBalance()) {
+				//check om man ejer gruppen, om der er mindre end 5 huse på feltet
+				if (asset.checkPropertyGroupOwnership(currentPlayer, fieldCount, fields) == true && asset.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields) != 5 && asset.getHousePrice(fieldCount, fields) <= players[currentPlayer].getBalance()) {
 					amountOfProperties++;
 				}
 			}
@@ -89,7 +92,7 @@ public class DropdownCTRL {
 		//3-Rødovrevej
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
 			if (fields[fieldCount] instanceof PropertyFields) {
-				if (asset.checkPropertyGroupOwnership(currentPlayer, fieldCount,fields) == true && asset.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields) != 5 && asset.getHousePrice(fieldCount, fields)<=players[currentPlayer].getBalance()) {
+				if (asset.checkPropertyGroupOwnership(currentPlayer, fieldCount,fields) == true && asset.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields) != 5 && asset.getHousePrice(fieldCount, fields) <= players[currentPlayer].getBalance()) {
 					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + "-" + fields[fieldCount].getName(); 
 					index++;
 				}
@@ -115,7 +118,7 @@ public class DropdownCTRL {
 				view.writeText(players[currentPlayer].getPlayerName() + " har ikke råd til at bygge");
 			}
 		}else {
-			view.writeText(players[currentPlayer].getPlayerName() + " ejer ikke nogle grunde");
+			view.writeText(players[currentPlayer].getPlayerName() + " ejer ikke hele grupper af grunde");
 		}
 	}
 	/**
@@ -210,8 +213,7 @@ public class DropdownCTRL {
 		//vælge grund i dropdown
 		if (propertyArray.length != 0) {
 
-			//Vælge hvilken spiller man vil sælge til 
-			//0 er banken.
+
 			String[] choice = view.getDropDownChoice("Vælg hvilken grund du vil sælge", propertyArray).split("-");
 			int chosenFieldNumber=Integer.parseInt(choice[0]);
 
@@ -222,22 +224,28 @@ public class DropdownCTRL {
 				playerCountArray[playerCount]= Integer.toString(playerCount);
 			}
 
-			//Vælg spiller eller bank
+			//Vælge hvilken spiller man vil sælge til 
+			//0 er banken.
 			String playerSellChoice = view.getDropDownChoice( players[currentPlayer].getPlayerName() + ", hvilken spiller vil du sælge til?   0 er til banken", playerCountArray);
 			int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
 
-			//Sælg grund.
-			trade.sellProperty(currentPlayer, chosenPlayerNumber,chosenFieldNumber, players, fields);
-			view.updateOwnership(chosenPlayerNumber, chosenFieldNumber);
-			view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
-			if (chosenPlayerNumber != 0) {
-				view.updatePlayerAccount(chosenPlayerNumber, players[chosenPlayerNumber].getBalance());
+			if (players[chosenPlayerNumber].getBalance() >= ((OwnerFields)fields[chosenFieldNumber]).getPropertyValue()) {
+				//Sælg grund.
+				trade.sellProperty(currentPlayer, chosenPlayerNumber,chosenFieldNumber, players, fields);
+				view.updateOwnership(chosenPlayerNumber, chosenFieldNumber);
+				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
+				if (chosenPlayerNumber != 0) {
+					view.updatePlayerAccount(chosenPlayerNumber, players[chosenPlayerNumber].getBalance());
+				}
+			}else {
+				view.writeText("Spilleren du har valgt har ikke råd til at købe grunden.");
 			}
 		}
 		else {
-			view.writeText("Du ejer ikke nogle grunde, som du kan sælge eller har ikke råd");
+			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
 		}
-		
+
+
 	}
 	/**
 	 * Går tilbage til dropdownmenu.
