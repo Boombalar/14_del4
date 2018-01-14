@@ -4,14 +4,14 @@ import model.*;
 
 import java.util.Random;
 
-public class ChanceCardDeckCTRL {
+public class ChanceDeckCTRL {
 	ChanceCard[] chanceCard;
 	int cardPointer = 0;
 	int cardNumber = 0;
 	int[] shuffledDeck = new int[32];
 
-	public ChanceCardDeckCTRL () {
-		ChanceCardDeck deck = new ChanceCardDeck();
+	public ChanceDeckCTRL () {
+		ChanceDeck deck = new ChanceDeck();
 		chanceCard = deck.getChanceCards();
 		shuffle();
 	}

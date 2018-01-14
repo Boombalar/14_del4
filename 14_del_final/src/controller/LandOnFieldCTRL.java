@@ -6,7 +6,7 @@ import view.*;
 public class LandOnFieldCTRL {
 
 	private Toolbox toolbox;
-	private ChanceCardDeckCTRL chancecarddeck;
+	private ChanceDeckCTRL chancedeck;
 	private BankruptcyCTRL bankruptcy;
 
 	/**
@@ -15,9 +15,9 @@ public class LandOnFieldCTRL {
 	 * @param bankruptcy - indtast objectnavn af typen BankruptcyCTRL
 	 * @param chancecarddeck - indtast objectnavn af typen ChanceCardDeckCTRL
 	 */
-	public LandOnFieldCTRL (Toolbox toolbox,BankruptcyCTRL bankruptcy, ChanceCardDeckCTRL chancecarddeck) {
+	public LandOnFieldCTRL (Toolbox toolbox,BankruptcyCTRL bankruptcy, ChanceDeckCTRL chancedeck) {
 		this.toolbox = toolbox;	
-		this.chancecarddeck = chancecarddeck;
+		this.chancedeck = chancedeck;
 		this.bankruptcy = bankruptcy;
 	}
 
@@ -169,8 +169,8 @@ public class LandOnFieldCTRL {
 	 */
 	public void chanceField(int currentPlayer, Player[] players,Field[] fields,ViewCTRL view) {
 		view.writeText(players[currentPlayer].getPlayerName() + " er landet på 'Prøv lykken', du trækker et chance kort"); //Tekst fra gui 
-		chancecarddeck.draw(); //ChanceCardCRTL trækker et kort	
-		view.showChanceCard(chancecarddeck.getDescription());	 //Teksten fra Chancekortet vises i gui 
+		chancedeck.draw(); //ChanceCardCRTL trækker et kort	
+		view.showChanceCard(chancedeck.getDescription());	 //Teksten fra Chancekortet vises i gui 
 		chanceCardRules(currentPlayer, players, fields, view); //kald af metode som fortæller hvilket slags kort man har trukket.
 	}
 
@@ -237,8 +237,8 @@ public class LandOnFieldCTRL {
 	 * @param view - indtast objectnavn af typen ViewCTRL
 	 */
 	public void chanceCardRules (int currentPlayer, Player[] players,Field[] fields,ViewCTRL view) {
-		int chanceCardType = chancecarddeck.getType();
-		int[] chanceCardValueArray = chancecarddeck.getReturnValue();
+		int chanceCardType = chancedeck.getType();
+		int[] chanceCardValueArray = chancedeck.getReturnValue();
 		int owner = 0;
 		if ((fields[players[currentPlayer].getPosition()]) instanceof OwnerFields) {
 			owner = (((OwnerFields)fields[players[currentPlayer].getPosition()]).getOwner());
@@ -288,7 +288,7 @@ public class LandOnFieldCTRL {
 	 */
 	public void moveToCardsRules (int currentPlayer, Player[] players,Field[] fields, ViewCTRL view) {
 		int playerPosition = players[currentPlayer].getPosition();
-		int[] chanceCardValueArray = chancecarddeck.getReturnValue();
+		int[] chanceCardValueArray = chancedeck.getReturnValue();
 		int moveToField = chanceCardValueArray[0];
 		int moveToType = chanceCardValueArray[1];
 

@@ -1,13 +1,13 @@
 package model;
 
-public class ChanceCardDeck {
+public class ChanceDeck {
 
 	private ChanceCard[] chancecards = new ChanceCard[32]; //Danner et array med de 32 chancekort vi har.
 
 	/**
 	 * ChanceCardDeck() - Konstruktør til ChanceCardDeck
 	 */
-	public ChanceCardDeck() {
+	public ChanceDeck() {
 	//Opsætning er som følgende
 	//De sidste pladser i arrayet bliver bestemt i de klasser der nedarves.
 	//chancecards[<nr. i arrayet>] = new <klassen som chancekortet hører til> (<nr. på kortet>, <typen 1-4>, <beskrivelsen af kortet>, <eventuel betaling eller feltet der skal rykkes til>)

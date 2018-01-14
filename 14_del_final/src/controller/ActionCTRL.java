@@ -10,7 +10,7 @@ public class ActionCTRL {
 	private CreatePlayers makePlayers;
 	private Player[] players;
 	private ViewCTRL view;
-	private ChanceCardDeckCTRL chancecarddeck;
+	private ChanceDeckCTRL chancedeck;
 	private DieCup dieCup;
 	private Toolbox toolbox;
 	private JailCTRL jail;
@@ -26,7 +26,7 @@ public class ActionCTRL {
 	}
 
 	public void initialiseGame() {
-		chancecarddeck = new ChanceCardDeckCTRL(); //Lav chancekort CTRL.
+		chancedeck = new ChanceDeckCTRL(); //Lav chancekort CTRL.
 		dieCup = new DieCup(); 		//Lav raflebæger.
 		board = new Board();		 //Lav bræt model.
 		fields = board.getFields();
@@ -35,7 +35,7 @@ public class ActionCTRL {
 		trade = new TradeCTRL(toolbox);
 		bankruptcy = new BankruptcyCTRL(toolbox, trade);
 		jail = new JailCTRL(bankruptcy);
-		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, chancecarddeck);
+		landonfield = new LandOnFieldCTRL(toolbox, bankruptcy, chancedeck);
 		view = new ViewCTRL(fields);//Opret bræt.
 		String[] lines = {"2","3","4","5","6"};		//Hent antal spillere.
 		numberOfPlayers = Integer.parseInt(view.getDropDownChoice("Vælg antal spillere 2-6", lines));
