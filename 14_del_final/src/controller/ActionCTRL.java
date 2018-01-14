@@ -47,26 +47,17 @@ public class ActionCTRL {
 	}
 	/**
 	 * gameSequence
-	 * kører gamesekvens for en spiller
-	 * 
+	 * kører gamesekvens for en spiller.
 	 */
 	private void gameSequence() {
-		//		int oldPlayerPosition = 0; //En given spiller start position på en runde
-		//		int newPlayerPosition; //Den position en given spiller rykkes til når terningerne er slået
 		int currentPlayer = 1; //Den første spiller instantieres til spiller 1
-		//		int diceValue; //Den samlede mængde af terningerne
-		//		int amountOfProperties=0; //Den mængde grunde en given spiller ejer?
-		//		int index;
-		//		String[] propertyArray; //Det String array som indeholder alle de grunde en given spiller ejer.
-		//		String choice; //Det valg en given spiller vælger ud fra propertyString array.
-		//		int[] returnValue; //Hvilken specifik returværdi det dette?s
 
 		while (!winner.checkWinner(numberOfPlayers, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 
 			while (true) {
 				// Hvis en spiller er broke, så gå ud af loop
-				if(players[currentPlayer].getBroke()) {
-					view.removePlayerCar(currentPlayer, players[currentPlayer].getPosition());
+				if(players[currentPlayer].getBroke()) { //Metode der tjekker om en spiller er bankerot
+					view.removePlayerCar(currentPlayer, players[currentPlayer].getPosition()); //Fjerner spillerens bil, hvis ovenstående er true
 					currentPlayer++;
 					break;				
 				}
@@ -85,45 +76,39 @@ public class ActionCTRL {
 				String choiceOfPlayer = view.getDropDownChoice(players[currentPlayer].getPlayerName() + " - vælg fra dropdown", playerChoice);
 
 				//Håndtér valg fra menu
-				//I ver. 8 kan man switche på en streng :)
+				//I java ver. 8 kan man switche på en streng :)
 				switch(choiceOfPlayer) {
 
 				// Slår terningerne, ændrer position i model lag og opdaterer view lag
-				// Håndterer om man kommer over start og får 4.000.
 				case "Slå terninger":
 					dropdown.rollDice(currentPlayer, players, fields, view);
-					if (players[currentPlayer].getExtraTurn() == true) {
+					if (players[currentPlayer].getExtraTurn() == true) { //Tjekker om en spiller har slået 2 ens men en boolean.
 						view.writeText(players[currentPlayer].getPlayerName() + " slog to ens, og har derfor en ekstra tur");
-						players[currentPlayer].setExtraTurn(false);
+						players[currentPlayer].setExtraTurn(false); //Sætter en spillers extraTurn til false efter den blev sat til true.
 						currentPlayer--;
 					}
 					break;
 
-					// Køb huse og hoteller.
-					// Finder de felter hvor spilleren ejer hele grupper. 
-					// Giver mulighed for at bygge på de felter.
+				// Køb huse og hoteller.
 				case "Køb hus og hotel":
 					dropdown.buyHousesAndHotel(currentPlayer, players, fields, view);
-					if (dropdown.getBackToDropDown()) {
+					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til "start" menuen, hvis en spiller valgte noget andet end slå terninger
 						currentPlayer--;
 					}
 					break;
 
-					//Sælg huse og hoteller.
-					//Find de grunde hvor spilleren ejer huse
-					//sælg et hus.
+				//Sælg huse og hoteller.
 				case "Sælg hus og hotel":
 					dropdown.sellHousesAndHotels(currentPlayer, players, fields, view);
-					if (dropdown.getBackToDropDown()) {
+					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til "start" menuen, hvis en spiller valgte noget andet end slå terninger
 						currentPlayer--;
 					}
 					break;
 
 					//Sælg grund hvis man ejer den og der ikke er nogle huse på
-					//Man kan sælge til banken eller anden spiller
 				case "Sælg grund":
 					dropdown.sellProperty(currentPlayer, players, fields, view);
-					if (dropdown.getBackToDropDown()) {
+					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til "start" menuen, hvis en spiller valgte noget andet end slå terninger
 						currentPlayer--;
 					}
 					break;
@@ -131,12 +116,12 @@ public class ActionCTRL {
 				}
 
 				currentPlayer++;
-				if (currentPlayer > players.length-1){
+				if (currentPlayer == players.length){
 					currentPlayer = 1;
 				}
 
-				if (winner.checkWinner(numberOfPlayers, players)) {
-					winner.printWinner(currentPlayer, numberOfPlayers, players, view);
+				if (winner.checkWinner(numberOfPlayers, players)) { //Boolean på om der er 1 spiller tilbage
+					winner.printWinner(currentPlayer, numberOfPlayers, players, view); //Metode der printer vinderen, hvis ovenstående er sandt
 					break;
 				}
 			}
