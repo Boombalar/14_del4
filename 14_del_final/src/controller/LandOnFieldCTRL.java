@@ -112,6 +112,7 @@ public class LandOnFieldCTRL {
 				((PropertyFields)fields[newPlayerPosition]).setOwner(currentPlayer);
 				players[currentPlayer].removeMoney(propertyValue);; 	//spiller køber grunden af brættet
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
+				view.updateOwnership(currentPlayer, newPlayerPosition);
 			}
 		}
 		if(owner != 0 && owner != currentPlayer) {
