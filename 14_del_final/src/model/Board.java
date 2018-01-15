@@ -143,7 +143,6 @@ public class Board {
 	 */
 
 	/**
-	 * getFields() - 
 	 * Getter til field arrayet
 	 * @return Field array der indeholder alle felterne samt logik.
 	 */
