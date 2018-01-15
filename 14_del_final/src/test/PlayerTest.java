@@ -1,42 +1,12 @@
 package test;
 
 import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
 import model.Player;
 
 public class PlayerTest {
-	
+
 	Player playerTest = new Player("Adam");
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	/**
-	 * Konstruktør skal ikke testes.
-	 */
-	@Test
-	public void testPlayer() {
-		///////////////fail("Not yet implemented");
-	}
 
 	/**
 	 * Tester getBalance, da en spiller instansieres med 30000 på kontoen forventes at getBalance returnere 30000.
@@ -56,7 +26,7 @@ public class PlayerTest {
 		playerTest.recieveMoney(5000);
 		int expected = 35000;
 		assertEquals(expected, playerTest.getBalance());
-		
+
 	}
 
 	/**

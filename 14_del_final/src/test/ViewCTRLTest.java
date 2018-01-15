@@ -6,18 +6,16 @@ import java.util.Random;
 import controller.*;
 import model.*;
 
-public class ViewCTRLTEST {
+public class ViewCTRLTest {
 	Board board;
 	Field[] fields;
-
 	CreatePlayers makePlayers;
 	Player[] players;
-
 	ViewCTRL view;
 	ChanceDeckCTRL chanceCard;
 	DieCup dieCup;
 
-	public ViewCTRLTEST() {
+	public ViewCTRLTest() {
 		initialiseGame();
 	}
 
@@ -63,23 +61,20 @@ public class ViewCTRLTEST {
 			view.updatePlayerAccount(x, ranNum);
 		} //updatePlayerPosition og updatePlayerAccount er testet
 		System.out.println("updatePlayerPosition og updatePlayerAccount er testet");
-		
+
 		view.updateBuildings(1, 1);
 		view.updateBuildings(3, 2);
 		view.updateBuildings(6, 3);
 		view.updateBuildings(8, 4);
 		view.updateBuildings(9, 5);
 		System.out.println("updateBuildings er testet");
-		
-		
-		
+
 		view.updateOwnership(1, 1);
 		view.updateOwnership(1, 3);
 		view.updateOwnership(1, 6);
 		view.updateOwnership(1, 8);
 		view.updateOwnership(1, 9);
 		System.out.println("updateOwnership er testet");
-		
-
 	}
+
 }

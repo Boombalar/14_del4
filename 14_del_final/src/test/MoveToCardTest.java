@@ -1,33 +1,11 @@
 package test;
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.MoveToCard;
 
 public class MoveToCardTest {
-
-	
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
 	public void testMoveToCard() {
@@ -41,7 +19,6 @@ public class MoveToCardTest {
 		expectedreturnValue[0] = 2;
 		expectedreturnValue[1] = 3;
 
-		
 		int actualNumber = movetocard.getNumber();
 		int actualType = movetocard.getType();
 		String actualDescription = movetocard.getDescription();
@@ -52,15 +29,6 @@ public class MoveToCardTest {
 		assertEquals("getDescription virker ikke", expectedDescription, actualDescription);
 		assertEquals("returnvalue value0 virker ikke", expectedreturnValue[0], actualreturnValue[0]);
 		assertEquals("returnvalue value1 virker ikke", expectedreturnValue[1], actualreturnValue[1]);
-		
-		
-		
-		
-		
-		
-		
-			
-	
 	}
 
 }
