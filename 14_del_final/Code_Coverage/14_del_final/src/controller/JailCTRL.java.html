@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>JailCTRL.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">JailCTRL.java</span></div><h1>JailCTRL.java</h1><pre class="source lang-java linenums">package controller;
+
+import model.*;
+import view.*;
+
+public class JailCTRL {
+	private BankruptcyCTRL bankruptcy;
+
+<span class="fc" id="L9">	public JailCTRL(BankruptcyCTRL bankruptcy) {</span>
+<span class="fc" id="L10">		this.bankruptcy = bankruptcy;</span>
+<span class="fc" id="L11">	}</span>
+/**
+ * Håndtere om man er kommet i fængsel.
+ * @param currentPlayer en int som er den aktivespiller.
+ * @param players objekt af Player[]
+ * @param fields Objekt af Field[]
+ * @param view Objekt af ViewCTRL
+ */
+	public void jailHandling(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
+<span class="fc bfc" id="L20" title="All 2 branches covered.">		if(players[currentPlayer].getTurnsInJail()==1) {</span>
+<span class="fc" id="L21">			view.writeText(players[currentPlayer].getPlayerName() + &quot; er i fængsel, og skal nu ud af fængslet&quot;);</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">			if (players[currentPlayer].getReleaseCard() &gt; 0) {</span>
+<span class="fc" id="L23">				String[] playerChoiceJail = {&quot;Brug løsladelseskort&quot;, &quot;Betal 1000kr.&quot;};</span>
+<span class="fc" id="L24">				String choiceJailPlayer = view.getDropDownChoice(&quot;Vælg hvordan &quot; + players[currentPlayer].getPlayerName() + &quot; kommer ud af fængsel, der er &quot; + players[currentPlayer].getReleaseCard() + &quot; løsladelseskort tilgængeligt&quot;, playerChoiceJail);</span>
+				if (choiceJailPlayer==&quot;Brug løsladelseskort&quot;) {
+				}
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">				if (choiceJailPlayer==&quot;Betal 1000kr.&quot;) {</span>
+<span class="nc" id="L28">					bankruptcy.payMoney(currentPlayer, 0, 1000, players, fields, view);</span>
+<span class="nc" id="L29">					view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());</span>
+				}
+<span class="nc" id="L31">			}else {					</span>
+<span class="fc" id="L32">				view.writeText(players[currentPlayer].getPlayerName() + &quot; har intet løsladelseskort, og bliver derfor trukket 1000 kr., for at komme ud af fængslet.&quot;);</span>
+<span class="fc" id="L33">				bankruptcy.payMoney(currentPlayer, 0, 1000, players, fields, view);</span>
+<span class="fc" id="L34">				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());</span>
+			}
+<span class="fc" id="L36">			players[currentPlayer].removeTurnsInJail();</span>
+		}
+<span class="fc" id="L38">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

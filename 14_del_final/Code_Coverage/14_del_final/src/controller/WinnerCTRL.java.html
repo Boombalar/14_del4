@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>WinnerCTRL.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">WinnerCTRL.java</span></div><h1>WinnerCTRL.java</h1><pre class="source lang-java linenums">package controller;
+
+import model.*;
+import java.util.concurrent.TimeUnit;
+import view.*;
+
+<span class="fc" id="L7">public class WinnerCTRL {</span>
+
+	/**
+	 * checkWinner() - tjekker om der findes en vinder, ved at gennemløbe spillerarrayet for 'broke-status'
+	 * @param numberOfPlayers - antal af spillere.
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @return - boolean bestemmer om der er en vinder eller ej.
+	 */
+	public boolean checkWinner(int numberOfPlayers, Player[] players) {
+<span class="fc" id="L16">		int numberOfPlayersBroke = 0;</span>
+<span class="fc" id="L17">		boolean winner = false;</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">		for (int i = 1; i &lt;= numberOfPlayers; i++) {</span>
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">			if (players[i].getBroke())</span>
+<span class="nc" id="L20">				numberOfPlayersBroke++;</span>
+		}
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">		if (numberOfPlayersBroke == numberOfPlayers-1)</span>
+<span class="nc" id="L23">			winner = true;</span>
+<span class="fc" id="L24">		return winner;</span>
+	}
+
+	/**
+	 * printWinner() - printer vinderen på skærmen. - finder først om der er en vinder med checkWinner()
+	 * @param currentPlayer - spillernummeret i playerarrayet
+	 * @param numberOfPlayers - antal af spillere.
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param view - indtast objectnavn af typen ViewCTRL
+	 */
+	public void printWinner(int currentPlayer, int numberOfPlayers, Player[] players, ViewCTRL view) {
+<span class="nc bnc" id="L35" title="All 2 branches missed.">		if (checkWinner(numberOfPlayers, players)) {</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">			for (int i = 1; i &lt;= numberOfPlayers; i++) {</span>
+<span class="nc" id="L37">				boolean checkPlayerBroke = players[i].getBroke();</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">				if (!checkPlayerBroke) {</span>
+<span class="nc" id="L39">					view.showChanceCard(players[currentPlayer].getPlayerName() + &quot; har vundet spillet!! - ønsker du at spille igen, skal du starte spillet igen.&quot;);</span>
+<span class="nc" id="L40">					view.getUserResponse(&quot;Spillet slutter efter du trykker på 'Afslut spil'&quot;, &quot;Afslut spil&quot;);</span>
+					try {
+<span class="nc" id="L42">						TimeUnit.SECONDS.sleep(1);</span>
+<span class="nc" id="L43">						System.exit(0);</span>
+<span class="nc" id="L44">					}</span>
+<span class="nc" id="L45">					catch (InterruptedException e) {</span>
+<span class="nc" id="L46">						System.out.println(&quot;Fejl i sleep når program lukker&quot;);</span>
+<span class="nc" id="L47">						e.printStackTrace();</span>
+					}
+				}
+			}
+		}
+<span class="nc" id="L52">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

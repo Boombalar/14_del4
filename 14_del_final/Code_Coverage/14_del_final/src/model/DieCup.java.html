@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DieCup.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">DieCup.java</span></div><h1>DieCup.java</h1><pre class="source lang-java linenums">package model;
+
+<span class="fc" id="L3">public class DieCup {</span>
+
+<span class="fc" id="L5">	private int die1=0, die2=0; //Instansiere terningerne.</span>
+<span class="fc" id="L6">	private Die die = new Die(); // Laver et object af typen Die</span>
+
+	/**
+	 * shake()
+	 * - laver 2 rolls og gemmer i to værdier
+	 * die1 og die2
+	 */
+	public void shake() {
+<span class="fc" id="L14">		die.roll();</span>
+<span class="fc" id="L15">		this.die1 = this.die.getEyes();</span>
+<span class="fc" id="L16">		die.roll();</span>
+<span class="fc" id="L17">		this.die2 = this.die.getEyes();</span>
+<span class="fc" id="L18">	}</span>
+
+	/**
+	 * getDiceValue()
+	 * - får værdien fra die1 og die2
+	 * @return - resultetet i int for die1+die2
+	 */
+	public int getDiceValue() {
+<span class="fc" id="L26">		int dieresult = this.die1 + this.die2;</span>
+<span class="fc" id="L27">		return dieresult;</span>
+	}
+
+	/**
+	 * getEqualEyes()
+	 * - Tjekker om die1 og die2 er de samme på Die objektet.
+	 * Vær opmærksom på at die1 og die2's startværdier er 0.
+	 * Så inden der laves shake, er denne true.
+	 * @return boolean - true(de samme) / false(ikke de samme) 
+	 */
+	public boolean getEqualEyes() {
+<span class="nc" id="L38">		boolean isEqual=false;</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">		if (this.die1 == this.die2) {</span>
+<span class="nc" id="L40">			isEqual = true;</span>
+<span class="nc" id="L41">		} return isEqual;</span>
+	}
+
+	/**
+	 * getDie1Value()
+	 * @return int terning1 værdi.
+	 */
+	public int getDie1Value () {
+<span class="fc" id="L49">		return die1;</span>
+	}
+
+	/**
+	 * getDie1Value()
+	 * @return int terning2 værdi.
+	 */
+	public int getDie2Value () {
+<span class="fc" id="L57">		return die2;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

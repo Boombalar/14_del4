@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>DropdownCTRL.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">DropdownCTRL.java</span></div><h1>DropdownCTRL.java</h1><pre class="source lang-java linenums">package controller;
+
+import model.*;
+import view.*;
+
+public class DropdownCTRL {
+	private LandOnFieldCTRL landonfield;
+	private AssetCTRL asset;
+	private TradeCTRL trade;
+
+	/**
+	 * Konstruktør
+	 * @param landonfield Et objekt af LandOnFieldCTRL
+	 * @param asset Et objekt af AssetCTRL
+	 * @param trade Et objekt af TradeCTRL
+	 */
+<span class="fc" id="L17">	public DropdownCTRL(LandOnFieldCTRL landonfield, AssetCTRL asset, TradeCTRL trade) {</span>
+<span class="fc" id="L18">		this.landonfield = landonfield;</span>
+<span class="fc" id="L19">		this.asset = asset;</span>
+<span class="fc" id="L20">		this.trade = trade;</span>
+<span class="fc" id="L21">	}</span>
+<span class="fc" id="L22">	boolean backToDropdown = false;</span>
+
+	/**
+	 * En metode der slår med terninger
+	 * @param currentPlayer modtager en int som er den aktivespiller.
+	 * @param players objekt af Player[]
+	 * @param fields objekt af Field[]	
+	 * @param view objekt af ViewCTRL
+	 * @param dieCup objekt af DieCup
+	 */
+	public void rollDice (int currentPlayer, Player[] players, Field[] fields, ViewCTRL view, DieCup dieCup) {
+
+		//slå terninger
+<span class="fc" id="L35">		dieCup.shake();</span>
+<span class="fc" id="L36">		int diceValue = dieCup.getDiceValue();</span>
+
+		//skift position på spiller i model lag
+<span class="fc" id="L39">		int oldPlayerPosition = players[currentPlayer].getPosition();</span>
+<span class="fc" id="L40">		int newPlayerPosition = oldPlayerPosition + diceValue;</span>
+
+		//Update view
+<span class="fc" id="L43">		view.updateDice(dieCup.getDie1Value(), dieCup.getDie2Value());						  </span>
+
+
+		//Håndter om man kommer over start og får 4000.
+<span class="fc bfc" id="L47" title="All 2 branches covered.">		if (newPlayerPosition &gt; 39) {</span>
+<span class="fc" id="L48">			newPlayerPosition -= 40;</span>
+<span class="fc" id="L49">			players[currentPlayer].recieveMoney(4000);</span>
+<span class="fc" id="L50">			view.writeText(players[currentPlayer].getPlayerName() + &quot; har passeret start, og får 4000 kr.&quot;);</span>
+		}
+
+		//flyt spiller til ny pos i modellaget
+<span class="fc" id="L54">		players[currentPlayer].setPosition(newPlayerPosition);</span>
+		//flyt spiller til ny pos i viewlaget, og opdater han balance.
+<span class="fc" id="L56">		view.updatePlayerPosition(currentPlayer, oldPlayerPosition, newPlayerPosition);</span>
+<span class="fc" id="L57">		view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());</span>
+
+		//Kør regel på nyt felt.
+<span class="fc" id="L60">		landonfield.ruleSwitch(currentPlayer, players, fields, view);</span>
+<span class="fc" id="L61">	}</span>
+	/**
+	 * metode der giver lov til at købe huse og hoteller hvis man ejer felter af samme gruppe. 
+	 * @param currentPlayer en int som er den aktive spiller.	
+	 * @param players et objekt af Player[]
+	 * @param fields et objekt af Field[]
+	 * @param view et objekt af ViewCTRL.
+	 */
+	public void buyHousesAndHotel(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
+<span class="fc" id="L70">		backToDropdown = true;</span>
+		//Find ud af hvor mange proporties man ejer hvor man har hele gruppen til array, og hvor man har råd til at bygge.
+<span class="fc" id="L72">		int amountOfProperties = 0;</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		for(int fieldCount = 0;fieldCount&lt;=39;fieldCount++) {//Går hele brættet igennem</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">			if (fields[fieldCount] instanceof PropertyFields) {</span>
+				//check om man ejer gruppen
+<span class="pc bpc" id="L76" title="1 of 6 branches missed.">				if (asset.checkPropertyGroupOwnership(currentPlayer, fieldCount, fields) == true &amp;&amp; asset.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields) != 5 &amp;&amp; asset.getHousePrice(fieldCount, fields)&lt;=players[currentPlayer].getBalance()) {</span>
+<span class="fc" id="L77">					amountOfProperties++;</span>
+				}
+			}
+		}
+
+		//Vi laver Array til DropDown listen
+<span class="fc" id="L83">		String [] propertyArray = new String[amountOfProperties];</span>
+<span class="fc" id="L84">		int index = 0;</span>
+		int[] returnValue;
+
+		//Vi populer array med felt hvis man ejer hele gruppen OG har råd til at bygge på det felt.
+		//1-Hvidovrevej
+		//3-Rødovrevej
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		for(int fieldCount = 0;fieldCount&lt;=39;fieldCount++) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (fields[fieldCount] instanceof PropertyFields) {</span>
+<span class="pc bpc" id="L92" title="1 of 6 branches missed.">				if (asset.checkPropertyGroupOwnership(currentPlayer, fieldCount,fields) == true &amp;&amp; asset.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields) != 5 &amp;&amp; asset.getHousePrice(fieldCount, fields)&lt;=players[currentPlayer].getBalance()) {</span>
+<span class="fc" id="L93">					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + &quot;-&quot; + fields[fieldCount].getName(); </span>
+<span class="fc" id="L94">					index++;</span>
+				}
+			}
+		}
+		//Vi modtager svar fra dropdown listen
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (propertyArray.length != 0) {</span>
+			//Vælg hvilken grund du vil købe hus på
+<span class="fc" id="L101">			String[] choice = view.getDropDownChoice(&quot;Vælg hvilken grund til vil købe hus på&quot;, propertyArray).split(&quot;-&quot;);</span>
+<span class="fc" id="L102">			int chosenFieldNumber=Integer.parseInt(choice[0]);</span>
+
+			//Vi bygger
+<span class="fc" id="L105">			returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if (returnValue[6] &lt; 6) {//hvis der er mindre end 6 huse på feltet</span>
+<span class="fc" id="L107">				returnValue[6]++;</span>
+				//BYG FOR FANDEN!!
+<span class="fc" id="L109">				players[currentPlayer].removeMoney(asset.getHousePrice(chosenFieldNumber, fields));	</span>
+<span class="fc" id="L110">				asset.setHousesOnProperty(returnValue[6], chosenFieldNumber, fields);</span>
+<span class="fc" id="L111">				view.updateBuildings(chosenFieldNumber, returnValue[6]);</span>
+<span class="fc" id="L112">				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());</span>
+
+<span class="fc" id="L114">			}else {</span>
+<span class="nc" id="L115">				view.writeText(players[currentPlayer].getPlayerName() + &quot; har ikke råd til at bygge&quot;);</span>
+			}
+<span class="nc" id="L117">		}else {</span>
+<span class="fc" id="L118">			view.writeText(players[currentPlayer].getPlayerName() + &quot; ejer ikke nogle grunde&quot;);</span>
+		}
+<span class="fc" id="L120">	}</span>
+	/**
+	 * Metode der gør vi kan sælge huse eller hoteller.
+	 * @param currentPlayer int som er den aktive spiller.
+	 * @param players objekt af Player[]
+	 * @param fields objjekt af Field[]
+	 * @param view objekt af ViewCTRL
+	 */
+	public void sellHousesAndHotels(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
+<span class="fc" id="L129">		backToDropdown = true;</span>
+<span class="fc" id="L130">		int amountOfProperties=0;</span>
+<span class="fc" id="L131">		int amountOfHouses=0;</span>
+		int[] returnValue;
+
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		for(int fieldCount = 0;fieldCount&lt;=39;fieldCount++) {</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">			if (fields[fieldCount] instanceof PropertyFields) {</span>
+<span class="fc" id="L136">				amountOfHouses = asset.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields);</span>
+<span class="pc bpc" id="L137" title="3 of 4 branches missed.">				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer &amp;&amp; amountOfHouses &gt; 0) {</span>
+<span class="nc" id="L138">					amountOfProperties++;</span>
+				}	
+			}
+		}
+
+		//Lav array til dropdown
+<span class="fc" id="L144">		String[] propertyArray = new String[amountOfProperties];</span>
+<span class="fc" id="L145">		int index=0;</span>
+
+		//populer array med felt hvis det opfylder kriterierne
+		//1. Hvidovrevej
+		//3. Rødovrevej
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		for(int fieldCount = 0;fieldCount&lt;=39;fieldCount++) {</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">			if (fields[fieldCount] instanceof PropertyFields) {</span>
+<span class="fc" id="L152">				amountOfHouses = asset.getHousesOnPropertyWithOwner(currentPlayer, fieldCount, fields);</span>
+<span class="pc bpc" id="L153" title="3 of 4 branches missed.">				if (((PropertyFields)fields[fieldCount]).getOwner() == currentPlayer &amp;&amp; amountOfHouses &gt; 0) {</span>
+<span class="nc" id="L154">					propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + &quot;-&quot; + fields[fieldCount].getName();</span>
+<span class="nc" id="L155">					index++;</span>
+				}
+			}
+		}
+
+		//Vi sælger
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (propertyArray.length != 0) {</span>
+<span class="nc" id="L162">			String[] choice = view.getDropDownChoice(&quot;Vælg hvilken grund til vil købe hus på&quot;, propertyArray).split(&quot;-&quot;);</span>
+<span class="nc" id="L163">			int chosenFieldNumber=Integer.parseInt(choice[0]);</span>
+<span class="nc" id="L164">			returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">			if (returnValue[6] &gt; 0) {//hvis der er mere end 1 hus på feltet.</span>
+<span class="nc" id="L166">				returnValue[6]--;</span>
+				//SÆLG FOR HELVEDE
+<span class="nc" id="L168">				players[currentPlayer].recieveMoney(asset.getHousePrice(chosenFieldNumber, fields)/2);	</span>
+<span class="nc" id="L169">				asset.setHousesOnProperty(returnValue[6], chosenFieldNumber, fields);</span>
+<span class="nc" id="L170">				view.updateBuildings(chosenFieldNumber, returnValue[6]);</span>
+<span class="nc" id="L171">				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());</span>
+			}
+<span class="nc" id="L173">		} else </span>
+		{
+<span class="fc" id="L175">			view.writeText(players[currentPlayer].getPlayerName() + &quot; har ikke nogle grunde at sælge huse på&quot;);</span>
+		}
+<span class="fc" id="L177">	}</span>
+
+
+	/**
+	 * metode der gør vi kan sælge huse.
+	 * @param currentPlayer int som er den aktivespiller.
+	 * @param players Objekt af Player[]	
+	 * @param fields Objekt af Field[]
+	 * @param view Objekt af ViewCTRL
+	 */
+	public void sellProperty(int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
+<span class="fc" id="L188">		backToDropdown = true;</span>
+<span class="fc" id="L189">		int amountOfProperties=0;</span>
+		//Find ud af hvor mange grunde man ejer som ikke har huse på sig til array
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		for(int fieldCount = 0;fieldCount&lt;=39;fieldCount++) {</span>
+			//Hvis feltet er enten et ejet OwnerField eller et ejet PropertyField uden huse.
+<span class="pc bpc" id="L193" title="1 of 8 branches missed.">			if ((fields[fieldCount] instanceof OwnerFields &amp;&amp; ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) &amp;&amp; !((fields[fieldCount] instanceof PropertyFields &amp;&amp; asset.getHousesOnGroup(currentPlayer, fieldCount, fields)&gt;0))) {</span>
+<span class="fc" id="L194">				amountOfProperties++;//tæl op</span>
+			}
+		}
+
+		//Lav Array
+<span class="fc" id="L199">		String[] propertyArray = new String[amountOfProperties];</span>
+<span class="fc" id="L200">		int index=0;</span>
+
+		//Populer array med grunde man ejer som ikke har huse på sig til array
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		for(int fieldCount = 0;fieldCount&lt;=39;fieldCount++) {</span>
+<span class="pc bpc" id="L204" title="1 of 8 branches missed.">			if ((fields[fieldCount] instanceof OwnerFields &amp;&amp; ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) &amp;&amp; !((fields[fieldCount] instanceof PropertyFields &amp;&amp; asset.getHousesOnGroup(currentPlayer, fieldCount, fields)&gt;0))) {</span>
+<span class="fc" id="L205">				propertyArray[index] = Integer.toString(fields[fieldCount].getNumber()) + &quot;-&quot; + fields[fieldCount].getName(); </span>
+<span class="fc" id="L206">				index++;	</span>
+			}
+		}
+
+		//vælge grund i dropdown
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		if (propertyArray.length != 0) {</span>
+
+			//Vælge hvilken spiller man vil sælge til 
+			//0 er banken.
+<span class="fc" id="L215">			String[] choice = view.getDropDownChoice(&quot;Vælg hvilken grund du vil sælge&quot;, propertyArray).split(&quot;-&quot;);</span>
+<span class="fc" id="L216">			int chosenFieldNumber=Integer.parseInt(choice[0]);</span>
+
+			//Lav array og populer
+<span class="fc" id="L219">			String[] playerCountArray = new String[players.length];</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">			for (int playerCount = 0;playerCount &lt;= players.length-1;</span>
+<span class="fc" id="L221">					playerCount++) {</span>
+<span class="fc" id="L222">				playerCountArray[playerCount]= Integer.toString(playerCount);</span>
+			}
+
+			//Vælg spiller eller bank
+<span class="fc" id="L226">			String playerSellChoice = view.getDropDownChoice( players[currentPlayer].getPlayerName() + &quot;, hvilken spiller vil du sælge til?   0 er til banken&quot;, playerCountArray);</span>
+<span class="fc" id="L227">			int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));</span>
+
+			//Sælg grund.
+<span class="fc" id="L230">			trade.sellProperty(currentPlayer, chosenPlayerNumber,chosenFieldNumber, players, fields);</span>
+<span class="fc" id="L231">			view.updateOwnership(chosenPlayerNumber, chosenFieldNumber);</span>
+<span class="fc" id="L232">			view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">			if (chosenPlayerNumber != 0) {</span>
+<span class="fc" id="L234">				view.updatePlayerAccount(chosenPlayerNumber, players[chosenPlayerNumber].getBalance());</span>
+			}
+<span class="fc" id="L236">		}</span>
+		else {
+<span class="fc" id="L238">			view.writeText(&quot;Du ejer ikke nogle grunde, som du kan sælge&quot;);</span>
+		}
+<span class="fc" id="L240">	}</span>
+	/**
+	 * Går tilbage til dropdownmenu.
+	 * @return
+	 */
+	public boolean getBackToDropDown() {
+<span class="fc" id="L246">		return backToDropdown;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

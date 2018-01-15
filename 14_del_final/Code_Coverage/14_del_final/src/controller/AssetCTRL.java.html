@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>AssetCTRL.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">AssetCTRL.java</span></div><h1>AssetCTRL.java</h1><pre class="source lang-java linenums">package controller;
+
+import model.*;
+
+<span class="fc" id="L5">public class AssetCTRL {</span>
+
+	/**
+	 * Hvis playerNumber ejer feltet, så får man antal huse på feltet.
+	 * @param owner spillernummeret der skal trækkes info på.
+	 * @param fieldNumber feltnummeret hvor der skal trækkes info på.
+	 * @param fields indtast objectnavn af typen Field[]
+	 * @return Returner hvor mange huse der er på grunden, hvis man ejer den.
+	 */
+	public int getHousesOnPropertyWithOwner(int owner, int fieldNumber, Field[] fields) {
+<span class="fc" id="L15">		int value = 0;</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">		if (((OwnerFields)fields[fieldNumber]).getOwner() == owner) {</span>
+<span class="fc" id="L17">			int[] returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();</span>
+<span class="fc" id="L18">			value = returnValue[6];</span>
+		}
+<span class="fc" id="L20">		return value;</span>
+	}
+
+	/**
+	 * Overskriver det antal huse der står på grunden.
+	 * @param amountOfHouses Antal af huse der skal sættes til at være på ejerfeltet.
+	 * @param fieldNumber hvilket feltnummer der skal sættes huse på.
+	 * @param fields indtast objectnavn af typen Field[]
+	 */
+	public void setHousesOnProperty(int amountOfHouses, int fieldNumber, Field[] fields) {
+<span class="fc" id="L30">		((PropertyFields)fields[fieldNumber]).setNumberOfHouses(amountOfHouses);</span>
+<span class="fc" id="L31">	}</span>
+
+	/**
+	 * Hvis playerNumber er ejer, så træk info på hvor mange huse der er på en gruppe af grunde.
+	 * @param owner ejeren man sammenligner info på, sammen med feltet.
+	 * @param fieldNumber feltnummeret der skal undersøges.
+	 * @param fields indtast objectnavn af typen Field[]
+	 * @return Returner hvor mange huse der er på en hel gruppe, hvis man ejer gruppen.
+	 */
+	public int getHousesOnGroup(int owner, int fieldNumber, Field[] fields) {
+<span class="fc" id="L41">		int returnValue=0;</span>
+<span class="fc" id="L42">		int housesOnProperty = 0;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		for (int fieldCount = 0;fieldCount&lt;= 39;fieldCount++) {</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">			if(fields[fieldCount] instanceof PropertyFields) {</span>
+<span class="fc" id="L45">				housesOnProperty = getHousesOnPropertyWithOwner(owner, fieldNumber, fields);</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">				if(housesOnProperty &gt; 0) {</span>
+<span class="nc" id="L47">					returnValue = returnValue + housesOnProperty;</span>
+				}
+			}
+		}
+<span class="fc" id="L51">		return returnValue;</span>
+	}
+
+	/**
+	 * Få husprisen på et felt.
+	 * @param fieldNumber feltet man skal undersøge
+	 * @param fields indtast objectnavn af typen Field[]
+	 * @return prisen på at bygge huse, på det pågældende felt.
+	 */
+	public int getHousePrice(int fieldNumber, Field[] fields) {
+		int[] returnValue;
+<span class="fc" id="L62">		returnValue = ((PropertyFields)fields[fieldNumber]).getReturnValue();</span>
+<span class="fc" id="L63">		return returnValue[7];</span>
+	}
+
+	/**
+	 * Finder hvor mange felter der ejes af owner, i en gruppe.
+	 * @param owner ejeren der skal undersøges.
+	 * @param fieldNumber feltnummeret, hvorfra man finder den ønskede gruppe.
+	 * @param fields indtast objectnavn af typen Field[]
+	 * @return antallet af ejede felter.
+	 */
+	public int getNumberOfOwnedPropertiesInGroup(int owner, int fieldNumber, Field[] fields) {
+<span class="fc" id="L74">		int returnValue=0;</span>
+<span class="fc" id="L75">		int groupNumber = ((OwnerFields)fields[fieldNumber]).getGroupNumber();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		for (int fieldCount=0;fieldCount&lt;=39;fieldCount++) {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			if (fields[fieldCount] instanceof OwnerFields) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">				if (((OwnerFields)fields[fieldCount]).getOwner()==owner) {</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">					if (((OwnerFields)fields[fieldCount]).getGroupNumber()==groupNumber) {</span>
+<span class="fc" id="L80">						returnValue++;</span>
+					}
+				}
+			}
+		}
+<span class="fc" id="L85">		return returnValue;</span>
+	}
+
+	/**
+	 * 
+	 * @param playerNumber
+	 * @param fields indtast objectnavn af typen Field[]
+	 * @return
+	 */
+	public int getNumberOfHousesFromPlayer(int playerNumber, Field[] fields) {
+<span class="fc" id="L95">		int numbOfHouses=0;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		for(int i=0 ; i &lt; 39 ; i++) {</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			if(fields[i] instanceof PropertyFields) {</span>
+<span class="fc" id="L98">				int numbOfHousesOnField = (((PropertyFields)fields[i]).getReturnValue()[6]);</span>
+<span class="fc" id="L99">				int fieldOwner = (((PropertyFields)fields[i]).getOwner());</span>
+<span class="pc bpc" id="L100" title="1 of 4 branches missed.">				if ((fieldOwner == playerNumber) &amp;&amp; (numbOfHousesOnField &lt; 5)) {</span>
+<span class="fc" id="L101">					numbOfHouses += numbOfHousesOnField;</span>
+				}
+			}
+		}
+<span class="fc" id="L105">		return numbOfHouses;</span>
+	}
+
+	/**
+	 * 
+	 * @param playerNumber
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @return
+	 */
+	public int getNumberOfHotelsFromPlayer(int playerNumber, Field[] fields) {
+<span class="fc" id="L115">		int numbOfHotels=0;</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		for(int i=0 ; i &lt; 39 ; i++) {</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">			if(fields[i] instanceof PropertyFields) {</span>
+<span class="fc" id="L118">				int numbOfHousesOnField = (((PropertyFields)fields[i]).getReturnValue()[6]);</span>
+<span class="fc" id="L119">				int fieldOwner = (((PropertyFields)fields[i]).getOwner());</span>
+<span class="pc bpc" id="L120" title="1 of 4 branches missed.">				if ((fieldOwner == playerNumber) &amp;&amp; (numbOfHousesOnField == 5)) { // hvis der er 5 huse, så er der et hotel</span>
+<span class="nc" id="L121">					numbOfHotels += 1;</span>
+				}
+			}
+		}
+<span class="fc" id="L125">		return numbOfHotels;</span>
+	}
+
+	/**
+	 * 
+	 * @param currentPlayer
+	 * @param amountNeeded
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @return
+	 */
+	public boolean checkPropertySaleValue(int currentPlayer, int amountNeeded, Field[] fields) {
+<span class="fc" id="L136">		boolean returnValue = false;</span>
+		int priceOfProperty;
+
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		for (int fieldCount = 0; fieldCount&lt;=39;fieldCount++) {</span>
+<span class="pc bpc" id="L140" title="1 of 4 branches missed.">			if(fields[fieldCount] instanceof OwnerFields &amp;&amp; amountNeeded &gt; 0) {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">				if (((OwnerFields)fields[fieldCount]).getOwner() == currentPlayer) {</span>
+<span class="fc" id="L142">					priceOfProperty = ((OwnerFields)fields[fieldCount]).getPropertyValue();</span>
+<span class="fc" id="L143">					amountNeeded = amountNeeded - priceOfProperty;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">					if (amountNeeded &lt; 0) {</span>
+<span class="fc" id="L145">						returnValue = true;</span>
+<span class="fc" id="L146">						break;</span>
+					}
+				}
+			}
+		}
+<span class="fc" id="L151">		return returnValue;</span>
+	}
+
+	//Check om man ejer alle grunde i en gruppe af PropertyFields.
+	/**
+	 * 
+	 * @param fieldOwner
+	 * @param fieldNumber
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @return
+	 */
+	public boolean checkPropertyGroupOwnership(int fieldOwner, int fieldNumber, Field[] fields) {
+<span class="fc" id="L163">		boolean returnValue = true;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		for (int fieldCount = 0;fieldCount &lt;=39;fieldCount++) {</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">			if (fields[fieldCount] instanceof PropertyFields) {</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">				if (((PropertyFields)fields[fieldCount]).getGroupNumber() == ((PropertyFields)fields[fieldNumber]).getGroupNumber()) {//Hvis feltet man er nået til er samme ejer som feltet man checker ud fra</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">					if (((PropertyFields)fields[fieldCount]).getOwner() != fieldOwner) {//Hvis feltet ikke har samme ejer som det felt man checker ud fra.</span>
+<span class="fc" id="L168">						returnValue=false; //Så falsk</span>
+					}
+				}
+			}
+		}
+<span class="fc" id="L173">		return returnValue;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

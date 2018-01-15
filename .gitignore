@@ -1,5 +1,6 @@
 ### Compiled class file
 *.class
+.classpath
 
 ### Log file
 *.log
@@ -26,6 +27,7 @@ hs_err_pid*
 
 ### macOS
 .DS_Store
+.icloud
 
 ### Windows
 Thumbs.db
@@ -40,3 +42,7 @@ Desktop.ini
 bin/**/*
 /**/bin/*
 /.metadata/
+
+## others
+.recommenders
+.project

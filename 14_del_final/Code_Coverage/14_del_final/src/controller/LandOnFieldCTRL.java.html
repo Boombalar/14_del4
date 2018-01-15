@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>LandOnFieldCTRL.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">LandOnFieldCTRL.java</span></div><h1>LandOnFieldCTRL.java</h1><pre class="source lang-java linenums">package controller;
+
+import model.*;
+import view.*;
+
+public class LandOnFieldCTRL {
+
+	private AssetCTRL asset;
+	private ChanceDeckCTRL chancedeck;
+	private BankruptcyCTRL bankruptcy;
+
+	/**
+	 * Konstruktør til LandOnFieldCTRL
+	 * @param asset - indtast objectnavn af typen Toolbox
+	 * @param bankruptcy - indtast objectnavn af typen BankruptcyCTRL
+	 * @param chancecarddeck - indtast objectnavn af typen ChanceCardDeckCTRL
+	 */
+<span class="fc" id="L18">	public LandOnFieldCTRL (AssetCTRL asset,BankruptcyCTRL bankruptcy, ChanceDeckCTRL chancedeck) {</span>
+<span class="fc" id="L19">		this.asset = asset;	</span>
+<span class="fc" id="L20">		this.chancedeck = chancedeck;</span>
+<span class="fc" id="L21">		this.bankruptcy = bankruptcy;</span>
+<span class="fc" id="L22">	}</span>
+
+	/**
+	 * fieldRulesSwitch() - En metode som switcher på hvilket type felt man er landet på
+	 * @param currentPlayer - spillernummeret i playerarrayet
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @param view - indtast objectnavn af typen ViewCTRL
+	 */
+	public void ruleSwitch (int currentPlayer, Player[] players, Field[] fields, ViewCTRL view) {
+<span class="fc" id="L32">		int fieldType = fields[players[currentPlayer].getPosition()].getType();</span>
+<span class="fc" id="L33">		int owner = 0;</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		if ((fields[players[currentPlayer].getPosition()]) instanceof OwnerFields) {</span>
+<span class="fc" id="L35">			owner = (((OwnerFields)fields[players[currentPlayer].getPosition()]).getOwner());</span>
+		}
+
+<span class="pc bpc" id="L38" title="1 of 9 branches missed.">		switch (fieldType) {</span>
+
+		case 0:		
+<span class="fc" id="L41">			propertyField(currentPlayer, owner, players, fields, view);</span>
+<span class="fc" id="L42">			break;</span>
+		case 1:
+			//ShipFields
+<span class="fc" id="L45">			shippingField(currentPlayer, owner, 1, players, fields, view);</span>
+<span class="fc" id="L46">			break;</span>
+		case 2:
+			//BreweryFields
+<span class="fc" id="L49">			breweryField(currentPlayer, owner, players, fields, view);</span>
+<span class="fc" id="L50">			break;</span>
+		case 3:
+			//TaxFields
+<span class="fc" id="L53">			taxField(currentPlayer, players, fields, view);</span>
+<span class="fc" id="L54">			break;</span>
+		case 4:
+			//ChanceField			
+<span class="fc" id="L57">			chanceField(currentPlayer, players, fields, view);</span>
+<span class="fc" id="L58">			break;</span>
+		case 5: 
+			//StartField
+<span class="fc" id="L61">			view.writeText(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[players[currentPlayer].getPosition()].getName() + &quot;'&quot;);</span>
+<span class="fc" id="L62">			break;</span>
+		case 6: 
+			//NoActionField
+<span class="fc" id="L65">			view.writeText(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[players[currentPlayer].getPosition()].getName() + &quot;'&quot;);</span>
+<span class="fc" id="L66">			break;</span>
+		case 7:
+			//GoToJailField
+<span class="fc" id="L69">			goToJailField(currentPlayer, players, fields, view);</span>
+<span class="fc" id="L70">			break;</span>
+		default:
+<span class="nc" id="L72">			System.out.println(&quot;Felt-typen der pharses er ikke korrekt.&quot;);</span>
+
+		}
+<span class="fc" id="L75">	}</span>
+	
+	/**
+	 * 
+	 * @param oldPosition
+	 * @param newPosition
+	 * @return
+	 */
+	public boolean checkForPassingStart(int oldPosition, int newPosition) {
+<span class="fc" id="L84">		Boolean didPassStart = false;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (newPosition &lt; oldPosition) {</span>
+<span class="fc" id="L86">			didPassStart = true;</span>
+		}
+<span class="fc" id="L88">		return didPassStart;</span>
+	}
+
+	/**
+	 * PropertyField()
+	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
+	 * @param owner - indtast ejeren af feltet, der er i fokus (i int)
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @param view - indtast objectnavn af typen ViewCTRL
+	 */
+	public void propertyField(int currentPlayer, int owner, Player[] players,Field[] fields,ViewCTRL view) {
+		//ProbertyField
+<span class="fc" id="L101">		int newPlayerPosition = players[currentPlayer].getPosition();</span>
+<span class="fc" id="L102">		int propertyValue = (((PropertyFields)fields[newPlayerPosition]).getPropertyValue());</span>
+<span class="fc" id="L103">		int[] fieldRent = (((PropertyFields)fields[newPlayerPosition]).getReturnValue());</span>
+<span class="fc" id="L104">		int numberOfHouses = fieldRent[6];</span>
+<span class="fc" id="L105">		int propertyRent = fieldRent[numberOfHouses];</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		if(owner == 0) {</span>
+<span class="fc" id="L107">			boolean	answer = view.getUserAnswer(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;', vil du købe grunden ?&quot;, &quot;ja&quot;, &quot;nej&quot;);		</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			if(answer == true) {</span>
+<span class="fc" id="L109">				view.writeText(players[currentPlayer].getPlayerName() + &quot; har købt '&quot; + fields[newPlayerPosition].getName() + &quot;' for &quot; + propertyValue + &quot; kr.&quot;); //gui tekst til spilleren</span>
+<span class="fc" id="L110">				PropertyFields wantedFieldChange = ((PropertyFields)fields[newPlayerPosition]);</span>
+				//Herunder bliver feltets ejer skiftet.
+<span class="fc" id="L112">				wantedFieldChange.setOwner(currentPlayer);</span>
+<span class="fc" id="L113">				bankruptcy.payMoney(currentPlayer, owner, propertyValue, players, fields, view); 	//spiller køber grunden af brættet</span>
+			}
+		}
+<span class="fc bfc" id="L116" title="All 4 branches covered.">		if(owner != 0 &amp;&amp; owner != currentPlayer) {</span>
+<span class="pc bpc" id="L117" title="3 of 4 branches missed.">			if (asset.checkPropertyGroupOwnership(owner,newPlayerPosition,fields) &amp;&amp; (fieldRent[6] == 0)) {</span>
+<span class="nc" id="L118">				propertyRent *= 2;</span>
+			}
+<span class="fc" id="L120">			view.writeText(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;', du skal betale &quot; + propertyRent + &quot;kr. til &quot; + players[owner].getPlayerName()); //Gui i tekst til spilleren</span>
+<span class="fc" id="L121">			bankruptcy.payMoney(currentPlayer, owner, propertyRent, players, fields, view);			 //transaction mellem to spiller.</span>
+		}
+		//Her lander den aktivespiller på et felt som han selv ejer. 
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if((owner == currentPlayer)) {  </span>
+<span class="fc" id="L125">			view.writeText(players[currentPlayer].getPlayerName() +  &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;', &quot; + players[currentPlayer].getPlayerName() + &quot;, ejer selv denne grund&quot;);</span>
+		}
+<span class="fc" id="L127">	}</span>
+	
+	/**
+	 * shippingField()
+	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
+	 * @param multiplier - multiplier, der bestemmer multipliciteten af lejen, når man lander, og det er ejet i forvejen.
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @param view - indtast objectnavn af typen ViewCTRL
+	 */
+	public void shippingField(int currentPlayer, int owner, int multiplier, Player[] players,Field[] fields,ViewCTRL view) {
+<span class="fc" id="L138">		int newPlayerPosition = players[currentPlayer].getPosition();</span>
+<span class="fc" id="L139">		int shippingPropertyValue = (((ShippingFields)fields[newPlayerPosition]).getPropertyValue());</span>
+<span class="fc" id="L140">		int[] fieldRent = (((ShippingFields)fields[newPlayerPosition]).getReturnValue());</span>
+<span class="fc" id="L141">		int numOfOwnedShipFields = (asset.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition, fields));</span>
+
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if(owner == 0) {</span>
+<span class="fc" id="L144">			boolean answer = view.getUserAnswer(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;', vil du købe dette redderi ?&quot;, &quot;ja&quot;, &quot;nej&quot;); //Spiller for mulighed for at købe grunden</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">			if(answer == true) {</span>
+<span class="fc" id="L146">				view.writeText(players[currentPlayer].getPlayerName() + &quot; har købt '&quot; + fields[newPlayerPosition].getName() + &quot;' for &quot; + shippingPropertyValue + &quot; kr&quot; );	//Tekst til gui</span>
+<span class="fc" id="L147">				ShippingFields wantedFieldChange = ((ShippingFields)fields[newPlayerPosition]);</span>
+<span class="fc" id="L148">				wantedFieldChange.setOwner(currentPlayer);												//Køberen bliver sat til ejer af feltet</span>
+<span class="fc" id="L149">				bankruptcy.payMoney(currentPlayer, owner, shippingPropertyValue, players, fields, view);	//transaktionen forgår mellem spiller og bræt</span>
+			}
+		}
+
+<span class="fc bfc" id="L153" title="All 4 branches covered.">		if(owner != 0 &amp;&amp; owner != currentPlayer) {</span>
+<span class="fc" id="L154">			int shipRent = ((fieldRent[numOfOwnedShipFields -1])*multiplier);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">			if(multiplier == 1) {</span>
+<span class="fc" id="L156">				view.writeText(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;', du skal betale &quot; + shipRent + &quot;kr. til &quot; + players[owner].getPlayerName());</span>
+<span class="fc" id="L157">			} else {</span>
+<span class="nc" id="L158">				view.writeText(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;', og du skal betale dobbelt leje, &quot; + shipRent + &quot;kr. til &quot; + players[owner].getPlayerName());</span>
+			}
+<span class="fc" id="L160">			bankruptcy.payMoney(currentPlayer, owner, shipRent, players, fields, view);</span>
+		}
+
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if(owner == currentPlayer) {</span>
+<span class="fc" id="L164">			view.writeText(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;', &quot; + players[currentPlayer].getPlayerName() + &quot;, ejer selv dette rederi&quot;);</span>
+		}
+<span class="fc" id="L166">	}</span>
+
+
+	/**
+	 * breweryField ()
+	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
+	 * @param owner - indtast ejeren af feltet, der er i fokus (i int)
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @param view - indtast objectnavn af typen ViewCTRL
+	 */
+	public void breweryField(int currentPlayer,int owner,Player[] players,Field[] fields,ViewCTRL view) {
+<span class="fc" id="L178">		int newPlayerPosition = players[currentPlayer].getPosition();</span>
+<span class="fc" id="L179">		int breweryPropertyValue = (((BreweryFields)fields[newPlayerPosition]).getPropertyValue());</span>
+<span class="fc" id="L180">		int[] breweryFieldRent = (((BreweryFields)fields[newPlayerPosition]).getReturnValue());</span>
+<span class="fc" id="L181">		int numOfOwnedBrewFields = (asset.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition, fields));</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if(owner == 0) {</span>
+<span class="fc" id="L183">			boolean answer = view.getUserAnswer(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;', vil du købe dette bryggeri ?&quot;, &quot;ja&quot;, &quot;nej&quot;);</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">			if(answer == true) {</span>
+<span class="fc" id="L185">				view.writeText(players[currentPlayer].getPlayerName() + &quot; har købt '&quot; + fields[newPlayerPosition].getName() + &quot;' for &quot; + breweryPropertyValue + &quot;kr.&quot;);</span>
+<span class="fc" id="L186">				OwnerFields wantedFieldChange = ((OwnerFields)fields[newPlayerPosition]);</span>
+<span class="fc" id="L187">				wantedFieldChange.setOwner(currentPlayer);</span>
+<span class="fc" id="L188">				bankruptcy.payMoney(currentPlayer, owner, breweryPropertyValue, players, fields, view);</span>
+			}
+		}
+<span class="pc bpc" id="L191" title="1 of 4 branches missed.">		if(owner != 0 &amp;&amp; owner != currentPlayer) {</span>
+<span class="fc" id="L192">			int breweryRent = breweryFieldRent[numOfOwnedBrewFields-1];</span>
+<span class="fc" id="L193">			view.writeText(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;' du skal betale &quot; + breweryRent + &quot;kr. til &quot; + players[owner].getPlayerName());</span>
+<span class="fc" id="L194">			bankruptcy.payMoney(currentPlayer, owner, breweryRent, players, fields, view);</span>
+		}
+
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if(owner == currentPlayer) {</span>
+<span class="nc" id="L198">			view.writeText(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;', &quot; + players[currentPlayer].getPlayerName() + &quot;,  ejer selv dette bryggeri&quot;);</span>
+		}
+<span class="fc" id="L200">	}</span>
+
+	/**
+	 * taxField()
+	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
+	 * @param owner - indtast ejeren af feltet, der er i fokus (i int)
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @param view - indtast objectnavn af typen ViewCTRL
+	 */
+	public void taxField(int currentPlayer, Player[] players,Field[] fields,ViewCTRL view) {
+<span class="fc" id="L211">		int newPlayerPosition = players[currentPlayer].getPosition();</span>
+<span class="fc" id="L212">		int[] taxValue = (((TaxField)fields[newPlayerPosition]).getReturnValue());</span>
+<span class="fc" id="L213">		view.writeText(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;', du skal betale &quot; + taxValue[0] + &quot;kr. i skat&quot;); // tekst til spilleren</span>
+<span class="fc" id="L214">		bankruptcy.payMoney(currentPlayer, 0, taxValue[0], players, fields, view);// Transaction som sker på spilleren ud fra hvilket taxfield han lander på</span>
+<span class="fc" id="L215">	}</span>
+
+	/**
+	 * chanceField()
+	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @param view - indtast objectnavn af typen ViewCTRL
+	 */
+	public void chanceField(int currentPlayer, Player[] players,Field[] fields,ViewCTRL view) {
+<span class="fc" id="L225">		view.writeText(players[currentPlayer].getPlayerName() + &quot; er landet på 'Prøv lykken', du trækker et chance kort&quot;); //Tekst fra gui </span>
+<span class="fc" id="L226">		chancedeck.draw(); //ChanceCardCRTL trækker et kort	</span>
+<span class="fc" id="L227">		view.showChanceCard(chancedeck.getDescription());	 //Teksten fra Chancekortet vises i gui </span>
+<span class="fc" id="L228">		chanceCardRules(currentPlayer, players, fields, view); //kald af metode som fortæller hvilket slags kort man har trukket.</span>
+<span class="fc" id="L229">	}</span>
+
+	/**
+	 * goToJailField()
+	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @param view - indtast objectnavn af typen ViewCTRL
+	 */
+	public void goToJailField(int currentPlayer,Player[] players,Field[] fields,ViewCTRL view) {
+<span class="fc" id="L239">		int newPlayerPosition = players[currentPlayer].getPosition();</span>
+<span class="fc" id="L240">		view.writeText(players[currentPlayer].getPlayerName() + &quot; er landet på '&quot; + fields[newPlayerPosition].getName() + &quot;', du skal nu i fængsel&quot;); //tekst til spilleren.</span>
+<span class="fc" id="L241">		players[currentPlayer].setPosition(10); // spilleren position bliver rykket til felt nr 10</span>
+<span class="fc" id="L242">		players[currentPlayer].addTurnsInJail(); // Spilleren sidder i fængsel.</span>
+<span class="fc" id="L243">		view.updatePlayerPosition(currentPlayer, newPlayerPosition, 10); //update af gui</span>
+<span class="fc" id="L244">	}</span>
+
+	
+	/**
+	 * chanceCardRules () - Switcher på hvilken type ChanceCard man har trukket, og udfører alt handling.
+	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @param view - indtast objectnavn af typen ViewCTRL
+	 */
+	public void chanceCardRules (int currentPlayer, Player[] players,Field[] fields,ViewCTRL view) {
+<span class="fc" id="L255">		int chanceCardType = chancedeck.getType();</span>
+<span class="fc" id="L256">		int[] chanceCardValueArray = chancedeck.getReturnValue();</span>
+<span class="fc" id="L257">		int owner = 0;</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		if ((fields[players[currentPlayer].getPosition()]) instanceof OwnerFields) {</span>
+<span class="nc" id="L259">			owner = (((OwnerFields)fields[players[currentPlayer].getPosition()]).getOwner());</span>
+		}
+<span class="pc bpc" id="L261" title="1 of 5 branches missed.">		switch (chanceCardType) {</span>
+		case 1: // TransactionCard
+<span class="fc" id="L263">			int transactionValue = chanceCardValueArray[0];</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">			if ((transactionValue) &lt; 0) {</span>
+<span class="fc" id="L265">				int realvalue = (transactionValue * (-1)); </span>
+<span class="fc" id="L266">				view.writeText(&quot;Der trækkes &quot; + realvalue + &quot;kr. fra &quot; + players[currentPlayer].getPlayerName() + &quot;'s konto.&quot;);</span>
+<span class="fc" id="L267">				bankruptcy.payMoney(currentPlayer, owner, (realvalue), players, fields, view);</span>
+
+<span class="fc" id="L269">			} else {</span>
+<span class="fc" id="L270">				view.writeText(&quot;Der tilføjes &quot; + transactionValue + &quot;kr. til &quot; + players[currentPlayer].getPlayerName() + &quot;'s konto.&quot;);</span>
+<span class="fc" id="L271">				players[currentPlayer].recieveMoney(transactionValue);</span>
+			}
+<span class="fc" id="L273">			view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());</span>
+<span class="fc" id="L274">			break;</span>
+
+		case 2: // MoveToCards
+<span class="fc" id="L277">			moveToCardsRules(currentPlayer, players, fields, view); // logik og viewCTRL-kald ligger i denne metode.</span>
+<span class="fc" id="L278">			break;</span>
+
+		case 3: // ReleaseCards
+<span class="fc" id="L281">			players[currentPlayer].addReleaseCard();</span>
+<span class="fc" id="L282">			view.writeText(players[currentPlayer].getPlayerName() + &quot; har nu 1 løsladelseskort mere, og totalt &quot; + players[currentPlayer].getReleaseCard() + &quot;kort.&quot;);</span>
+<span class="fc" id="L283">			break;</span>
+
+		case 4: //TaxCards
+<span class="fc" id="L286">			int numberofhouses = asset.getNumberOfHousesFromPlayer(currentPlayer, fields);</span>
+<span class="fc" id="L287">			int numberofhotels = asset.getNumberOfHotelsFromPlayer(currentPlayer, fields);</span>
+<span class="fc" id="L288">			int totalSum = (chanceCardValueArray[0] * numberofhouses)+(chanceCardValueArray[1] * numberofhotels);</span>
+<span class="fc" id="L289">			view.writeText(&quot;Der trækkes &quot; + totalSum + &quot;kr. fra &quot; + players[currentPlayer].getPlayerName() + &quot;'s konto.&quot;);</span>
+<span class="fc" id="L290">			bankruptcy.payMoney(currentPlayer, owner, (totalSum), players, fields, view);</span>
+<span class="fc" id="L291">			break;</span>
+		default:
+<span class="nc" id="L293">			System.out.println(&quot;ChanceCard-typen der pharses er ikke korrekt.&quot;);</span>
+		}
+<span class="fc" id="L295">	}</span>
+
+	/**
+	 * moveToCardRules() - Switcher på hvilket type af MoveToCard man har trukket.
+	 * @param currentPlayer - aktuel spiller, der er i fokus (i int)
+	 * @param players - indtast objectnavn af typen Player[]
+	 * @param fields - indtast objectnavn af typen Field[]
+	 * @param view - indtast objectnavn af typen ViewCTRL
+	 */
+	public void moveToCardsRules (int currentPlayer, Player[] players,Field[] fields, ViewCTRL view) {
+<span class="fc" id="L305">		int playerPosition = players[currentPlayer].getPosition();</span>
+<span class="fc" id="L306">		int[] chanceCardValueArray = chancedeck.getReturnValue();</span>
+<span class="fc" id="L307">		int moveToField = chanceCardValueArray[0];</span>
+<span class="fc" id="L308">		int moveToType = chanceCardValueArray[1];</span>
+
+<span class="pc bpc" id="L310" title="1 of 5 branches missed.">		switch (moveToType){</span>
+		case 1:
+			// Blot flyttekort til et bestemt felt.
+<span class="fc bfc" id="L313" title="All 2 branches covered.">			if(checkForPassingStart(playerPosition, moveToField)) {</span>
+<span class="fc" id="L314">				view.writeText(players[currentPlayer].getPlayerName() + &quot; flyttes til &quot; + fields[moveToField].getName() + &quot;, men passerer samtidigt også start og får 4000 kr.&quot;);</span>
+<span class="fc" id="L315">				players[currentPlayer].recieveMoney(4000);</span>
+<span class="fc" id="L316">				players[currentPlayer].setPosition(moveToField);</span>
+<span class="fc" id="L317">				view.updatePlayerPosition(currentPlayer, playerPosition, (moveToField));</span>
+<span class="fc" id="L318">			} else {</span>
+<span class="fc" id="L319">				view.writeText(players[currentPlayer].getPlayerName() + &quot; flyttes til &quot; + fields[moveToField].getName() + &quot;, men passerer samtidigt også start og får 4000 kr.&quot;);</span>
+<span class="fc" id="L320">				players[currentPlayer].setPosition(moveToField);</span>
+<span class="fc" id="L321">				view.updatePlayerPosition(currentPlayer, playerPosition, moveToField);</span>
+			}
+<span class="fc" id="L323">			ruleSwitch(currentPlayer, players, fields, view);</span>
+<span class="fc" id="L324">			break;</span>
+
+		case 2: // Et flyttekort, hvor man flytter til det nærmeste felt med rederi.	
+<span class="fc" id="L327">			int oldPlayerPos = players[currentPlayer].getPosition();</span>
+<span class="fc" id="L328">			int newPlayerPos = players[currentPlayer].getPosition();</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">			while (fields[newPlayerPos].getType() != 1) {</span>
+<span class="fc" id="L330">				newPlayerPos++;</span>
+<span class="pc bpc" id="L331" title="1 of 2 branches missed.">				if (newPlayerPos &gt; 39) { </span>
+<span class="nc" id="L332">					newPlayerPos =0;</span>
+				}
+			}
+<span class="fc" id="L335">			view.writeText(players[currentPlayer].getPlayerName() + &quot; flyttes til &quot; + fields[newPlayerPos].getName() + &quot;, som er det nærmeste redderi&quot;);</span>
+<span class="fc" id="L336">			players[currentPlayer].setPosition(newPlayerPos);</span>
+<span class="fc" id="L337">			view.updatePlayerPosition(currentPlayer, oldPlayerPos, newPlayerPos);</span>
+<span class="fc" id="L338">			int owner=((OwnerFields)fields[newPlayerPos]).getOwner();</span>
+<span class="fc" id="L339">			shippingField(currentPlayer, owner, 2, players, fields, view);</span>
+<span class="fc" id="L340">			break;</span>
+
+		case 3:
+			// Flyttekort til fængsel
+<span class="fc" id="L344">			view.writeText(players[currentPlayer].getPlayerName() + &quot; flyttes til &quot; + fields[moveToField].getName());</span>
+<span class="fc" id="L345">			players[currentPlayer].addTurnsInJail();</span>
+<span class="fc" id="L346">			players[currentPlayer].setPosition(moveToField);</span>
+<span class="fc" id="L347">			players[currentPlayer].setExtraTurn(false);</span>
+<span class="fc" id="L348">			view.updatePlayerPosition(currentPlayer, playerPosition, moveToField);</span>
+<span class="fc" id="L349">			break;</span>
+
+		case 4: // Ryk tre felter tilbage.
+<span class="fc" id="L352">			int actualMove = (playerPosition - moveToField);</span>
+<span class="fc" id="L353">			view.writeText(players[currentPlayer].getPlayerName() + &quot; rykkes tre felter tilbage til &quot; + fields[actualMove].getName());</span>
+<span class="fc" id="L354">			players[currentPlayer].setPosition(actualMove);</span>
+<span class="fc" id="L355">			view.updatePlayerPosition(currentPlayer, playerPosition, actualMove);</span>
+<span class="fc" id="L356">			ruleSwitch(currentPlayer, players, fields, view);</span>
+<span class="fc" id="L357">			break;</span>
+
+		default:
+<span class="nc" id="L360">			System.out.println(&quot;MoveTo-typen der pharses er ikke korrekt.&quot;);</span>
+		}
+<span class="fc" id="L362">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>

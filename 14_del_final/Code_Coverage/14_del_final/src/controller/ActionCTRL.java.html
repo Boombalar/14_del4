@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="da"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>ActionCTRL.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Merged (14-01-2018 19:40:31)</a> &gt; <a href="../../index.html" class="el_group">14_del_final</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">ActionCTRL.java</span></div><h1>ActionCTRL.java</h1><pre class="source lang-java linenums">package controller;
+
+import model.*;
+import view.*;
+
+public class ActionCTRL {
+	private int numberOfPlayers;
+	private AssetCTRL asset;
+	private BankruptcyCTRL bankruptcy;
+	private Board board;
+	private CreatePlayers makePlayers;
+	private ChanceDeckCTRL chancedeck;
+	private DieCup dieCup;
+	private DropdownCTRL dropdown;
+	private Field[] fields;
+	private JailCTRL jail;
+	private LandOnFieldCTRL landonfield;
+	private Player[] players;
+	private TradeCTRL trade;
+	private ViewCTRL view;
+	private WinnerCTRL winner;
+
+<span class="fc" id="L23">	public ActionCTRL() {</span>
+<span class="fc" id="L24">		initialiseGame();</span>
+<span class="nc" id="L25">		gameSequence();</span>
+<span class="nc" id="L26">	}</span>
+
+	private void initialiseGame() {
+<span class="fc" id="L29">		chancedeck = new ChanceDeckCTRL(); //Lav chancekort CTRL.</span>
+<span class="fc" id="L30">		dieCup = new DieCup(); 		//Lav raflebæger.</span>
+<span class="fc" id="L31">		board = new Board();		 //Lav bræt model.</span>
+<span class="fc" id="L32">		fields = board.getFields();</span>
+<span class="fc" id="L33">		winner = new WinnerCTRL();</span>
+<span class="fc" id="L34">		asset = new AssetCTRL();</span>
+<span class="fc" id="L35">		trade = new TradeCTRL(asset);</span>
+<span class="fc" id="L36">		bankruptcy = new BankruptcyCTRL(asset, trade);</span>
+<span class="fc" id="L37">		jail = new JailCTRL(bankruptcy);</span>
+<span class="fc" id="L38">		landonfield = new LandOnFieldCTRL(asset, bankruptcy, chancedeck);</span>
+<span class="fc" id="L39">		view = new ViewCTRL(fields);//Opret bræt.</span>
+<span class="fc" id="L40">		String[] lines = {&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;};		//Hent antal spillere.</span>
+<span class="fc" id="L41">		numberOfPlayers = Integer.parseInt(view.getDropDownChoice(&quot;Vælg antal spillere 2-6&quot;, lines));</span>
+<span class="fc" id="L42">		makePlayers = new CreatePlayers(numberOfPlayers, view);  		//Lav player array.</span>
+<span class="fc" id="L43">		players = makePlayers.getPlayers(); // Modtag player array.</span>
+<span class="fc" id="L44">		view.makeGuiPlayers(players); //Opret antal spillere på bræt.</span>
+<span class="fc" id="L45">		dropdown = new DropdownCTRL(landonfield, asset, trade);</span>
+<span class="fc" id="L46">		view.updateEntireBoard(fields, players); // updatering af boardet på gui, så test / fejlfinding kan blive nemmere.</span>
+<span class="fc" id="L47">	}</span>
+	/**
+	 * Kører gamesekvens for en spiller.
+	 */
+	private void gameSequence() {
+<span class="fc" id="L52">		int currentPlayer = 1; //Den første spiller instantieres til spiller 1</span>
+
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		while (!winner.checkWinner(numberOfPlayers, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder</span>
+
+			while (true) {
+				// Hvis en spiller er broke, så gå ud af loop
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">				if(players[currentPlayer].getBroke()) { //Metode der tjekker om en spiller er bankerot</span>
+<span class="nc" id="L59">					view.removePlayerCar(currentPlayer, players[currentPlayer].getPosition()); //Fjerner spillerens bil, hvis ovenstående er true</span>
+<span class="nc" id="L60">					currentPlayer++;</span>
+<span class="nc" id="L61">					break;				</span>
+				}
+
+				// Lav Startmenu for spiller
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">				if (players[currentPlayer].getExtraTurn()) {</span>
+				} else {
+<span class="fc" id="L67">					view.writeText(&quot;Det er &quot; + players[currentPlayer].getPlayerName() + &quot;'s tur nu&quot;);</span>
+				}
+
+				//Hvis spiller er i fængsel håndter det.
+<span class="fc" id="L71">				jail.jailHandling(currentPlayer, players, fields, view);</span>
+
+				//Spillermenu
+<span class="fc" id="L74">				String[] playerChoice = {&quot;Slå terninger&quot;, &quot;Køb hus og hotel&quot;,&quot;Sælg hus og hotel&quot;, &quot;Sælg grund&quot;};</span>
+<span class="fc" id="L75">				String choiceOfPlayer = view.getDropDownChoice(players[currentPlayer].getPlayerName() + &quot; - vælg fra dropdown&quot;, playerChoice);</span>
+
+				//Håndtér valg fra menu
+				//I java ver. 8 kan man switche på en streng :)
+<span class="pc bpc" id="L79" title="5 of 13 branches missed.">				switch(choiceOfPlayer) {</span>
+
+				// Slår terningerne, ændrer position i model lag og opdaterer view lag
+				case &quot;Slå terninger&quot;:
+<span class="fc" id="L83">					dropdown.rollDice(currentPlayer, players, fields, view, dieCup);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">					if (players[currentPlayer].getExtraTurn() == true) { //Tjekker om en spiller har slået 2 ens men en boolean.</span>
+<span class="nc" id="L85">						view.writeText(players[currentPlayer].getPlayerName() + &quot; slog to ens, og har derfor en ekstra tur&quot;);</span>
+<span class="nc" id="L86">						players[currentPlayer].setExtraTurn(false); //Sætter en spillers extraTurn til false efter den blev sat til true.</span>
+<span class="nc" id="L87">						currentPlayer--;</span>
+					}
+<span class="nc" id="L89">					break;</span>
+
+				// Køb huse og hoteller.
+				case &quot;Køb hus og hotel&quot;:
+<span class="fc" id="L93">					dropdown.buyHousesAndHotel(currentPlayer, players, fields, view);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til &quot;start&quot; menuen, hvis en spiller valgte noget andet end slå terninger</span>
+<span class="fc" id="L95">						currentPlayer--;</span>
+					}
+<span class="fc" id="L97">					break;</span>
+
+				//Sælg huse og hoteller.
+				case &quot;Sælg hus og hotel&quot;:
+<span class="fc" id="L101">					dropdown.sellHousesAndHotels(currentPlayer, players, fields, view);</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til &quot;start&quot; menuen, hvis en spiller valgte noget andet end slå terninger</span>
+<span class="fc" id="L103">						currentPlayer--;</span>
+					}
+<span class="fc" id="L105">					break;</span>
+
+					//Sælg grund hvis man ejer den og der ikke er nogle huse på
+				case &quot;Sælg grund&quot;:
+<span class="fc" id="L109">					dropdown.sellProperty(currentPlayer, players, fields, view);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til &quot;start&quot; menuen, hvis en spiller valgte noget andet end slå terninger</span>
+<span class="fc" id="L111">						currentPlayer--;</span>
+					}
+					break;
+
+				}
+				//fortæller systemet af det er næsten spillers tur.
+<span class="fc" id="L117">				currentPlayer++;</span>
+				//Når det har været sidste spillers tur bliver den sat til spiller 1 igen.
+<span class="fc bfc" id="L119" title="All 2 branches covered.">				if (currentPlayer == players.length){</span>
+<span class="fc" id="L120">					currentPlayer = 1; 		</span>
+				}
+
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">				if (winner.checkWinner(numberOfPlayers, players)) { //Boolean på om der er 1 spiller tilbage</span>
+<span class="nc" id="L124">					winner.printWinner(currentPlayer, numberOfPlayers, players, view); //Metode der printer vinderen, hvis ovenstående er sandt</span>
+					break;
+				}
+			}
+		}
+<span class="nc" id="L129">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>Merged (14-01-2018 19:40:31)</div></body></html>
