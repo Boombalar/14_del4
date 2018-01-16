@@ -45,6 +45,8 @@ public class TradeCTRL {
 		players[fromPlayer].removeMoney(players[fromPlayer].getBalance());
 	}
 
+	
+	//Den her bruger vi ikke nogen steder. DØD KODE
 	/**
 	 * Tilføjer en bygning til et felt.
 	 * @param currentPlayer - den spiller der skal købe.
@@ -61,6 +63,7 @@ public class TradeCTRL {
 		}
 	}
 
+	
 	/**
 	 * Sælg en bygning til halv pris og overfør pengene til ejeren
 	 * @param currentPlayer - den spiller der skal sælge.

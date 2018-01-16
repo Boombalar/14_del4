@@ -122,8 +122,7 @@ public class DropdownCTRL {
 				view.writeText(players[currentPlayer].getPlayerName() + " har ikke råd til at bygge");
 			}
 		}else {
-			//Den burde ikke komme hertil da grunde man ejer hvor man ikke har hele gruppen er sorteret fra i condition 
-
+			//Den kommer ikke  hertil da grunde man ejer hvor man ikke har hele gruppen er sorteret fra i condition 
 			view.writeText(players[currentPlayer].getPlayerName() + " ejer ikke hele grupper af grunde");
 		}
 	}
@@ -169,9 +168,11 @@ public class DropdownCTRL {
 
 		//Vi sælger
 		if (propertyArray.length != 0) {
+			//Her skal stå "Vælg hvilken grund du vil sælge et hus på".
 			String[] choice = view.getDropDownChoice("Vælg hvilken grund til vil købe hus på", propertyArray).split("-");
 			int chosenFieldNumber=Integer.parseInt(choice[0]);
 			returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
+			//Vi behøver ikke spørge om der er hus på, for det ved vi allerede når vi populerer array
 			if (returnValue[6] > 0) {//hvis der er mere end 1 hus på feltet.
 				returnValue[6]--;
 				//SÆLG FOR HELVEDE
@@ -197,8 +198,8 @@ public class DropdownCTRL {
 		int amountOfProperties=0;
 		//Find ud af hvor mange grunde man ejer som ikke har huse på sig til array
 		for(int fieldCount = 0;fieldCount<=39;fieldCount++) {
-			//Hvis feltet er enten et ejet OwnerField eller et ejet PropertyField uden huse.
-			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) && !((fields[fieldCount] instanceof PropertyFields && asset.getHousesOnGroup(currentPlayer, fieldCount, fields)>0))) {
+			//Hvis feltet er enten et ejet OwnerField eller et ejet PropertyField uden huse i gruppen.
+			if ((fields[fieldCount] instanceof OwnerFields && ((OwnerFields)fields[fieldCount]).getOwner()==currentPlayer) && !((fields[fieldCount] instanceof PropertyFields && asset.getHousesOnGroup(currentPlayer, fieldCount, fields) > 0))) {
 				amountOfProperties++;//tæl op
 			}
 		}
@@ -234,6 +235,11 @@ public class DropdownCTRL {
 			String playerSellChoice = view.getDropDownChoice( players[currentPlayer].getPlayerName() + ", hvilken spiller vil du sælge til?   0 er til banken", playerCountArray);
 			int chosenPlayerNumber=Character.getNumericValue(playerSellChoice.charAt(0));
 
+			//Problem når man sælger til banken.
+			//players[0] giver nullpointexception fordi den instans ikke eksisterer.
+			//Vi kunne skrive en if struktur der fixede det.
+			
+			//Hvis den spiller der er valgt som modtager af feltet har råd så sælger man til spillere.
 			if (players[chosenPlayerNumber].getBalance() >= ((OwnerFields)fields[chosenFieldNumber]).getPropertyValue()) {
 				//Sælg grund.
 				trade.sellProperty(currentPlayer, chosenPlayerNumber,chosenFieldNumber, players, fields);

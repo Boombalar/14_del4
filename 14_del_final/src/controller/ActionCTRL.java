@@ -88,6 +88,7 @@ public class ActionCTRL {
 					if (players[currentPlayer].getExtraTurn() == true) { //Tjekker om en spiller har slået 2 ens men en boolean.
 						view.writeText(players[currentPlayer].getPlayerName() + " slog to ens, og har derfor en ekstra tur");
 						players[currentPlayer].setExtraTurn(false); //Sætter en spillers extraTurn til false efter den blev sat til true.
+						//man kunne bare have skrevet gamesequence(); her så ville vi ikke have brug for at trække en fra hele tiden, hvis currentPlayer=1 i start af gamesequence var en attribut med startværdi 1.
 						currentPlayer--;
 					}
 					break;
@@ -96,6 +97,7 @@ public class ActionCTRL {
 				case "Køb hus og hotel":
 					dropdown.buyHousesAndHotel(currentPlayer, players, fields, view);
 					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til "start" menuen, hvis en spiller valgte noget andet end slå terninger
+						//man kunne bare have skrevet gamesequence(); her så ville vi ikke have brug for at trække en fra hele tiden, hvis currentPlayer=1 i start af gamesequence var en attribut med startværdi 1.
 						currentPlayer--;
 					}
 					break;
@@ -104,6 +106,7 @@ public class ActionCTRL {
 				case "Sælg hus og hotel":
 					dropdown.sellHousesAndHotels(currentPlayer, players, fields, view);
 					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til "start" menuen, hvis en spiller valgte noget andet end slå terninger
+//						//man kunne bare have skrevet gamesequence(); her så ville vi ikke have brug for at trække en fra hele tiden, hvis currentPlayer=1 i start af gamesequence var en attribut med startværdi 1.
 						currentPlayer--;
 					}
 					break;
@@ -112,6 +115,7 @@ public class ActionCTRL {
 				case "Sælg grund":
 					dropdown.sellProperty(currentPlayer, players, fields, view);
 					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til "start" menuen, hvis en spiller valgte noget andet end slå terninger
+						//man kunne bare have skrevet gamesequence(); her så ville vi ikke have brug for at trække en fra hele tiden, hvis currentPlayer=1 i start af gamesequence var en attribut med startværdi 1.
 						currentPlayer--;
 					}
 					break;
