@@ -96,11 +96,10 @@ public class LandOnFieldCTRL {
 	 * @param fields - indtast objectnavn af typen Field[]
 	 * @param view - indtast objectnavn af typen ViewCTRL
 	 */
-<<<<<<< Updated upstream
-	public void propertyField(int currentPlayer, int owner, Player[] players,Field[] fields,ViewCTRL view) {
-=======
+
+
 	public void propertyField(int currentPlayer, int owner, Player[] players,Field[] fields, ViewCTRL view) {
->>>>>>> Stashed changes
+
 		//ProbertyField
 		int newPlayerPosition = players[currentPlayer].getPosition();
 		int propertyValue = (((PropertyFields)fields[newPlayerPosition]).getPropertyValue());
@@ -119,20 +118,16 @@ public class LandOnFieldCTRL {
 				view.updateOwnership(currentPlayer, newPlayerPosition);
 			}
 		}
-<<<<<<< Updated upstream
-=======
+
 		//Hvis ejer ikke er bank og owner ikke er aktiv spiller.
->>>>>>> Stashed changes
+
 		if(owner != 0 && owner != currentPlayer) {
 			if (asset.checkPropertyGroupOwnership(owner,newPlayerPosition,fields) && (fieldRent[6] == 0)) {
 				propertyRent *= 2;
 			}
 			view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du skal betale " + propertyRent + "kr. til " + players[owner].getPlayerName()); //Gui i tekst til spilleren
-<<<<<<< Updated upstream
-			bankruptcy.payMoney(currentPlayer, owner, propertyRent, players, fields, view);			 //transaction mellem to spiller.
-=======
 			bankruptcy.payMoney(currentPlayer, owner, propertyRent, players, fields, view);	 //transaction mellem to spiller.
->>>>>>> Stashed changes
+
 		}
 		//Her lander den aktivespiller på et felt som han selv ejer. 
 		if((owner == currentPlayer)) {  
@@ -266,20 +261,14 @@ public class LandOnFieldCTRL {
 	public void chanceCardRules (int currentPlayer, Player[] players,Field[] fields,ViewCTRL view) {
 		int chanceCardType = chancedeck.getType();
 		int[] chanceCardValueArray = chancedeck.getReturnValue();
-<<<<<<< Updated upstream
-=======
+
 		//Den her er overflødig da vi på dette sted altid står på et chancekort som er ejet af spillet.
->>>>>>> Stashed changes
+
 		int owner = 0;
 		if ((fields[players[currentPlayer].getPosition()]) instanceof OwnerFields) {
 			owner = (((OwnerFields)fields[players[currentPlayer].getPosition()]).getOwner());
 		}
 		switch (chanceCardType) {
-<<<<<<< Updated upstream
-		case 1: // TransactionCard
-			int transactionValue = chanceCardValueArray[0];
-			if ((transactionValue) < 0) {
-=======
 		
 		case 1: // TransactionCard
 			int transactionValue = chanceCardValueArray[0];
@@ -287,7 +276,7 @@ public class LandOnFieldCTRL {
 			if ((transactionValue) < 0) {
 				//vi laver nu tallet om til et positivt tal så vi skriver et positivt tal ud og kan skelne
 				//mellem removeMoney og recieveMoney i player.
->>>>>>> Stashed changes
+
 				int realvalue = (transactionValue * (-1)); 
 				view.writeText("Der trækkes " + realvalue + "kr. fra " + players[currentPlayer].getPlayerName() + "'s konto.");
 				bankruptcy.payMoney(currentPlayer, owner, realvalue, players, fields, view);

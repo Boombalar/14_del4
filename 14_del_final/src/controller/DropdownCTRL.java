@@ -105,10 +105,9 @@ public class DropdownCTRL {
 
 			//Vi bygger
 			returnValue = ((PropertyFields)fields[chosenFieldNumber]).getReturnValue();
-<<<<<<< Updated upstream
-=======
+
 			//Herunder skal der stå < 5 ellers kan man bygge på et felt med 5 huse.
->>>>>>> Stashed changes
+
 			if (returnValue[6] < 6) {//hvis der er mindre end 6 huse på feltet
 				returnValue[6]++;
 				//BYG FOR FANDEN!!
@@ -118,17 +117,13 @@ public class DropdownCTRL {
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 
 			}else {
-<<<<<<< Updated upstream
-				view.writeText(players[currentPlayer].getPlayerName() + " har ikke råd til at bygge");
-			}
-		}else {
-=======
+
 				//Den kommer ikke hertil da det er sorteret fra starten.
 				view.writeText(players[currentPlayer].getPlayerName() + " har ikke råd til at bygge");
 			}
 		}else {
 			//Den burde ikke komme hertil da grunde man ejer hvor man ikke har hele gruppen er sorteret fra i condition 
->>>>>>> Stashed changes
+
 			view.writeText(players[currentPlayer].getPlayerName() + " ejer ikke hele grupper af grunde");
 		}
 	}
