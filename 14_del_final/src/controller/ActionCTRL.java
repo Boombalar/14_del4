@@ -39,8 +39,7 @@ public class ActionCTRL {
 		bankruptcy = new BankruptcyCTRL(asset, trade);
 		jail = new JailCTRL(bankruptcy);
 		landonfield = new LandOnFieldCTRL(asset, bankruptcy, chancedeck);
-		//Opret bræt.
-		view = new ViewCTRL(fields);
+		view = new ViewCTRL(fields); //Opret bræt. 
 
 		//Hent antal spillere.
 		String[] lines = {"2","3","4","5","6"};		
@@ -61,14 +60,13 @@ public class ActionCTRL {
 		while (!winner.checkWinner(numberOfPlayers, players)) { //Et while(true) loop der kører indtil vi har fundet 1 vinder
 
 			while (true) {
-				// Hvis en spiller er broke, så gå ud af loop
+				// Hvis en spiller er broke, så gå ud af loop og så er det næste spillers tur.
 				if(players[currentPlayer].getBroke()) { //Metode der tjekker om en spiller er bankerot
 					view.removePlayerCar(currentPlayer, players[currentPlayer].getPosition()); //Fjerner spillerens bil, hvis ovenstående er true
 					currentPlayer++;
 					break;				
 				}
 
-				// Lav Startmenu for spiller
 				view.writeText("Det er " + players[currentPlayer].getPlayerName() + "'s tur nu");
 
 				//Hvis spiller er i fængsel håndter det.
@@ -79,14 +77,14 @@ public class ActionCTRL {
 				String choiceOfPlayer = view.getDropDownChoice(players[currentPlayer].getPlayerName() + " - vælg fra dropdown", playerChoice);
 
 				//Håndtér valg fra menu
-				//I java ver. 8 kan man switche på en streng :)
+				//I java ver. 1.8 kan man switche på en streng :)
 				switch(choiceOfPlayer) {
 
 				// Slår terningerne, ændrer position i model lag og opdaterer view lag
 				case "Slå terninger":
 					dropdown.rollDice(currentPlayer, players, fields, view, dieCup);
-					if (players[currentPlayer].getExtraTurn() == true) { //Tjekker om en spiller har slået 2 ens men en boolean.
-						view.writeText(players[currentPlayer].getPlayerName() + " slog to ens, og har derfor en ekstra tur");
+					if (players[currentPlayer].getExtraTurn() == true) { //Tjekker om en spiller har en ekstratur.
+						view.writeText(players[currentPlayer].getPlayerName() + " slog to ens, og har derfor en ekstra tur"); 
 						players[currentPlayer].setExtraTurn(false); //Sætter en spillers extraTurn til false efter den blev sat til true.
 						//man kunne bare have skrevet gamesequence(); her så ville vi ikke have brug for at trække en fra hele tiden, hvis currentPlayer=1 i start af gamesequence var en attribut med startværdi 1.
 						currentPlayer--;
@@ -96,7 +94,7 @@ public class ActionCTRL {
 					// Køb huse og hoteller.
 				case "Køb hus og hotel":
 					dropdown.buyHousesAndHotel(currentPlayer, players, fields, view);
-					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til "start" menuen, hvis en spiller valgte noget andet end slå terninger
+					if (dropdown.getBackToDropDown()) { //Metode der henter tilbage til dropdownstatus.
 						//man kunne bare have skrevet gamesequence(); her så ville vi ikke have brug for at trække en fra hele tiden, hvis currentPlayer=1 i start af gamesequence var en attribut med startværdi 1.
 						currentPlayer--;
 					}
@@ -105,8 +103,8 @@ public class ActionCTRL {
 					//Sælg huse og hoteller.
 				case "Sælg hus og hotel":
 					dropdown.sellHousesAndHotels(currentPlayer, players, fields, view);
-					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til "start" menuen, hvis en spiller valgte noget andet end slå terninger
-//						//man kunne bare have skrevet gamesequence(); her så ville vi ikke have brug for at trække en fra hele tiden, hvis currentPlayer=1 i start af gamesequence var en attribut med startværdi 1.
+					if (dropdown.getBackToDropDown()) {//Metode der henter tilbage til dropdownstatus.
+						//man kunne bare have skrevet gamesequence(); her så ville vi ikke have brug for at trække en fra hele tiden, hvis currentPlayer=1 i start af gamesequence var en attribut med startværdi 1.
 						currentPlayer--;
 					}
 					break;
@@ -114,22 +112,22 @@ public class ActionCTRL {
 					//Sælg grund hvis man ejer den og der ikke er nogle huse på
 				case "Sælg grund":
 					dropdown.sellProperty(currentPlayer, players, fields, view);
-					if (dropdown.getBackToDropDown()) { //Metode der smider spilleren tilbage til "start" menuen, hvis en spiller valgte noget andet end slå terninger
+					if (dropdown.getBackToDropDown()) { //Metode der henter tilbage til dropdownstatus.
 						//man kunne bare have skrevet gamesequence(); her så ville vi ikke have brug for at trække en fra hele tiden, hvis currentPlayer=1 i start af gamesequence var en attribut med startværdi 1.
 						currentPlayer--;
 					}
 					break;
-
 				}
-				//fortæller systemet af det er næsten spillers tur.
+				
+				//fortæller spillet at det er næste spillers tur.
 				currentPlayer++;
-				//Når det har været sidste spillers tur bliver den sat til spiller 1 igen.
+				//Når det har været sidste spillers tur bliver det spillet 1 tur igen.
 				if (currentPlayer == players.length){
 					currentPlayer = 1; 		
 				}
 
-				if (winner.checkWinner(numberOfPlayers, players)) { //Boolean på om der er 1 spiller tilbage
-					winner.printWinner(currentPlayer, numberOfPlayers, players, view); //Metode der printer vinderen, hvis ovenstående er sandt
+				if (winner.checkWinner(numberOfPlayers, players)) { //Boolean på om der kun er en spiller tilbage
+					winner.printWinner(currentPlayer, numberOfPlayers, players, view); //Metode der printer vinderen, hvis ovenstående er sandt og stopper spillet.
 					break;
 				}
 			}

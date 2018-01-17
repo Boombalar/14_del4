@@ -23,11 +23,15 @@ public class BankruptcyCTRL {
 	 * @param view Det er et objekt af ViewCTRL.
 	 */ 
 	public void payMoney(int currentPlayer, int toPlayer, int amount, Player[] players, Field[] fields, ViewCTRL view) {
+		//Hvis der er ikke er nok penge på kontoen til at betale
 		if (checkForEnoughMoneyOnAccount(currentPlayer, amount, players) == false) {
+			//Hvis man ikke kan rejse nok penge til at betale
 			if (raiseMoney(currentPlayer, toPlayer, amount, players, fields) == false){
+				//Spiller er bankerot.
 				bankruptcy(currentPlayer, toPlayer, players, fields, view);
 			}
-		} else {						
+		} else {			
+			
 			players[currentPlayer].removeMoney(amount);
 			if (toPlayer > 0) {
 				players[toPlayer].recieveMoney(amount);
@@ -74,6 +78,9 @@ public class BankruptcyCTRL {
 					//Vi sælger husene 1 ad gangen
 					for (int houseCount = 1; houseCount <= numberOfHouses; houseCount++ ) {
 						trade.sellBuilding(currentPlayer, fieldCount, players, fields);
+						//Her kunne man bare lave return true og så droppe else i payMoney. overførslen skulle så ligge udenfor 1. if sætning.
+						//Nu vil der komme en fejl nullPointException, hvis man kan rejse pengene, og betaler til banken, da der bliver lavet en safeTransferMoney
+						//til players[0] og det objekt eksisterer ikke.
 						//Check for om salget af huset gav nok penge.
 						if (checkForEnoughMoneyOnAccount(currentPlayer, amountToPay, players)) {
 							trade.safeTransferMoney(currentPlayer, toPlayer, amountToPay, players);

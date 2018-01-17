@@ -131,13 +131,13 @@ public class ViewCTRL {
 		guiPlayer = new GUI_Player[players.length+1];
 
 		//Opretter 6 farver på bilerne
-		carColor[0] = new Color(1,1,1);
-		carColor[1] = new Color(70,250,0);
+		carColor[0] = new Color(100,1,200);
+		carColor[1] = new Color(100,1,200);
 		carColor[2] = new Color(10,160,230);
 		carColor[3] = new Color(200,200,200);
 		carColor[4] = new Color(0,0,250);	
 		carColor[5] = new Color(50,150,100);
-		carColor[6] = new Color(75,100,220);
+		carColor[6] = new Color(250,10,10);
 
 		//Opret spillere på bræt.
 		guiCar = new GUI_Car[players.length+1];

@@ -106,21 +106,23 @@ public class LandOnFieldCTRL {
 		int[] fieldRent = (((PropertyFields)fields[newPlayerPosition]).getReturnValue());
 		int numberOfHouses = fieldRent[6];
 		int propertyRent = fieldRent[numberOfHouses];
+		
 		//Hvis banken ejer feltet, og man har råd til at købe
+		//skulle have stået <=
 		if(owner == 0 && propertyValue < players[currentPlayer].getBalance()) {
 			boolean	answer = view.getUserAnswer(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', vil du købe grunden ?", "ja", "nej");		
+			//Hvis man svarer ja til at købe
 			if(answer == true) {
 				view.writeText(players[currentPlayer].getPlayerName() + " har købt '" + fields[newPlayerPosition].getName() + "' for " + propertyValue + " kr."); //gui tekst til spilleren
 				//Herunder bliver feltets ejer skiftet.
 				((PropertyFields)fields[newPlayerPosition]).setOwner(currentPlayer);
-				players[currentPlayer].removeMoney(propertyValue);; 	//spiller køber grunden af brættet
+				players[currentPlayer].removeMoney(propertyValue);; 	//spiller køber grunden af banken.
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
 				view.updateOwnership(currentPlayer, newPlayerPosition);
 			}
 		}
 
 		//Hvis ejer ikke er bank og owner ikke er aktiv spiller.
-
 		if(owner != 0 && owner != currentPlayer) {
 			if (asset.checkPropertyGroupOwnership(owner,newPlayerPosition,fields) && (fieldRent[6] == 0)) {
 				propertyRent *= 2;
@@ -148,24 +150,31 @@ public class LandOnFieldCTRL {
 		int shippingPropertyValue = (((ShippingFields)fields[newPlayerPosition]).getPropertyValue());
 		int[] fieldRent = (((ShippingFields)fields[newPlayerPosition]).getReturnValue());
 		int numOfOwnedShipFields = (asset.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition, fields));
-
+		//Hvis det er ejet af banken
+		//Her skulle der også have været check om man havde råd til at købe feltet.
 		if(owner == 0) {
+			//Så får man muligheden for at købe den.
 			boolean answer = view.getUserAnswer(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', vil du købe dette redderi ?", "ja", "nej"); //Spiller for mulighed for at købe grunden
 			if(answer == true) {
 				view.writeText(players[currentPlayer].getPlayerName() + " har købt '" + fields[newPlayerPosition].getName() + "' for " + shippingPropertyValue + " kr" );	//Tekst til gui
+				//ville ikke skrive det sådan her. istedet for skal der stå.  
+				//((ShippingFields)fields[newPlayerPosition]).setOwner(currentPlayer);
 				ShippingFields wantedFieldChange = ((ShippingFields)fields[newPlayerPosition]);
 				wantedFieldChange.setOwner(currentPlayer);												//Køberen bliver sat til ejer af feltet
 				bankruptcy.payMoney(currentPlayer, owner, shippingPropertyValue, players, fields, view);	//transaktionen forgår mellem spiller og bræt
 			}
 		}
-
+		//Hvis ejer ikke er 0 eller currentPlayer
 		if(owner != 0 && owner != currentPlayer) {
+			//multiplier er hvis man trækker et chancekort der beder en om at rykke til nærmeste
+			//og betale 2 gange lejen på feltet
 			int shipRent = ((fieldRent[numOfOwnedShipFields -1])*multiplier);
 			if(multiplier == 1) {
 				view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', du skal betale " + shipRent + "kr. til " + players[owner].getPlayerName());
 			} else {
 				view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', og du skal betale dobbelt leje, " + shipRent + "kr. til " + players[owner].getPlayerName());
 			}
+			//Man skal ikke betale med payMoney, men med safeTransfer.
 			bankruptcy.payMoney(currentPlayer, owner, shipRent, players, fields, view);
 		}
 
@@ -187,15 +196,22 @@ public class LandOnFieldCTRL {
 		int breweryPropertyValue = (((BreweryFields)fields[newPlayerPosition]).getPropertyValue());
 		int[] breweryFieldRent = (((BreweryFields)fields[newPlayerPosition]).getReturnValue());
 		int numOfOwnedBrewFields = (asset.getNumberOfOwnedPropertiesInGroup(owner, newPlayerPosition, fields));
+		//Hvis feltet er ejet af banken
+		//Her skulle der også have været check om man havde råd til at købe feltet.
 		if(owner == 0) {
 			boolean answer = view.getUserAnswer(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "', vil du købe dette bryggeri ?", "ja", "nej");
+			//Så kan man købe den.
 			if(answer == true) {
 				view.writeText(players[currentPlayer].getPlayerName() + " har købt '" + fields[newPlayerPosition].getName() + "' for " + breweryPropertyValue + "kr.");
+				//ville ikke skrive det sådan her. istedet for skal der stå.  
+				//((OwnerFields)fields[newPlayerPosition]).setOwner(currentPlayer);
 				OwnerFields wantedFieldChange = ((OwnerFields)fields[newPlayerPosition]);
 				wantedFieldChange.setOwner(currentPlayer);
+				//Man skal ikke betale med payMoney, men med safeTransfer.
 				bankruptcy.payMoney(currentPlayer, owner, breweryPropertyValue, players, fields, view);
 			}
 		}
+		//Hvis ejeren ikke er banken, eller en selv
 		if(owner != 0 && owner != currentPlayer) {
 			int breweryRent = breweryFieldRent[numOfOwnedBrewFields-1];
 			view.writeText(players[currentPlayer].getPlayerName() + " er landet på '" + fields[newPlayerPosition].getName() + "' du skal betale " + breweryRent + "kr. til " + players[owner].getPlayerName());

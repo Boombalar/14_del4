@@ -238,6 +238,8 @@ public class DropdownCTRL {
 			//Problem når man sælger til banken.
 			//players[0] giver nullpointexception fordi den instans ikke eksisterer.
 			//Vi kunne skrive en if struktur der fixede det.
+			//fix er at tilføje chosenPlayerNumber == 0 ||  i starten af argumentet.
+			
 			
 			//Hvis den spiller der er valgt som modtager af feltet har råd så sælger man til spillere.
 			if (players[chosenPlayerNumber].getBalance() >= ((OwnerFields)fields[chosenFieldNumber]).getPropertyValue()) {
@@ -257,6 +259,7 @@ public class DropdownCTRL {
 		}
 
 	}
+	
 	/**
 	 * Går tilbage til dropdownmenu.
 	 * @return
