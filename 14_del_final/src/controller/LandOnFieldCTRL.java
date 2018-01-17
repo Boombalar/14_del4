@@ -293,12 +293,14 @@ public class LandOnFieldCTRL {
 			if ((transactionValue) < 0) {
 				//vi laver nu tallet om til et positivt tal så vi skriver et positivt tal ud og kan skelne
 				//mellem removeMoney og recieveMoney i player.
+				//Spiller skal af med penge.
 
 				int realvalue = (transactionValue * (-1)); 
 				view.writeText("Der trækkes " + realvalue + "kr. fra " + players[currentPlayer].getPlayerName() + "'s konto.");
 				bankruptcy.payMoney(currentPlayer, owner, realvalue, players, fields, view);
 
 			} else {
+				//Spiller modtager penge
 				view.writeText("Der tilføjes " + transactionValue + "kr. til " + players[currentPlayer].getPlayerName() + "'s konto.");
 				players[currentPlayer].recieveMoney(transactionValue);
 			}
@@ -336,28 +338,33 @@ public class LandOnFieldCTRL {
 	public void moveToCardsRules (int currentPlayer, Player[] players,Field[] fields, ViewCTRL view) {
 		int playerPosition = players[currentPlayer].getPosition();
 		int[] chanceCardValueArray = chancedeck.getReturnValue();
+		//Her hentes værdier ud fra arrray til senere brug
 		int moveToField = chanceCardValueArray[0];
 		int moveToType = chanceCardValueArray[1];
 
 		switch (moveToType){
 		case 1:
 			// Blot flyttekort til et bestemt felt.
+			//Hvis man passerer start får man 4000 kr.
 			if(checkForPassingStart(playerPosition, moveToField)) {
 				view.writeText(players[currentPlayer].getPlayerName() + " flyttes til " + fields[moveToField].getName() + ", men passerer samtidigt også start og får 4000 kr.");
 				players[currentPlayer].recieveMoney(4000);
 				players[currentPlayer].setPosition(moveToField);
 				view.updatePlayerPosition(currentPlayer, playerPosition, (moveToField));
 			} else {
+				//ellers flytter man bare til feltet
 				view.writeText(players[currentPlayer].getPlayerName() + " flyttes til " + fields[moveToField].getName() + ", men passerer samtidigt også start og får 4000 kr.");
 				players[currentPlayer].setPosition(moveToField);
 				view.updatePlayerPosition(currentPlayer, playerPosition, moveToField);
 			}
+			//Regelsættet kaldes igen.
 			ruleSwitch(currentPlayer, players, fields, view);
 			break;
 
 		case 2: // Et flyttekort, hvor man flytter til det nærmeste felt med rederi.	
 			int oldPlayerPos = players[currentPlayer].getPosition();
 			int newPlayerPos = players[currentPlayer].getPosition();
+			//Det nærmeste rederi findes og positionen gemmes i newPlayerPos
 			while (fields[newPlayerPos].getType() != 1) {
 				newPlayerPos++;
 				if (newPlayerPos > 39) { 
@@ -368,6 +375,7 @@ public class LandOnFieldCTRL {
 			players[currentPlayer].setPosition(newPlayerPos);
 			view.updatePlayerPosition(currentPlayer, oldPlayerPos, newPlayerPos);
 			int owner=((OwnerFields)fields[newPlayerPos]).getOwner();
+			//Rederireglen kaldes med en multiplier på 2 så ejeren får 2 gange lejen tilbage
 			shippingField(currentPlayer, owner, 2, players, fields, view);
 			break;
 

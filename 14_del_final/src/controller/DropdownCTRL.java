@@ -247,6 +247,7 @@ public class DropdownCTRL {
 				trade.sellProperty(currentPlayer, chosenPlayerNumber,chosenFieldNumber, players, fields);
 				view.updateOwnership(chosenPlayerNumber, chosenFieldNumber);
 				view.updatePlayerAccount(currentPlayer, players[currentPlayer].getBalance());
+				//Hvis det ikke er banken man sælger til så opdater view.
 				if (chosenPlayerNumber != 0) {
 					view.updatePlayerAccount(chosenPlayerNumber, players[chosenPlayerNumber].getBalance());
 				}
@@ -257,7 +258,6 @@ public class DropdownCTRL {
 		else {
 			view.writeText("Du ejer ikke nogle grunde, som du kan sælge");
 		}
-
 	}
 	
 	/**
