@@ -249,6 +249,7 @@ public class LandOnFieldCTRL {
 		view.writeText(players[currentPlayer].getPlayerName() + " er landet på 'Prøv lykken', du trækker et chance kort"); //Tekst fra gui 
 		chancedeck.draw(); //ChanceCardCRTL trækker et kort	
 		view.showChanceCard(chancedeck.getDescription());	 //Teksten fra Chancekortet vises i gui 
+		//Udfør regel på modellag
 		chanceCardRules(currentPlayer, players, fields, view); //kald af metode som fortæller hvilket slags kort man har trukket.
 	}
 
