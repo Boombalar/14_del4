@@ -30,9 +30,10 @@ public class PropertyFields extends OwnerFields {
 		rent[7] = value7;
 	}
 
+	
 	/**
-	 * En getter til huslejen på et givet propertyField felt.
-	 * @return Hvor mange huse en propertyField grund har
+	 * En getter der returnerer array
+	 * @return returnerer array
 	 */
 	public int[] getReturnValue() {
 		return this.rent;
@@ -45,5 +46,7 @@ public class PropertyFields extends OwnerFields {
 	public void setNumberOfHouses(int returnValue) {
 		this.rent[6] = returnValue;
 	}
+	
+	//Her kunne vi godt have haft en getRent, og en getNumberOfHouses
 	
 }
